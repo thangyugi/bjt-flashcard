@@ -40,7 +40,7 @@ export default function StudyGroupPage({ params }: PageProps) {
   }
 
   return (
-    <div className="h-[calc(100vh-3.5rem)] w-full flex flex-col items-center justify-center px-4 py-6 bg-gray-50 overflow-hidden">
+    <div className="min-h-[calc(100vh-3.5rem)] lg:h-[calc(100vh-3.5rem)] w-full flex flex-col items-center justify-center px-4 py-6 bg-gray-50 lg:overflow-hidden">
       <FlashCardDeck group={group} />
     </div>
   );

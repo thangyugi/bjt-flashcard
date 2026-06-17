@@ -55,9 +55,9 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
   if (!current) return null;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start w-full max-w-6xl mx-auto h-full overflow-hidden">
+    <div className="flex flex-col lg:flex-row gap-8 lg:gap-8 items-start w-full max-w-6xl mx-auto lg:h-full lg:overflow-hidden pb-10 lg:pb-0">
       {/* Left Column: Grid nav */}
-      <div className="w-full lg:w-80 shrink-0 order-2 lg:order-1 h-full max-h-full flex flex-col min-h-0">
+      <div className="w-full lg:w-80 shrink-0 order-2 lg:order-1 lg:h-full max-h-[400px] lg:max-h-full flex flex-col min-h-0">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex-1 flex flex-col overflow-hidden min-h-0">
           <h3 className="text-sm font-semibold text-gray-800 mb-4 flex justify-between items-center shrink-0">
             <span>Danh sách từ vựng</span>
@@ -99,7 +99,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
       </div>
 
       {/* Right Column: Main Card Area */}
-      <div className="flex-1 w-full max-w-xl mx-auto order-1 lg:order-2 flex flex-col items-center gap-5 h-full overflow-y-auto scrollbar-none pb-6 px-1">
+      <div className="flex-1 w-full max-w-xl mx-auto order-1 lg:order-2 flex flex-col items-center gap-5 lg:h-full lg:overflow-y-auto scrollbar-none lg:pb-6 px-1 shrink-0">
         {/* Back nav + counter */}
         <div className="w-full flex items-center justify-between">
           <button
@@ -133,39 +133,31 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
         </div>
 
         {/* Card */}
-        <FlashCard item={current} index={currentCardIndex} compact={false} />
+        <FlashCard 
+          key={current.id}
+          item={current} 
+          index={currentCardIndex} 
+          compact={false} 
+          onStatusChange={(status) => {
+            updateProgress(current.id, status);
+            handleNext();
+          }}
+        />
 
         {/* Action row */}
         <div className="flex items-center gap-3 flex-wrap justify-center">
           <button
             onClick={handlePrev}
             disabled={currentCardIndex === 0}
-            className="px-5 py-2.5 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+            className="px-5 py-2.5 text-sm font-semibold rounded-full border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
           >
             ← Trước
           </button>
 
-          {isFlipped && (
-            <>
-              <button
-                onClick={() => { updateProgress(current.id, "learning"); handleNext(); }}
-                className="px-5 py-2.5 text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-all shadow-sm"
-              >
-                Chưa nhớ
-              </button>
-              <button
-                onClick={() => { updateProgress(current.id, "mastered"); handleNext(); }}
-                className="px-5 py-2.5 text-sm font-semibold rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-all shadow-sm"
-              >
-                ✓ Nhớ rồi
-              </button>
-            </>
-          )}
-
           <button
             onClick={handleNext}
             disabled={currentCardIndex === total - 1}
-            className="px-5 py-2.5 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+            className="px-5 py-2.5 text-sm font-semibold rounded-full border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
           >
             Tiếp →
           </button>
