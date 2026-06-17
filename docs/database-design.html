@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BJT Flashcard — Database Design v1.0</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #09090f;
+      --surface: #11111e;
+      --surface2: #18182b;
+      --border: rgba(255,255,255,0.07);
+      --accent: #6366f1;
+      --accent2: #8b5cf6;
+      --text: #e0e0f0;
+      --muted: #6060a0;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --blue: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 0;
+    }
+
+    /* Sidebar */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 260px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .logo-badge {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+      color: white;
+    }
+    .sidebar h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; margin-top: 20px; }
+    .sidebar-nav a {
+      display: block;
+      padding: 7px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+    }
+    .sidebar-nav a:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .sidebar-nav a.active { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+
+    /* Main */
+    .main { flex: 1; padding: 40px 48px; max-width: 1100px; }
+
+    /* Sections */
+    section { margin-bottom: 56px; scroll-margin-top: 24px; }
+    h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+    h1 span { background: linear-gradient(90deg, #6366f1, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+    h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #c8c8f8; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: #a0a0e0; }
+
+    /* Changelog */
+    .changelog { display: flex; flex-direction: column; gap: 16px; }
+    .version-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      position: relative;
+    }
+    .version-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 16px; bottom: 16px;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+    }
+    .version-card.current::before { background: var(--green); }
+    .version-card.planned::before { background: var(--muted); }
+    .version-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .version-badge {
+      font-weight: 700;
+      font-size: 13px;
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+    .current .version-badge { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+    .planned .version-badge { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+    .version-date { color: var(--muted); font-size: 12px; }
+    .version-changes { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .version-changes li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #b0b0d0; }
+    .change-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tag-new { background: rgba(16,185,129,0.15); color: #34d399; }
+    .tag-modify { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .tag-remove { background: rgba(239,68,68,0.15); color: #f87171; }
+    .tag-seed { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+
+    /* ERD */
+    .mermaid-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      overflow-x: auto;
+    }
+    .mermaid { max-width: 100%; }
+
+    /* Table schema */
+    .schema-table {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .schema-table-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+    .table-name {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      font-size: 15px;
+      color: #a5b4fc;
+    }
+    .table-desc { color: var(--muted); font-size: 12px; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      padding: 10px 20px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      font-size: 13px;
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .col-name {
+      font-family: 'Courier New', monospace;
+      color: #93c5fd;
+      font-weight: 600;
+    }
+    .col-type {
+      font-family: 'Courier New', monospace;
+      color: #c084fc;
+      font-size: 12px;
+    }
+    .key-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+    .pk { background: rgba(245,158,11,0.2); color: #fbbf24; }
+    .fk { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    .uq { background: rgba(167,139,250,0.2); color: #c4b5fd; }
+    .idx { background: rgba(16,185,129,0.15); color: #34d399; }
+    .nullable { color: var(--muted); font-size: 11px; }
+    .not-null { color: #f87171; font-size: 11px; font-weight: 600; }
+    td:last-child { color: var(--muted); font-size: 12px; }
+
+    /* Seed data */
+    .seed-block {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .seed-header {
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    pre {
+      padding: 16px 18px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #c8c8e8;
+    }
+    .kw { color: #a5b4fc; }
+    .str { color: #86efac; }
+    .num { color: #fcd34d; }
+    .cmt { color: var(--muted); }
+
+    /* Info boxes */
+    .info-box {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .info-box.note { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); }
+    .info-box.warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); }
+    .info-box.tip { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); }
+    .info-icon { font-size: 18px; flex-shrink: 0; }
+    .info-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+    .info-box.note .info-title { color: #93c5fd; }
+    .info-box.warning .info-title { color: #fbbf24; }
+    .info-box.tip .info-title { color: #34d399; }
+    .info-body { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-badge">BJT</div>
+      <div>
+        <div style="font-weight:700;font-size:14px;">DB Design</div>
+        <div style="color:var(--muted);font-size:11px;">v1.0 — 2026-06-17</div>
+      </div>
+    </div>
+
+    <h2>Navigation</h2>
+    <div class="sidebar-nav">
+      <a href="#changelog" class="active">📋 Changelog</a>
+      <a href="#erd">🗂 ERD Diagram</a>
+      <a href="#tables">📊 Table Schema</a>
+      <a href="#seeds">🌱 Seed Data</a>
+      <a href="#migration">⚙️ Migration Guide</a>
+    </div>
+
+    <h2>Tables</h2>
+    <div class="sidebar-nav">
+      <a href="#tbl-sources">vocabulary_sources</a>
+      <a href="#tbl-groups">vocabulary_groups</a>
+      <a href="#tbl-items">vocabulary_items</a>
+      <a href="#tbl-progress">flashcard_progress</a>
+      <a href="#tbl-sessions">study_sessions</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main">
+    <h1>BJT Flashcard — <span>Database Design</span></h1>
+    <p class="subtitle">
+      Tài liệu thiết kế cơ sở dữ liệu cho ứng dụng học từ vựng tiếng Nhật business (BJT).<br>
+      Sử dụng Supabase (PostgreSQL). Phiên bản hiện tại: <strong style="color:#34d399">v1.0</strong>
+    </p>
+
+    <!-- ═══ CHANGELOG ═══ -->
+    <section id="changelog">
+      <h2>📋 Version Changelog</h2>
+
+      <div class="changelog">
+        <div class="version-card current">
+          <div class="version-header">
+            <span class="version-badge">v1.0.0</span>
+            <span class="version-date">2026-06-17 — Current</span>
+            <span style="font-size:11px;background:rgba(16,185,129,0.15);color:#34d399;padding:2px 8px;border-radius:99px;">CURRENT</span>
+          </div>
+          <ul class="version-changes">
+            <li><span class="change-tag tag-new">NEW</span> Khởi tạo schema: 5 bảng chính</li>
+            <li><span class="change-tag tag-new">NEW</span> Bảng <code>vocabulary_sources</code> — quản lý nguồn tài liệu (BJT, JLPT)</li>
+            <li><span class="change-tag tag-new">NEW</span> Bảng <code>vocabulary_groups</code> — nhóm từ vựng theo chủ đề</li>
+            <li><span class="change-tag tag-new">NEW</span> Bảng <code>vocabulary_items</code> — từ vựng đơn lẻ với đầy đủ metadata</li>
+            <li><span class="change-tag tag-new">NEW</span> Bảng <code>flashcard_progress</code> — theo dõi tiến độ học (future use)</li>
+            <li><span class="change-tag tag-new">NEW</span> Bảng <code>study_sessions</code> — phiên học (future use)</li>
+            <li><span class="change-tag tag-seed">SEED</span> 12 nhóm từ vựng từ BJT 1000 Vocs (trang 2-3) và Mimikara N1 (trang 1)</li>
+            <li><span class="change-tag tag-seed">SEED</span> 36 từ vựng với business context và ví dụ câu</li>
+          </ul>
+        </div>
+
+        <div class="version-card planned">
+          <div class="version-header">
+            <span class="version-badge">v1.1.0</span>
+            <span class="version-date">Planned — Phase 2</span>
+          </div>
+          <ul class="version-changes">
+            <li><span class="change-tag tag-new">NEW</span> Kết nối Supabase thật (thay dummy data)</li>
+            <li><span class="change-tag tag-new">NEW</span> Authentication (Supabase Auth)</li>
+            <li><span class="change-tag tag-new">NEW</span> Bảng <code>user_profiles</code></li>
+            <li><span class="change-tag tag-modify">MODIFY</span> <code>flashcard_progress</code> — thêm user_id FK</li>
+            <li><span class="change-tag tag-modify">MODIFY</span> <code>study_sessions</code> — thêm user_id FK</li>
+            <li><span class="change-tag tag-seed">SEED</span> Thêm từ vựng từ BJT 1000 Vocs (toàn bộ 1000 từ)</li>
+          </ul>
+        </div>
+
+        <div class="version-card planned">
+          <div class="version-header">
+            <span class="version-badge">v2.0.0</span>
+            <span class="version-date">Planned — Phase 3</span>
+          </div>
+          <ul class="version-changes">
+            <li><span class="change-tag tag-new">NEW</span> Spaced Repetition System (SRS) — thuật toán SM-2</li>
+            <li><span class="change-tag tag-new">NEW</span> Bảng <code>review_schedule</code></li>
+            <li><span class="change-tag tag-new">NEW</span> Audio pronunciation (TTS)</li>
+            <li><span class="change-tag tag-new">NEW</span> Quiz mode với scoring</li>
+            <li><span class="change-tag tag-modify">MODIFY</span> <code>vocabulary_items</code> — thêm audio_url, image_url</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ERD ═══ -->
+    <section id="erd">
+      <h2>🗂 Entity Relationship Diagram</h2>
+      <div class="info-box note">
+        <span class="info-icon">ℹ️</span>
+        <div>
+          <div class="info-title">Ghi chú</div>
+          <div class="info-body">
+            ERD v1.0 chưa bao gồm user authentication (Phase 2).
+            Bảng <code>flashcard_progress</code> và <code>study_sessions</code> hiện lưu local (Zustand persist),
+            sẽ migrate lên Supabase ở Phase 2.
+          </div>
+        </div>
+      </div>
+
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+erDiagram
+    vocabulary_sources {
+        uuid id PK
+        varchar name
+        text description
+        varchar source_type
+        varchar level
+        timestamp created_at
+    }
+
+    vocabulary_groups {
+        varchar id PK
+        uuid source_id FK
+        varchar name
+        varchar name_ja
+        text description
+        varchar theme_color
+        varchar icon
+        int sort_order
+        timestamp created_at
+    }
+
+    vocabulary_items {
+        varchar id PK
+        varchar group_id FK
+        varchar kanji
+        varchar hiragana
+        varchar romaji
+        varchar katakana
+        text meaning_vn
+        text meaning_en
+        text meaning_ja
+        varchar part_of_speech
+        varchar jlpt_level
+        boolean bjt_relevance
+        text example_sentence
+        text example_translation
+        text business_context
+        text usage_notes
+        text[] related_words
+        text[] synonyms
+        text[] antonyms
+        int sort_order
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    flashcard_progress {
+        uuid id PK
+        varchar vocabulary_item_id FK
+        varchar user_id
+        varchar status
+        int review_count
+        timestamp next_review_at
+        timestamp last_reviewed_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    study_sessions {
+        uuid id PK
+        varchar group_id FK
+        varchar user_id
+        timestamp started_at
+        timestamp ended_at
+        int cards_studied
+        int cards_correct
+    }
+
+    vocabulary_sources ||--o{ vocabulary_groups : "has"
+    vocabulary_groups ||--o{ vocabulary_items : "contains"
+    vocabulary_items ||--o{ flashcard_progress : "tracked by"
+    vocabulary_groups ||--o{ study_sessions : "studied in"
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TABLE SCHEMA ═══ -->
+    <section id="tables">
+      <h2>📊 Table Schema</h2>
+
+      <!-- vocabulary_sources -->
+      <div class="schema-table" id="tbl-sources">
+        <div class="schema-table-header">
+          <span class="table-name">vocabulary_sources</span>
+          <span class="table-desc">— Nguồn tài liệu từ vựng (BJT, JLPT...)</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th><th>Type</th><th>Key</th><th>Nullable</th><th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">id</td><td class="col-type">UUID</td><td><span class="key-badge pk">PK</span></td><td class="not-null">NOT NULL</td><td>Primary key, auto-generated</td></tr>
+            <tr><td class="col-name">name</td><td class="col-type">VARCHAR(100)</td><td></td><td class="not-null">NOT NULL</td><td>Tên nguồn (e.g. "BJT 1000 Từ Vựng")</td></tr>
+            <tr><td class="col-name">description</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Mô tả chi tiết nguồn</td></tr>
+            <tr><td class="col-name">source_type</td><td class="col-type">VARCHAR(20)</td><td><span class="key-badge idx">IDX</span></td><td class="not-null">NOT NULL</td><td>Enum: 'BJT' | 'JLPT' | 'OTHER'</td></tr>
+            <tr><td class="col-name">level</td><td class="col-type">VARCHAR(10)</td><td></td><td class="nullable">NULL</td><td>e.g. "N1", "N2", "BJT-J1"</td></tr>
+            <tr><td class="col-name">created_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT NOW()</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- vocabulary_groups -->
+      <div class="schema-table" id="tbl-groups">
+        <div class="schema-table-header">
+          <span class="table-name">vocabulary_groups</span>
+          <span class="table-desc">— Nhóm từ vựng theo chủ đề</span>
+        </div>
+        <table>
+          <thead><tr><th>Column</th><th>Type</th><th>Key</th><th>Nullable</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="col-name">id</td><td class="col-type">VARCHAR(50)</td><td><span class="key-badge pk">PK</span></td><td class="not-null">NOT NULL</td><td>e.g. "bjt-g01", "n1-g01"</td></tr>
+            <tr><td class="col-name">source_id</td><td class="col-type">UUID</td><td><span class="key-badge fk">FK</span></td><td class="not-null">NOT NULL</td><td>→ vocabulary_sources.id</td></tr>
+            <tr><td class="col-name">name</td><td class="col-type">VARCHAR(100)</td><td></td><td class="not-null">NOT NULL</td><td>Tên nhóm tiếng Việt (e.g. "Họp & Thảo luận")</td></tr>
+            <tr><td class="col-name">name_ja</td><td class="col-type">VARCHAR(100)</td><td></td><td class="nullable">NULL</td><td>Tên nhóm tiếng Nhật (e.g. "会議・話し合い")</td></tr>
+            <tr><td class="col-name">description</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Mô tả ngắn về nhóm</td></tr>
+            <tr><td class="col-name">theme_color</td><td class="col-type">VARCHAR(20)</td><td></td><td class="not-null">NOT NULL</td><td>Hex color (e.g. "#3B82F6")</td></tr>
+            <tr><td class="col-name">icon</td><td class="col-type">VARCHAR(10)</td><td></td><td class="nullable">NULL</td><td>Emoji icon (e.g. "🗣️")</td></tr>
+            <tr><td class="col-name">sort_order</td><td class="col-type">INTEGER</td><td><span class="key-badge idx">IDX</span></td><td class="not-null">NOT NULL</td><td>Thứ tự hiển thị</td></tr>
+            <tr><td class="col-name">created_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT NOW()</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- vocabulary_items -->
+      <div class="schema-table" id="tbl-items">
+        <div class="schema-table-header">
+          <span class="table-name">vocabulary_items</span>
+          <span class="table-desc">— Từ vựng đơn lẻ với đầy đủ metadata</span>
+        </div>
+        <table>
+          <thead><tr><th>Column</th><th>Type</th><th>Key</th><th>Nullable</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="col-name">id</td><td class="col-type">VARCHAR(50)</td><td><span class="key-badge pk">PK</span></td><td class="not-null">NOT NULL</td><td>e.g. "bjt-001", "n1-015"</td></tr>
+            <tr><td class="col-name">group_id</td><td class="col-type">VARCHAR(50)</td><td><span class="key-badge fk">FK</span><span class="key-badge idx">IDX</span></td><td class="not-null">NOT NULL</td><td>→ vocabulary_groups.id</td></tr>
+            <tr><td class="col-name">kanji</td><td class="col-type">VARCHAR(100)</td><td></td><td class="not-null">NOT NULL</td><td>Từ chính (kanji hoặc katakana)</td></tr>
+            <tr><td class="col-name">hiragana</td><td class="col-type">VARCHAR(200)</td><td></td><td class="nullable">NULL</td><td>Furigana (cách đọc)</td></tr>
+            <tr><td class="col-name">romaji</td><td class="col-type">VARCHAR(200)</td><td></td><td class="nullable">NULL</td><td>Romaji phiên âm</td></tr>
+            <tr><td class="col-name">katakana</td><td class="col-type">VARCHAR(200)</td><td></td><td class="nullable">NULL</td><td>Dùng cho từ ngoại lai</td></tr>
+            <tr><td class="col-name">meaning_vn</td><td class="col-type">TEXT</td><td></td><td class="not-null">NOT NULL</td><td>Nghĩa tiếng Việt (bắt buộc)</td></tr>
+            <tr><td class="col-name">meaning_en</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Nghĩa tiếng Anh</td></tr>
+            <tr><td class="col-name">meaning_ja</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Giải thích bằng tiếng Nhật</td></tr>
+            <tr><td class="col-name">part_of_speech</td><td class="col-type">VARCHAR(30)</td><td></td><td class="nullable">NULL</td><td>noun/verb/adjective/expression/katakana...</td></tr>
+            <tr><td class="col-name">jlpt_level</td><td class="col-type">VARCHAR(5)</td><td><span class="key-badge idx">IDX</span></td><td class="nullable">NULL</td><td>N1/N2/N3/N4/N5</td></tr>
+            <tr><td class="col-name">bjt_relevance</td><td class="col-type">BOOLEAN</td><td><span class="key-badge idx">IDX</span></td><td class="not-null">NOT NULL</td><td>DEFAULT false. True = từ BJT</td></tr>
+            <tr><td class="col-name">example_sentence</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Câu ví dụ tiếng Nhật</td></tr>
+            <tr><td class="col-name">example_translation</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Dịch câu ví dụ</td></tr>
+            <tr><td class="col-name">business_context</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Ghi chú ngữ cảnh business Nhật</td></tr>
+            <tr><td class="col-name">usage_notes</td><td class="col-type">TEXT</td><td></td><td class="nullable">NULL</td><td>Lưu ý cách dùng, phân biệt từ</td></tr>
+            <tr><td class="col-name">related_words</td><td class="col-type">TEXT[]</td><td></td><td class="nullable">NULL</td><td>Array IDs của từ liên quan</td></tr>
+            <tr><td class="col-name">synonyms</td><td class="col-type">TEXT[]</td><td></td><td class="nullable">NULL</td><td>Từ đồng nghĩa</td></tr>
+            <tr><td class="col-name">antonyms</td><td class="col-type">TEXT[]</td><td></td><td class="nullable">NULL</td><td>Từ trái nghĩa</td></tr>
+            <tr><td class="col-name">sort_order</td><td class="col-type">INTEGER</td><td></td><td class="not-null">NOT NULL</td><td>Thứ tự trong nhóm</td></tr>
+            <tr><td class="col-name">created_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT NOW()</td></tr>
+            <tr><td class="col-name">updated_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT NOW(), auto-update on change</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- flashcard_progress -->
+      <div class="schema-table" id="tbl-progress">
+        <div class="schema-table-header">
+          <span class="table-name">flashcard_progress</span>
+          <span class="table-desc">— Theo dõi tiến độ học từng từ (Phase 2: thêm user_id)</span>
+        </div>
+        <table>
+          <thead><tr><th>Column</th><th>Type</th><th>Key</th><th>Nullable</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="col-name">id</td><td class="col-type">UUID</td><td><span class="key-badge pk">PK</span></td><td class="not-null">NOT NULL</td><td>Primary key</td></tr>
+            <tr><td class="col-name">vocabulary_item_id</td><td class="col-type">VARCHAR(50)</td><td><span class="key-badge fk">FK</span><span class="key-badge idx">IDX</span></td><td class="not-null">NOT NULL</td><td>→ vocabulary_items.id</td></tr>
+            <tr><td class="col-name">user_id</td><td class="col-type">UUID</td><td><span class="key-badge idx">IDX</span></td><td class="nullable">NULL</td><td>→ auth.users.id (Phase 2)</td></tr>
+            <tr><td class="col-name">status</td><td class="col-type">VARCHAR(20)</td><td></td><td class="not-null">NOT NULL</td><td>'new' | 'learning' | 'review' | 'mastered'</td></tr>
+            <tr><td class="col-name">review_count</td><td class="col-type">INTEGER</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT 0. Số lần đã ôn</td></tr>
+            <tr><td class="col-name">next_review_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="nullable">NULL</td><td>Thời điểm ôn lại tiếp theo (SRS)</td></tr>
+            <tr><td class="col-name">last_reviewed_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="nullable">NULL</td><td>Lần ôn gần nhất</td></tr>
+            <tr><td class="col-name">created_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT NOW()</td></tr>
+            <tr><td class="col-name">updated_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT NOW()</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- study_sessions -->
+      <div class="schema-table" id="tbl-sessions">
+        <div class="schema-table-header">
+          <span class="table-name">study_sessions</span>
+          <span class="table-desc">— Phiên học theo nhóm (Phase 2)</span>
+        </div>
+        <table>
+          <thead><tr><th>Column</th><th>Type</th><th>Key</th><th>Nullable</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="col-name">id</td><td class="col-type">UUID</td><td><span class="key-badge pk">PK</span></td><td class="not-null">NOT NULL</td><td>Primary key</td></tr>
+            <tr><td class="col-name">group_id</td><td class="col-type">VARCHAR(50)</td><td><span class="key-badge fk">FK</span></td><td class="not-null">NOT NULL</td><td>→ vocabulary_groups.id</td></tr>
+            <tr><td class="col-name">user_id</td><td class="col-type">UUID</td><td><span class="key-badge idx">IDX</span></td><td class="nullable">NULL</td><td>→ auth.users.id (Phase 2)</td></tr>
+            <tr><td class="col-name">started_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT NOW()</td></tr>
+            <tr><td class="col-name">ended_at</td><td class="col-type">TIMESTAMPTZ</td><td></td><td class="nullable">NULL</td><td>NULL nếu session chưa kết thúc</td></tr>
+            <tr><td class="col-name">cards_studied</td><td class="col-type">INTEGER</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT 0</td></tr>
+            <tr><td class="col-name">cards_correct</td><td class="col-type">INTEGER</td><td></td><td class="not-null">NOT NULL</td><td>DEFAULT 0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ SEED DATA ═══ -->
+    <section id="seeds">
+      <h2>🌱 Seed Data (SQL)</h2>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">
+        Dữ liệu mẫu từ <strong>BJT 1000 Từ Vựng (trang 2-3)</strong> và <strong>Mimikara N1 (trang 1)</strong>.
+        Chưa cần chạy — Phase 1 dùng dummy data TypeScript. Phase 2 sẽ migrate lên Supabase.
+      </p>
+
+      <div class="seed-block">
+        <div class="seed-header">📄 00_sources.sql — Vocabulary Sources</div>
+        <pre><span class="cmt">-- Insert vocabulary sources</span>
+<span class="kw">INSERT INTO</span> vocabulary_sources (id, name, description, source_type, level) <span class="kw">VALUES</span>
+  (<span class="str">'11111111-0000-0000-0000-000000000001'</span>, <span class="str">'BJT 1000 Từ Vựng'</span>,
+   <span class="str">'Tổng hợp 1000 từ vựng luyện thi BJT'</span>, <span class="str">'BJT'</span>, <span class="str">'BJT'</span>),
+  (<span class="str">'22222222-0000-0000-0000-000000000002'</span>, <span class="str">'Mimikara N1'</span>,
+   <span class="str">'Từ vựng JLPT N1 — Mimikara Oboeru'</span>, <span class="str">'JLPT'</span>, <span class="str">'N1'</span>);</pre>
+      </div>
+
+      <div class="seed-block">
+        <div class="seed-header">📄 01_groups.sql — Vocabulary Groups (BJT)</div>
+        <pre><span class="cmt">-- BJT Groups</span>
+<span class="kw">INSERT INTO</span> vocabulary_groups
+  (id, source_id, name, name_ja, description, theme_color, icon, sort_order)
+<span class="kw">VALUES</span>
+  (<span class="str">'bjt-g01'</span>, <span class="str">'11111111-0000-0000-0000-000000000001'</span>,
+   <span class="str">'Họp & Thảo luận'</span>, <span class="str">'会議・話し合い'</span>,
+   <span class="str">'Từ vựng về cuộc họp, thảo luận, biên bản'</span>, <span class="str">'#3B82F6'</span>, <span class="str">'🗣️'</span>, <span class="num">1</span>),
+  (<span class="str">'bjt-g02'</span>, <span class="str">'11111111-0000-0000-0000-000000000001'</span>,
+   <span class="str">'Khách hàng & Đối tác'</span>, <span class="str">'顧客・取引先'</span>,
+   <span class="str">'Các từ chỉ khách hàng, đối tác và tiếp đãi'</span>, <span class="str">'#10B981'</span>, <span class="str">'🤝'</span>, <span class="num">2</span>),
+  (<span class="str">'bjt-g03'</span>, <span class="str">'11111111-0000-0000-0000-000000000001'</span>,
+   <span class="str">'Hợp đồng & Ký kết'</span>, <span class="str">'契約・締結'</span>,
+   <span class="str">'Từ vựng về ký kết hợp đồng'</span>, <span class="str">'#8B5CF6'</span>, <span class="str">'📝'</span>, <span class="num">3</span>),
+  (<span class="str">'bjt-g04'</span>, <span class="str">'11111111-0000-0000-0000-000000000001'</span>,
+   <span class="str">'Hàng hóa & Kho vận'</span>, <span class="str">'物流・在庫'</span>,
+   <span class="str">'Từ vựng về hàng hóa, phân loại, hóa đơn'</span>, <span class="str">'#F59E0B'</span>, <span class="str">'📦'</span>, <span class="num">4</span>),
+  (<span class="str">'bjt-g05'</span>, <span class="str">'11111111-0000-0000-0000-000000000001'</span>,
+   <span class="str">'Sự kiện & Nghi lễ công ty'</span>, <span class="str">'行事・式典'</span>,
+   <span class="str">'Từ vựng về tiệc tùng, lễ nghi'</span>, <span class="str">'#EF4444'</span>, <span class="str">'🎉'</span>, <span class="num">5</span>),
+  (<span class="str">'bjt-g06'</span>, <span class="str">'11111111-0000-0000-0000-000000000001'</span>,
+   <span class="str">'Tài chính & Báo cáo'</span>, <span class="str">'財務・報告'</span>,
+   <span class="str">'Từ vựng về tài chính, lỗ lãi'</span>, <span class="str">'#06B6D4'</span>, <span class="str">'💹'</span>, <span class="num">6</span>),
+  (<span class="str">'bjt-g07'</span>, <span class="str">'11111111-0000-0000-0000-000000000001'</span>,
+   <span class="str">'Nhân sự & Chức vụ'</span>, <span class="str">'人事・役職'</span>,
+   <span class="str">'Từ vựng về chức vụ, nhân sự'</span>, <span class="str">'#EC4899'</span>, <span class="str">'👔'</span>, <span class="num">7</span>);
+
+<span class="cmt">-- N1 Groups</span>
+<span class="kw">INSERT INTO</span> vocabulary_groups
+  (id, source_id, name, name_ja, description, theme_color, icon, sort_order)
+<span class="kw">VALUES</span>
+  (<span class="str">'n1-g01'</span>, <span class="str">'22222222-0000-0000-0000-000000000002'</span>,
+   <span class="str">'Tuổi tác & Thời gian'</span>, <span class="str">'年齢・時代'</span>,
+   <span class="str">'Từ về thanh xuân, tuổi già'</span>, <span class="str">'#F97316'</span>, <span class="str">'🌸'</span>, <span class="num">8</span>),
+  (<span class="str">'n1-g02'</span>, <span class="str">'22222222-0000-0000-0000-000000000002'</span>,
+   <span class="str">'Gia đình & Hộ gia đình'</span>, <span class="str">'家族・世帯'</span>,
+   <span class="str">'Từ vựng về hộ gia đình'</span>, <span class="str">'#84CC16'</span>, <span class="str">'🏠'</span>, <span class="num">9</span>),
+  (<span class="str">'n1-g03'</span>, <span class="str">'22222222-0000-0000-0000-000000000002'</span>,
+   <span class="str">'Xã hội & Tầng lớp'</span>, <span class="str">'社会・階層'</span>,
+   <span class="str">'Từ về xã hội, thế gian'</span>, <span class="str">'#6366F1'</span>, <span class="str">'🌐'</span>, <span class="num">10</span>),
+  (<span class="str">'n1-g04'</span>, <span class="str">'22222222-0000-0000-0000-000000000002'</span>,
+   <span class="str">'Lương tâm & Phẩm chất'</span>, <span class="str">'良心・素質'</span>,
+   <span class="str">'Từ về lương tâm, phẩm chất'</span>, <span class="str">'#14B8A6'</span>, <span class="str">'💎'</span>, <span class="num">11</span>),
+  (<span class="str">'n1-g05'</span>, <span class="str">'22222222-0000-0000-0000-000000000002'</span>,
+   <span class="str">'Diện mạo & Bản thân'</span>, <span class="str">'外見・自身'</span>,
+   <span class="str">'Từ về ngoại hình, diện mạo'</span>, <span class="str">'#D946EF'</span>, <span class="str">'🪞'</span>, <span class="num">12</span>);</pre>
+      </div>
+
+      <div class="seed-block">
+        <div class="seed-header">📄 02_items_sample.sql — Sample Items (bjt-g01)</div>
+        <pre><span class="cmt">-- Sample: Nhóm Họp & Thảo luận</span>
+<span class="kw">INSERT INTO</span> vocabulary_items
+  (id, group_id, kanji, hiragana, romaji, meaning_vn, meaning_en,
+   part_of_speech, bjt_relevance, example_sentence, example_translation,
+   business_context, usage_notes, sort_order)
+<span class="kw">VALUES</span>
+  (<span class="str">'bjt-001'</span>, <span class="str">'bjt-g01'</span>, <span class="str">'話し合い'</span>, <span class="str">'はなしあい'</span>, <span class="str">'hanashiai'</span>,
+   <span class="str">'Thảo luận, bàn bạc'</span>, <span class="str">'Discussion, negotiation'</span>,
+   <span class="str">'noun'</span>, <span class="kw">true</span>,
+   <span class="str">'明日の話し合いに参加してください。'</span>,
+   <span class="str">'Vui lòng tham gia buổi thảo luận ngày mai.'</span>,
+   <span class="str">'Rất phổ biến trong môi trường công sở Nhật...'</span>,
+   <span class="str">'話し合い = bàn bạc thân mật hơn 会議...'</span>, <span class="num">1</span>),
+  (<span class="str">'bjt-016'</span>, <span class="str">'bjt-g01'</span>, <span class="str">'議事録'</span>, <span class="str">'ぎじろく'</span>, <span class="str">'gijiroku'</span>,
+   <span class="str">'Biên bản cuộc họp'</span>, <span class="str">'Meeting minutes'</span>,
+   <span class="str">'noun'</span>, <span class="kw">true</span>,
+   <span class="str">'会議後、議事録を作成して共有してください。'</span>,
+   <span class="str">'Sau cuộc họp, hãy tạo và chia sẻ biên bản.'</span>,
+   <span class="str">'Kỹ năng viết 議事録 rất quan trọng...'</span>, <span class="kw">NULL</span>, <span class="num">3</span>);</pre>
+      </div>
+    </section>
+
+    <!-- ═══ MIGRATION GUIDE ═══ -->
+    <section id="migration">
+      <h2>⚙️ Migration Guide — Phase 1 → Phase 2</h2>
+
+      <div class="info-box warning">
+        <span class="info-icon">⚠️</span>
+        <div>
+          <div class="info-title">Phase 2 Prerequisites</div>
+          <div class="info-body">
+            Trước khi migrate, cần: (1) Tạo project Supabase, (2) Setup environment variables,
+            (3) Install @supabase/supabase-js, (4) Thay hooks trong useVocabulary.ts.
+          </div>
+        </div>
+      </div>
+
+      <div class="seed-block">
+        <div class="seed-header">🔧 Phase 2 Migration Steps</div>
+        <pre><span class="cmt"># 1. Tạo Supabase project tại supabase.com</span>
+<span class="cmt"># 2. Thêm environment variables vào .env.local</span>
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
+
+<span class="cmt"># 3. Install Supabase client</span>
+npm install @supabase/supabase-js @supabase/ssr
+
+<span class="cmt"># 4. Tạo file src/lib/supabase.ts</span>
+<span class="cmt"># 5. Chạy migration SQL lên Supabase SQL Editor</span>
+<span class="cmt"># 6. Chạy seed SQL files theo thứ tự: 00 → 01 → 02</span>
+<span class="cmt"># 7. Cập nhật useVocabulary.ts để gọi Supabase thay dummy data</span></pre>
+      </div>
+
+      <div class="info-box tip">
+        <span class="info-icon">✅</span>
+        <div>
+          <div class="info-title">Tip: Backward Compatible</div>
+          <div class="info-body">
+            Hooks <code>useAllVocabularyGroups</code>, <code>useVocabularyGroup</code>... được thiết kế
+            để chỉ cần thay đổi phần fetcher bên trong, không cần sửa components.
+            Chuyển đổi Supabase sẽ rất dễ dàng!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid var(--border);padding-top:24px;margin-top:40px;color:var(--muted);font-size:12px;">
+      BJT Flashcard Database Design — v1.0.0 — 2026-06-17 &nbsp;|&nbsp;
+      Maintained by: Leonardo Thang &nbsp;|&nbsp;
+      Stack: Next.js 16 · Supabase (PostgreSQL) · TypeScript
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      background: '#11111e',
+      primaryColor: '#1e1e30',
+      primaryTextColor: '#c8c8e8',
+      primaryBorderColor: '#6366f1',
+      lineColor: '#6366f1',
+      edgeLabelBackground: '#11111e',
+    }
+  });
+
+  // Active link highlight
+  document.querySelectorAll('.sidebar-nav a').forEach(a => {
+    a.addEventListener('click', function() {
+      document.querySelectorAll('.sidebar-nav a').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
