@@ -2,81 +2,80 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useVocabularyStats } from "@/hooks/useVocabulary";
-import { useFlashcardStore } from "@/store/flashcard-store";
+import { useProgressStats } from "@/hooks/useProgressStats";
 import { cn } from "@/lib/utils";
+
+export const NAV_ITEMS = [
+  { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
+  { href: "/study", label: "Học bài", match: (p: string) => p.startsWith("/study") },
+  { href: "/quiz?groupId=all", label: "Trắc nghiệm", match: (p: string) => p.startsWith("/quiz") },
+];
 
 export function Header() {
   const pathname = usePathname();
-  const { data: stats } = useVocabularyStats();
-  const { progress } = useFlashcardStore();
+  const { mastered, total, pct } = useProgressStats();
 
-  const masteredCount = Object.values(progress).filter(
-    (p) => p.status === "mastered"
-  ).length;
-  const totalCards = stats?.totalItems ?? 0;
-  const overallPct = totalCards > 0 ? Math.round((masteredCount / totalCards) * 100) : 0;
+  // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng
+  const hideOnMobile = pathname.startsWith("/study/") || pathname.startsWith("/quiz");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-xl shadow-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-14">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-[11px] shadow-md shadow-indigo-200 group-hover:shadow-indigo-300 transition-shadow">
-              BJT
-            </div>
-            <div className="hidden sm:block">
-              <div className="text-gray-900 font-bold text-sm leading-tight">BJT Flashcard</div>
-              <div className="text-gray-400 text-[10px]">Japanese Business</div>
-            </div>
-          </Link>
-
-          {/* Nav */}
-          <nav className="flex items-center gap-1">
-            <NavLink href="/" label="Tổng quan" active={pathname === "/"} />
-            <NavLink href="/study" label="Học bài" active={pathname.startsWith("/study")} />
-          </nav>
-
-          {/* Overall progress */}
-          <div className="flex items-center gap-2.5">
-            <div className="hidden sm:flex items-center gap-2 text-xs">
-              <span className="text-gray-400 font-medium">{masteredCount}/{totalCards}</span>
-              <div className="w-20 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-700"
-                  style={{ width: `${overallPct}%` }}
-                />
-              </div>
-              <span className="text-indigo-600 font-semibold">{overallPct}%</span>
-            </div>
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-xl",
+        hideOnMobile && "hidden md:block"
+      )}
+    >
+      <div className="mx-auto flex h-14 max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-8 md:h-16">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-brand font-mincho text-xl font-bold text-white">
+            語
           </div>
+          <div className="flex flex-col leading-tight">
+            <span className="text-[15px] font-bold tracking-tight text-ink">BJT Flashcard</span>
+            <span className="hidden font-jp text-[11px] text-ink-3 lg:block">ビジネス日本語</span>
+          </div>
+        </Link>
+
+        {/* Nav — tablet / desktop */}
+        <nav
+          aria-label="Điều hướng chính"
+          className="hidden items-center gap-1 rounded-xl bg-surface-2 p-1 md:flex"
+        >
+          {NAV_ITEMS.map((item) => {
+            const active = item.match(pathname);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "rounded-[9px] px-3 py-2 text-sm transition-colors lg:px-4",
+                  active
+                    ? "bg-surface font-semibold text-ink shadow-[0_1px_2px_rgba(28,25,23,0.04),0_2px_8px_rgba(28,25,23,0.04)]"
+                    : "font-medium text-ink-2 hover:text-ink"
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Tiến độ tổng */}
+        <div className="flex items-center gap-2.5 text-[13px]" title={`Đã thuộc ${mastered}/${total} từ`}>
+          <span className="hidden font-medium text-ink-3 lg:inline">
+            {mastered}/{total}
+          </span>
+          <div className="h-1.5 w-14 overflow-hidden rounded-full bg-track lg:w-[88px]">
+            <div
+              className="h-full rounded-full bg-brand transition-all duration-700"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+          <span className="font-bold text-brand">{pct}%</span>
         </div>
       </div>
     </header>
-  );
-}
-
-function NavLink({
-  href,
-  label,
-  active,
-}: {
-  href: string;
-  label: string;
-  active: boolean;
-}) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150",
-        active
-          ? "bg-indigo-50 text-indigo-700 border border-indigo-200"
-          : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
-      )}
-    >
-      {label}
-    </Link>
   );
 }

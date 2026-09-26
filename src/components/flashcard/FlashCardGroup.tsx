@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { FlashCard } from "./FlashCard";
 import { useFlashcardStore } from "@/store/flashcard-store";
 import type { VocabularyGroup } from "@/types/vocabulary";
+import { GroupIcon } from "@/components/ui/group-icon";
 import { cn } from "@/lib/utils";
 
 interface FlashCardGroupProps {
@@ -14,87 +16,61 @@ interface FlashCardGroupProps {
 export function FlashCardGroup({ group, className }: FlashCardGroupProps) {
   const { progress } = useFlashcardStore();
 
-  const masteredCount = group.items.filter(
-    (item) => progress[item.id]?.status === "mastered"
-  ).length;
-  const progressPct = Math.round((masteredCount / group.items.length) * 100);
+  const masteredCount = group.items.filter((item) => progress[item.id]?.status === "mastered").length;
+  const progressPct = group.items.length ? Math.round((masteredCount / group.items.length) * 100) : 0;
 
   return (
-    <section className={cn("", className)}>
+    <section className={cn("flex flex-col gap-4", className)}>
       {/* ── Header ── */}
-      <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
-        <div className="flex items-center gap-3 min-w-0">
-          <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0 bg-white border border-zinc-200 shadow-sm text-zinc-700"
-          >
-            {group.icon}
-          </div>
-          <div className="min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="font-bold text-gray-900 text-base leading-tight truncate">
-                {group.name}
-              </h2>
-              <span
-                className="text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0 bg-zinc-100 text-zinc-600 border border-zinc-200/50"
-              >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3.5">
+          <GroupIcon groupId={group.id} />
+          <div className="flex min-w-0 flex-col gap-[3px]">
+            <div className="flex items-center gap-2.5">
+              <h3 className="truncate text-lg font-bold text-ink">{group.name}</h3>
+              <span className="shrink-0 rounded-md border border-line px-2 py-[3px] text-[11px] font-bold text-ink-2">
                 {group.sourceType === "BJT" ? "BJT" : "JLPT N1"}
               </span>
             </div>
-            {group.nameJa && (
-              <p className="text-gray-500 text-xs mt-0.5">{group.nameJa}</p>
-            )}
+            <span className="text-[13px] text-ink-3">
+              {group.nameJa && <span className="font-jp">{group.nameJa} · </span>}
+              {group.items.length} từ
+            </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 flex-shrink-0">
-          {/* Progress */}
-          <div className="hidden sm:flex items-center gap-2">
-            <div className="w-16 h-1.5 bg-zinc-100 rounded-full overflow-hidden border border-zinc-200/50">
-              <div
-                className="h-full bg-zinc-900 rounded-full transition-all duration-500"
-                style={{ width: `${progressPct}%` }}
-              />
+        <div className="flex items-center gap-3 sm:gap-5">
+          <div className="hidden items-center gap-2.5 sm:flex">
+            <div className="h-1.5 w-24 overflow-hidden rounded-full bg-track">
+              <div className="h-full rounded-full bg-brand transition-all duration-500" style={{ width: `${progressPct}%` }} />
             </div>
-            <span className="text-xs text-gray-500 font-medium whitespace-nowrap">
+            <span className="text-[13px] font-semibold whitespace-nowrap text-ink-2">
               {masteredCount}/{group.items.length}
             </span>
           </div>
-
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            <Link
-              href={`/quiz?groupId=${group.id}`}
-              className="text-xs font-semibold px-3 py-2 rounded-lg transition-all hover:bg-blue-100 hover:shadow-sm whitespace-nowrap border border-blue-200 text-blue-700 bg-blue-50"
-            >
-              📝 Trắc nghiệm
-            </Link>
-            <Link
-              href={`/study/${group.id}`}
-              className="text-xs font-semibold px-4 py-2 rounded-lg transition-all hover:opacity-90 hover:shadow-sm whitespace-nowrap bg-zinc-900 text-white"
-            >
-              Học ngay →
-            </Link>
-          </div>
+          <Link
+            href={`/quiz?groupId=${group.id}`}
+            className="flex h-10 items-center rounded-[10px] border border-line-strong bg-surface px-4 text-[13px] font-semibold whitespace-nowrap text-ink transition-colors hover:bg-surface-2"
+          >
+            Trắc nghiệm
+          </Link>
+          <Link
+            href={`/study/${group.id}`}
+            className="flex h-10 items-center gap-1.5 rounded-[10px] bg-brand px-4 text-[13px] font-bold whitespace-nowrap text-white transition-colors hover:bg-brand-hover"
+          >
+            Học ngay
+            <ArrowRight className="h-[15px] w-[15px]" strokeWidth={2.4} aria-hidden />
+          </Link>
         </div>
       </div>
 
-      {/* ── Horizontal scroll ── */}
+      {/* ── Hàng thẻ cuộn ngang ── */}
       <div className="relative">
-        {/* Right fade mask */}
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#f7f8fc] to-transparent z-10" />
-
-        <div
-          className="flex gap-4 overflow-x-auto pb-4 pt-3 px-1 scrollbar-none"
-          style={{ scrollbarWidth: "none" }}
-        >
-          {group.items.map((item, idx) => {
-            const p = progress[item.id];
-            return (
-              <div key={item.id} className="relative flex-shrink-0">
-                <FlashCard item={item} index={idx} compact />
-              </div>
-            );
-          })}
+        <div className="fade-right pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-12 sm:w-[72px]" />
+        <div className="scrollbar-none -mx-1 flex gap-4 overflow-x-auto px-1 pt-1 pb-3">
+          {group.items.map((item, idx) => (
+            <FlashCard key={item.id} item={item} index={idx} total={group.items.length} groupName={group.name} />
+          ))}
         </div>
       </div>
     </section>
