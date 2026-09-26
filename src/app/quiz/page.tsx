@@ -37,16 +37,16 @@ function QuizPageInner() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-brand-soft border-t-brand"></div>
       </div>
     );
   }
 
   if (items.length === 0) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-gray-500">Không tìm thấy dữ liệu từ vựng.</div>
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="text-ink-3">Không tìm thấy dữ liệu từ vựng.</div>
       </div>
     );
   }
@@ -57,8 +57,8 @@ function QuizPageInner() {
 export default function QuizPage() {
   return (
     <Suspense fallback={
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-brand-soft border-t-brand"></div>
       </div>
     }>
       <QuizPageInner />

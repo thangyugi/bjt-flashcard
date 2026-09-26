@@ -1,12 +1,31 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Be_Vietnam_Pro, Shippori_Mincho, Zen_Kaku_Gothic_New, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/query-provider";
 import { Header } from "@/components/layout/Header";
+import { MobileTabBar } from "@/components/layout/MobileTabBar";
 
-const inter = Inter({
-  variable: "--font-sans",
+// Chữ Việt / giao diện
+const beVietnam = Be_Vietnam_Pro({
+  variable: "--font-be-vietnam",
   subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+// Kanji trên thẻ (Mincho)
+const shippori = Shippori_Mincho({
+  variable: "--font-shippori",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  preload: false,
+});
+
+// Kana, câu ví dụ, furigana
+const zenKaku = Zen_Kaku_Gothic_New({
+  variable: "--font-zen",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
@@ -32,14 +51,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="vi"
+      suppressHydrationWarning
+      className={`${beVietnam.variable} ${shippori.variable} ${zenKaku.variable} ${geistMono.variable}`}
+    >
+      <body className="font-sans antialiased">
         <QueryProvider>
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1">{children}</main>
+            <MobileTabBar />
           </div>
         </QueryProvider>
       </body>
