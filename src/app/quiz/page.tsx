@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useAllVocabularyGroups } from "@/hooks/useVocabulary";
-import { PageLoader } from "@/components/layout/PageLoader";
+import { QuizSkeleton } from "@/components/layout/Skeletons";
 import { QuizRunner } from "@/components/quiz/QuizRunner";
 import { useMemo, Suspense } from "react";
 import type { VocabularyItem } from "@/types/vocabulary";
@@ -38,7 +38,7 @@ function QuizPageInner() {
 
   if (isLoading) {
     return (
-      <PageLoader label="Đang tạo đề trắc nghiệm…" className="min-h-[60vh]" />
+      <QuizSkeleton />
     );
   }
 
@@ -56,7 +56,7 @@ function QuizPageInner() {
 export default function QuizPage() {
   return (
     <Suspense fallback={
-      <PageLoader label="Đang tạo đề trắc nghiệm…" className="min-h-[60vh]" />
+      <QuizSkeleton />
     }>
       <QuizPageInner />
     </Suspense>

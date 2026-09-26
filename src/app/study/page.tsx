@@ -19,8 +19,15 @@ export default function StudyIndexPage() {
 
       {isLoading ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="skeleton h-[92px] rounded-[18px]" />
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-4 rounded-[18px] border border-line bg-surface p-5">
+              <div className="skeleton h-11 w-11 rounded-xl" />
+              <div className="flex flex-1 flex-col gap-2">
+                <div className="skeleton h-4 w-40" />
+                <div className="skeleton h-3 w-24" />
+                <div className="skeleton mt-1 h-1.5 w-full rounded-full" />
+              </div>
+            </div>
           ))}
         </div>
       ) : (

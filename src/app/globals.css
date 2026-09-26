@@ -167,6 +167,7 @@
   position: relative;
   width: 100%;
   height: 100%;
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   transition: transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
@@ -184,6 +185,9 @@
   height: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  /* Safari (iOS/iPad) cần mặt trước có transform 3D riêng, nếu không mặt sau
+     bị lộ ngược qua mặt trước (icon, mũi tên hiện lệch/ngược) */
+  transform: rotateY(0deg) translateZ(1px);
   border-radius: 18px;
   overflow: hidden;
   display: flex;
@@ -192,19 +196,35 @@
 
 /* Back face starts rotated 180° so it's hidden by default */
 .flashcard-back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+/* Mặt đang úp: ẩn hẳn sau khi lật xong để không bắt chạm / không lộ icon */
+.flashcard-inner:not(.flashcard-flipped) > .flashcard-back,
+.flashcard-flipped > .flashcard-face:not(.flashcard-back) {
+  visibility: hidden;
+  transition: visibility 0s linear 0.28s;
+}
+.flashcard-inner > .flashcard-face {
+  transition: visibility 0s linear 0.28s;
 }
 
 /* ── Skeleton loader ───────────────────────────────────────── */
 @keyframes shimmer {
-  0%   { background-position: -600px 0; }
-  100% { background-position:  600px 0; }
+  0%   { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
 }
-.skeleton {
-  background: linear-gradient(90deg, var(--surface-2) 25%, var(--track) 50%, var(--surface-2) 75%);
-  background-size: 600px 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
-  border-radius: 0.75rem;
+/* Trong @layer components để các class rounded-* của Tailwind ghi đè được */
+@layer components {
+  .skeleton {
+    background: linear-gradient(100deg, var(--surface-2) 30%, #faf6f1 50%, var(--surface-2) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+    border-radius: 0.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
 }
 
 /* ── Utility ──────────────────────────────────────────────── */
