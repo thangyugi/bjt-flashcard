@@ -9,10 +9,11 @@ import { cn } from "@/lib/utils";
 
 const ICONS = [House, Layers, SquareCheckBig];
 
-/** Thanh điều hướng dưới đáy — chỉ hiện trên mobile, ẩn khi đang làm trắc nghiệm. */
+/** Thanh điều hướng dưới đáy — chỉ hiện trên mobile, ẩn ở màn trắc nghiệm và học theo nhóm. */
 export function MobileTabBar() {
   const pathname = usePathname();
-  if (pathname.startsWith("/quiz")) return null;
+  // Ẩn khi đang làm trắc nghiệm hoặc đang học một nhóm (chế độ tập trung)
+  if (pathname.startsWith("/quiz") || pathname.startsWith("/study/")) return null;
 
   return (
     <>

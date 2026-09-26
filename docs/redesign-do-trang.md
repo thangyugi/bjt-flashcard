@@ -58,7 +58,7 @@ Thẻ nhóm nền trắng, icon nhóm mới, nhãn nguồn, thêm thanh tiến �
 |---|---|
 | Desktop (≥1024px) | Cột trái 336px: "Danh sách từ vựng", thanh tỉ lệ + 3 ô Đã thuộc / Đang học / Chưa học, lưới số 6 cột. Cột phải: Quay lại · tên nhóm · bộ đếm, thanh tiến độ, thẻ lớn 880×560, nút Trước / Tiếp, gợi ý phím ← → / Space. |
 | Tablet (768–1023px) | Xếp dọc: tiêu đề, tiến độ, thẻ lớn (2 cột), nút "Từ trước / Từ tiếp", bảng danh sách với 3 nhãn thống kê + lưới 12 cột. |
-| Mobile (<768px) | Thanh trên: quay lại, tên nhóm + "Từ x / y", nút mở danh sách. Thẻ 1 cột, nút "Từ trước / Từ tiếp", thanh tab dưới đáy. Danh sách từ mở dạng bottom sheet. |
+| Mobile (<768px) | Chế độ tập trung (ẩn thanh tab dưới đáy). Thanh trên: ✕ thoát, ‹ tên nhóm + "x / y" ›, nút mở danh sách; thanh tiến độ 3px ngay dưới. Thẻ chiếm hết chiều cao còn lại, không có header riêng (nhãn BJT / từ loại nằm trong thân thẻ, chạm thẻ để lật). Chỉ còn 1 hàng nút "Chưa nhớ / Đã thuộc". Danh sách từ mở dạng bottom sheet. |
 - Ô trong lưới: đỏ đặc = đã thuộc, hồng = đang học, viền = chưa học; ô đang xem có vòng viền đậm.
 - Loading / lỗi dùng màu mới, bỏ emoji.
 - Giữ nguyên logic: bấm trạng thái → lưu tiến độ → sang từ tiếp; phím ← → Space (tắt khi đang mở danh sách).

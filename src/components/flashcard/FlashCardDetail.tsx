@@ -75,6 +75,15 @@ export function FlashCardDetail({
   const leftRow = variant === "modal" ? "md:max-lg:flex-row md:max-lg:gap-7" : "";
   const rightScroll = variant === "deck" ? "md:overflow-y-auto" : "lg:overflow-y-auto";
 
+  // Học bài trên mobile: bỏ header của thẻ để dành chỗ cho nội dung, nhãn chuyển vào thân thẻ
+  const deck = variant === "deck";
+  const bodyChips = deck ? (
+    <div className="flex items-center gap-1.5 md:hidden">
+      <span className="rounded-full bg-brand-soft px-[9px] py-[3px] text-[11px] font-bold text-brand-soft-ink">{levelLabel(item)}</span>
+      {pos && <span className="rounded-full border border-line bg-surface px-[9px] py-[2px] text-[11px] font-semibold text-ink-2">{pos}</span>}
+    </div>
+  ) : null;
+
   const handleKey = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -99,7 +108,7 @@ export function FlashCardDetail({
       )}
     >
       {/* ── Header ── */}
-      <header className="flex h-[52px] shrink-0 items-center justify-between gap-2.5 border-b border-line pr-1.5 pl-3.5 sm:h-[60px] sm:pr-3 sm:pl-6">
+      <header className={cn("h-[52px] shrink-0 items-center justify-between gap-2.5 border-b border-line pr-1.5 pl-3.5 sm:h-[60px] sm:pr-3 sm:pl-6", deck ? "hidden md:flex" : "flex")}>
         <div className="flex min-w-0 items-center gap-1.5">
           <span className="rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-bold text-brand-soft-ink">
             {levelLabel(item)}
@@ -151,6 +160,7 @@ export function FlashCardDetail({
       >
         {!isFlipped ? (
           <div className="relative flex w-full flex-col items-center justify-center gap-3 px-8 pb-12">
+            {bodyChips && <div className="absolute top-4 left-4">{bodyChips}</div>}
             {reading && (
               <span className="font-jp text-lg tracking-[0.12em] text-ink-2 sm:text-[22px]">{reading}</span>
             )}
@@ -173,11 +183,13 @@ export function FlashCardDetail({
             {/* Từ + nghĩa */}
             <div
               className={cn(
-                "flex flex-col gap-3 border-b border-line bg-surface-2 px-[18px] py-4 sm:px-7 sm:py-6",
+                "flex flex-col border-b border-line bg-surface-2 sm:px-7 sm:py-6",
+                deck ? "gap-2 px-4 py-3.5" : "gap-3 px-[18px] py-4",
                 leftTwoCol,
                 leftRow
               )}
             >
+              {bodyChips}
               <div className={cn("flex min-w-0 flex-col gap-1", variant === "modal" && "md:max-lg:w-60 md:max-lg:shrink-0")}>
                 <span className={cn("font-mincho leading-[1.15] font-semibold", kanjiSize(item.kanji, "back"))}>
                   {item.kanji}
@@ -201,7 +213,13 @@ export function FlashCardDetail({
             </div>
 
             {/* Ví dụ + ngữ cảnh + lưu ý */}
-            <div className={cn("flex flex-col gap-4 px-[18px] pt-4 pb-6 sm:px-7 sm:pt-[22px]", rightScroll)}>
+            <div
+              className={cn(
+                "flex flex-col sm:px-7 sm:pt-[22px] md:gap-4",
+                deck ? "gap-3 px-4 pt-3.5 pb-5" : "gap-4 px-[18px] pt-4 pb-6",
+                rightScroll
+              )}
+            >
               {item.exampleSentence && (
                 <section className="flex flex-col gap-1">
                   <div className="flex items-center gap-[7px] text-brand">

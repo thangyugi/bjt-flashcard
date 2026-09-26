@@ -164,26 +164,58 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
     "flex h-12 items-center justify-center gap-2 rounded-xl border border-line-strong bg-surface text-[15px] font-semibold text-ink transition-colors hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-40 lg:h-11 lg:px-5 lg:text-sm";
 
   return (
-    <div className="mx-auto flex w-full max-w-[1280px] flex-col md:gap-4 md:px-8 md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7">
-      {/* ── Mobile: thanh trên cùng ── */}
-      <header className="sticky top-0 z-40 flex h-[60px] items-center justify-between border-b border-line bg-paper/95 px-2 backdrop-blur md:hidden">
-        <Link href="/study" aria-label="Quay lại" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
-          <ChevronLeft className="h-[22px] w-[22px]" strokeWidth={2.2} />
-        </Link>
-        <div className="flex min-w-0 flex-col items-center">
-          <h1 className="truncate text-[15px] font-bold text-ink">{group.name}</h1>
-          <span className="text-xs text-ink-3">
-            Từ {currentCardIndex + 1} / {total}
-          </span>
+    <div className="mx-auto flex h-dvh w-full max-w-[1280px] flex-col md:h-auto md:gap-4 md:px-8 md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7">
+      {/* ── Mobile: thanh trên cùng (chế độ tập trung) — ‹ tên nhóm + bộ đếm › ── */}
+      <header className="shrink-0 bg-paper/95 backdrop-blur md:hidden">
+        <div className="flex h-14 items-center justify-between px-1">
+          <Link href="/study" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
+            <X className="h-5 w-5" strokeWidth={2.2} />
+          </Link>
+          <div className="flex min-w-0 items-center gap-0.5">
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={currentCardIndex === 0}
+              aria-label="Từ trước"
+              className="flex h-11 w-10 items-center justify-center rounded-[10px] text-ink disabled:opacity-30"
+            >
+              <ChevronLeft className="h-[18px] w-[18px]" strokeWidth={2.4} />
+            </button>
+            <div className="flex min-w-[136px] flex-col items-center">
+              <h1 className="max-w-[180px] truncate text-sm font-bold text-ink">{group.name}</h1>
+              <span className="text-xs font-semibold text-ink-3">
+                {currentCardIndex + 1} <span className="font-normal">/ {total}</span>
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={currentCardIndex === total - 1}
+              aria-label="Từ tiếp"
+              className="flex h-11 w-10 items-center justify-center rounded-[10px] text-ink disabled:opacity-30"
+            >
+              <ChevronRight className="h-[18px] w-[18px]" strokeWidth={2.4} />
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => setListOpen(true)}
+            aria-label="Danh sách từ vựng"
+            className="flex h-11 w-11 items-center justify-center rounded-xl text-ink"
+          >
+            <LayoutGrid className="h-5 w-5" />
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => setListOpen(true)}
-          aria-label="Danh sách từ vựng"
-          className="flex h-11 w-11 items-center justify-center rounded-xl text-ink"
+        <div
+          role="progressbar"
+          aria-label="Vị trí trong nhóm"
+          aria-valuemin={1}
+          aria-valuemax={total}
+          aria-valuenow={currentCardIndex + 1}
+          className="h-[3px] bg-track"
         >
-          <LayoutGrid className="h-[21px] w-[21px]" />
-        </button>
+          <div className="h-full bg-brand transition-all duration-300" style={{ width: `${positionPct}%` }} />
+        </div>
       </header>
 
       {/* ── Desktop: cột danh sách bên trái ── */}
@@ -205,7 +237,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
       </aside>
 
       {/* ── Khu vực thẻ ── */}
-      <section className="flex min-w-0 flex-1 flex-col items-center gap-3 px-4 pt-3 pb-4 md:gap-4 md:p-0">
+      <section className="flex min-h-0 min-w-0 flex-1 flex-col items-center gap-3 px-3 pt-3 pb-[max(env(safe-area-inset-bottom),12px)] md:gap-4 md:p-0">
         <div className="hidden w-full max-w-[880px] items-center justify-between md:flex">
           <Link
             href="/study"
@@ -230,7 +262,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
           aria-valuemin={1}
           aria-valuemax={total}
           aria-valuenow={currentCardIndex + 1}
-          className="h-[5px] w-full max-w-[880px] shrink-0 overflow-hidden rounded-full bg-track md:h-1.5"
+          className="hidden h-1.5 w-full max-w-[880px] shrink-0 overflow-hidden rounded-full bg-track md:block"
         >
           <div className="h-full rounded-full bg-brand transition-all duration-300" style={{ width: `${positionPct}%` }} />
         </div>
@@ -249,10 +281,10 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
             updateProgress(current.id, status);
             handleNext();
           }}
-          className="h-[520px] max-w-[880px] rounded-[20px] md:h-[580px] md:rounded-3xl lg:h-[560px] lg:shrink-0"
+          className="min-h-0 max-w-[880px] flex-1 rounded-[20px] md:h-[580px] md:flex-none md:rounded-3xl lg:h-[560px] lg:shrink-0"
         />
 
-        <div className="grid w-full max-w-[880px] grid-cols-2 gap-2.5 md:gap-3 lg:flex lg:items-center lg:justify-between">
+        <div className="hidden w-full max-w-[880px] grid-cols-2 gap-3 md:grid lg:flex lg:items-center lg:justify-between">
           <div className="contents lg:flex lg:gap-2.5">
             <button type="button" onClick={handlePrev} disabled={currentCardIndex === 0} className={navBtn}>
               <ChevronLeft className="h-4 w-4" strokeWidth={2.2} aria-hidden />
