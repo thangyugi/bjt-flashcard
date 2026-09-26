@@ -14,6 +14,8 @@ Chạy lại mỗi khi thêm/sửa câu ví dụ:
 Cách đọc sai của MeCab được sửa thủ công trong READING_OVERRIDES.
 """
 
+from __future__ import annotations
+
 import json
 import re
 from pathlib import Path
