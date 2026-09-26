@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import { useProgressStats } from "@/hooks/useProgressStats";
 import { cn } from "@/lib/utils";
@@ -56,7 +56,7 @@ export function Header() {
                     : "font-medium text-ink-2 hover:text-ink"
                 )}
               >
-                {item.label}
+                <PendingLabel label={item.label} />
               </Link>
             );
           })}
@@ -78,4 +78,10 @@ export function Header() {
       </div>
     </header>
   );
+}
+
+/** Nhãn menu nhấp nháy nhẹ trong lúc trang đích đang tải */
+function PendingLabel({ label }: { label: string }) {
+  const { pending } = useLinkStatus();
+  return <span className={cn("transition-opacity", pending && "animate-pulse text-brand")}>{label}</span>;
 }

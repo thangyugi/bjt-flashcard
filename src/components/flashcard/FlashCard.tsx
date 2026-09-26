@@ -18,11 +18,11 @@ interface FlashCardProps {
 
 function kanjiSize(text: string) {
   const n = text.length;
-  if (n <= 2) return "text-[44px]";
-  if (n <= 3) return "text-[38px]";
-  if (n <= 4) return "text-[34px]";
-  if (n <= 6) return "text-[26px]";
-  return "text-[21px]";
+  if (n <= 2) return "text-[44px] lg:text-[52px]";
+  if (n <= 3) return "text-[38px] lg:text-[46px]";
+  if (n <= 4) return "text-[34px] lg:text-[40px]";
+  if (n <= 6) return "text-[26px] lg:text-[31px]";
+  return "text-[21px] lg:text-[25px]";
 }
 
 /**
@@ -67,24 +67,27 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
     }
   };
 
+  // Nút "Mở rộng" gọn: icon nhỏ ở góc phải trên, không chiếm một dải riêng
   const expandBtn = (
     <button
       type="button"
       onClick={() => setIsExpanded(true)}
       aria-label={`Mở rộng thẻ ${item.kanji}`}
-      className="flex h-10 w-full shrink-0 items-center justify-center gap-[7px] border-t border-line text-[12.5px] font-semibold text-ink-2 transition-colors hover:bg-brand/[0.07] hover:text-brand"
+      title="Mở rộng"
+      className="absolute top-2.5 right-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-lg text-ink-3 transition-colors hover:bg-brand-soft hover:text-brand focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
     >
-      <Maximize2 className="h-[13px] w-[13px]" strokeWidth={2.2} aria-hidden />
-      Mở rộng
+      <Maximize2 className="h-[15px] w-[15px]" strokeWidth={2.2} aria-hidden />
     </button>
   );
 
   const faceClass =
     "flashcard-face border border-line bg-surface shadow-[0_1px_2px_rgba(28,25,23,0.04),0_2px_8px_rgba(28,25,23,0.04)]";
+  const areaClass =
+    "flex min-h-0 flex-1 cursor-pointer flex-col select-text outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset";
 
   return (
     <>
-      <div className="flashcard-wrapper h-[316px] w-56 shrink-0 transition-transform duration-200 hover:-translate-y-[3px]">
+      <div className="flashcard-wrapper h-[316px] w-56 shrink-0 transition-transform duration-200 hover:-translate-y-[3px] lg:h-[360px] lg:w-[264px]">
         <div className={cn("flashcard-inner", isFlipped && "flashcard-flipped")}>
           {/* ═══ Mặt trước ═══ */}
           <div className={faceClass} aria-hidden={isFlipped}>
@@ -94,23 +97,21 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
               onClick={flip}
               onKeyDown={onKey}
               aria-label={`${item.kanji} — chạm để xem nghĩa`}
-              className="flex min-h-0 flex-1 cursor-pointer flex-col select-text px-4 pt-4 pb-3 outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
+              className={cn(areaClass, "px-4 pt-4 pb-3.5 lg:px-5 lg:pt-[18px]")}
             >
-              <div className="flex items-center justify-between">
-                {pos ? (
-                  <span className="rounded-full bg-surface-2 px-[9px] py-[3px] text-[11px] font-semibold text-ink-2">{pos}</span>
-                ) : (
-                  <span />
+              <div className="flex items-center gap-2 pr-9">
+                {pos && (
+                  <span className="rounded-full bg-surface-2 px-[9px] py-[3px] text-[11px] font-semibold text-ink-2 lg:text-xs">{pos}</span>
                 )}
-                {dot}
+                <span className="ml-auto flex">{dot}</span>
               </div>
               <div className="flex flex-1 flex-col items-center justify-center gap-2">
-                {reading && <span className="font-jp text-[13px] tracking-[0.06em] text-ink-3">{reading}</span>}
+                {reading && <span className="font-jp text-[13px] tracking-[0.06em] text-ink-2 lg:text-[15px]">{reading}</span>}
                 <span className={cn("text-center font-mincho leading-[1.15] font-semibold text-ink", kanjiSize(item.kanji))}>
                   {item.kanji}
                 </span>
               </div>
-              <div className="flex items-center justify-center gap-[5px] text-[11.5px] text-ink-3">
+              <div className="flex items-center justify-center gap-[5px] text-[11.5px] text-ink-3 lg:text-xs">
                 <RotateCcw className="h-3 w-3" aria-hidden />
                 Chạm thẻ để lật
               </div>
@@ -118,7 +119,7 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
             {expandBtn}
           </div>
 
-          {/* ═══ Mặt sau: hiện đủ nội dung, không cắt ═══ */}
+          {/* ═══ Mặt sau: hiện đủ nội dung, chữ to rõ trên desktop ═══ */}
           <div className={cn(faceClass, "flashcard-back")} aria-hidden={!isFlipped}>
             <div
               role="button"
@@ -126,23 +127,25 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
               onClick={flip}
               onKeyDown={onKey}
               aria-label={`${item.kanji} — mặt sau, chạm để lật lại`}
-              className="scrollbar-none flex min-h-0 flex-1 cursor-pointer flex-col gap-2 select-text overflow-y-auto px-4 pt-4 pb-3 outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
+              className={cn(areaClass, "scrollbar-none gap-2 overflow-y-auto px-4 pt-3.5 pb-4 lg:gap-2.5 lg:px-5 lg:pt-4")}
             >
-              <div className="flex items-start justify-between gap-2">
+              <div className="flex items-start gap-2 pr-9">
                 <div className="flex min-w-0 flex-col gap-px">
-                  <span className="font-mincho text-[17px] leading-[1.3] font-semibold text-ink">{item.kanji}</span>
-                  {reading && <span className="font-jp text-[11.5px] leading-[1.4] tracking-[0.04em] text-ink-3">{reading}</span>}
+                  <span className="font-mincho text-lg leading-[1.3] font-semibold text-ink lg:text-[21px]">{item.kanji}</span>
+                  {reading && (
+                    <span className="font-jp text-xs leading-[1.4] tracking-[0.04em] text-ink-2 lg:text-[13px]">{reading}</span>
+                  )}
                 </div>
-                <span className="mt-[7px] flex">{dot}</span>
+                <span className="mt-2 ml-auto flex">{dot}</span>
               </div>
-              <span className="text-[14.5px] leading-[1.35] font-bold text-brand">{item.meaningVn}</span>
+              <span className="text-[15px] leading-[1.35] font-bold text-brand lg:text-[17px]">{item.meaningVn}</span>
               {item.exampleSentence && (
-                <div className="flex flex-col gap-[3px] rounded-[10px] bg-surface-2 px-2.5 pt-[5px] pb-2">
-                  <p className="font-jp text-[12.5px] leading-[1.95] text-ink">
+                <div className="flex flex-col gap-1 rounded-[10px] bg-surface-2 px-2.5 pt-1.5 pb-2 lg:px-3 lg:pb-2.5">
+                  <p className="font-jp text-[13.5px] leading-[1.9] text-ink lg:text-[15px]">
                     <Furigana markup={item.exampleSentenceFurigana} fallback={item.exampleSentence} />
                   </p>
                   {item.exampleTranslation && (
-                    <p className="text-[11.5px] leading-[1.45] text-ink-2">{item.exampleTranslation}</p>
+                    <p className="text-[12.5px] leading-[1.45] text-ink-2 lg:text-[13.5px]">{item.exampleTranslation}</p>
                   )}
                 </div>
               )}

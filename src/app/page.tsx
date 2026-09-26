@@ -269,7 +269,7 @@ export default function HomePage() {
               <div className="skeleton h-6 w-48" />
               <div className="flex gap-4 overflow-hidden">
                 {Array.from({ length: 5 }).map((_, j) => (
-                  <div key={j} className="skeleton h-[316px] w-56 shrink-0 rounded-[18px]" />
+                  <div key={j} className="skeleton h-[316px] w-56 shrink-0 rounded-[18px] lg:h-[360px] lg:w-[264px]" />
                 ))}
               </div>
             </div>

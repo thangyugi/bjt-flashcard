@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type UseQueryResult } from "@tanstack/react-query";
+import { useHydrated } from "@/hooks/useHydrated";
 import { n1Groups } from "@/data/vocabulary-groups";
 import type { FilterOptions, VocabularyGroup } from "@/types/vocabulary";
 
@@ -39,8 +40,15 @@ async function fetchGroupsBySource(
 
 // ── Hooks ────────────────────────────────────────────────────
 
+/** Ẩn dữ liệu đã cache cho tới khi hydrate xong, để HTML server và client khớp nhau. */
+function useHydratedQuery<T>(query: UseQueryResult<T>): UseQueryResult<T> {
+  const hydrated = useHydrated();
+  if (hydrated) return query;
+  return { ...query, data: undefined, isLoading: true, isFetched: false, isSuccess: false } as UseQueryResult<T>;
+}
+
 export function useAllVocabularyGroups(filters?: FilterOptions) {
-  return useQuery({
+  return useHydratedQuery(useQuery({
     queryKey: ["vocabulary-groups", filters],
     queryFn: async () => {
       const groups = await fetchAllGroups();
@@ -57,20 +65,20 @@ export function useAllVocabularyGroups(filters?: FilterOptions) {
       });
     },
     staleTime: 5 * 60 * 1000, // 5 minutes cache
-  });
+  }));
 }
 
 export function useVocabularyGroup(groupId: string | null) {
-  return useQuery({
+  return useHydratedQuery(useQuery({
     queryKey: ["vocabulary-group", groupId],
     queryFn: () => (groupId ? fetchGroupById(groupId) : null),
     enabled: !!groupId,
     staleTime: 5 * 60 * 1000,
-  });
+  }));
 }
 
 export function useVocabularyStats() {
-  return useQuery({
+  return useHydratedQuery(useQuery({
     queryKey: ["vocabulary-stats"],
     queryFn: async () => {
       const bjt = await fetchBjtGroups();
@@ -86,13 +94,13 @@ export function useVocabularyStats() {
       };
     },
     staleTime: 5 * 60 * 1000,
-  });
+  }));
 }
 
 export function useGroupsBySource(sourceType: "BJT" | "JLPT") {
-  return useQuery({
+  return useHydratedQuery(useQuery({
     queryKey: ["vocabulary-groups-by-source", sourceType],
     queryFn: () => fetchGroupsBySource(sourceType),
     staleTime: 5 * 60 * 1000,
-  });
+  }));
 }
