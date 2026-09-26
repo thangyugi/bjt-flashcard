@@ -4,6 +4,9 @@ import "./globals.css";
 import { QueryProvider } from "@/lib/query-provider";
 import { Header } from "@/components/layout/Header";
 import { MobileTabBar } from "@/components/layout/MobileTabBar";
+import { NavProgress } from "@/components/layout/NavProgress";
+import { AppSplash } from "@/components/layout/AppSplash";
+import { Suspense } from "react";
 
 // Chữ Việt / giao diện
 const beVietnam = Be_Vietnam_Pro({
@@ -58,6 +61,10 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         <QueryProvider>
+          <Suspense fallback={null}>
+            <NavProgress />
+          </Suspense>
+          <AppSplash />
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1">{children}</main>

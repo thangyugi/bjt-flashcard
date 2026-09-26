@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
+import type { LucideIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { House, Layers, SquareCheckBig } from "lucide-react";
 import { NAV_ITEMS } from "@/components/layout/Header";
@@ -34,12 +35,25 @@ export function MobileTabBar() {
                 active ? "font-bold text-brand" : "font-medium text-ink-3"
               )}
             >
-              <Icon className="h-[22px] w-[22px]" strokeWidth={2} aria-hidden />
+              <TabIcon Icon={Icon} />
               {item.label}
             </Link>
           );
         })}
       </nav>
     </>
+  );
+}
+
+/** Icon tab: hiện vòng xoay nhỏ khi đang tải trang đích */
+function TabIcon({ Icon }: { Icon: LucideIcon }) {
+  const { pending } = useLinkStatus();
+  return (
+    <span className="relative flex h-[22px] w-[22px] items-center justify-center">
+      <Icon className={cn("h-[22px] w-[22px] transition-opacity", pending && "opacity-30")} strokeWidth={2} aria-hidden />
+      {pending && (
+        <span className="absolute inset-0 animate-spin rounded-full border-2 border-brand-soft border-t-brand" aria-hidden />
+      )}
+    </span>
   );
 }

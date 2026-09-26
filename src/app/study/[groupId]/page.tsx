@@ -4,6 +4,7 @@ import { use } from "react";
 import { useVocabularyGroup } from "@/hooks/useVocabulary";
 import { FlashCardDeck } from "@/components/flashcard/FlashCardDeck";
 import Link from "next/link";
+import { PageLoader } from "@/components/layout/PageLoader";
 import { ArrowLeft, SearchX } from "lucide-react";
 
 interface PageProps {
@@ -15,14 +16,7 @@ export default function StudyGroupPage({ params }: PageProps) {
   const { data: group, isLoading, error } = useVocabularyGroup(groupId);
 
   if (isLoading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="space-y-4 text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-brand-soft border-t-brand" />
-          <p className="text-sm text-ink-3">Đang tải flashcard...</p>
-        </div>
-      </div>
-    );
+    return <PageLoader label="Đang tải flashcard…" className="min-h-[60vh]" />;
   }
 
   if (error || !group) {

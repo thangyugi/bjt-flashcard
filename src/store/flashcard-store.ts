@@ -80,6 +80,8 @@ export const useFlashcardStore = create<FlashcardStore>()(
     }),
     {
       name: "bjt-flashcard-store",
+      // Nạp tiến độ từ localStorage sau khi hydrate (xem QueryProvider) để HTML server/client khớp
+      skipHydration: true,
       // Only persist progress and filters, not UI state
       partialize: (state) => ({
         progress: state.progress,
