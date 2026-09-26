@@ -83,6 +83,7 @@ export const VocabularyItemSchema = z.object({
   bjtRelevance: z.boolean().default(false),  // Có liên quan BJT không
   // Ví dụ
   exampleSentence: z.string().optional(),      // VD: 話し合いを行います
+  exampleSentenceFurigana: z.string().optional(), // VD: {話|はな}し{合|あ}いを{行|おこな}います
   exampleTranslation: z.string().optional(),   // Dịch câu ví dụ
   // Ghi chú & Context
   businessContext: z.string().optional(),  // Notes về ngữ cảnh business
