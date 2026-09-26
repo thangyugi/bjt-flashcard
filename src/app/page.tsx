@@ -9,6 +9,7 @@ import { useMemo, useState } from "react";
 import type { SourceType, VocabularyGroup, VocabularyItem } from "@/types/vocabulary";
 import { ArrowRight, Lightbulb, Play, Search, SquareCheckBig } from "lucide-react";
 import Link from "next/link";
+import { CardRowSkeleton } from "@/components/layout/Skeletons";
 import { cn } from "@/lib/utils";
 
 const FILTERS: { label: string; value: SourceType | "ALL" }[] = [
@@ -264,16 +265,10 @@ export default function HomePage() {
       {/* ── Nhóm từ vựng ── */}
       <div className="flex flex-col gap-10 lg:gap-12">
         {isLoading ? (
-          Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="space-y-4">
-              <div className="skeleton h-6 w-48" />
-              <div className="flex gap-4 overflow-hidden">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <div key={j} className="skeleton h-[316px] w-56 shrink-0 rounded-[18px] lg:h-[360px] lg:w-[264px]" />
-                ))}
-              </div>
-            </div>
-          ))
+          <>
+            <CardRowSkeleton />
+            <CardRowSkeleton />
+          </>
         ) : visibleGroups.length ? (
           visibleGroups.map((g) => <FlashCardGroup key={g.id} group={g} />)
         ) : (

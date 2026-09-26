@@ -140,12 +140,12 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
               </div>
               <span className="text-[15px] leading-[1.35] font-bold text-brand lg:text-[17px]">{item.meaningVn}</span>
               {item.exampleSentence && (
-                <div className="flex flex-col gap-1 rounded-[10px] bg-surface-2 px-2.5 pt-1.5 pb-2 lg:px-3 lg:pb-2.5">
-                  <p className="font-jp text-[13.5px] leading-[1.9] text-ink lg:text-[15px]">
+                <div className="mt-0.5 flex flex-col gap-1 border-t border-line pt-2.5 lg:pt-3">
+                  <p className="font-jp text-[14px] leading-[1.9] text-ink lg:text-[15.5px]">
                     <Furigana markup={item.exampleSentenceFurigana} fallback={item.exampleSentence} />
                   </p>
                   {item.exampleTranslation && (
-                    <p className="text-[12.5px] leading-[1.45] text-ink-2 lg:text-[13.5px]">{item.exampleTranslation}</p>
+                    <p className="text-[13px] leading-[1.5] text-ink-2 lg:text-sm">{item.exampleTranslation}</p>
                   )}
                 </div>
               )}

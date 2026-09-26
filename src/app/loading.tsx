@@ -1,6 +1,6 @@
-import { PageLoader } from "@/components/layout/PageLoader";
+import { HomeSkeleton } from "@/components/layout/Skeletons";
 
 // Hiện ngay khi chuyển trang, trong lúc trang mới đang tải
 export default function Loading() {
-  return <PageLoader className="min-h-[60vh]" />;
+  return <HomeSkeleton />;
 }
