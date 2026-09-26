@@ -359,9 +359,9 @@ export function QuizRunner({ items, allVocab, title = "Trắc nghiệm" }: QuizR
                           <span className="text-[15px] font-bold text-ok-ink">{q.correctAnswer}</span>
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 gap-3.5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-5">
+                      <div className="grid grid-cols-1 gap-3.5 md:px-3.5 lg:grid-cols-2 lg:gap-2.5 lg:px-0">
                         {q.item.exampleSentence && (
-                          <div className="flex flex-col gap-[3px]">
+                          <div className="flex flex-col gap-[3px] lg:px-3.5">
                             <span className={cn(LABEL, "text-brand")}>Ví dụ</span>
                             <p className="font-jp text-[15px] leading-[2.05] text-ink">
                               <Furigana markup={q.item.exampleSentenceFurigana} fallback={q.item.exampleSentence} />
@@ -369,7 +369,7 @@ export function QuizRunner({ items, allVocab, title = "Trắc nghiệm" }: QuizR
                             {q.item.exampleTranslation && <p className="text-[13px] leading-normal text-ink-2">{q.item.exampleTranslation}</p>}
                           </div>
                         )}
-                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-1 lg:gap-2.5">
+                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-[38px] lg:grid-cols-1 lg:gap-2.5 lg:px-3.5">
                           {q.item.businessContext && (
                             <div className="flex flex-col gap-[3px]">
                               <span className={cn(LABEL, "text-ink-3")}>Ngữ cảnh business</span>
