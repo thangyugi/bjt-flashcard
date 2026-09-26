@@ -174,3 +174,11 @@
   50%       { opacity: 1;   }
 }
 .glow-animate { animation: glow-pulse 2.5s ease-in-out infinite; }
+/* ── Furigana ─────────────────────────────────────────────── */
+ruby rt {
+  font-size: 0.55em;
+  font-weight: 400;
+  opacity: 0.75;
+  letter-spacing: 0;
+  user-select: none;
+}

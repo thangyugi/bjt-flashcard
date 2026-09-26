@@ -3,6 +3,7 @@
 import { useFlashcardStore } from "@/store/flashcard-store";
 import type { VocabularyItem } from "@/types/vocabulary";
 import { cn } from "@/lib/utils";
+import { Furigana } from "@/components/ui/furigana";
 import { useState, useEffect } from "react";
 
 interface FlashCardProps {
@@ -284,12 +285,12 @@ export function FlashCard({ item, index, compact = false, isModal, onClose, onSt
                 </p>
                 <p
                   className={cn(
-                    "text-sky-900 leading-relaxed font-medium",
+                    "text-sky-900 leading-[2.1] font-medium",
                     compact ? "text-xs" : "text-[15px]"
                   )}
                   style={{ fontFamily: "'Hiragino Kaku Gothic Pro','Noto Sans JP','Yu Gothic',sans-serif" }}
                 >
-                  {item.exampleSentence}
+                  <Furigana markup={item.exampleSentenceFurigana} fallback={item.exampleSentence} />
                 </p>
                 {item.exampleTranslation && (
                   <p className={cn("text-sky-700/80 mt-2", compact ? "text-[10px]" : "text-sm")}>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { VocabularyItem } from "@/types/vocabulary";
 import { cn } from "@/lib/utils";
+import { Furigana } from "@/components/ui/furigana";
 
 interface QuizRunnerProps {
   items: VocabularyItem[];
@@ -219,8 +220,8 @@ export function QuizRunner({ items, allVocab, title = "Trắc nghiệm" }: QuizR
                       {q.item.exampleSentence && (
                         <div>
                           <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">📝 Ví dụ</p>
-                          <p className="text-gray-800 font-medium" style={{ fontFamily: "'Hiragino Kaku Gothic Pro','Noto Sans JP','Yu Gothic',sans-serif" }}>
-                            {q.item.exampleSentence}
+                          <p className="text-gray-800 font-medium leading-[2.1]" style={{ fontFamily: "'Hiragino Kaku Gothic Pro','Noto Sans JP','Yu Gothic',sans-serif" }}>
+                            <Furigana markup={q.item.exampleSentenceFurigana} fallback={q.item.exampleSentence} />
                           </p>
                           {q.item.exampleTranslation && (
                             <p className="text-gray-600 text-sm mt-1">{q.item.exampleTranslation}</p>
