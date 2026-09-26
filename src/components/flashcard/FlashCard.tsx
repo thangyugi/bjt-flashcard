@@ -6,7 +6,7 @@ import { useFlashcardStore } from "@/store/flashcard-store";
 import type { VocabularyItem } from "@/types/vocabulary";
 import { Furigana } from "@/components/ui/furigana";
 import { posLabel, readingOf } from "@/lib/vocab-labels";
-import { cn } from "@/lib/utils";
+import { cn, hasTextSelection } from "@/lib/utils";
 import { FlashCardModal } from "./FlashCardModal";
 
 interface FlashCardProps {
@@ -54,6 +54,12 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
     />
   );
 
+  // Kéo chuột để bôi đen chữ thì không lật thẻ
+  const flip = () => {
+    if (hasTextSelection()) return;
+    toggleFlip(item.id);
+  };
+
   const onKey = (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -78,17 +84,17 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
 
   return (
     <>
-      <div className="flashcard-wrapper h-[316px] w-56 shrink-0 select-none transition-transform duration-200 hover:-translate-y-[3px]">
+      <div className="flashcard-wrapper h-[316px] w-56 shrink-0 transition-transform duration-200 hover:-translate-y-[3px]">
         <div className={cn("flashcard-inner", isFlipped && "flashcard-flipped")}>
           {/* ═══ Mặt trước ═══ */}
           <div className={faceClass} aria-hidden={isFlipped}>
             <div
               role="button"
               tabIndex={isFlipped ? -1 : 0}
-              onClick={() => toggleFlip(item.id)}
+              onClick={flip}
               onKeyDown={onKey}
               aria-label={`${item.kanji} — chạm để xem nghĩa`}
-              className="flex min-h-0 flex-1 cursor-pointer flex-col px-4 pt-4 pb-3 outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
+              className="flex min-h-0 flex-1 cursor-pointer flex-col select-text px-4 pt-4 pb-3 outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
             >
               <div className="flex items-center justify-between">
                 {pos ? (
@@ -117,10 +123,10 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
             <div
               role="button"
               tabIndex={isFlipped ? 0 : -1}
-              onClick={() => toggleFlip(item.id)}
+              onClick={flip}
               onKeyDown={onKey}
               aria-label={`${item.kanji} — mặt sau, chạm để lật lại`}
-              className="scrollbar-none flex min-h-0 flex-1 cursor-pointer flex-col gap-2 overflow-y-auto px-4 pt-4 pb-3 outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
+              className="scrollbar-none flex min-h-0 flex-1 cursor-pointer flex-col gap-2 select-text overflow-y-auto px-4 pt-4 pb-3 outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex min-w-0 flex-col gap-px">

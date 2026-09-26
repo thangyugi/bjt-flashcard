@@ -5,7 +5,7 @@ import { Briefcase, Check, MessageSquare, PencilLine, RotateCcw, X } from "lucid
 import type { CardStatus, VocabularyItem } from "@/types/vocabulary";
 import { Furigana } from "@/components/ui/furigana";
 import { levelLabel, posLabel, readingOf } from "@/lib/vocab-labels";
-import { cn } from "@/lib/utils";
+import { cn, hasTextSelection } from "@/lib/utils";
 
 interface FlashCardDetailProps {
   item: VocabularyItem;
@@ -141,10 +141,13 @@ export function FlashCardDetail({
       <div
         role="button"
         tabIndex={0}
-        onClick={onFlip}
+        onClick={() => {
+          // Kéo chuột để bôi đen chữ thì không lật thẻ
+          if (!hasTextSelection()) onFlip();
+        }}
         onKeyDown={handleKey}
         aria-label={isFlipped ? "Mặt sau — chạm để lật về mặt trước" : "Mặt trước — chạm để xem nghĩa"}
-        className="flex min-h-0 flex-1 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
+        className="flex min-h-0 flex-1 cursor-pointer select-text outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-inset"
       >
         {!isFlipped ? (
           <div className="relative flex w-full flex-col items-center justify-center gap-3 px-8 pb-12">
