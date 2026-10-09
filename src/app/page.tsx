@@ -100,7 +100,7 @@ export default function HomePage() {
               <ArrowRight className="h-[18px] w-[18px]" strokeWidth={2.2} aria-hidden />
             </Link>
             <Link
-              href="/quiz?groupId=all"
+              href="/quiz?scope=all"
               className="flex h-[50px] items-center gap-2.5 rounded-xl border border-line-strong bg-surface px-5 text-[15px] font-semibold text-ink transition-colors hover:bg-surface-2"
             >
               <SquareCheckBig className="h-[18px] w-[18px]" aria-hidden />

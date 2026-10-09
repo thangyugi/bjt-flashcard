@@ -91,3 +91,16 @@ Thay `window.confirm` bằng hộp thoại riêng: số câu đã trả lời, c
 - `npx next build`: đạt.
 - `npx eslint src`: còn 1 lỗi có từ trước (`react-hooks/set-state-in-effect` ở effect tạo đề trong `QuizRunner`, logic cũ giữ nguyên) và 1 cảnh báo cũ trong `flashcard-store.ts`.
 - Đã chạy app và chụp màn hình ở 1440 / 834 / 390px cho trang chủ, thẻ lật, modal, học bài, trắc nghiệm, xác nhận và kết quả; không có lỗi console.
+
+## 5. Trắc nghiệm v2 — màn tổng hợp, nhiều dạng câu hỏi, phân tích kết quả
+
+| Phần | File | Thay đổi |
+|---|---|---|
+| Màn tổng hợp `/quiz` | `src/app/quiz/page.tsx`, `src/components/quiz/QuizHub.tsx` (mới) | Chọn **phạm vi**: Tổng hợp toàn bộ, Cần ôn lại (từ làm sai), Chưa học, Đang học, Đã thuộc, hoặc từng **chủ đề** (lọc BJT / JLPT N1). Chọn **số câu** 10 / 20 / 30 / 50 / Tất cả và **dạng câu hỏi**. Desktop: thiết lập cố định bên phải; tablet/mobile: thiết lập bên dưới + thanh "Bắt đầu" cố định. Link cũ `/quiz?groupId=…` mở màn này với nhóm đã chọn sẵn. |
+| Làm bài `/quiz/play` | `src/app/quiz/play/page.tsx` (mới) | Đọc `scope`, `count`, `types` từ URL; mỗi lượt tạo đề một lần. "Làm đề mới" tạo đề với từ khác; "Ôn lại N từ chưa thuộc" tạo đề chỉ từ các từ sai. |
+| Sinh đề | `src/lib/quiz.ts` (mới), `src/lib/quiz-scope.ts` (mới) | 5 dạng, xếp thành từng phần dễ → khó: **Chọn nghĩa**, **Chọn từ theo nghĩa**, **Cách đọc**, **Điền từ vào câu** (câu ví dụ có furigana, đục chỗ trống), **Điền vào đoạn văn** (ghép câu ví dụ thành đoạn, 1–3 chỗ trống ngẫu nhiên + câu ngữ cảnh). Mỗi từ chỉ xuất hiện 1 lần; ưu tiên từ chưa hỏi gần đây trong phạm vi (không lặp lại cùng 30 từ). Đáp án nhiễu ưu tiên cùng chủ đề và không trùng từ đang hiện trong đoạn văn. |
+| Làm bài (UI) | `src/components/quiz/QuizRunner.tsx` (viết lại) | Nhãn "Phần x/y · dạng · độ khó"; danh sách câu chia theo phần; đoạn văn có chỗ trống bấm chọn, tự chuyển chỗ trống kế tiếp. |
+| Kết quả | `QuizRunner.tsx` | **Phân tích theo dạng câu hỏi** (đúng/tổng, %), gợi ý dạng cần luyện thêm, **danh sách từ chưa thuộc** (tự thêm vào "Cần ôn lại"; từ làm đúng được gỡ khỏi danh sách), nút ôn lại các từ sai / làm đề mới. Chi tiết từng câu theo dạng (đoạn văn hiện đúng/sai từng chỗ trống + bản dịch). Mobile: 2 nút cố định "Ôn N từ sai" / "Đề mới". |
+| Lưu trữ | `src/store/flashcard-store.ts` | Thêm `reviewIds` (từ cần ôn) và `quizSeen` (từ đã hỏi theo phạm vi), lưu localStorage. |
+| Điều hướng | `Header.tsx`, `MobileTabBar.tsx`, `page.tsx` | Menu "Trắc nghiệm" → `/quiz`. Thanh tab mobile hiện ở màn tổng hợp, ẩn khi đang làm bài. |
+| Loading | `quiz/loading.tsx`, `quiz/play/loading.tsx`, `Skeletons.tsx` | Khung mờ riêng cho màn tổng hợp (`HubSkeleton`). |

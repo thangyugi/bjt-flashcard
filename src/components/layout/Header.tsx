@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export const NAV_ITEMS = [
   { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
   { href: "/study", label: "Học bài", match: (p: string) => p.startsWith("/study") },
-  { href: "/quiz?groupId=all", label: "Trắc nghiệm", match: (p: string) => p.startsWith("/quiz") },
+  { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => p.startsWith("/quiz") },
 ];
 
 export function Header() {
@@ -16,7 +16,7 @@ export function Header() {
   const { mastered, total, pct } = useProgressStats();
 
   // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng
-  const hideOnMobile = pathname.startsWith("/study/") || pathname.startsWith("/quiz");
+  const hideOnMobile = pathname.startsWith("/study/") || pathname.startsWith("/quiz/play");
 
   return (
     <header

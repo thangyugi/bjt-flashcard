@@ -22,6 +22,14 @@ interface FlashcardStore {
   goNext: () => void;
   goPrev: (total: number) => void;
 
+  // Trắc nghiệm: danh sách từ cần ôn (từ làm sai) và lịch sử từ đã hỏi theo phạm vi
+  reviewIds: string[];
+  addToReview: (ids: string[]) => void;
+  removeFromReview: (ids: string[]) => void;
+  clearReview: () => void;
+  quizSeen: Record<string, string[]>;
+  markQuizSeen: (scope: string, ids: string[], poolSize: number) => void;
+
   // Filters
   filters: FilterOptions;
   setFilters: (filters: Partial<FilterOptions>) => void;
@@ -72,6 +80,24 @@ export const useFlashcardStore = create<FlashcardStore>()(
           currentCardIndex: Math.max(0, state.currentCardIndex - 1),
         })),
 
+      // ── Trắc nghiệm ────────────────────────────
+      reviewIds: [],
+      addToReview: (ids) =>
+        set((state) => ({ reviewIds: Array.from(new Set([...state.reviewIds, ...ids])) })),
+      removeFromReview: (ids) =>
+        set((state) => ({ reviewIds: state.reviewIds.filter((id) => !ids.includes(id)) })),
+      clearReview: () => set({ reviewIds: [] }),
+      quizSeen: {},
+      // Ghi nhớ các từ đã hỏi trong phạm vi; khi đã hỏi hết thì bắt đầu vòng mới
+      markQuizSeen: (scope, ids, poolSize) =>
+        set((state) => {
+          const prev = state.quizSeen[scope] ?? [];
+          let next = Array.from(new Set([...prev, ...ids]));
+          // Đã hỏi hết: vòng mới chỉ nhớ các từ vừa hỏi để lần sau ưu tiên từ khác
+          if (next.length >= poolSize) next = ids.length >= poolSize ? [] : [...ids];
+          return { quizSeen: { ...state.quizSeen, [scope]: next } };
+        }),
+
       // ── Filters ────────────────────────────────
       filters: {},
       setFilters: (newFilters) =>
@@ -82,10 +108,12 @@ export const useFlashcardStore = create<FlashcardStore>()(
       name: "bjt-flashcard-store",
       // Nạp tiến độ từ localStorage sau khi hydrate (xem QueryProvider) để HTML server/client khớp
       skipHydration: true,
-      // Only persist progress and filters, not UI state
+      // Chỉ lưu tiến độ, bộ lọc và dữ liệu trắc nghiệm, không lưu trạng thái giao diện
       partialize: (state) => ({
         progress: state.progress,
         filters: state.filters,
+        reviewIds: state.reviewIds,
+        quizSeen: state.quizSeen,
       }),
     }
   )
