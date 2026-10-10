@@ -200,3 +200,54 @@ export function QuizSkeleton() {
     </Screen>
   );
 }
+
+/** Màn tổng hợp trắc nghiệm */
+export function HubSkeleton() {
+  return (
+    <Screen
+      label="Đang tải trắc nghiệm"
+      className="mx-auto flex max-w-[1280px] flex-col gap-6 px-4 pt-6 pb-12 sm:px-8 sm:pt-10 lg:flex-row lg:items-start lg:gap-8"
+    >
+      <div className="flex min-w-0 flex-1 flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <Bone className="h-8 w-44" />
+          <Bone className="h-4 w-72" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="flex h-[156px] flex-col gap-3 rounded-[18px] border border-line bg-surface p-5">
+              <Bone className="h-10 w-10 rounded-xl" />
+              <Bone className="h-4 w-28" />
+              <Bone className="h-3 w-36" />
+              <Bone className="h-6 w-14" />
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-3.5 rounded-[18px] border border-line bg-surface p-4">
+              <Bone className="h-11 w-11 rounded-xl" />
+              <div className="flex flex-1 flex-col gap-2">
+                <Bone className="h-4 w-40" />
+                <Bone className="h-3 w-28" />
+                <Bone className="h-1.5 w-full rounded-full" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="hidden w-[380px] shrink-0 flex-col gap-4 rounded-[20px] border border-line bg-surface p-5 lg:flex">
+        <Bone className="h-5 w-40" />
+        <div className="grid grid-cols-5 gap-1.5">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Bone key={i} className="h-11 rounded-[10px]" />
+          ))}
+        </div>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Bone key={i} className="h-[62px] rounded-xl" />
+        ))}
+        <Bone className="h-[52px] rounded-xl" />
+      </div>
+    </Screen>
+  );
+}

@@ -13,7 +13,7 @@ const ICONS = [House, Layers, SquareCheckBig];
 export function MobileTabBar() {
   const pathname = usePathname();
   // Ẩn khi đang làm trắc nghiệm hoặc đang học một nhóm (chế độ tập trung)
-  if (pathname.startsWith("/quiz") || pathname.startsWith("/study/")) return null;
+  if (pathname.startsWith("/quiz/play") || pathname.startsWith("/study/")) return null;
 
   return (
     <>
