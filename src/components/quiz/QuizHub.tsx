@@ -7,7 +7,7 @@ import { useAllVocabularyGroups } from "@/hooks/useVocabulary";
 import { useFlashcardStore } from "@/store/flashcard-store";
 import { GroupIcon } from "@/components/ui/group-icon";
 import { HubSkeleton } from "@/components/layout/Skeletons";
-import { QUESTION_TYPES, type QuestionType } from "@/lib/quiz";
+import { ELIGIBLE, QUESTION_TYPES, eligibleWords, type QuestionType } from "@/lib/quiz";
 import { resolveScope, type ScopeKey } from "@/lib/quiz-scope";
 import type { SourceType } from "@/types/vocabulary";
 import { cn } from "@/lib/utils";
@@ -43,8 +43,13 @@ export function QuizHub() {
   if (isLoading || !groups || !stats) return <HubSkeleton />;
 
   const selected = resolveScope(scope, groups, progress, reviewIds);
-  const available = selected.items.length;
+  // Số từ trong phạm vi kiểm tra được bằng các dạng đã chọn
+  const available = eligibleWords(selected.items, types).length;
+  const excluded = selected.items.length - available;
   const effectiveCount = count === "all" ? available : Math.min(count, available);
+  const perType = Object.fromEntries(
+    QUESTION_TYPES.map((t) => [t.type, selected.items.filter(ELIGIBLE[t.type]).length])
+  ) as Record<QuestionType, number>;
   const toggleType = (t: QuestionType) =>
     setTypes((prev) => (prev.includes(t) ? (prev.length > 1 ? prev.filter((x) => x !== t) : prev) : [...prev, t]));
   const start = () => {
@@ -66,12 +71,12 @@ export function QuizHub() {
       <div className="flex flex-col gap-1">
         <span className="text-[11px] font-bold tracking-[0.1em] text-ink-3 uppercase">Phạm vi</span>
         <span className="text-[17px] font-bold text-ink">{selected.label}</span>
-        <span className="text-[13px] text-ink-3">{available} từ có thể hỏi</span>
+        <span className="text-[13px] text-ink-3">{selected.items.length} từ trong phạm vi</span>
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className="text-[11px] font-bold tracking-[0.1em] text-ink-3 uppercase">Số câu hỏi</span>
-        <div role="radiogroup" aria-label="Số câu hỏi" className="grid grid-cols-5 gap-1.5">
+        <span className="text-[11px] font-bold tracking-[0.1em] text-ink-3 uppercase">Số từ kiểm tra</span>
+        <div role="radiogroup" aria-label="Số từ kiểm tra" className="grid grid-cols-5 gap-1.5">
           {[...COUNTS, "all" as const].map((c) => {
             const on = count === c;
             const disabled = c !== "all" && c > available && available > 0;
@@ -126,16 +131,27 @@ export function QuizHub() {
                     {t.label}
                   </span>
                   <span className="text-[12.5px] leading-snug text-ink-3">{t.desc}</span>
+                  <span className="text-[11.5px] font-semibold text-ink-2">
+                    Dùng được cho {perType[t.type]}/{selected.items.length} từ
+                  </span>
                 </span>
                 <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold", LEVEL_STYLE[t.level])}>{t.level}</span>
               </button>
             );
           })}
         </div>
-        <p className="text-xs leading-relaxed text-ink-3">
-          Mỗi dạng là một phần riêng, xếp từ dễ đến khó. Số câu được chia đều cho các dạng đã chọn; mỗi từ chỉ xuất hiện một lần và
-          ưu tiên những từ bạn chưa được hỏi gần đây.
-        </p>
+        <div className="flex flex-col gap-1.5 rounded-xl bg-surface-2 px-3.5 py-3 text-xs leading-relaxed text-ink-2">
+          <p>
+            Sẽ kiểm tra <b className="text-ink">{effectiveCount}</b> từ, chỉ bằng các dạng đã chọn. Từ được chia đều cho các dạng; mỗi từ
+            xuất hiện đúng một lần, ưu tiên từ bạn chưa được hỏi gần đây. Mỗi đoạn văn gộp 1–3 từ thành một câu hỏi.
+          </p>
+          {excluded > 0 && (
+            <p className="font-semibold text-brand-soft-ink">
+              {excluded} từ không áp dụng được cho các dạng đã chọn (ví dụ từ katakana không có dạng cách đọc, hoặc câu ví dụ không chứa
+              từ) nên sẽ không xuất hiện. Chọn thêm dạng khác để kiểm tra đủ {selected.items.length} từ.
+            </p>
+          )}
+        </div>
       </div>
 
       <button
@@ -145,7 +161,7 @@ export function QuizHub() {
         className="hidden h-[52px] items-center justify-center gap-2 rounded-xl bg-brand text-[15px] font-bold text-white transition-colors hover:bg-brand-hover disabled:opacity-40 lg:flex"
       >
         <Play className="h-4 w-4 fill-current" aria-hidden />
-        Bắt đầu · {effectiveCount} câu
+        Bắt đầu · {effectiveCount} từ
       </button>
     </div>
   );
@@ -261,7 +277,7 @@ export function QuizHub() {
           <div className="flex min-w-0 flex-1 flex-col">
             <span className="truncate text-sm font-bold text-ink">{selected.label}</span>
             <span className="text-xs text-ink-3">
-              {effectiveCount} câu · {types.length} dạng
+              {effectiveCount} từ · {types.length} dạng
             </span>
           </div>
           <button
