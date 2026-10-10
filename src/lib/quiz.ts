@@ -51,17 +51,60 @@ function parseSentence(item: VocabularyItem): Seg[] {
   return segs;
 }
 
-/** Từ có xuất hiện nguyên dạng trong câu ví dụ → dùng được cho dạng điền chỗ trống */
-export function canBlank(item: VocabularyItem) {
-  return !!item.exampleSentence && item.exampleSentence.includes(item.kanji);
+const HIRA_END = /[\u3041-\u309f]$/;
+
+/** Các cách viết của từ: "A・B" → [A, B]; bỏ phần trong ngoặc và dấu ～ */
+function surfaceCandidates(word: string): string[] {
+  const out = new Set<string>();
+  const add = (w: string) => {
+    const t = w.replace(/[～〜~]/g, "").trim();
+    if (t) out.add(t);
+  };
+  for (const part of word.split("・")) {
+    add(part.replace(/[（(][^）)]*[）)]/g, ""));
+    for (const m of part.matchAll(/[（(]([^）)]*)[）)]/g)) add(m[1]);
+  }
+  return [...out];
 }
 
-/** Thay từ trong câu ví dụ bằng chỗ trống số `blank`, giữ furigana của phần còn lại */
-function blankSentence(item: VocabularyItem, blank: number): Seg[] {
+/**
+ * Tìm vị trí từ trong câu ví dụ của chính nó.
+ * Thử nguyên dạng trước, sau đó bỏ dần đuôi hiragana để khớp dạng đã chia (結ぶ → 結びました).
+ */
+export function findInSentence(item: VocabularyItem): { start: number; end: number } | null {
+  const sentence = item.exampleSentence;
+  if (!sentence) return null;
+  const cands = surfaceCandidates(item.kanji);
+  for (const c of cands) {
+    const i = sentence.indexOf(c);
+    if (i >= 0) return { start: i, end: i + c.length };
+  }
+  for (const c of cands) {
+    let t = c;
+    while (t.length > 1 && HIRA_END.test(t)) {
+      t = t.slice(0, -1);
+      if (t.length < 2 && HIRA_END.test(t)) break;
+      const i = sentence.indexOf(t);
+      if (i >= 0) return { start: i, end: i + t.length };
+    }
+  }
+  return null;
+}
+
+/** Từ tìm được trong câu ví dụ → dùng được cho dạng điền chỗ trống */
+export function canBlank(item: VocabularyItem) {
+  return findInSentence(item) !== null;
+}
+
+/**
+ * Thay từ trong câu ví dụ bằng chỗ trống số `blank`, giữ furigana của phần còn lại.
+ * Trả về cả chữ gốc ở chỗ trống (dạng xuất hiện trong câu) để hiện khi xem lại.
+ */
+function blankSentence(item: VocabularyItem, blank: number): { segs: Seg[]; surface: string } {
   const segs = parseSentence(item);
-  const plain = segs.map((s) => s.text).join("");
-  const start = plain.indexOf(item.kanji);
-  const end = start + item.kanji.length;
+  const range = findInSentence(item);
+  if (!range) return { segs, surface: item.kanji };
+  const { start, end } = range;
   const out: Seg[] = [];
   let pos = 0;
   let placed = false;
@@ -81,7 +124,7 @@ function blankSentence(item: VocabularyItem, blank: number): Seg[] {
     }
     if (b > end) out.push({ text: s.text.slice(end - a) });
   }
-  return out;
+  return { segs: out, surface: item.exampleSentence!.slice(start, end) };
 }
 
 // ─────────────────────────────────────────────
@@ -96,12 +139,16 @@ export interface ChoiceQuestion {
   answer: string;
   /** Dạng điền từ vào câu: câu có chỗ trống */
   sentence?: Seg[];
+  /** Chữ thật ở chỗ trống (có thể là dạng đã chia của từ) */
+  surface?: string;
 }
 
 export interface PassageBlank {
   item: VocabularyItem;
   options: string[];
   answer: string;
+  /** Chữ thật ở chỗ trống (có thể là dạng đã chia của từ) */
+  surface: string;
 }
 
 export interface PassageQuestion {
@@ -137,7 +184,7 @@ function shuffle<T>(arr: T[]): T[] {
 const readingOf = (i: VocabularyItem) => i.hiragana || i.katakana || "";
 const HAS_KANJI = /[一-龯㐀-䶿々]/;
 
-const ELIGIBLE: Record<QuestionType, (i: VocabularyItem) => boolean> = {
+export const ELIGIBLE: Record<QuestionType, (i: VocabularyItem) => boolean> = {
   meaning: (i) => !!i.meaningVn,
   reverse: (i) => !!i.meaningVn,
   reading: (i) => !!readingOf(i) && HAS_KANJI.test(i.kanji) && readingOf(i) !== i.kanji,
@@ -176,79 +223,72 @@ export interface BuildOptions {
   allVocab: VocabularyItem[];
   /** id từ → nhóm (để lấy đáp án nhiễu cùng nhóm) */
   groupOf: Map<string, VocabularyGroup>;
+  /** Số TỪ cần kiểm tra (Infinity = tất cả từ dùng được) */
   count: number;
   types: QuestionType[];
   /** id các từ đã hỏi gần đây trong phạm vi này → để sau cùng */
   seenIds?: string[];
 }
 
+/** Các dạng đã chọn, theo thứ tự phần (dễ → khó) */
+function orderedTypes(types: QuestionType[]): QuestionType[] {
+  const order = QUESTION_TYPES.map((t) => t.type).filter((t) => types.includes(t));
+  return order.length ? order : ["meaning"];
+}
+
+/** Từ trong phạm vi kiểm tra được bằng ít nhất một dạng đã chọn */
+export function eligibleWords(pool: VocabularyItem[], types: QuestionType[]): VocabularyItem[] {
+  const order = orderedTypes(types);
+  return pool.filter((i) => order.some((t) => ELIGIBLE[t](i)));
+}
+
 /**
- * Tạo đề: mỗi từ chỉ xuất hiện một lần, ưu tiên từ chưa hỏi gần đây,
- * chia đều số câu cho các dạng đã chọn và xếp thành từng phần (dễ → khó).
+ * Tạo đề:
+ * - Chỉ dùng đúng các dạng đã chọn (không tự bù bằng dạng khác).
+ * - `count` là số từ được kiểm tra; mỗi từ xuất hiện đúng một lần.
+ * - Từ chia đều cho các dạng, có xét từ nào dùng được cho dạng nào.
+ * - Ưu tiên từ chưa hỏi gần đây; câu xếp thành từng phần (dễ → khó).
  */
 export function buildQuiz({ pool, allVocab, groupOf, count, types, seenIds = [] }: BuildOptions): Question[] {
+  const order = orderedTypes(types);
   const seen = new Set(seenIds);
-  const ordered = [...shuffle(pool.filter((i) => !seen.has(i.id))), ...shuffle(pool.filter((i) => seen.has(i.id)))];
-  const used = new Set<string>();
-  const order = QUESTION_TYPES.map((t) => t.type).filter((t) => types.includes(t));
-  if (!order.length) order.push("meaning");
+  const candidates = eligibleWords(pool, order);
+  const ordered = [...shuffle(candidates.filter((i) => !seen.has(i.id))), ...shuffle(candidates.filter((i) => seen.has(i.id)))];
+  const target = Math.min(count, ordered.length);
+  const chosen = ordered.slice(0, target);
 
-  // Chia số câu cho từng dạng
-  const total = Math.min(count, pool.length);
-  const quota = new Map<QuestionType, number>();
-  order.forEach((t, i) => quota.set(t, Math.floor(total / order.length) + (i < total % order.length ? 1 : 0)));
+  // Gán từng từ cho dạng còn "thiếu" nhiều nhất trong các dạng mà từ đó dùng được.
+  // Từ ít lựa chọn (chỉ hợp vài dạng) được xếp trước để chia đều hơn.
+  const assigned = new Map<QuestionType, VocabularyItem[]>(order.map((t) => [t, []]));
+  const share = target / order.length;
+  const options = (i: VocabularyItem) => order.filter((t) => ELIGIBLE[t](i));
+  const byFlex = [...chosen].sort((a, b) => options(a).length - options(b).length);
+  for (const w of byFlex) {
+    const opts = options(w);
+    const pick = opts.reduce((best, t) => {
+      const fill = assigned.get(t)!.length / share;
+      const bestFill = assigned.get(best)!.length / share;
+      return fill < bestFill ? t : best;
+    }, opts[0]);
+    assigned.get(pick)!.push(w);
+  }
 
-  const take = (pred: (i: VocabularyItem) => boolean) => {
-    const it = ordered.find((i) => !used.has(i.id) && pred(i));
-    if (it) used.add(it.id);
-    return it;
-  };
   const nearOf = (i: VocabularyItem) => groupOf.get(i.id)?.items ?? [];
-
-  const byType = new Map<QuestionType, Question[]>();
-  let leftover = 0;
   let seq = 0;
-
-  // Dạng khó trước (cần câu ví dụ), dạng dễ nhận phần thiếu
-  for (const type of [...order].reverse()) {
-    const list: Question[] = [];
-    let need = quota.get(type) ?? 0;
-    while (need > 0) {
-      if (type === "passage") {
-        // Mỗi đoạn văn có ngẫu nhiên 1–3 chỗ trống
-        const k = 1 + Math.floor(Math.random() * 3);
-        const words: VocabularyItem[] = [];
-        for (let j = 0; j < k; j++) {
-          const w = take(ELIGIBLE.passage);
-          if (w) words.push(w);
-        }
-        if (!words.length) break;
-        list.push(makePassage(`q${seq++}`, words, allVocab, nearOf));
-        need -= 1;
-        continue;
-      }
-      const it = take(ELIGIBLE[type]);
-      if (!it) break;
-      list.push(makeChoice(`q${seq++}`, type, it, allVocab, nearOf));
-      need -= 1;
-    }
-    leftover += need;
-    byType.set(type, list);
-  }
-
-  // Phần thiếu (không đủ từ hợp lệ) bù bằng dạng chọn nghĩa / chọn từ
-  const fallback: QuestionType = order.includes("meaning") ? "meaning" : order.includes("reverse") ? "reverse" : "meaning";
-  while (leftover > 0) {
-    const it = take(ELIGIBLE[fallback]);
-    if (!it) break;
-    const list = byType.get(fallback) ?? [];
-    list.push(makeChoice(`q${seq++}`, fallback, it, allVocab, nearOf));
-    byType.set(fallback, list);
-    leftover--;
-  }
-
   const result: Question[] = [];
-  for (const t of QUESTION_TYPES.map((x) => x.type)) result.push(...(byType.get(t) ?? []));
+  for (const type of order) {
+    const words = shuffle(assigned.get(type)!);
+    if (type === "passage") {
+      // Mỗi đoạn văn gồm ngẫu nhiên 1–3 từ (chỗ trống)
+      for (let i = 0; i < words.length; ) {
+        const k = Math.min(1 + Math.floor(Math.random() * 3), words.length - i);
+        result.push(makePassage(`q${seq++}`, words.slice(i, i + k), allVocab, nearOf));
+        i += k;
+      }
+    } else {
+      for (const w of words) result.push(makeChoice(`q${seq++}`, type, w, allVocab, nearOf));
+    }
+  }
   return result;
 }
 
@@ -269,7 +309,7 @@ function makeChoice(
     item,
     answer,
     options,
-    sentence: type === "cloze" ? blankSentence(item, 0) : undefined,
+    ...(type === "cloze" ? (({ segs, surface }) => ({ sentence: segs, surface }))(blankSentence(item, 0)) : {}),
   };
 }
 
@@ -280,47 +320,51 @@ function makePassage(
   nearOf: (i: VocabularyItem) => VocabularyItem[]
 ): PassageQuestion {
   const answers = words.map((w) => w.kanji);
+  const blanked = words.map((w, idx) => ({ w, idx, ...blankSentence(w, idx) }));
 
   // Thêm 1–2 câu ngữ cảnh (không có chỗ trống) để đoạn văn dài hơn
   const fillers = shuffle(
-    all.filter((i) => i.exampleSentence && !words.some((w) => w.id === i.id) && nearOf(words[0]).includes(i))
+    nearOf(words[0]).filter((i) => i.exampleSentence && !words.some((w) => w.id === i.id))
   ).slice(0, words.length === 1 ? 2 : 1);
-  // Đáp án nhiễu không được là từ đang hiện sẵn trong đoạn văn
-  const visibleText = [...fillers, ...words].map((i) => i.exampleSentence ?? "").join("");
-  const inPassage = (v: string) => visibleText.includes(v);
-
-  const blanks: PassageBlank[] = words.map((w) => ({
-    item: w,
-    answer: w.kanji,
-    // Đáp án nhiễu gồm cả các từ của chỗ trống khác trong cùng đoạn
-    options: shuffle([
-      w.kanji,
-      ...answers.filter((a) => a !== w.kanji).slice(0, 2),
-      ...distractors(w.kanji, (i) => i.kanji, nearOf(w), all, 3, answers, inPassage),
-    ].slice(0, 4)),
-  }));
 
   const sentences: { segs: Seg[]; vn: string }[] = shuffle([
-    ...words.map((w, idx) => ({ segs: blankSentence(w, idx), vn: w.exampleTranslation ?? "", idx })),
-    ...fillers.map((f) => ({ segs: parseSentence(f), vn: f.exampleTranslation ?? "", idx: -1 })),
+    ...blanked.map((b) => ({ segs: b.segs, vn: b.w.exampleTranslation ?? "" })),
+    ...fillers.map((f) => ({ segs: parseSentence(f), vn: f.exampleTranslation ?? "" })),
   ]);
+
+  // Đáp án nhiễu không được là từ đang hiện sẵn trong đoạn văn
+  const visibleText = sentences.flatMap((x) => x.segs.map((g) => g.text)).join("");
+  const inPassage = (v: string) => visibleText.includes(v);
+
+  const blanks: PassageBlank[] = blanked.map(({ w, surface }) => ({
+    item: w,
+    answer: w.kanji,
+    surface,
+    // Đáp án nhiễu gồm cả các từ của chỗ trống khác trong cùng đoạn
+    options: shuffle(
+      [
+        w.kanji,
+        ...answers.filter((a) => a !== w.kanji).slice(0, 2),
+        ...distractors(w.kanji, (i) => i.kanji, nearOf(w), all, 3, answers, inPassage),
+      ].slice(0, 4)
+    ),
+  }));
 
   // Đánh số chỗ trống theo thứ tự xuất hiện trong đoạn
   const appearance: number[] = [];
-  for (const s of sentences) for (const seg of s.segs) if (seg.blank !== undefined) appearance.push(seg.blank);
+  for (const x of sentences) for (const seg of x.segs) if (seg.blank !== undefined) appearance.push(seg.blank);
   const renumber = new Map(appearance.map((orig, i) => [orig, i]));
   const segments: Seg[] = [];
-  for (const s of sentences) {
-    for (const seg of s.segs) segments.push(seg.blank !== undefined ? { ...seg, blank: renumber.get(seg.blank) } : seg);
+  for (const x of sentences) {
+    for (const seg of x.segs) segments.push(seg.blank !== undefined ? { ...seg, blank: renumber.get(seg.blank) } : seg);
   }
-  const orderedBlanks = appearance.map((orig) => blanks[orig]);
 
   return {
     id,
     type: "passage",
     segments,
-    blanks: orderedBlanks,
-    translations: sentences.map((s) => s.vn).filter(Boolean),
+    blanks: appearance.map((orig) => blanks[orig]),
+    translations: sentences.map((x) => x.vn).filter(Boolean),
   };
 }
 

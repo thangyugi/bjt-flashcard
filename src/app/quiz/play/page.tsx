@@ -72,7 +72,8 @@ function QuizPlayInner() {
 
   const retry = session.retry;
   const pool = retry ?? scopeSnapshot.items;
-  const count = retry ? retry.length : countParam === "all" ? pool.length : Number(countParam) || 20;
+  // Số từ cần kiểm tra ("all" = mọi từ dùng được với các dạng đã chọn)
+  const count = retry ? retry.length : countParam === "all" ? Infinity : Number(countParam) || 20;
 
   return (
     <QuizSession

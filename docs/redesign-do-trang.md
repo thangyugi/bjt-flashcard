@@ -104,3 +104,10 @@ Thay `window.confirm` bằng hộp thoại riêng: số câu đã trả lời, c
 | Lưu trữ | `src/store/flashcard-store.ts` | Thêm `reviewIds` (từ cần ôn) và `quizSeen` (từ đã hỏi theo phạm vi), lưu localStorage. |
 | Điều hướng | `Header.tsx`, `MobileTabBar.tsx`, `page.tsx` | Menu "Trắc nghiệm" → `/quiz`. Thanh tab mobile hiện ở màn tổng hợp, ẩn khi đang làm bài. |
 | Loading | `quiz/loading.tsx`, `quiz/play/loading.tsx`, `Skeletons.tsx` | Khung mờ riêng cho màn tổng hợp (`HubSkeleton`). |
+
+### 5a. Sửa lỗi sinh đề (thiếu câu, lẫn dạng không chọn)
+- **Chỉ dùng đúng các dạng đã chọn**: trước đây khi thiếu từ hợp lệ, đề tự bù bằng "Chọn nghĩa" dù không chọn dạng này — đã bỏ.
+- **Đếm theo số từ**: "Số từ kiểm tra" 10/20/30/50/Tất cả. "Tất cả" = mọi từ trong phạm vi dùng được với các dạng đã chọn, mỗi từ đúng một lần. Đoạn văn gộp 1–3 từ thành 1 câu nên số câu ít hơn số từ.
+- **Nhận diện từ trong câu ví dụ tốt hơn**: khớp cả dạng đã chia (結ぶ → 結びました), cách viết `A・B`, bỏ phần trong ngoặc và dấu ～. Điền chỗ trống dùng được cho 902/905 từ BJT (trước là 749).
+- Màn tổng hợp hiện "Dùng được cho X/Y từ" ở từng dạng và báo số từ không áp dụng được.
+- Bài dài (>40 câu): ở màn kết quả, câu sai không tự mở hết để trang nhẹ.

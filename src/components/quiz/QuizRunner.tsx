@@ -101,6 +101,7 @@ export function QuizRunner({ questions, title, onFinish, onNewSession, onRetryWr
   const [openMap, setOpenMap] = useState<Record<number, boolean>>({});
 
   const total = questions.length;
+  const wordCount = useMemo(() => questions.reduce((n, q) => n + questionItems(q).length, 0), [questions]);
   const graded = useMemo(() => questions.map((q, i) => gradeQuestion(q, answers[i])), [questions, answers]);
 
   // Các phần theo dạng câu hỏi
@@ -394,7 +395,7 @@ export function QuizRunner({ questions, title, onFinish, onNewSession, onRetryWr
         </Link>
         <h1 className="truncate text-[17px] font-bold text-ink lg:text-lg">{title}</h1>
         <span className="min-w-[90px] text-right text-[13px] text-ink-3">
-          {total} câu · {parts.length} phần
+          {total} câu · {wordCount} từ · {parts.length} phần
         </span>
       </div>
 
@@ -848,7 +849,8 @@ function QuizResult({ questions, answers, graded, title, filter, setFilter, open
               idx={idx}
               kind={kind}
               answer={answers[idx]}
-              expanded={openMap[idx] ?? kind !== "right"}
+              // Bài ngắn: câu sai/bỏ trống mở sẵn; bài dài: thu gọn để trang nhẹ
+              expanded={openMap[idx] ?? (kind !== "right" && total <= 40)}
               onToggle={(v) => setOpenMap((m) => ({ ...m, [idx]: v }))}
             />
           ))}
@@ -931,7 +933,7 @@ function ReviewItem({
                   return (
                     <span className={cn("mx-0.5 rounded-md px-1.5 font-mincho font-semibold", ok ? "bg-ok-soft text-ok-ink" : "bg-brand-soft text-brand-soft-ink")}>
                       <sup className="mr-0.5 font-sans text-[10px]">{n + 1}</sup>
-                      {q.blanks[n].answer}
+                      {q.blanks[n].surface}
                     </span>
                   );
                 }}
