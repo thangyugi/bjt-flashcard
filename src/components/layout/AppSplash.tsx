@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useVocabularyStats } from "@/hooks/useVocabulary";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,9 @@ import { cn } from "@/lib/utils";
 export function AppSplash() {
   const { isFetched } = useVocabularyStats();
   const [removed, setRemoved] = useState(false);
-  if (removed) return null;
+  const pathname = usePathname();
+  // Màn khởi động chỉ dành cho BJT Flashcard, không hiện ở trang OCI AI Foundations
+  if (removed || pathname.startsWith("/oracle-oci-ai")) return null;
 
   return (
     <div
