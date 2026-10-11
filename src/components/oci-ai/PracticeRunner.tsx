@@ -261,7 +261,7 @@ function PracticeMode({
             <RotateCcw aria-hidden /> Làm lại tất cả (xáo trộn)
           </button>
           <Link href={backHref} className="oci-btn ghost">
-            <ArrowLeft aria-hidden /> {backLabel}
+            <ArrowLeft aria-hidden /> {backLabel.replace(/^←\s*/, "")}
           </Link>
         </div>
         {wrong.length > 0 && (
@@ -385,14 +385,20 @@ function ExamMode({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Giữ bản mới nhất của submit để đồng hồ tự nộp bài khi hết giờ
+  const submitRef = useRef(submit);
+  useEffect(() => {
+    submitRef.current = submit;
+  });
   useEffect(() => {
     if (!started || submitted) return;
-    const t = setInterval(() => setNow(Date.now()), 1000);
+    const t = setInterval(() => {
+      const n = Date.now();
+      setNow(n);
+      if (n >= endAt) submitRef.current();
+    }, 1000);
     return () => clearInterval(t);
-  }, [started, submitted]);
-  useEffect(() => {
-    if (started && !submitted && now > 0 && now >= endAt) submit();
-  });
+  }, [started, submitted, endAt]);
 
   if (!started) {
     return (
@@ -478,7 +484,7 @@ function ExamMode({
             <RotateCcw aria-hidden /> Làm lại đề (xáo trộn)
           </button>
           <Link href={backHref} className="oci-btn ghost">
-            <ArrowLeft aria-hidden /> {backLabel}
+            <ArrowLeft aria-hidden /> {backLabel.replace(/^←\s*/, "")}
           </Link>
           <ViToggle showVi={showVi} setShowVi={setShowVi} />
         </div>
