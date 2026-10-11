@@ -14,6 +14,8 @@ export function MobileTabBar() {
   const pathname = usePathname();
   // Ẩn khi đang làm trắc nghiệm hoặc đang học một nhóm (chế độ tập trung)
   if (pathname.startsWith("/quiz/play") || pathname.startsWith("/study/")) return null;
+  // Trang học OCI AI Foundations có điều hướng riêng
+  if (pathname.startsWith("/oracle-oci-ai")) return null;
 
   return (
     <>

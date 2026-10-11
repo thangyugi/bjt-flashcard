@@ -15,6 +15,9 @@ export function Header() {
   const pathname = usePathname();
   const { mastered, total, pct } = useProgressStats();
 
+  // Trang học OCI AI Foundations có thanh điều hướng riêng
+  if (pathname.startsWith("/oracle-oci-ai")) return null;
+
   // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng
   const hideOnMobile = pathname.startsWith("/study/") || pathname.startsWith("/quiz/play");
 
