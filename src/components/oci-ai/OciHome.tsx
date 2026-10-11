@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookA, GraduationCap, Layers, Play, RotateCcw } from "lucide-react";
+import { ArrowRight, BookA, FileCheck2, GraduationCap, Layers, Play, RotateCcw } from "lucide-react";
 import type { LessonMeta, ModuleMeta } from "@/data/oci-ai/types";
 import { useOciAiStore } from "@/store/oci-ai-store";
 import { useHydrated } from "@/hooks/useHydrated";
@@ -144,6 +144,19 @@ export function OciHome({ modules, lessons, stats }: Props) {
             </span>
             <span className="d" style={{ display: "block" }}>
               {stats.terms} thuật ngữ, tìm nhanh và ôn bằng thẻ ghi nhớ.
+            </span>
+          </span>
+        </Link>
+        <Link href={`${OCI_BASE}/practice`} className="oci-tool">
+          <span className="ic">
+            <FileCheck2 aria-hidden />
+          </span>
+          <span>
+            <span className="t" style={{ display: "block" }}>
+              Luyện tập &amp; thi thử 1Z0-1122-26
+            </span>
+            <span className="d" style={{ display: "block" }}>
+              Ngân hàng câu hỏi theo từng bài, trộn ngẫu nhiên và 3 đề thi mô phỏng có đồng hồ.
             </span>
           </span>
         </Link>

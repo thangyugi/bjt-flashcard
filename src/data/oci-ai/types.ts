@@ -80,3 +80,44 @@ export interface ModuleMeta {
   lessonIds: string[];
   minutes: number;
 }
+
+/* ── Luyện tập & thi thử ─────────────────────────────────── */
+
+export interface PracticeOption {
+  /** Nội dung đáp án (tiếng Anh, như đề thi thật) */
+  t: string;
+  /** Ghi chú tiếng Việt: vì sao nên chọn / không nên chọn */
+  n: string;
+  ok?: boolean;
+}
+
+export interface PracticeQuestion {
+  id: string;
+  /** Câu hỏi tiếng Anh */
+  q: string;
+  /** Bản dịch tiếng Việt */
+  vi: string;
+  opts: PracticeOption[];
+  /** Mẹo nhớ lâu & so sánh với khái niệm gần giống */
+  tip?: string;
+  /** Chủ đề (dùng cho đề thi thử) */
+  domain?: string;
+  /** Bài học liên quan */
+  lessonId?: string;
+}
+
+export interface LessonPractice {
+  lessonId: string;
+  /** Mẹo ghi nhớ tổng hợp của bài */
+  tips: string[];
+  qs: PracticeQuestion[];
+}
+
+export interface MockExam {
+  id: string;
+  title: string;
+  desc: string;
+  minutes: number;
+  passPct: number;
+  qs: PracticeQuestion[];
+}

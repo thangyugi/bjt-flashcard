@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   BookA,
   ChevronRight,
+  FileCheck2,
   Circle,
   CircleCheck,
   House,
@@ -59,7 +60,7 @@ export function OciShell({ modules, lessons, children }: Props) {
   const [query, setQuery] = useState("");
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => "system" as Theme);
 
-  const activeId = pathname.startsWith(`${OCI_BASE}/`) ? pathname.slice(OCI_BASE.length + 1) : "";
+  const activeId = pathname.startsWith(`${OCI_BASE}/`) ? pathname.slice(OCI_BASE.length + 1).replace(/^practice\//, "") : "";
   const activeModuleId = lessons.find((l) => l.id === activeId)?.moduleId;
 
   // Mở sẵn nhóm chứa bài đang học
@@ -187,6 +188,12 @@ export function OciShell({ modules, lessons, children }: Props) {
                   className={`oci-side-link${pathname === `${OCI_BASE}/glossary` ? " active" : ""}`}
                 >
                   <BookA aria-hidden /> Từ điển thuật ngữ
+                </Link>
+                <Link
+                  href={`${OCI_BASE}/practice`}
+                  className={`oci-side-link${pathname.startsWith(`${OCI_BASE}/practice`) || pathname.startsWith(`${OCI_BASE}/exam`) ? " active" : ""}`}
+                >
+                  <FileCheck2 aria-hidden /> Luyện tập &amp; thi thử
                 </Link>
                 <div className="oci-side-sep" />
               </>

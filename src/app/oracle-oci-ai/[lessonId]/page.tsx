@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BookOpen, Clock, ListChecks } from "lucide-react";
+import { BookOpen, Clock, FileCheck2, ListChecks } from "lucide-react";
+import { practiceByLesson } from "@/data/oci-ai/practice";
 import { LESSONS, getLesson } from "@/data/oci-ai/course";
 import { LessonQuiz } from "@/components/oci-ai/LessonQuiz";
 import { LessonControls } from "@/components/oci-ai/LessonControls";
@@ -72,6 +73,19 @@ export default async function LessonPage({ params }: PageProps<"/oracle-oci-ai/[
         {lesson.quiz && <LessonQuiz lessonId={lesson.id} questions={lesson.quiz} passPct={lesson.passPct} />}
 
         {lesson.afterHtml && <div className="oci-prose" style={{ marginTop: 24 }} dangerouslySetInnerHTML={{ __html: lesson.afterHtml }} />}
+
+        {practiceByLesson.has(lesson.id) && (
+          <div className="oci-practice-cta">
+            <FileCheck2 aria-hidden style={{ width: 26, height: 26, color: "var(--o-accent)", flex: "none" }} />
+            <span className="tx">
+              <b>Luyện {practiceByLesson.get(lesson.id)!.qs.length} câu hỏi của bài này</b>
+              Câu hỏi tiếng Anh kèm dịch, giải thích từng đáp án và mẹo nhớ.
+            </span>
+            <Link href={`/oracle-oci-ai/practice/${lesson.id}`} className="oci-btn primary sm">
+              Bắt đầu
+            </Link>
+          </div>
+        )}
 
         <LessonControls
           lessonId={lesson.id}

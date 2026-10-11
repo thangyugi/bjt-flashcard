@@ -9,11 +9,14 @@ interface OciAiStore {
   quiz: Record<string, { score: number; total: number; at: string }>;
   /** Bài mở gần nhất → nút "Học tiếp" */
   lastLessonId: string | null;
+  /** Kết quả luyện tập / thi thử: khóa bộ câu hỏi → điểm */
+  practice: Record<string, { best: number; last: number; total: number; at: string }>;
 
   toggleDone: (id: string) => void;
   markDone: (id: string) => void;
   saveQuiz: (id: string, score: number, total: number) => void;
   visit: (id: string) => void;
+  savePractice: (key: string, score: number, total: number) => void;
   reset: () => void;
 }
 
@@ -23,6 +26,7 @@ export const useOciAiStore = create<OciAiStore>()(
       done: {},
       quiz: {},
       lastLessonId: null,
+      practice: {},
 
       toggleDone: (id) =>
         set((s) => {
@@ -36,7 +40,17 @@ export const useOciAiStore = create<OciAiStore>()(
       saveQuiz: (id, score, total) =>
         set((s) => ({ quiz: { ...s.quiz, [id]: { score, total, at: new Date().toISOString() } } })),
       visit: (id) => set((s) => (s.lastLessonId === id ? s : { lastLessonId: id })),
-      reset: () => set({ done: {}, quiz: {}, lastLessonId: null }),
+      savePractice: (key, score, total) =>
+        set((s) => {
+          const prev = s.practice?.[key];
+          return {
+            practice: {
+              ...s.practice,
+              [key]: { best: Math.max(prev?.best ?? 0, score), last: score, total, at: new Date().toISOString() },
+            },
+          };
+        }),
+      reset: () => set({ done: {}, quiz: {}, lastLessonId: null, practice: {} }),
     }),
     { name: "oci-ai-progress", version: 1 }
   )
