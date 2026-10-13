@@ -10,6 +10,7 @@ import type { SourceType, VocabularyGroup, VocabularyItem } from "@/types/vocabu
 import { ArrowRight, Lightbulb, Play, Search, SquareCheckBig } from "lucide-react";
 import Link from "next/link";
 import { CardRowSkeleton } from "@/components/layout/Skeletons";
+import { CourseCards } from "@/components/layout/CourseCards";
 import { cn } from "@/lib/utils";
 
 const FILTERS: { label: string; value: SourceType | "ALL" }[] = [
@@ -221,6 +222,26 @@ export default function HomePage() {
             </Link>
           </div>
         )}
+      </section>
+
+      {/* ── Khóa học ── */}
+      <section aria-labelledby="home-courses" className="flex flex-col gap-4">
+        <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <h2 id="home-courses" className="text-[22px] font-extrabold tracking-[-0.015em] text-ink">
+              Khóa học
+            </h2>
+            <p className="text-sm text-ink-3">JLPT N1 ngữ pháp kể thành truyện, OCI AI Foundations và từ vựng BJT.</p>
+          </div>
+          <Link
+            href="/courses"
+            className="flex shrink-0 items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover"
+          >
+            Tất cả khóa học
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </div>
+        <CourseCards compact />
       </section>
 
       {/* ── Bộ lọc & tìm kiếm ── */}
