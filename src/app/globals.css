@@ -284,3 +284,26 @@ ruby rt {
 @media (prefers-reduced-motion: reduce) {
   .nav-progress-bar, .loading-bar { animation-duration: 0s; }
 }
+
+/* ── JLPT N1: mẫu ngữ pháp & chỗ trống ───────────────────── */
+.n1-mark {
+  background: linear-gradient(transparent 58%, var(--brand-soft) 58%);
+  color: var(--brand-soft-ink);
+  font-weight: 700;
+  padding: 0 1px;
+}
+.n1-mark rt {
+  color: var(--brand-soft-ink);
+  opacity: 0.75;
+}
+.n1-blank {
+  display: inline-block;
+  width: 4.5em;
+  border-bottom: 2px solid var(--ink-3);
+  margin: 0 0.2em;
+  vertical-align: -0.15em;
+}
+.n1-star {
+  color: var(--brand);
+  font-weight: 700;
+}

@@ -3,11 +3,11 @@
 import Link, { useLinkStatus } from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { House, Layers, SquareCheckBig } from "lucide-react";
+import { GraduationCap, House, Layers, SquareCheckBig } from "lucide-react";
 import { NAV_ITEMS } from "@/components/layout/Header";
 import { cn } from "@/lib/utils";
 
-const ICONS = [House, Layers, SquareCheckBig];
+const ICONS = [House, Layers, SquareCheckBig, GraduationCap];
 
 /** Thanh điều hướng dưới đáy — chỉ hiện trên mobile, ẩn ở màn trắc nghiệm và học theo nhóm. */
 export function MobileTabBar() {
@@ -23,7 +23,7 @@ export function MobileTabBar() {
       <div className="h-20 md:hidden" aria-hidden />
       <nav
         aria-label="Điều hướng chính"
-        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-line bg-surface px-3 pt-2 pb-[max(env(safe-area-inset-bottom),14px)] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-line bg-surface px-3 pt-2 pb-[max(env(safe-area-inset-bottom),14px)] md:hidden"
       >
         {NAV_ITEMS.map((item, i) => {
           const Icon = ICONS[i];

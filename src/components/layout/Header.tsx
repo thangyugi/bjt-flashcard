@@ -9,6 +9,11 @@ export const NAV_ITEMS = [
   { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
   { href: "/study", label: "Học bài", match: (p: string) => p.startsWith("/study") },
   { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => p.startsWith("/quiz") },
+  {
+    href: "/courses",
+    label: "Khóa học",
+    match: (p: string) => p.startsWith("/courses") || p.startsWith("/jlpt-n1"),
+  },
 ];
 
 export function Header() {
