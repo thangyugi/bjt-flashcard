@@ -47,7 +47,7 @@ export default function N1GrammarIndex() {
 
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-extrabold text-ink">Mục lục</h2>
-        <ChapterMap lessons={lessons} total={20} />
+        <ChapterMap lessons={lessons} total={lessons.length} />
       </section>
     </div>
   );

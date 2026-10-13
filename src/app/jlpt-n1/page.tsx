@@ -107,7 +107,7 @@ export default function JlptN1Home() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-[22px] font-extrabold tracking-[-0.015em] text-ink">Ngữ pháp · 20 chương</h2>
-        <ChapterMap lessons={lessons} total={20} />
+        <ChapterMap lessons={lessons} total={lessons.length} />
       </section>
     </div>
   );

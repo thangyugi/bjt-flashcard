@@ -80,8 +80,8 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
             className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-brand/90 sm:h-72 sm:w-72"
             aria-hidden
           />
-          <div className="relative flex items-center gap-3 text-[13px] font-semibold tracking-[0.08em] text-[#d8cfc6] uppercase">
-            <span className="font-mincho text-base tracking-normal text-white normal-case">第{lesson.num}章</span>
+          <div className="relative flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold tracking-[0.08em] text-[#d8cfc6] uppercase">
+            <span className="font-mincho text-base tracking-normal whitespace-nowrap text-white normal-case">第{lesson.num}章</span>
             <span>·</span>
             <Jp t={lesson.topicJa} className="tracking-normal normal-case [&_rt]:text-[#b5ada5]" />
             <span>·</span>

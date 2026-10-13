@@ -164,7 +164,7 @@ function Choice({ q, onResult }: { q: Extract<N1Question, { type: "choice" }>; o
   const done = picked !== null;
   return (
     <>
-      <p className="text-[17px] leading-[2.1] text-ink">
+      <p className="text-[17px] leading-[2.1] whitespace-pre-line text-ink">
         <Jp t={q.q} />
       </p>
       {q.qVi && <p className="mt-1 text-sm text-ink-3">{q.qVi}</p>}
