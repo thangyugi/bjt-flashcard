@@ -1,6 +1,11 @@
 import type { KanjiInfo, VocabLesson, VocabLessonMeta, VocabSource } from "./types";
 import { KANJI_BASE } from "./kanji";
 import { v01 } from "./mimikara/v01";
+import { v02 } from "./mimikara/v02";
+import { v03 } from "./mimikara/v03";
+import { v04 } from "./mimikara/v04";
+import { v05 } from "./mimikara/v05";
+import { v06 } from "./mimikara/v06";
 
 /** Thư viện từ vựng N1 — mỗi nguồn là một bộ bài. Thêm nguồn mới: thêm phần tử vào mảng này. */
 export const VOCAB_SOURCES: VocabSource[] = [
@@ -8,7 +13,7 @@ export const VOCAB_SOURCES: VocabSource[] = [
     id: "mimikara-n1",
     name: "Mimikara Oboeru N1",
     prefix: "mk",
-    lessons: [v01],
+    lessons: [v01, v02, v03, v04, v05, v06],
   },
 ];
 
