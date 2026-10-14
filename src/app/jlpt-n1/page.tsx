@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, BookA, BookOpen, Headphones, Languages, ScrollText } from "lucide-react";
 import { N1_LESSONS, getN1Stats, toMeta } from "@/data/jlpt-n1/course";
 import { withFurigana } from "@/data/jlpt-n1/furigana";
+import { vocabStats } from "@/data/jlpt-n1/vocab";
 import { ChapterMap } from "@/components/jlpt-n1/ChapterMap";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 
 export default function JlptN1Home() {
   const stats = getN1Stats();
+  const vocab = vocabStats();
   const lessons = withFurigana(N1_LESSONS.map(toMeta));
   const skills = [
     {
@@ -23,7 +25,14 @@ export default function JlptN1Home() {
       desc: `${stats.patterns} mẫu · ${stats.lessons} chương truyện · ${stats.questions} câu trắc nghiệm`,
       ready: true,
     },
-    { href: "", icon: BookA, ja: "語彙", title: "Từ vựng", desc: "Đang biên soạn", ready: false },
+    {
+      href: "/jlpt-n1/vocab",
+      icon: BookA,
+      ja: "語彙",
+      title: "Từ vựng",
+      desc: `Mimikara N1 · ${vocab.words} từ · ${vocab.lessons} bài`,
+      ready: true,
+    },
     { href: "", icon: Languages, ja: "漢字", title: "Kanji", desc: "Đang biên soạn", ready: false },
     { href: "", icon: BookOpen, ja: "読解", title: "Đọc hiểu", desc: "Đang biên soạn", ready: false },
     { href: "", icon: Headphones, ja: "聴解", title: "Nghe hiểu", desc: "Đang biên soạn", ready: false },

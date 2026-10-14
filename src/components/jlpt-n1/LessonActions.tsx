@@ -7,8 +7,8 @@ import { useHydrated } from "@/hooks/useHydrated";
 import { cn } from "@/lib/utils";
 
 /** Ghi nhớ chương đang học + nút đánh dấu hoàn thành. */
-export function LessonActions({ lessonId }: { lessonId: string }) {
-  const visit = useN1Store((s) => s.visit);
+export function LessonActions({ lessonId, kind = "grammar" }: { lessonId: string; kind?: "grammar" | "vocab" }) {
+  const visit = useN1Store((s) => (kind === "vocab" ? s.visitVocab : s.visit));
   const done = useN1Store((s) => !!s.done[lessonId]);
   const toggle = useN1Store((s) => s.toggleDone);
   const hydrated = useHydrated();

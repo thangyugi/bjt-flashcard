@@ -75,6 +75,7 @@ READING_OVERRIDES: dict[str, str] = {
 
 # Sửa theo ngữ cảnh trên kết quả đã đánh dấu: (đoạn sai, đoạn đúng)
 MARKUP_FIXES: list[tuple[str, str]] = [
+    ("{一|いち}{歳|さい}", "{一歳|いっさい}"),
     ("・{春|しゅん}・", "・{春|はる}・"),
     ("{謝|しゃ}っ", "{謝|あやま}っ"),
     ("{比|ひ}ぶ", "{比|くら}ぶ"),
@@ -163,6 +164,11 @@ def align(surface: str, reading: str) -> list[tuple[str, str | None]]:
 def analyze(text: str) -> str:
     if not KANJI_RE.search(text):
         return text
+    # MeCab bỏ khoảng trắng ở đầu/cuối đoạn — giữ lại để ghép đoạn không bị dính chữ
+    core = text.strip()
+    lead, trail = text[: len(text) - len(text.lstrip())], text[len(text.rstrip()) :]
+    if core != text:
+        return lead + analyze(core) + trail
     out: list[str] = []
     for word in tagger(text):
         if word.white_space:
@@ -198,20 +204,72 @@ def strip_furigana(markup: str) -> str:
     return re.sub(r"\{([^|}]+)\|[^}]+\}", r"\1", markup)
 
 
+WORD_BLOCK_RE = re.compile(r"\bno: \d+,")
+WORD_FIELD_RE = re.compile(r'\bw: "([^"]+)", r: "([^"]+)"')
+MARKED_RE = re.compile(r"\[\[(.*?)\]\]")
+
+
+def word_runs(word: str, reading: str) -> list[tuple[str, str]]:
+    """Các đoạn kanji của từ kèm cách đọc đúng, ví dụ 見落とす/みおとす → [(見,み), (落,お)]."""
+    if not KANJI_RE.search(word):
+        return []
+    return [(k, r) for k, r in align(word, reading) if r and KANJI_RE.match(k)]
+
+
+def inject(text: str, runs: list[tuple[str, str]]) -> str:
+    """Gắn sẵn {kanji|cách đọc} cho các đoạn kanji của từ đang học."""
+    for k, r in sorted(runs, key=lambda x: -len(x[0])):
+        parts = MANUAL_RE.split(text)
+        text = "".join(p if MANUAL_RE.fullmatch(p) else p.replace(k, f"{{{k}|{r}}}") for p in parts)
+    return text
+
+
+def apply_runs(s: str, runs: list[tuple[str, str]], whole: bool) -> str:
+    if not runs:
+        return s
+    if whole:
+        return inject(s, runs)
+    return MARKED_RE.sub(lambda m: "[[" + inject(m.group(1), runs) + "]]", s)
+
+
+def collect(path: Path) -> list[tuple[str, str]]:
+    """(chuỗi gốc, chuỗi đã gắn sẵn cách đọc của từ vựng) cho mọi chuỗi có kanji trong file."""
+    text = path.read_text(encoding="utf-8")
+    starts = [m.start() for m in WORD_BLOCK_RE.finditer(text)]
+    blocks: list[tuple[int, int, list[tuple[str, str]], str]] = []
+    all_runs: list[tuple[str, str]] = []
+    for i, st in enumerate(starts):
+        en = starts[i + 1] if i + 1 < len(starts) else len(text)
+        f = WORD_FIELD_RE.search(text, st, en)
+        if f:
+            runs = word_runs(f.group(1), f.group(2))
+            blocks.append((st, en, runs, f.group(1)))
+            all_runs += runs
+    out = []
+    for m in STRING_RE.finditer(text):
+        s = json.loads(f'"{m.group(1)}"')
+        if not KANJI_RE.search(s):
+            continue
+        blk = next((b for b in blocks if b[0] <= m.start() < b[1]), None)
+        if blk:
+            pre = apply_runs(s, blk[2], whole=blk[3] in s and s != blk[3])
+        else:
+            pre = apply_runs(s, all_runs, whole=False)
+        out.append((s, pre))
+    return out
+
+
 def main() -> None:
-    strings: set[str] = set()
+    items: dict[str, str] = {}
     for path in sorted(DATA_DIR.rglob("*.ts")):
-        for m in STRING_RE.finditer(path.read_text(encoding="utf-8")):
-            s = json.loads(f'"{m.group(1)}"')
-            if KANJI_RE.search(s):
-                strings.add(s)
+        for s, pre in collect(path):
+            items.setdefault(s, pre)
     result: dict[str, str] = {}
-    for s in sorted(strings):
-        markup = to_furigana(s)
+    for s in sorted(items):
+        markup = to_furigana(items[s])
         if markup == s:
             continue
-        expected = MANUAL_RE.sub(lambda m: m.group(0), s)
-        assert strip_furigana(markup) == strip_furigana(expected), (s, markup)
+        assert strip_furigana(markup) == s, (s, markup)
         result[s] = markup
     OUT_PATH.write_text(json.dumps(result, ensure_ascii=False, indent=0) + "\n", encoding="utf-8")
     print(f"furigana.json: {len(result)} chuỗi")
