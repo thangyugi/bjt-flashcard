@@ -25,8 +25,8 @@ export const v10: VocabLesson = {
       vi: "Một đêm, tên trộm đột nhập quán sau giờ đóng cửa. Nghe tiếng động, Mai giật bắn mình; khi thấy bóng người trong kho tối, cô sởn cả gáy.",
     },
     {
-      jp: "[[焦って]]電話をかけようとするマイを、田中さんが「早く！」と[[せかした]]。すぐに警察が来て、泥棒はその場で[[捕らえられた]]。",
-      vi: "Mai cuống cuồng định gọi điện, anh Tanaka giục \"Nhanh lên!\". Cảnh sát đến ngay, tên trộm bị bắt tại chỗ.",
+      jp: "[[焦って]]電話をかけようとするマイを、田中さんが「早く！」と[[せかした]]。マイは怖さに[[耐えて]]待った。すぐに警察が来て、泥棒はその場で[[捕らえられた]]。",
+      vi: "Mai cuống cuồng định gọi điện, anh Tanaka giục \"Nhanh lên!\". Mai cố chịu đựng nỗi sợ mà chờ. Cảnh sát đến ngay, tên trộm bị bắt tại chỗ.",
     },
     {
       jp: "翌日、本社が新しい防犯カメラを[[よこした]]。店長は「店のことは本社がちゃんとしてくれ」と[[むっとして]]いたが、皆の無事を喜んだ。",
