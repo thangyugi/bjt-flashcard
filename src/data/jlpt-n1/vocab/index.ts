@@ -6,6 +6,12 @@ import { v03 } from "./mimikara/v03";
 import { v04 } from "./mimikara/v04";
 import { v05 } from "./mimikara/v05";
 import { v06 } from "./mimikara/v06";
+import { v07 } from "./mimikara/v07";
+import { v08 } from "./mimikara/v08";
+import { v09 } from "./mimikara/v09";
+import { v10 } from "./mimikara/v10";
+import { v11 } from "./mimikara/v11";
+import { v12 } from "./mimikara/v12";
 
 /** Thư viện từ vựng N1 — mỗi nguồn là một bộ bài. Thêm nguồn mới: thêm phần tử vào mảng này. */
 export const VOCAB_SOURCES: VocabSource[] = [
@@ -13,7 +19,7 @@ export const VOCAB_SOURCES: VocabSource[] = [
     id: "mimikara-n1",
     name: "Mimikara Oboeru N1",
     prefix: "mk",
-    lessons: [v01, v02, v03, v04, v05, v06],
+    lessons: [v01, v02, v03, v04, v05, v06, v07, v08, v09, v10, v11, v12],
   },
 ];
 
