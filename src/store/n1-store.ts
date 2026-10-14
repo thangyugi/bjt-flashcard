@@ -9,11 +9,14 @@ interface N1Store {
   quiz: Record<string, { best: number; last: number; total: number; at: string }>;
   /** Chương mở gần nhất → nút "Học tiếp" */
   lastLessonId: string | null;
+  /** Bài từ vựng mở gần nhất */
+  lastVocabId: string | null;
 
   toggleDone: (id: string) => void;
   markDone: (id: string) => void;
   saveQuiz: (key: string, score: number, total: number) => void;
   visit: (id: string) => void;
+  visitVocab: (id: string) => void;
   reset: () => void;
 }
 
@@ -23,6 +26,7 @@ export const useN1Store = create<N1Store>()(
       done: {},
       quiz: {},
       lastLessonId: null,
+      lastVocabId: null,
 
       toggleDone: (id) =>
         set((s) => {
@@ -43,7 +47,8 @@ export const useN1Store = create<N1Store>()(
           };
         }),
       visit: (id) => set((s) => (s.lastLessonId === id ? s : { lastLessonId: id })),
-      reset: () => set({ done: {}, quiz: {}, lastLessonId: null }),
+      visitVocab: (id) => set((s) => (s.lastVocabId === id ? s : { lastVocabId: id })),
+      reset: () => set({ done: {}, quiz: {}, lastLessonId: null, lastVocabId: null }),
     }),
     { name: "jlpt-n1-progress", version: 1 }
   )

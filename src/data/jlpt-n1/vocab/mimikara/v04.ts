@@ -1,0 +1,286 @@
+import type { VocabLesson } from "../types";
+
+export const v04: VocabLesson = {
+  id: "mk-04",
+  num: 4,
+  title: "Đồ vật, con số & sự biến đổi",
+  titleJa: "物・数・変化",
+  scene:
+    "Tiệc tất niên của phòng Marketing: bốc thăm trúng thưởng, chiếc cốc sứt mẻ, ấm nước sôi sùng sục và một trận động đất nhỏ. Những từ chỉ đồ vật, con số và sự thay đổi xuất hiện liên tiếp.",
+  story: [
+    {
+      jp: "忘年会の最後は、毎年恒例の[[くじ]]引きだ。健太は一等の旅行券を[[獲得]]して、跳び上がって喜んだ。",
+      vi: "Cuối tiệc tất niên là màn bốc thăm thường niên. Kenta giành được giải nhất là phiếu du lịch, nhảy cẫng lên vì sướng.",
+    },
+    {
+      jp: "「金額の[[桁]]を見て！ゼロが五つもある」「旅行代は会社が[[一括]]で払ってくれるんだって」",
+      vi: "\"Nhìn số chữ số này! Năm số không lận!\" \"Nghe nói công ty trả tiền chuyến đi một lần luôn đấy.\"",
+    },
+    {
+      jp: "マイはテーブルの[[隅]]で、アンケートの「感想」[[欄]]に何を書こうか考えていた。",
+      vi: "Mai ngồi ở góc bàn, nghĩ xem nên viết gì vào ô \"cảm tưởng\" của phiếu khảo sát.",
+    },
+    {
+      jp: "手に取ったコップは、[[縁]]が少し欠けて、[[ひび]]が入っていた。台所ではやかんのお湯が[[沸騰]]している。",
+      vi: "Chiếc cốc Mai cầm lên bị mẻ một chút ở miệng, lại có vết nứt. Trong bếp, ấm nước đang sôi sùng sục.",
+    },
+    {
+      jp: "そのとき、小さな地震があった。床の[[振動]]で、ケーキの大きな[[塊]]がお皿から落ちた。佐藤先輩のドレスの[[丈]]が長すぎて、裾が汚れてしまった。",
+      vi: "Đúng lúc đó có một trận động đất nhỏ. Sàn nhà rung lên làm miếng bánh to rơi khỏi đĩa. Váy chị Satō dài quá nên gấu váy bị bẩn.",
+    },
+    {
+      jp: "二次会をどこにするかで、チームは二つに[[分裂]]した。「甘い物の食べすぎは体に[[毒]]だよ」と部長が笑った。",
+      vi: "Vì chuyện chọn chỗ tăng hai mà cả nhóm chia làm hai phe. \"Ăn ngọt nhiều quá là độc cho cơ thể đấy\", trưởng phòng cười.",
+    },
+    {
+      jp: "帰る前に、みんなで空き缶を[[回収]]した。「リサイクルで資源を[[循環]]させよう」。健太は大学時代、[[単位]]を落としてばかりだった話をして、また笑わせた。",
+      vi: "Trước khi về, mọi người cùng thu gom vỏ lon. \"Tái chế để tài nguyên được tuần hoàn nào.\" Kenta kể chuyện hồi đại học toàn trượt tín chỉ, lại khiến cả bọn cười.",
+    },
+  ],
+  words: [
+    {
+      no: 50, w: "毒", r: "どく", pos: "noun", hv: "ĐỘC", m: "chất độc; điều có hại",
+      use: "Chất độc. Nghĩa bóng: điều có hại (体に毒), lời nói cay độc (毒舌). 気の毒 = đáng thương (thành ngữ, nghĩa khác).",
+      col: ["毒がある", "体に毒だ", "毒キノコ", "気の毒"],
+      ex: [
+        ["このキノコには[[毒]]がある。", "Loại nấm này có độc."],
+        ["寝不足は体に[[毒]]だ。", "Thiếu ngủ là có hại cho cơ thể."],
+      ],
+      memo: "気の毒 không phải \"tâm độc\" mà là \"đáng thương, tội nghiệp\" — cái độc làm tim mình nhói thay người khác.",
+    },
+    {
+      no: 51, w: "くじ", r: "くじ", pos: "noun", m: "thăm, xổ số",
+      use: "Lá thăm để quyết định ngẫu nhiên, hoặc vé số. Đi với 引く: くじを引く, くじ引き, 宝くじ (xổ số).",
+      col: ["くじを引く", "くじ引き", "宝くじ", "くじに当たる"],
+      ex: [
+        ["順番は[[くじ]]で決めよう。", "Thứ tự thì bốc thăm quyết định đi."],
+        ["宝[[くじ]]で一億円当たったらどうする？", "Nếu trúng xổ số một trăm triệu yên thì cậu làm gì?"],
+      ],
+      memo: "Chữ Hán 籤 rất khó nên hầu như viết kana. 宝くじ = \"lá thăm báu vật\" = xổ số.",
+    },
+    {
+      no: 52, w: "桁", r: "けた", pos: "noun", hv: "HÀNH", m: "chữ số (hàng đơn vị, chục…); tầm cỡ",
+      use: "Số chữ số của một con số (3桁の数 = số có 3 chữ số). Thành ngữ: 桁違い (khác hẳn đẳng cấp), 桁外れ (phi thường).",
+      col: ["桁を間違える", "3桁の数", "桁違い", "桁外れ"],
+      ex: [
+        ["値段の[[桁]]を一つ間違えて、大損した。", "Nhầm một chữ số trong giá, tôi lỗ nặng."],
+        ["彼の実力は[[桁]]違いだ。", "Thực lực của anh ấy hơn hẳn một đẳng cấp."],
+      ],
+      memo: "桁 có bộ 木 (gỗ) — vốn là thanh xà ngang; trên bàn tính, mỗi \"thanh\" là một hàng số.",
+    },
+    {
+      no: 53, w: "単位", r: "たんい", pos: "noun", hv: "ĐƠN VỊ", m: "đơn vị (đo lường, tổ chức); tín chỉ (đại học)",
+      use: "Đơn vị đo (メートル), đơn vị tổ chức (家族単位), tín chỉ ở đại học (単位を取る／落とす).",
+      col: ["単位を取る", "単位を落とす", "〜単位で"],
+      ex: [
+        ["卒業に必要な[[単位]]を全部取った。", "Tôi đã lấy đủ tín chỉ cần để tốt nghiệp."],
+        ["料金は一時間[[単位]]で計算される。", "Phí được tính theo đơn vị từng giờ."],
+      ],
+      memo: "単 (đơn) + 位 (vị trí) = \"một vị trí\" làm chuẩn đếm.",
+    },
+    {
+      no: 54, w: "一括", r: "いっかつ", pos: "suru", hv: "NHẤT QUÁT", m: "gộp một lần, toàn bộ cùng lúc",
+      use: "Gộp tất cả lại xử lý một lần (thanh toán, mua, tải xuống). Đối lập: 分割 (chia nhiều lần).",
+      col: ["一括払い", "一括で購入する", "一括して処理する"],
+      ex: [
+        ["車の代金を[[一括]]で払った。", "Tôi trả tiền xe một lần luôn."],
+        ["資料を[[一括]]してダウンロードできる。", "Có thể tải toàn bộ tài liệu cùng lúc."],
+      ],
+      cmp: [["分割", "Trái nghĩa: 分割払い = trả góp. 一括払い = trả một lần."]],
+      memo: "一 (một) + 括 (buộc, gom — như 括弧 dấu ngoặc) = gom vào một ngoặc.",
+    },
+    {
+      no: 55, w: "塊", r: "かたまり", pos: "noun", hv: "KHỐI", m: "khối, cục, tảng; (người) một khối…",
+      alt: "固まり",
+      use: "Vật đông cứng thành khối (氷の塊, 肉の塊). Nghĩa bóng: \"toàn là…\" — 欲の塊 (kẻ tham lam), 好奇心の塊.",
+      col: ["氷の塊", "肉の塊", "〜の塊だ"],
+      ex: [
+        ["冷凍庫から大きな氷の[[塊]]を取り出した。", "Tôi lấy một tảng đá lớn từ ngăn đông ra."],
+        ["子供は好奇心の[[塊]]だ。", "Trẻ con là cả một khối tò mò."],
+      ],
+      cmp: [["固まる", "Động từ 固まる (đông lại, cứng lại) → danh từ 固まり. Viết 塊 khi nói khối vật chất."]],
+      memo: "塊 có bộ 土 (đất) — một cục đất. Cùng gốc với 固まる (đông cứng).",
+    },
+    {
+      no: 56, w: "丈", r: "たけ", pos: "noun", hv: "TRƯỢNG", m: "chiều dài (quần áo), chiều cao; tất cả (những gì có)",
+      use: "Chiều dài của quần áo (スカートの丈), chiều cao. Thành ngữ: 思いの丈 (tất cả tâm tư).",
+      col: ["スカートの丈", "丈を詰める", "身の丈", "思いの丈"],
+      ex: [
+        ["ズボンの[[丈]]が長いので、少し詰めてもらった。", "Quần dài quá nên tôi nhờ cắt bớt một chút."],
+        ["[[丈]]の短いコートが流行している。", "Áo khoác dáng ngắn đang thịnh hành."],
+      ],
+      cmp: [["頑丈", "Chữ 丈 đọc じょう trong 頑丈 (chắc chắn — từ 191), 大丈夫."]],
+      memo: "丈 vốn là đơn vị đo (1 trượng ≈ 3m) → \"độ dài\". 大丈夫 cũng là chữ này!",
+    },
+    {
+      no: 57, w: "欄", r: "らん", pos: "noun", hv: "LAN", m: "cột, ô (trong biểu mẫu); mục (trên báo)",
+      use: "Ô trống để điền trên giấy tờ (記入欄, 氏名欄) hoặc chuyên mục báo chí (スポーツ欄).",
+      col: ["記入欄", "〜欄に書く", "空欄", "スポーツ欄"],
+      ex: [
+        ["この[[欄]]に名前と住所を書いてください。", "Hãy viết tên và địa chỉ vào ô này."],
+        ["新聞のスポーツ[[欄]]を毎朝読む。", "Sáng nào tôi cũng đọc mục thể thao trên báo."],
+      ],
+      memo: "欄 có bộ 木 (gỗ) — vốn là lan can bằng gỗ; các ô trên giấy giống những song lan can.",
+    },
+    {
+      no: 58, w: "隅", r: "すみ", pos: "noun", hv: "NGUNG", m: "góc (bên trong), xó",
+      use: "Góc phía trong của một không gian (部屋の隅). Thành ngữ: 隅から隅まで (từ đầu đến cuối, mọi ngóc ngách), 隅に置けない (không thể xem thường).",
+      col: ["部屋の隅", "隅から隅まで", "隅に置けない"],
+      ex: [
+        ["部屋の[[隅]]にほこりがたまっている。", "Bụi tích ở góc phòng."],
+        ["説明書を[[隅]]から[[隅]]まで読んだ。", "Tôi đọc sách hướng dẫn từ đầu đến cuối."],
+      ],
+      cmp: [["角", "角 (かど): góc nhô ra bên ngoài (đường, bàn). 隅: góc khuất bên trong (phòng, hộp)."]],
+      memo: "隅 có bộ 阝 (gò đất) — chỗ khuất trong góc đồi. Góc trong = すみ, góc ngoài = かど.",
+    },
+    {
+      no: 59, w: "縁", r: "ふち", pos: "noun", hv: "DUYÊN", m: "mép, viền, vành",
+      use: "Phần mép, viền của đồ vật (眼鏡の縁, コップの縁, 池の縁). Cùng chữ với 縁 (えん — duyên, từ 26).",
+      col: ["眼鏡の縁", "コップの縁", "縁取り"],
+      ex: [
+        ["コップの[[縁]]が欠けている。", "Miệng cốc bị mẻ."],
+        ["黒い[[縁]]の眼鏡をかけている。", "Anh ấy đeo kính gọng đen."],
+      ],
+      cmp: [["縁（えん）", "えん = duyên (trừu tượng). ふち = mép, viền (vật lý)."]],
+      memo: "Sợi chỉ (糸) viền quanh mép vải → ふち. Cùng chữ, khác cách đọc với えん (duyên).",
+    },
+    {
+      no: 60, w: "ひび", r: "ひび", pos: "noun", m: "vết nứt; rạn nứt (quan hệ)",
+      use: "Vết nứt nhỏ trên kính, đồ gốm, tường. Nghĩa bóng: rạn nứt trong quan hệ. Đi với 入る: ひびが入る.",
+      col: ["ひびが入る", "ひび割れ", "関係にひびが入る"],
+      ex: [
+        ["落としたスマホの画面に[[ひび]]が入った。", "Màn hình điện thoại làm rơi bị nứt."],
+        ["その一言で、二人の友情に[[ひび]]が入った。", "Chỉ một câu nói ấy mà tình bạn hai người rạn nứt."],
+      ],
+      memo: "\"HI-BI\" như tiếng kính \"bíp bíp\" rạn. Động từ luôn là 入る: vết nứt \"đi vào\" vật.",
+    },
+    {
+      no: 61, w: "分裂", r: "ぶんれつ", pos: "suru", hv: "PHÂN LIỆT", m: "phân liệt, chia rẽ, tách ra",
+      use: "Một khối thống nhất bị tách thành nhiều phần (đảng phái, tổ chức, tế bào).",
+      col: ["党が分裂する", "細胞分裂", "分裂を避ける"],
+      ex: [
+        ["意見の対立で、党が二つに[[分裂]]した。", "Do bất đồng ý kiến, đảng chia thành hai."],
+        ["細胞は[[分裂]]して増える。", "Tế bào phân chia để nhân lên."],
+      ],
+      memo: "分 (chia) + 裂 (xé rách — có 衣 áo bên dưới) = xé ra từng mảnh.",
+    },
+    {
+      no: 62, w: "振動", r: "しんどう", pos: "suru", hv: "CHẤN ĐỘNG", m: "rung, dao động",
+      use: "Rung lắc vật lý lặp đi lặp lại (máy móc, xe, điện thoại để rung).",
+      col: ["振動が伝わる", "振動する", "マナーモードの振動"],
+      ex: [
+        ["電車の[[振動]]で眠くなった。", "Rung lắc của tàu điện làm tôi buồn ngủ."],
+        ["ポケットの中でスマホが[[振動]]した。", "Điện thoại rung trong túi."],
+      ],
+      cmp: [["震動", "震動 (cùng đọc しんどう): rung do động đất, nổ — chấn động lớn. 振動: dao động nói chung."]],
+      memo: "振 (vung, lắc) + 動 (động) = lắc qua lắc lại.",
+    },
+    {
+      no: 63, w: "沸騰", r: "ふっとう", pos: "suru", hv: "PHÍ ĐẰNG", m: "sôi; (dư luận, giá cả) sôi sục, tăng vọt",
+      use: "Nước sôi. Nghĩa bóng: tranh luận sôi nổi (議論が沸騰), giá cả tăng vọt, cực kỳ nổi tiếng (人気沸騰).",
+      col: ["お湯が沸騰する", "人気が沸騰する", "議論が沸騰する"],
+      ex: [
+        ["お湯が[[沸騰]]したら、麺を入れてください。", "Nước sôi thì cho mì vào."],
+        ["そのアイドルの人気が[[沸騰]]している。", "Độ nổi tiếng của thần tượng đó đang lên như diều gặp gió."],
+      ],
+      memo: "沸 (sôi — có 氵 nước) + 騰 (bốc lên — có 馬 ngựa phi) = nước sôi bốc lên như ngựa phi.",
+    },
+    {
+      no: 64, w: "循環", r: "じゅんかん", pos: "suru", hv: "TUẦN HOÀN", m: "tuần hoàn, lưu thông vòng tròn",
+      use: "Chuyển động vòng quanh rồi trở lại (máu, nước, tiền tệ, tài nguyên). 悪循環 = vòng luẩn quẩn.",
+      col: ["血液の循環", "悪循環", "循環型社会"],
+      ex: [
+        ["運動すると血液の[[循環]]がよくなる。", "Vận động giúp máu lưu thông tốt hơn."],
+        ["寝不足とストレスの悪[[循環]]から抜け出したい。", "Tôi muốn thoát khỏi vòng luẩn quẩn thiếu ngủ và căng thẳng."],
+      ],
+      memo: "循 (đi theo) + 環 (vòng tròn — 環境) = đi theo vòng tròn.",
+    },
+    {
+      no: 65, w: "回収", r: "かいしゅう", pos: "suru", hv: "HỒI THU", m: "thu hồi, thu gom",
+      use: "Lấy lại những thứ đã phát ra / đã dùng (sản phẩm lỗi, phiếu khảo sát, rác tái chế, vốn đầu tư).",
+      col: ["ごみの回収", "製品を回収する", "アンケートを回収する", "資金を回収する"],
+      ex: [
+        ["欠陥が見つかった製品を[[回収]]している。", "Đang thu hồi các sản phẩm bị phát hiện lỗi."],
+        ["資源ごみは毎週水曜日に[[回収]]される。", "Rác tái chế được thu gom vào thứ Tư hằng tuần."],
+      ],
+      memo: "回 (quay về) + 収 (thu) = thu những thứ quay về.",
+    },
+    {
+      no: 66, w: "獲得", r: "かくとく", pos: "suru", hv: "HOẠCH ĐẮC", m: "giành được, thu được (nhờ nỗ lực)",
+      use: "Giành được thứ có giá trị qua cạnh tranh, nỗ lực (メダル, 賞, 支持, 権利).",
+      col: ["メダルを獲得する", "賞を獲得する", "支持を獲得する"],
+      ex: [
+        ["日本は金メダルを五つ[[獲得]]した。", "Nhật Bản giành được năm huy chương vàng."],
+        ["新商品は若者の支持を[[獲得]]した。", "Sản phẩm mới đã giành được sự ủng hộ của giới trẻ."],
+      ],
+      cmp: [["取得", "取得: lấy được (giấy phép, bằng cấp — thủ tục). 獲得: giành được qua cạnh tranh, nỗ lực."]],
+      memo: "獲 (săn bắt — có 犭 con thú) + 得 (có được) = săn được chiến lợi phẩm.",
+    },
+  ],
+  quiz: [
+    {
+      type: "choice",
+      label: "Dùng từ đúng (用法)",
+      q: "「回収」の使い方が正しい文はどれか。",
+      opts: [
+        "会社は不良品をすべて回収すると発表した。",
+        "病気が回収して、退院できた。",
+        "彼は毎朝公園を回収している。",
+        "テストの点数が回収した。",
+      ],
+      answer: 0,
+      explain: "回収 = thu hồi đồ vật. Hồi phục sức khỏe là 回復.",
+    },
+    {
+      type: "choice",
+      label: "Phân biệt",
+      q: "部屋の＿＿＿に古い段ボールが積んである。",
+      opts: ["隅", "角", "縁", "丈"],
+      answer: 0,
+      explain: "Góc bên trong phòng → 隅. 角 là góc nhô ra (góc đường, góc bàn).",
+    },
+    {
+      type: "choice",
+      label: "Từ gần nghĩa (言い換え)",
+      q: "代金を[[一括]]で支払った。",
+      opts: ["一度に全部", "少しずつ", "現金で", "後で"],
+      answer: 0,
+      explain: "一括 = gộp lại một lần, toàn bộ cùng lúc.",
+    },
+    {
+      type: "choice",
+      label: "Chọn từ thích hợp",
+      q: "あの一言がきっかけで、二人の関係に＿＿＿が入った。",
+      opts: ["ひび", "とげ", "毒", "くじ"],
+      answer: 0,
+      explain: "関係にひびが入る = quan hệ rạn nứt.",
+    },
+    {
+      type: "judge",
+      q: "人気歌手のコンサートのチケットは、価格が沸騰している。",
+      ok: true,
+      explain: "沸騰 dùng nghĩa bóng cho giá cả, độ nổi tiếng tăng vọt → chấp nhận được.",
+    },
+  ],
+  kanji: {
+    毒: { hv: "ĐỘC", m: "độc" },
+    桁: { hv: "HÀNH", m: "xà ngang; hàng (chữ số)" },
+    単: { hv: "ĐƠN", m: "đơn, một" },
+    位: { hv: "VỊ", m: "vị trí, ngôi thứ", memo: "人 (người) + 立 (đứng) — chỗ người đứng." },
+    一: { hv: "NHẤT", m: "một" },
+    括: { hv: "QUÁT", m: "buộc, gom lại" },
+    塊: { hv: "KHỐI", m: "khối, cục", memo: "土 (đất) + 鬼 — cục đất." },
+    丈: { hv: "TRƯỢNG", m: "chiều dài, trượng" },
+    欄: { hv: "LAN", m: "lan can; ô, cột" },
+    隅: { hv: "NGUNG", m: "góc" },
+    分: { hv: "PHÂN", m: "chia" },
+    裂: { hv: "LIỆT", m: "xé rách" },
+    動: { hv: "ĐỘNG", m: "chuyển động", memo: "重 (nặng) + 力 (sức) — dùng sức đẩy vật nặng." },
+    沸: { hv: "PHÍ", m: "sôi" },
+    騰: { hv: "ĐẰNG", m: "bốc lên, tăng vọt" },
+    循: { hv: "TUẦN", m: "đi theo, tuần tự" },
+    環: { hv: "HOÀN", m: "vòng tròn" },
+    収: { hv: "THU", m: "thu, thu nhận" },
+    獲: { hv: "HOẠCH", m: "săn được" },
+  },
+};
