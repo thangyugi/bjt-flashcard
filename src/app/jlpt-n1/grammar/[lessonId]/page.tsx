@@ -8,6 +8,7 @@ import { Jp } from "@/components/jlpt-n1/Jp";
 import { PatternCard } from "@/components/jlpt-n1/PatternCard";
 import { QuizBlock } from "@/components/jlpt-n1/QuizBlock";
 import { VoiceSettings } from "@/components/jlpt-n1/Speak";
+import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
 import { StoryReader } from "@/components/jlpt-n1/StoryReader";
 import { LessonActions } from "@/components/jlpt-n1/LessonActions";
 
@@ -55,8 +56,23 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
     { id: "tong-on", label: "Trắc nghiệm tổng ôn" },
   ];
 
+  const CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩";
+  const navItems = lesson.patterns.map((p, i) => ({
+    id: p.id,
+    no: CIRCLED[i] ?? String(i + 1),
+    jp: p.pattern,
+    vi: p.meaning,
+    search: found.lesson.patterns[i].pattern,
+  }));
+
   return (
     <div className="mx-auto flex max-w-[1180px] gap-10 px-4 py-6 sm:px-8 sm:py-10">
+      <LessonNavigator
+        title={`Chương ${lesson.num} · ${lesson.patterns.length} mẫu ngữ pháp`}
+        label="Mục lục"
+        sections={toc.filter((t) => !lesson.patterns.some((p) => p.id === t.id))}
+        items={navItems}
+      />
       <div className="flex min-w-0 flex-1 flex-col gap-10">
         {/* Đường dẫn */}
         <nav aria-label="Đường dẫn" className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
