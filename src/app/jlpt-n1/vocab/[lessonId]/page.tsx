@@ -12,6 +12,7 @@ import { VoiceSettings } from "@/components/jlpt-n1/Speak";
 import { PitchGuide } from "@/components/jlpt-n1/PitchAccent";
 import { StoryReader } from "@/components/jlpt-n1/StoryReader";
 import { LessonActions } from "@/components/jlpt-n1/LessonActions";
+import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
 
 export const dynamicParams = false;
 
@@ -62,8 +63,17 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
     ...sections.map((s) => ({ id: `quiz-${s.key}`, label: s.title })),
   ];
 
+  const navItems = raw.words.map((w, i) => ({
+    id: wordAnchor(source.prefix, w.no),
+    no: String(w.no),
+    jp: head(i),
+    vi: w.m,
+    search: `${w.w} ${w.r} ${w.hv ?? ""}`,
+  }));
+
   return (
     <div className="mx-auto flex max-w-[1180px] gap-10 px-4 py-6 sm:px-8 sm:py-10">
+      <LessonNavigator title={`Bài ${raw.num} · ${raw.words.length} từ (${range})`} sections={toc} items={navItems} />
       <div className="flex min-w-0 flex-1 flex-col gap-10">
         <nav aria-label="Đường dẫn" className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
           <Link href="/courses" className="hover:text-ink">
@@ -202,6 +212,19 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
             {t.label}
           </a>
         ))}
+        <span className="mt-4 mb-1 text-[12px] font-bold tracking-[0.08em] text-ink-3 uppercase">Từ trong bài</span>
+        <div className="flex max-h-[50vh] flex-col overflow-y-auto">
+          {raw.words.map((w) => (
+            <a
+              key={w.no}
+              href={`#${wordAnchor(source.prefix, w.no)}`}
+              className="flex items-baseline gap-2 rounded-lg px-2.5 py-1 text-[14px] text-ink-2 hover:bg-surface-2 hover:text-ink"
+            >
+              <span className="w-8 shrink-0 text-[11px] text-ink-3">{w.no}</span>
+              <span className="font-jp">{display(w)}</span>
+            </a>
+          ))}
+        </div>
       </aside>
     </div>
   );
