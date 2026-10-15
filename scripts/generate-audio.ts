@@ -5,6 +5,7 @@
  *   2. npm run audio                       → Ngữ pháp Bài 1 + Từ vựng Bài 19
  *      npm run audio -- bai-02 mk-20       → chọn bài
  *      npm run audio -- --all              → toàn bộ
+ *      npm run audio -- phongvan           → trang /phongvan (kịch bản phỏng vấn)
  *
  * Tùy chọn: --male "青山龍星" --female "冥鳴ひまり" --voices male,female --engine URL --force
  * Kết quả: public/audio/{male|female}/<khóa>.m4a và public/audio/manifest.json (xem docs/AUDIO.md).
@@ -16,6 +17,7 @@ import { tmpdir } from "node:os";
 import { N1_LESSONS } from "../src/data/jlpt-n1/course";
 import { VOCAB_LESSONS } from "../src/data/jlpt-n1/vocab";
 import { speechKey, toSpeech, type AudioManifest } from "../src/lib/audio-key";
+import { INTERVIEW } from "../src/data/interview/phongvan";
 
 type Gender = "male" | "female";
 
@@ -56,7 +58,10 @@ function collectTexts(): string[] {
       texts.push(w.say ?? (w.pos === "na-adj" ? `${w.w}な` : w.w), ...w.ex.map(([jp]) => jp));
     }
   }
-  return [...new Set(texts.map(toSpeech).filter(Boolean))];
+  if (!wanted || wanted.has("phongvan")) {
+    for (const sec of INTERVIEW) texts.push(...sec.paragraphs);
+  }
+    return [...new Set(texts.map(toSpeech).filter(Boolean))];
 }
 
 async function engine<T>(path: string, init?: RequestInit): Promise<T> {

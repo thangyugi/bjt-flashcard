@@ -15,6 +15,7 @@ File thu sẵn được tạo bằng **VOICEVOX** — phần mềm đọc tiến
    ```
 
    - Chọn bài: `npm run audio -- bai-02 bai-03 mk-20`
+   - Trang phỏng vấn /phongvan: `npm run audio -- phongvan`
    - Tất cả bài: `npm run audio -- --all` (lâu, file nhiều — xem phần dung lượng bên dưới)
    - Đổi giọng: `npm run audio -- --male "玄野武宏" --female "春日部つむぎ"`
    - Tạo lại file đã có: thêm `--force`
