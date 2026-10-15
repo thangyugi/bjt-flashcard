@@ -8,6 +8,8 @@ import { withFurigana } from "@/data/jlpt-n1/furigana";
 import { Jp } from "@/components/jlpt-n1/Jp";
 import { WordCard } from "@/components/jlpt-n1/WordCard";
 import { QuizBlock } from "@/components/jlpt-n1/QuizBlock";
+import { VoiceSettings } from "@/components/jlpt-n1/Speak";
+import { PitchGuide } from "@/components/jlpt-n1/PitchAccent";
 import { StoryReader } from "@/components/jlpt-n1/StoryReader";
 import { LessonActions } from "@/components/jlpt-n1/LessonActions";
 
@@ -125,6 +127,7 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
         <section className="flex flex-col gap-5">
           <Heading id="truyen" icon={BookMarked} kicker="物語 · Câu chuyện" title="Đọc truyện — gặp từ trong ngữ cảnh" />
           <p className="rounded-2xl bg-surface-2 px-5 py-4 text-[15px] leading-relaxed text-ink-2">{raw.scene}</p>
+          <VoiceSettings />
           <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8">
             <StoryReader story={lesson.story} />
           </div>
@@ -136,6 +139,7 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
         {/* Thẻ từ */}
         <section className="flex flex-col gap-5">
           <Heading id="tu-vung" icon={LibraryBig} kicker="単語 · Từ vựng" title="Học kỹ từng từ" />
+          {raw.words.some((w) => w.acc !== undefined) && <PitchGuide />}
           {raw.words.map((w, i) => (
             <WordCard key={w.no} raw={w} fw={lesson.words[i]} anchor={wordAnchor(source.prefix, w.no)} kanji={KANJI} />
           ))}

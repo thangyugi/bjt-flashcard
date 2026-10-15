@@ -7,6 +7,7 @@ import { withFurigana } from "@/data/jlpt-n1/furigana";
 import { Jp } from "@/components/jlpt-n1/Jp";
 import { PatternCard } from "@/components/jlpt-n1/PatternCard";
 import { QuizBlock } from "@/components/jlpt-n1/QuizBlock";
+import { VoiceSettings } from "@/components/jlpt-n1/Speak";
 import { StoryReader } from "@/components/jlpt-n1/StoryReader";
 import { LessonActions } from "@/components/jlpt-n1/LessonActions";
 
@@ -113,6 +114,7 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
           <p className="rounded-2xl bg-surface-2 px-5 py-4 text-[15px] leading-relaxed text-ink-2">
             <Jp t={lesson.scene} vi />
           </p>
+          <VoiceSettings />
           <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8">
             <StoryReader story={lesson.story} />
           </div>

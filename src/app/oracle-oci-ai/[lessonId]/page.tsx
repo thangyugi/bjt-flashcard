@@ -37,7 +37,9 @@ export default async function LessonPage({ params }: PageProps<"/oracle-oci-ai/[
     <div className="oci-lesson-grid">
       <article className="oci-article">
         <div className="oci-crumb">
-          <Link href="/oracle-oci-ai">Khóa học</Link>
+          <Link href="/courses">Khóa học</Link>
+          <span className="sep">/</span>
+          <Link href="/oracle-oci-ai">OCI AI</Link>
           <span className="sep">/</span>
           <span>
             Phần {module.num} · {module.title}

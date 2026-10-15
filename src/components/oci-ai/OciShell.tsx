@@ -153,6 +153,9 @@ export function OciShell({ modules, lessons, children }: Props) {
             <span className="lbl-long"> bài</span>
           </span>
         </div>
+        <Link href="/courses" className="oci-icon-btn" aria-label="Về danh sách khóa học" title="Về danh sách khóa học">
+          <House aria-hidden />
+        </Link>
         <button className="oci-icon-btn" onClick={cycleTheme} aria-label={`Đổi giao diện (hiện tại: ${themeLabel})`} title={themeLabel}>
           <ThemeIcon aria-hidden />
         </button>

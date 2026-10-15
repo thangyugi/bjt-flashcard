@@ -17,6 +17,7 @@ import type { N1Pattern } from "@/data/jlpt-n1/types";
 import { Jp } from "./Jp";
 import { Reveal } from "./Reveal";
 import { QuizBlock } from "./QuizBlock";
+import { SpeakButton } from "./Speak";
 
 const CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩";
 
@@ -42,9 +43,12 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
           <span className="font-mincho text-2xl text-brand">{CIRCLED[index] ?? index + 1}</span>
           <span className="rounded-full bg-surface px-2.5 py-1 text-[11.5px] font-semibold text-ink-2">{p.register}</span>
         </div>
-        <h3 className="text-[30px] leading-[1.5] font-bold text-ink sm:text-[36px]">
-          <Jp t={p.pattern} className="font-mincho" />
-        </h3>
+        <div className="flex items-center gap-3">
+          <h3 className="text-[30px] leading-[1.5] font-bold text-ink sm:text-[36px]">
+            <Jp t={p.pattern} className="font-mincho" />
+          </h3>
+          <SpeakButton text={p.pattern} label="Nghe mẫu ngữ pháp" size="md" />
+        </div>
         {p.variants && (
           <div className="flex flex-wrap gap-2 text-sm text-ink-2">
             Biến thể:
@@ -114,14 +118,18 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
         </Section>
 
         <Section icon={MessageSquareQuote} title="Ví dụ">
+          <SpeakButton text={p.examples.map((e) => e.jp)} label="Nghe tất cả ví dụ" showLabel className="self-start" />
           <ol className="flex flex-col gap-3">
             {p.examples.map((e, i) => (
               <li key={i} className="flex gap-3 rounded-2xl border border-line px-4 py-3">
                 <span className="mt-1.5 text-sm font-bold text-ink-3">{i + 1}</span>
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
-                  <p className="text-[17px] leading-[2.2] text-ink">
-                    <Jp t={e.jp} />
-                  </p>
+                  <div className="flex items-start gap-2">
+                    <p className="min-w-0 flex-1 text-[17px] leading-[2.2] text-ink">
+                      <Jp t={e.jp} />
+                    </p>
+                    <SpeakButton text={e.jp} label="Nghe câu ví dụ" className="mt-1.5" />
+                  </div>
                   <Reveal className="text-[14px] leading-relaxed text-ink-2">{e.vi}</Reveal>
                   {e.note && (
                     <p className="text-[13px] text-ink-3">
@@ -167,7 +175,7 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
                   {d.good && (
                     <span className="text-[15px] leading-[2] text-ok-ink">
                       <span className="mr-1 text-xs font-bold">ĐÚNG</span>
-                      <Jp t={d.good} />
+                      <Jp t={d.good} /> <SpeakButton text={d.good} label="Nghe câu đúng" className="ml-1 align-middle" />
                     </span>
                   )}
                 </li>
@@ -189,9 +197,12 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
                   </p>
                   {c.ex && (
                     <div className="rounded-xl bg-surface-2 px-3 py-2">
-                      <p className="text-[15px] leading-[2.1] text-ink">
-                        <Jp t={c.ex.jp} />
-                      </p>
+                      <div className="flex items-start gap-2">
+                        <p className="min-w-0 flex-1 text-[15px] leading-[2.1] text-ink">
+                          <Jp t={c.ex.jp} />
+                        </p>
+                        <SpeakButton text={c.ex.jp} label="Nghe câu ví dụ" className="mt-1" />
+                      </div>
                       <p className="text-[13px] text-ink-2">{c.ex.vi}</p>
                     </div>
                   )}
@@ -215,7 +226,10 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
             <div className="flex gap-3 rounded-2xl border border-line bg-paper px-4 py-4">
               <ScrollText className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden />
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-bold text-ink">Trong câu chuyện</span>
+                <span className="flex items-center justify-between gap-2 text-sm font-bold text-ink">
+                  Trong câu chuyện
+                  <SpeakButton text={p.storyLine} label="Nghe câu trong truyện" />
+                </span>
                 <p className="text-[16px] leading-[2.1] text-ink">
                   <Jp t={p.storyLine} />
                 </p>

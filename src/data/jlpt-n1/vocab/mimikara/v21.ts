@@ -137,7 +137,7 @@ export const v21: VocabLesson = {
       memo: "人 (người) + 目 (mắt) = mắt của người đời.",
     },
     {
-      no: 380, w: "人気", r: "ひとけ", pos: "noun", hv: "NHÂN KHÍ", m: "hơi người, bóng người (dấu hiệu có người)",
+      no: 380, w: "人気", r: "ひとけ", pos: "noun", hv: "NHÂN KHÍ", m: "hơi người, bóng người (dấu hiệu có người)", say: "ひとけ",
       use: "Cảm giác có người ở gần. Hầu như luôn dùng dạng phủ định: 人気のない道, 人気がない. Cùng mặt chữ với にんき (được ưa chuộng) — phải đoán cách đọc qua ngữ cảnh \"có/không có người\".",
       col: ["人気のない道", "人気がない", "人気のない夜の公園"],
       ex: [

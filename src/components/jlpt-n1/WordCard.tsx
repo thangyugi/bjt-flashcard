@@ -1,9 +1,11 @@
-import { BookOpenText, GitCompareArrows, Lightbulb, Link2, MessageSquareQuote, PenLine } from "lucide-react";
+import { AudioLines, BookOpenText, GitCompareArrows, Lightbulb, Link2, MessageSquareQuote, PenLine } from "lucide-react";
 import type { KanjiInfo, VocabWord } from "@/data/jlpt-n1/vocab/types";
 import { POS_LABEL } from "@/data/jlpt-n1/vocab/types";
 import { display, rubyOf } from "@/data/jlpt-n1/vocab/quiz";
 import { Jp } from "./Jp";
 import { Reveal } from "./Reveal";
+import { SpeakButton } from "./Speak";
+import { PitchAccent } from "./PitchAccent";
 
 const KANJI = /[㐀-䶿一-鿿豈-﫿々〆ヶ]/;
 
@@ -43,10 +45,13 @@ export function WordCard({
             <span className="rounded-full bg-surface px-2 py-0.5 font-semibold text-ink-2">{POS_LABEL[raw.pos]}</span>
             {raw.hv && <span className="font-semibold tracking-[0.08em] text-brand">{raw.hv}</span>}
           </div>
-          <h3 className="text-[32px] leading-[1.55] font-bold text-ink">
-            {raw.p && <span className="mr-1 align-middle font-jp text-lg font-medium text-ink-3">〜{raw.p}</span>}
-            <Jp t={head} className="font-mincho" />
-          </h3>
+          <div className="flex items-center gap-3">
+            <h3 className="text-[32px] leading-[1.55] font-bold text-ink">
+              {raw.p && <span className="mr-1 align-middle font-jp text-lg font-medium text-ink-3">〜{raw.p}</span>}
+              <Jp t={head} className="font-mincho" />
+            </h3>
+            <SpeakButton text={raw.say ?? display(raw)} label={`Nghe từ ${display(raw)}`} size="md" />
+          </div>
           {raw.alt && (
             <span className="text-[13px] text-ink-3">
               Cách viết khác: <Jp t={fw.alt!} />
@@ -57,6 +62,17 @@ export function WordCard({
       </header>
 
       <div className="flex flex-col gap-5 px-5 py-5 sm:px-6">
+        {raw.acc !== undefined && (
+          <section className="flex flex-col gap-2.5">
+            <Label icon={AudioLines}>Phát âm · cao – thấp</Label>
+            <PitchAccent
+              kana={raw.r}
+              acc={raw.acc}
+              particle={raw.pos === "na-adj" ? "な" : raw.pos === "verb" || raw.pos === "i-adj" || raw.pos === "adv" ? "" : "が"}
+            />
+          </section>
+        )}
+
         <section className="flex flex-col gap-2">
           <Label icon={BookOpenText}>Cách dùng · khi nào dùng</Label>
           <p className="text-[15px] leading-relaxed text-ink">
@@ -80,9 +96,12 @@ export function WordCard({
           <ol className="flex flex-col gap-2">
             {fw.ex.map(([jp, vi], i) => (
               <li key={i} className="rounded-2xl border border-line px-4 py-2.5">
-                <p className="text-[16.5px] leading-[2.2] text-ink">
-                  <Jp t={jp} />
-                </p>
+                <div className="flex items-start gap-2">
+                  <p className="min-w-0 flex-1 text-[16.5px] leading-[2.2] text-ink">
+                    <Jp t={jp} />
+                  </p>
+                  <SpeakButton text={jp} label="Nghe câu ví dụ" className="mt-1.5" />
+                </div>
                 <Reveal className="text-[14px] leading-relaxed text-ink-2">{vi}</Reveal>
               </li>
             ))}
