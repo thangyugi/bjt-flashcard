@@ -28,6 +28,8 @@ from fugashi import Tagger
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "src" / "data" / "jlpt-n1"
 OUT_PATH = DATA_DIR / "furigana.json"
+# Dữ liệu khác cũng dùng chung bảng furigana (ví dụ trang /phongvan)
+EXTRA_DIRS = [ROOT / "src" / "data" / "interview"]
 
 KANJI_CLASS = "㐀-䶿一-鿿豈-﫿々〆ヶ"
 KANJI = rf"[{KANJI_CLASS}]"
@@ -74,6 +76,11 @@ READING_OVERRIDES: dict[str, str] = {
 
 # Sửa theo ngữ cảnh trên kết quả đã đánh dấu: (đoạn sai, đoạn đúng)
 MARKUP_FIXES: list[tuple[str, str]] = [
+    ("{中国|ちゅうごく}{人|にん}", "{中国人|ちゅうごくじん}"),
+    ("なども{行|い}っています", "なども{行|おこな}っています"),
+    ("{頻度|ひんど}で{行|い}っていた", "{頻度|ひんど}で{行|おこな}っていた"),
+    ("{月|がつ}3", "{月|つき}3"),
+    ("その{後|あと}は、React", "その{後|ご}は、React"),
     ("{一|いち}{週間|しゅうかん}", "{一週間|いっしゅうかん}"),
     ("{貧|ひん}{乏|とぼ}", "{貧乏|びんぼう}"),
     ("わずか{三|みっ}{日|か}で", "わずか{三日|みっか}で"),
@@ -441,7 +448,8 @@ def collect(path: Path) -> list[tuple[str, str]]:
 
 def main() -> None:
     items: dict[str, str] = {}
-    for path in sorted(DATA_DIR.rglob("*.ts")):
+    paths = sorted(DATA_DIR.rglob("*.ts")) + [p for d in EXTRA_DIRS for p in sorted(d.rglob("*.ts"))]
+    for path in paths:
         for s, pre in collect(path):
             items.setdefault(s, pre)
     result: dict[str, str] = {}
