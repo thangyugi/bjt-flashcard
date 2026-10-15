@@ -39,7 +39,7 @@ export const v19: VocabLesson = {
   ],
   words: [
     {
-      no: 331, w: "光景", r: "こうけい", pos: "noun", hv: "QUANG CẢNH", m: "cảnh tượng, quang cảnh (đang diễn ra trước mắt)",
+      no: 331, w: "光景", r: "こうけい", pos: "noun", hv: "QUANG CẢNH", m: "cảnh tượng, quang cảnh (đang diễn ra trước mắt)", acc: [0, 1],
       use: "Cảnh tượng cụ thể nhìn tận mắt, thường gây ấn tượng mạnh: vui, cảm động hoặc thảm khốc (信じられない光景, 悲惨な光景). Hay đi với 目にする, 目の当たりにする.",
       col: ["悲惨な光景", "ほほえましい光景", "光景を目にする", "見慣れた光景"],
       ex: [
@@ -50,7 +50,7 @@ export const v19: VocabLesson = {
       memo: "光 (ánh sáng) + 景 (cảnh) = cảnh hiện lên trong ánh sáng trước mắt — \"quang cảnh\".",
     },
     {
-      no: 332, w: "報道", r: "ほうどう", pos: "suru", hv: "BÁO ĐẠO", m: "đưa tin, thông tin báo chí",
+      no: 332, w: "報道", r: "ほうどう", pos: "suru", hv: "BÁO ĐẠO", m: "đưa tin, thông tin báo chí", acc: 0,
       use: "Báo chí, truyền hình đưa tin về sự kiện (〜と報道される, 報道によると). Danh từ ghép: 報道機関 (cơ quan báo chí), 報道陣 (cánh phóng viên), 報道番組.",
       col: ["事件を報道する", "〜と報道される", "報道によると", "報道の自由"],
       ex: [
@@ -61,7 +61,7 @@ export const v19: VocabLesson = {
       memo: "報 (báo tin) + 道 (nói, con đường) = báo tin cho thiên hạ.",
     },
     {
-      no: 333, w: "破壊", r: "はかい", pos: "suru", hv: "PHÁ HOẠI", m: "phá hủy, phá hoại, hủy diệt",
+      no: 333, w: "破壊", r: "はかい", pos: "suru", hv: "PHÁ HOẠI", m: "phá hủy, phá hoại, hủy diệt", acc: 0,
       use: "Làm vỡ nát, hủy hoại vật thể hay hệ thống (建物を破壊する, 環境破壊, 自然破壊). Dùng cho vật lý hoặc trật tự lớn; không dùng cho giấy tờ, hợp đồng.",
       col: ["建物を破壊する", "環境破壊", "破壊力", "破壊的な"],
       ex: [
@@ -72,7 +72,7 @@ export const v19: VocabLesson = {
       memo: "破 (phá, làm vỡ) + 壊 (hoại, sụp đổ) — 壊す = làm hỏng.",
     },
     {
-      no: 334, w: "破棄", r: "はき", pos: "suru", hv: "PHÁ KHÍ", m: "hủy bỏ (hợp đồng, hôn ước); tiêu hủy (tài liệu)",
+      no: 334, w: "破棄", r: "はき", pos: "suru", hv: "PHÁ KHÍ", m: "hủy bỏ (hợp đồng, hôn ước); tiêu hủy (tài liệu)", acc: 1,
       use: "Hủy hiệu lực của thỏa thuận (契約を破棄する, 婚約を破棄する) hoặc tiêu hủy giấy tờ (書類を破棄する). Trong luật: tòa trên hủy bản án (判決を破棄する).",
       col: ["契約を破棄する", "婚約破棄", "書類を破棄する", "データを破棄する"],
       ex: [
@@ -83,7 +83,7 @@ export const v19: VocabLesson = {
       memo: "破 (xé rách) + 棄 (khí, vứt bỏ) = xé ra rồi vứt — hợp đồng hết hiệu lực.",
     },
     {
-      no: 335, w: "対応", r: "たいおう", pos: "suru", hv: "ĐỐI ỨNG", m: "ứng phó, xử lý, tiếp đón; tương ứng, hỗ trợ",
+      no: 335, w: "対応", r: "たいおう", pos: "suru", hv: "ĐỐI ỨNG", m: "ứng phó, xử lý, tiếp đón; tương ứng, hỗ trợ", acc: 0,
       use: "Phản ứng, xử lý trước tình huống hay con người (客に対応する, 対応が早い); tương ứng (〜に対応する訳語); hỗ trợ một chức năng (スマホ対応, 英語対応). Phạm vi rất rộng, cả khi không có sự cố.",
       col: ["客に対応する", "対応が遅い", "〜に対応した", "柔軟に対応する"],
       ex: [
@@ -94,7 +94,7 @@ export const v19: VocabLesson = {
       memo: "対 (đối diện) + 応 (đáp lại) = đứng đối diện và đáp lại — ứng phó.",
     },
     {
-      no: 336, w: "対処", r: "たいしょ", pos: "suru", hv: "ĐỐI XỬ", m: "đối phó, xử lý (vấn đề, sự cố)",
+      no: 336, w: "対処", r: "たいしょ", pos: "suru", hv: "ĐỐI XỬ", m: "đối phó, xử lý (vấn đề, sự cố)", acc: 1,
       use: "Đưa ra biện pháp cụ thể để giải quyết vấn đề, rắc rối, nguy cơ (問題に対処する, 対処法). Luôn có \"vấn đề\" làm đối tượng; không dùng cho người.",
       col: ["問題に対処する", "適切に対処する", "対処法", "対処しきれない"],
       ex: [
@@ -105,7 +105,7 @@ export const v19: VocabLesson = {
       memo: "対 (đối mặt) + 処 (xử lý) = đối mặt rồi xử lý — đây là chữ \"đối xử\" nhưng nghĩa là xử lý sự cố, không phải đối xử với người.",
     },
     {
-      no: 337, w: "取引", r: "とりひき", pos: "suru", hv: "THỦ DẪN", m: "giao dịch, mua bán, làm ăn",
+      no: 337, w: "取引", r: "とりひき", pos: "suru", hv: "THỦ DẪN", m: "giao dịch, mua bán, làm ăn", acc: 2,
       alt: "取り引き",
       use: "Quan hệ mua bán, làm ăn giữa công ty/cá nhân (〜と取引する, 取引先 = đối tác). Cũng dùng cho thỏa hiệp ngầm (裏取引, 司法取引).",
       col: ["取引先", "〜と取引する", "取引を始める", "株の取引"],
@@ -116,7 +116,7 @@ export const v19: VocabLesson = {
       memo: "取 (lấy) + 引 (kéo) = bên này lấy, bên kia kéo — trao đổi qua lại, giao dịch.",
     },
     {
-      no: 338, w: "独占", r: "どくせん", pos: "suru", hv: "ĐỘC CHIẾM", m: "độc chiếm, độc quyền",
+      no: 338, w: "独占", r: "どくせん", pos: "suru", hv: "ĐỘC CHIẾM", m: "độc chiếm, độc quyền", acc: 0,
       use: "Một mình chiếm hết (市場を独占する, 独占販売, 独占インタビュー). Khẩu ngữ đời thường dùng 独り占め (ひとりじめ).",
       col: ["市場を独占する", "独占企業", "独占販売", "人気を独占する"],
       ex: [
@@ -126,7 +126,7 @@ export const v19: VocabLesson = {
       memo: "独 (một mình) + 占 (chiếm) = một mình chiếm hết.",
     },
     {
-      no: 339, w: "進出", r: "しんしゅつ", pos: "suru", hv: "TIẾN XUẤT", m: "vươn ra, tiến vào (thị trường, lĩnh vực mới); vào vòng trong",
+      no: 339, w: "進出", r: "しんしゅつ", pos: "suru", hv: "TIẾN XUẤT", m: "vươn ra, tiến vào (thị trường, lĩnh vực mới); vào vòng trong", acc: 0,
       use: "Mở rộng hoạt động sang nơi/lĩnh vực mới (海外に進出する, 〜市場への進出); lọt vào vòng sau (決勝に進出する). Trợ từ: 〜に/〜へ進出する.",
       col: ["海外に進出する", "市場への進出", "決勝に進出する", "政界に進出する"],
       ex: [
@@ -137,7 +137,7 @@ export const v19: VocabLesson = {
       memo: "進 (tiến) + 出 (ra) = tiến ra ngoài — bước ra sân chơi mới.",
     },
     {
-      no: 340, w: "進化", r: "しんか", pos: "suru", hv: "TIẾN HÓA", m: "tiến hóa; phát triển, cải tiến lên",
+      no: 340, w: "進化", r: "しんか", pos: "suru", hv: "TIẾN HÓA", m: "tiến hóa; phát triển, cải tiến lên", acc: 1,
       use: "Sinh vật tiến hóa (人類の進化, 進化論); máy móc, kỹ thuật, con người thay đổi lên tầm cao hơn (スマホが進化する).",
       col: ["生物の進化", "進化論", "技術が進化する", "進化を遂げる"],
       ex: [
@@ -148,7 +148,7 @@ export const v19: VocabLesson = {
       memo: "進 (tiến) + 化 (biến hóa) = vừa tiến vừa biến hóa.",
     },
     {
-      no: 341, w: "一切", r: "いっさい", pos: "adv", hv: "NHẤT THIẾT", m: "hoàn toàn (không), tuyệt nhiên (không); toàn bộ",
+      no: 341, w: "一切", r: "いっさい", pos: "adv", hv: "NHẤT THIẾT", m: "hoàn toàn (không), tuyệt nhiên (không); toàn bộ", acc: 1,
       use: "Phó từ đi với phủ định: 一切〜ない = tuyệt đối không (cứng, mạnh hơn 全く). Danh từ: toàn bộ (一切の責任, 一切を任せる).",
       col: ["一切〜ない", "一切関係ない", "一切の責任", "一切を任せる"],
       ex: [
@@ -159,7 +159,7 @@ export const v19: VocabLesson = {
       memo: "一 (một) + 切 (cắt) = cắt một nhát là sạch hết — \"tất cả\" / \"không chút nào\". Đọc いっさい, không phải いっせつ.",
     },
     {
-      no: 342, w: "加減", r: "かげん", pos: "suru", hv: "GIA GIẢM", m: "cộng trừ; điều chỉnh (vừa phải); tình trạng (sức khỏe); いい加減 = cẩu thả",
+      no: 342, w: "加減", r: "かげん", pos: "suru", hv: "GIA GIẢM", m: "cộng trừ; điều chỉnh (vừa phải); tình trạng (sức khỏe); いい加減 = cẩu thả", acc: 0,
       use: "Điều chỉnh cho vừa (塩を加減する, 手加減 = nương tay); mức độ (湯加減, 焼き加減); thăm sức khỏe: お加減はいかがですか. いい加減な = cẩu thả, vô trách nhiệm; いい加減にしろ = thôi đủ rồi!",
       col: ["いい加減な", "お加減はいかがですか", "火加減", "力を加減する"],
       ex: [
@@ -169,7 +169,7 @@ export const v19: VocabLesson = {
       memo: "加 (thêm) + 減 (bớt) = thêm bớt cho vừa. いい加減 vốn là \"vừa phải\" → nghĩa xấu \"làm qua loa\".",
     },
     {
-      no: 343, w: "削減", r: "さくげん", pos: "suru", hv: "TƯỚC GIẢM", m: "cắt giảm",
+      no: 343, w: "削減", r: "さくげん", pos: "suru", hv: "TƯỚC GIẢM", m: "cắt giảm", acc: 0,
       use: "Giảm bớt có chủ đích số lượng, chi phí (経費を削減する, 人員削減, CO2の削減). Văn viết, thường trong kinh doanh, chính sách.",
       col: ["経費を削減する", "人員削減", "コスト削減", "大幅に削減する"],
       ex: [
@@ -180,7 +180,7 @@ export const v19: VocabLesson = {
       memo: "削 (tước, gọt bớt — có bộ 刂 con dao) + 減 (giảm) = dùng dao gọt cho giảm.",
     },
     {
-      no: 344, w: "余分", r: "よぶん", pos: "na-adj", hv: "DƯ PHÂN", m: "thừa ra, dư ra (so với lượng cần)",
+      no: 344, w: "余分", r: "よぶん", pos: "na-adj", hv: "DƯ PHÂN", m: "thừa ra, dư ra (so với lượng cần)", acc: 0,
       use: "Phần vượt quá mức cần thiết (余分なお金, 余分に買う). Trung tính, có thể tốt (dự phòng) hoặc xấu (lãng phí).",
       col: ["余分なお金", "余分に買う", "余分な脂肪", "余分に作る"],
       ex: [
@@ -191,7 +191,7 @@ export const v19: VocabLesson = {
       memo: "余 (dư) + 分 (phần) = phần dư.",
     },
     {
-      no: 345, w: "余地", r: "よち", pos: "noun", hv: "DƯ ĐỊA", m: "chỗ trống; dư địa, khả năng còn lại",
+      no: 345, w: "余地", r: "よち", pos: "noun", hv: "DƯ ĐỊA", m: "chỗ trống; dư địa, khả năng còn lại", acc: 1,
       use: "Nghĩa đen: khoảng đất trống. Hay dùng nghĩa bóng: 〜の余地がある／ない (改善の余地, 疑う余地はない, 選択の余地がない).",
       col: ["改善の余地がある", "疑う余地はない", "選択の余地がない", "議論の余地"],
       ex: [
@@ -201,7 +201,7 @@ export const v19: VocabLesson = {
       memo: "余 (dư) + 地 (đất) = mảnh đất dư — chỗ còn trống để làm gì đó.",
     },
     {
-      no: 346, w: "発言", r: "はつげん", pos: "suru", hv: "PHÁT NGÔN", m: "phát biểu, phát ngôn; lời nói",
+      no: 346, w: "発言", r: "はつげん", pos: "suru", hv: "PHÁT NGÔN", m: "phát biểu, phát ngôn; lời nói", acc: 0,
       use: "Nói ý kiến trong cuộc họp, nơi công cộng (会議で発言する, 発言権); lời phát ngôn (問題発言 = phát ngôn gây tranh cãi, 発言を撤回する).",
       col: ["会議で発言する", "発言を求める", "問題発言", "発言を撤回する"],
       ex: [
@@ -212,7 +212,7 @@ export const v19: VocabLesson = {
       memo: "発 (phát ra) + 言 (lời) = phát ra lời — \"phát ngôn\".",
     },
     {
-      no: 347, w: "発行", r: "はっこう", pos: "suru", hv: "PHÁT HÀNH", m: "phát hành (sách báo, tiền, vé); cấp (giấy tờ, thẻ)",
+      no: 347, w: "発行", r: "はっこう", pos: "suru", hv: "PHÁT HÀNH", m: "phát hành (sách báo, tiền, vé); cấp (giấy tờ, thẻ)", acc: 0,
       use: "In ấn và phát ra (雑誌を発行する); cơ quan cấp giấy tờ (証明書を発行する, パスポートの発行, 再発行).",
       col: ["雑誌を発行する", "証明書を発行する", "カードの再発行", "発行部数"],
       ex: [
@@ -223,7 +223,7 @@ export const v19: VocabLesson = {
       memo: "発 (phát) + 行 (đi) = cho đi ra ngoài thiên hạ — phát hành. Nhớ: giấy tờ \"đi\" (行) ra ngoài.",
     },
     {
-      no: 348, w: "発信", r: "はっしん", pos: "suru", hv: "PHÁT TÍN", m: "phát (tín hiệu), gửi đi (thông tin); gọi đi",
+      no: 348, w: "発信", r: "はっしん", pos: "suru", hv: "PHÁT TÍN", m: "phát (tín hiệu), gửi đi (thông tin); gọi đi", acc: 0,
       use: "Truyền tải thông tin ra bên ngoài (情報を発信する, SNSで発信する); phát tín hiệu, gọi điện đi (発信者, 発信履歴). Ngược nghĩa: 受信, 着信.",
       col: ["情報を発信する", "発信者", "海外に向けて発信する", "発信源"],
       ex: [
@@ -234,7 +234,7 @@ export const v19: VocabLesson = {
       memo: "発 (phát) + 信 (tín, tin tức) = phát tin ra ngoài.",
     },
     {
-      no: 349, w: "発送", r: "はっそう", pos: "suru", hv: "PHÁT TỐNG", m: "gửi đi (hàng hóa, thư từ)",
+      no: 349, w: "発送", r: "はっそう", pos: "suru", hv: "PHÁT TỐNG", m: "gửi đi (hàng hóa, thư từ)", acc: 0,
       use: "Gửi hàng, thư từ đi qua bưu điện hay dịch vụ vận chuyển (商品を発送する, 発送先). Hay gặp trong mua sắm online.",
       col: ["商品を発送する", "発送先", "本日発送", "発送が遅れる"],
       ex: [
@@ -245,7 +245,7 @@ export const v19: VocabLesson = {
       memo: "発 (phát ra) + 送 (tống, gửi) = gửi phát đi.",
     },
     {
-      no: 350, w: "発酵", r: "はっこう", pos: "suru", hv: "PHÁT DIẾU", m: "lên men",
+      no: 350, w: "発酵", r: "はっこう", pos: "suru", hv: "PHÁT DIẾU", m: "lên men", acc: 0,
       use: "Vi sinh vật phân giải làm thực phẩm biến đổi (大豆を発酵させる, 発酵食品 như 納豆, みそ, ヨーグルト). Thường dùng 〜を発酵させる (tha động).",
       col: ["発酵食品", "発酵させる", "発酵が進む", "発酵乳"],
       ex: [

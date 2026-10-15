@@ -11,6 +11,7 @@ import { ArrowRight, Lightbulb, Play, Search, SquareCheckBig } from "lucide-reac
 import Link from "next/link";
 import { CardRowSkeleton } from "@/components/layout/Skeletons";
 import { CourseCards } from "@/components/layout/CourseCards";
+import { InstallAppCard } from "@/components/layout/Pwa";
 import { cn } from "@/lib/utils";
 
 const FILTERS: { label: string; value: SourceType | "ALL" }[] = [
@@ -223,6 +224,8 @@ export default function HomePage() {
           </div>
         )}
       </section>
+
+      <InstallAppCard />
 
       {/* ── Khóa học ── */}
       <section aria-labelledby="home-courses" className="flex flex-col gap-4">

@@ -46,6 +46,13 @@ export interface VocabWord {
   cmp?: [string, string][];
   /** Mẹo nhớ từ */
   memo: string;
+  /**
+   * Trọng âm cao–thấp (giọng Tokyo): vị trí mora mà sau đó giọng rơi xuống.
+   * 0 = kiểu bằng (không rơi), 1 = rơi sau mora 1… Nhiều số = có nhiều cách đọc chấp nhận được.
+   */
+  acc?: number | number[];
+  /** Chuỗi đưa cho giọng đọc khi cách đọc mặc định của máy dễ sai (ví dụ 人気 → ひとけ) */
+  say?: string;
 }
 
 export interface VocabLesson {

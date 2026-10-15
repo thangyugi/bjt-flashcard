@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, Shippori_Mincho, Zen_Kaku_Gothic_New, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/query-provider";
@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { MobileTabBar } from "@/components/layout/MobileTabBar";
 import { NavProgress } from "@/components/layout/NavProgress";
 import { AppSplash } from "@/components/layout/AppSplash";
+import { ServiceWorkerRegister } from "@/components/layout/Pwa";
 import { Suspense } from "react";
 
 // Chữ Việt / giao diện
@@ -41,11 +42,22 @@ export const metadata: Metadata = {
   description:
     "Ứng dụng học từ vựng tiếng Nhật phục vụ ôn thi BJT Business Japanese Test. Flashcard thông minh nhóm theo chủ đề, có ghi chú ngữ cảnh business.",
   keywords: ["BJT", "tiếng Nhật", "business Japanese", "từ vựng", "flashcard", "JLPT N1"],
+  applicationName: "BJT Flashcard",
+  appleWebApp: { capable: true, title: "BJT Flashcard", statusBarStyle: "default" },
+  icons: {
+    icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+  },
   openGraph: {
     title: "BJT Flashcard",
     description: "Học từ vựng tiếng Nhật thương mại hiệu quả",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#faf8f5",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -65,6 +77,7 @@ export default function RootLayout({
             <NavProgress />
           </Suspense>
           <AppSplash />
+          <ServiceWorkerRegister />
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1">{children}</main>
