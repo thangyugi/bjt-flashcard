@@ -6,10 +6,11 @@
  * - File dữ liệu khác (json…): dùng bản cache ngay, đồng thời cập nhật ngầm.
  * Đổi VERSION khi cần xóa sạch cache cũ.
  */
-const VERSION = "v1";
+const VERSION = "v2";
 const STATIC_CACHE = `bjt-static-${VERSION}`;
 const PAGE_CACHE = `bjt-pages-${VERSION}`;
 const DATA_CACHE = `bjt-data-${VERSION}`;
+const AUDIO_CACHE = "bjt-audio-v1";
 const OFFLINE_URL = "/offline";
 const PRECACHE = ["/", OFFLINE_URL, "/icons/icon-192.png", "/icons/icon-512.png"];
 
@@ -23,7 +24,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  const keep = [STATIC_CACHE, PAGE_CACHE, DATA_CACHE];
+  const keep = [STATIC_CACHE, PAGE_CACHE, DATA_CACHE, AUDIO_CACHE];
   event.waitUntil(
     caches
       .keys()
@@ -38,6 +39,12 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname === "/sw.js") return;
+
+  // File giọng đọc thu sẵn: lưu lại để nghe offline (trả 206 cho yêu cầu Range — Safari cần)
+  if (url.pathname.startsWith("/audio/") && url.pathname !== "/audio/manifest.json") {
+    event.respondWith(audioCache(request, url));
+    return;
+  }
 
   if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/")) {
     event.respondWith(cacheFirst(request));
@@ -90,4 +97,30 @@ async function staleWhileRevalidate(request) {
     })
     .catch(() => hit || Response.error());
   return hit || fresh;
+}
+
+async function audioCache(request, url) {
+  const cache = await caches.open(AUDIO_CACHE);
+  const key = url.origin + url.pathname;
+  let res = await cache.match(key);
+  if (!res) {
+    res = await fetch(key);
+    if (!res.ok) return res;
+    await cache.put(key, res.clone());
+  }
+  const range = request.headers.get("Range");
+  if (!range) return res;
+  const buf = await res.arrayBuffer();
+  const m = /bytes=(\d*)-(\d*)/.exec(range);
+  const start = m && m[1] ? Number(m[1]) : 0;
+  const end = m && m[2] ? Math.min(Number(m[2]), buf.byteLength - 1) : buf.byteLength - 1;
+  return new Response(buf.slice(start, end + 1), {
+    status: 206,
+    headers: {
+      "Content-Type": res.headers.get("Content-Type") || "audio/mp4",
+      "Content-Range": `bytes ${start}-${end}/${buf.byteLength}`,
+      "Content-Length": String(end - start + 1),
+      "Accept-Ranges": "bytes",
+    },
+  });
 }

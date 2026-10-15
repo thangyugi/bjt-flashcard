@@ -14,7 +14,7 @@ interface TtsStore {
 export const useTtsStore = create<TtsStore>()(
   persist(
     (set) => ({
-      gender: "female",
+      gender: "male",
       rate: 0.9,
       setGender: (gender) => set({ gender }),
       setRate: (rate) => set({ rate }),

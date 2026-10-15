@@ -2,7 +2,18 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { Square, Volume2 } from "lucide-react";
-import { getPlaying, japaneseVoices, pickVoice, speak, stopSpeaking, subscribePlaying, ttsSupported } from "@/lib/tts";
+import {
+  getManifest,
+  getPlaying,
+  japaneseVoices,
+  loadAudioManifest,
+  pickVoice,
+  speak,
+  stopSpeaking,
+  subscribeManifest,
+  subscribePlaying,
+  ttsSupported,
+} from "@/lib/tts";
 import { useTtsStore } from "@/store/tts-store";
 import { useHydrated } from "@/hooks/useHydrated";
 import { cn } from "@/lib/utils";
@@ -44,7 +55,11 @@ export function SpeakButton({
   const playing = useSyncExternalStore(subscribePlaying, getPlaying, () => null) === id;
   const { gender, rate } = useTtsStore();
 
-  if (!hydrated || !ttsSupported()) return null;
+  useEffect(() => {
+    loadAudioManifest();
+  }, []);
+
+  if (!hydrated) return null;
 
   const onClick = () => {
     if (playing) stopSpeaking();
@@ -79,9 +94,14 @@ export function VoiceSettings({ className }: { className?: string }) {
   const hydrated = useHydrated();
   const voices = useVoicesReady();
   const { gender, rate, setGender, setRate } = useTtsStore();
+  const manifest = useSyncExternalStore(subscribeManifest, getManifest, () => null);
+  useEffect(() => {
+    loadAudioManifest();
+  }, []);
 
   if (!hydrated) return null;
-  if (!ttsSupported())
+  const recorded = manifest?.voices[gender];
+  if (!ttsSupported() && !recorded)
     return (
       <p className={cn("text-[13px] text-ink-3", className)}>
         Trình duyệt này chưa hỗ trợ đọc tiếng Nhật. Hãy dùng Safari (iPhone/iPad), Chrome hoặc Edge.
@@ -113,13 +133,19 @@ export function VoiceSettings({ className }: { className?: string }) {
           </button>
         </div>
       </div>
-      {pick && (
+      {recorded && (
+        <p className="text-[12px] text-ink-3">
+          Giọng thu sẵn: <b className="text-ink-2">{recorded}</b>
+          {" "}(câu nào chưa có file thu sẵn sẽ dùng giọng của máy).
+        </p>
+      )}
+      {!recorded && pick && (
         <p className="text-[12px] text-ink-3">
           {pick.voice ? `Đang dùng giọng: ${pick.voice.name}` : "Chưa tìm thấy giọng tiếng Nhật trên máy."}
           {pick.simulated && " — máy chưa có giọng nam tiếng Nhật nên đang hạ tông giọng nữ."}
         </p>
       )}
-      {voices === 0 && (
+      {!recorded && voices === 0 && (
         <p className="text-[12px] text-ink-3">
           Chưa thấy giọng tiếng Nhật trên máy. Cài thêm trong Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Nhật
           (iPhone/iPad) hoặc Cài đặt → Chuyển văn bản thành giọng nói (Android).
