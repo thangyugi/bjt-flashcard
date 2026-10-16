@@ -1,0 +1,318 @@
+import type { VocabLesson } from "../types";
+
+export const v56: VocabLesson = {
+  id: "mk-56",
+  num: 56,
+  title: "Tận tâm đến cùng",
+  titleJa: "こだわる・凝らす・極める",
+  scene:
+    "Công ty Mai tổ chức tiệc kỷ niệm 50 năm thành lập. Mai được giao lo khâu trang trí hội trường, và học được bài học về sự tận tâm, chừng mực lẫn trách nhiệm.",
+  story: [
+    {
+      jp: "会社の創立五十周年パーティーで、マイは会場の飾りつけを担当することになった。会社は「お客様第一」という理念を[[掲げて]]、この五十年で大きな成長を[[遂げて]]きた。",
+      vi: "Ở bữa tiệc kỷ niệm 50 năm thành lập công ty, Mai được giao phụ trách trang trí hội trường. Công ty nêu cao triết lý \"Khách hàng là trên hết\" và đã phát triển vượt bậc trong 50 năm qua.",
+    },
+    {
+      jp: "準備全体を[[仕切って]]いるのは佐藤先輩だ。先輩は三か国語を自由に[[操る]]ので、海外からのお客様の対応も任されている。",
+      vi: "Người điều hành toàn bộ khâu chuẩn bị là chị Satō. Chị sử dụng thành thạo ba thứ tiếng nên còn được giao tiếp đón khách nước ngoài.",
+    },
+    {
+      jp: "去年の行事では準備が遅れて大変だった。それに[[懲りた]]マイは、今年は一か月前から準備を始めた。",
+      vi: "Sự kiện năm ngoái chuẩn bị trễ nên vất vả vô cùng. Rút kinh nghiệm cay đắng ấy, năm nay Mai bắt đầu chuẩn bị từ một tháng trước.",
+    },
+    {
+      jp: "細部に[[こだわる]]マイは、花の色や配置にも工夫を[[凝らした]]。でも、テーブルの花にリボンの飾りを[[施す]]作業には[[手こずった]]。最近お菓子作りに[[凝って]]いる健太は、手作りのケーキを用意してくれた。",
+      vi: "Vốn kỹ tính từng chi tiết, Mai dày công sáng tạo cả màu sắc lẫn cách bố trí hoa. Nhưng việc thắt nơ trang trí cho hoa trên bàn thì làm cô chật vật mãi. Kenta, dạo này đang mê làm bánh, đã chuẩn bị một chiếc bánh tự làm.",
+    },
+    {
+      jp: "部長は「我々は裏方に[[徹しよう]]」と言い、「お客様の前では私語を[[慎む]]ように。社員としての立場を[[わきまえて]]行動してほしい」と注意した。マイは時間を[[惜しんで]]、最後の飾りつけを急いだ。",
+      vi: "Trưởng phòng nói: \"Chúng ta hãy làm tròn vai người hậu trường\", rồi nhắc: \"Trước mặt khách thì hạn chế nói chuyện riêng. Hãy hành xử đúng với vị trí nhân viên.\" Mai tranh thủ từng phút để hoàn tất phần trang trí cuối cùng.",
+    },
+    {
+      jp: "当日、受付は混雑を[[極めた]]。マイは流れの改善を[[図って]]、受付を二つに分けた。開場にはぎりぎり[[間に合った]]。",
+      vi: "Hôm đó, quầy lễ tân đông nghẹt. Mai tìm cách cải thiện luồng khách bằng cách chia lễ tân làm hai. Mọi thứ vừa kịp lúc mở cửa.",
+    },
+    {
+      jp: "パーティーの途中、田中さんがうっかりグラスを割ってしまった。人目を[[はばかって]]小声で謝る田中さんに、部長は笑って言った。「気が[[とがめる]]なら、後片付けで[[償って]]くれればいいよ」。",
+      vi: "Giữa buổi tiệc, anh Tanaka lỡ tay làm vỡ ly. Anh e dè ánh mắt mọi người, khẽ xin lỗi, còn trưởng phòng cười bảo: \"Nếu thấy áy náy thì bù lại bằng việc dọn dẹp sau tiệc là được.\"",
+    },
+  ],
+  words: [
+    {
+      no: 1041, w: "慎む", r: "つつしむ", p: "を", pos: "verb", hv: "THẬN", m: "thận trọng; kiềm chế, hạn chế",
+      use: "Tự kiềm chế lời nói, hành vi không nên: 言動を慎む, 私語を慎む, 酒を慎む. Trang trọng, hay dùng trong lời nhắc nhở, thông báo (〜はお慎みください).",
+      col: ["言動を慎む", "私語を慎む", "酒を慎む", "身を慎む"],
+      ex: [
+        ["式の間は私語を[[慎んで]]ください。", "Trong buổi lễ xin hạn chế nói chuyện riêng."],
+        ["医者に注意されて、酒とたばこを[[慎んで]]いる。", "Bị bác sĩ nhắc, tôi đang kiêng rượu và thuốc lá."],
+      ],
+      cmp: [["謹む", "Đồng âm つつしむ: 謹む = kính cẩn (謹んでお祝い申し上げます). 慎む = tự kiềm chế, cẩn trọng."]],
+      memo: "慎 = 忄 (tâm) + 真 (thật) — giữ lòng thật cẩn trọng. Từ quen: 慎重 = thận trọng.",
+    },
+    {
+      no: 1042, w: "わきまえる", r: "わきまえる", p: "を", pos: "verb", m: "hiểu rõ (lẽ phải, vị trí) và cư xử đúng mực",
+      alt: "弁える",
+      use: "Hiểu rõ đạo lý, hoàn cảnh, vị trí của mình và hành xử cho phải phép: 立場をわきまえる, 礼儀をわきまえる, 時と場所をわきまえる. Hay dùng trong lời khuyên, phê bình.",
+      col: ["立場をわきまえる", "礼儀をわきまえる", "場をわきまえる", "身のほどをわきまえる"],
+      ex: [
+        ["新人なのだから、自分の立場を[[わきまえて]]発言しなさい。", "Là người mới thì hãy biết vị trí của mình mà phát biểu."],
+        ["彼は時と場所を[[わきまえず]]、大声で話す。", "Anh ta nói to bất kể thời gian, địa điểm."],
+      ],
+      cmp: [["理解する", "理解する: hiểu (nội dung, lý lẽ). わきまえる: hiểu VÀ cư xử đúng mực theo hoàn cảnh, vị trí."]],
+      memo: "Kanji 弁える — 弁 (BIỆN: phân biện) — biết phân biệt phải trái, trên dưới.",
+    },
+    {
+      no: 1043, w: "惜しむ", r: "おしむ", p: "を", pos: "verb", hv: "TÍCH", m: "tiếc nuối; tiếc rẻ; quý trọng",
+      use: "(1) Tiếc nuối: 別れを惜しむ, 死を惜しむ. (2) Tiếc, không muốn bỏ ra — thường dùng phủ định: 努力を惜しまない (không tiếc công sức), 協力を惜しまない. (3) 時間を惜しんで = tranh thủ từng phút.",
+      col: ["別れを惜しむ", "努力を惜しまない", "寸暇を惜しんで", "協力を惜しまない"],
+      ex: [
+        ["卒業式で、みんな別れを[[惜しんだ]]。", "Ở lễ tốt nghiệp, ai nấy đều bịn rịn lúc chia tay."],
+        ["成功のためなら、彼は努力を[[惜しまない]]。", "Vì thành công, anh ấy không tiếc công sức."],
+      ],
+      memo: "惜 = 忄 (tâm) + 昔 (xưa) — lòng nhớ chuyện xưa = tiếc. Cùng chữ với 惜しい (đáng tiếc).",
+    },
+    {
+      no: 1044, w: "はばかる", r: "はばかる", p: "を", pos: "verb", m: "e dè, ngần ngại (ánh mắt người khác)",
+      alt: "憚る",
+      use: "E ngại dư luận, ánh mắt người khác nên kiềm chế: 人目をはばかる, 外聞をはばかる; はばかることなく = không ngần ngại; 〜はばかられる = thấy ngại phải ~. Văn viết.",
+      col: ["人目をはばかる", "外聞をはばかる", "はばかることなく", "口にするのもはばかられる"],
+      ex: [
+        ["二人は人目を[[はばかって]]、こっそり会っていた。", "Hai người e dè ánh mắt thiên hạ nên gặp nhau lén lút."],
+        ["口にするのも[[はばかられる]]ようなひどい言葉だ。", "Đó là những lời lẽ tệ đến mức ngại cả nói ra."],
+      ],
+      cmp: [["遠慮する", "遠慮する: khách sáo, từ chối nhã nhặn (đời thường). はばかる: e dè vì sợ người đời nhìn vào (trang trọng, văn viết)."]],
+      memo: "Kanji 憚 = 忄 (tâm) + 單 — trong lòng ngại ngần. Nhớ trọn cụm 人目をはばかる.",
+    },
+    {
+      no: 1045, w: "手こずる", r: "てこずる", p: "に", pos: "verb", hv: "THỦ", m: "chật vật, vất vả (xử lý); bó tay",
+      use: "Gặp khó, tốn nhiều công sức mới xử lý được: 〜に手こずる (問題に手こずる, 子どもに手こずる, 交渉に手こずる).",
+      col: ["〜に手こずる", "問題に手こずる", "子どもに手こずる"],
+      ex: [
+        ["思ったより難しい問題に[[手こずった]]。", "Tôi chật vật với một bài toán khó hơn tưởng tượng."],
+        ["わがままな客に[[手こずって]]いる。", "Tôi đang khổ sở với một vị khách đỏng đảnh."],
+      ],
+      cmp: [["手を焼く", "手を焼く: gần nghĩa, hay dùng với người khó bảo (息子に手を焼く). 手こずる: dùng cho cả công việc lẫn con người."]],
+      memo: "手 (tay) + こずる — tay cứ loay hoay mãi không xong việc.",
+    },
+    {
+      no: 1046, w: "懲りる", r: "こりる", p: "に", pos: "verb", hv: "TRỪNG", m: "chừa, tởn (sau thất bại cay đắng)",
+      use: "Rút kinh nghiệm đau đớn, không muốn lặp lại: 〜に懲りる (失敗に懲りる), もう懲りた. 懲りずに = chứng nào tật nấy. Tha động từ: 懲らしめる (trừng trị).",
+      col: ["失敗に懲りる", "懲りずに", "もう懲りた", "懲り懲りだ"],
+      ex: [
+        ["一度大失敗して[[懲りた]]ので、今は慎重に計画を立てる。", "Một lần thất bại nặng đã khiến tôi tởn, nên giờ tôi lập kế hoạch rất cẩn thận."],
+        ["彼は何度叱られても[[懲りず]]に遅刻する。", "Bị mắng bao nhiêu lần, cậu ta vẫn chứng nào tật nấy, đi muộn."],
+      ],
+      memo: "懲 = 徴 + 心 — trái tim mang dấu vết bị phạt. Hán Việt TRỪNG như \"trừng phạt\".",
+    },
+    {
+      no: 1047, w: "とがめる", r: "とがめる", p: "を/が", pos: "verb", m: "trách móc, khiển trách; (lương tâm) cắn rứt",
+      alt: "咎める",
+      use: "(1) Tha: trách, chỉ ra lỗi của người khác (ミスをとがめる). (2) Tự: 気がとがめる / 良心がとがめる = áy náy, cắn rứt lương tâm.",
+      col: ["気がとがめる", "良心がとがめる", "失敗をとがめる", "見とがめる"],
+      ex: [
+        ["うそをついたことで、ずっと気が[[とがめて]]いる。", "Vì đã nói dối, tôi cứ áy náy mãi."],
+        ["部長は部下の小さなミスを[[とがめなかった]]。", "Trưởng phòng không trách lỗi nhỏ của cấp dưới."],
+      ],
+      cmp: [["責める", "責める: trách móc, quy lỗi mạnh. とがめる: trách nhẹ, chỉ ra lỗi; và nghĩa nội tâm 気がとがめる (áy náy)."]],
+      memo: "Kanji 咎 = 夂 + 人 + 口 — một người bị miệng đời chê trách.",
+    },
+    {
+      no: 1048, w: "償う", r: "つぐなう", p: "を", pos: "verb", hv: "THƯỜNG", m: "bù đắp, bồi thường; chuộc (lỗi, tội)",
+      use: "Bù lại thiệt hại, chuộc lỗi lầm: 罪を償う, 損害を償う, 過ちを償う. Danh từ: 償い.",
+      col: ["罪を償う", "損害を償う", "過ちを償う", "一生かけて償う"],
+      ex: [
+        ["彼は刑務所で罪を[[償った]]。", "Anh ta đã chuộc tội trong tù."],
+        ["自分のミスで生じた損害は、自分で[[償う]]つもりだ。", "Thiệt hại do lỗi của mình, tôi định tự mình bồi thường."],
+      ],
+      memo: "償 = 亻 (người) + 賞 (thưởng — có 貝 là tiền) — người đem tiền ra bù đắp. Hán Việt THƯỜNG như \"bồi thường\".",
+    },
+    {
+      no: 1049, w: "凝る", r: "こる", p: "に/が", pos: "verb", hv: "NGƯNG", m: "say mê; cầu kỳ, công phu; (vai) mỏi cứng",
+      use: "(1) Say mê: 〜に凝る (料理に凝る, 釣りに凝る). (2) Cầu kỳ, công phu: 凝ったデザイン, 凝った料理. (3) 肩が凝る = mỏi cứng vai.",
+      col: ["〜に凝る", "凝った料理", "肩が凝る", "凝り性"],
+      ex: [
+        ["最近、父はカメラに[[凝って]]いて、毎週撮影に出かける。", "Dạo này bố tôi mê máy ảnh, tuần nào cũng đi chụp."],
+        ["一日中パソコンを使って、肩が[[凝った]]。", "Dùng máy tính cả ngày nên tôi mỏi cứng vai."],
+      ],
+      cmp: [["こだわる", "こだわる: khăng khăng chú trọng một tiêu chuẩn, chi tiết. 凝る: dồn công sức say mê, làm cho cầu kỳ."]],
+      memo: "凝 = 冫 (băng) + 疑 — nước đông cứng lại. Tâm trí \"đông\" lại vào một thứ = say mê; cơ \"đông\" lại = cứng vai.",
+    },
+    {
+      no: 1050, w: "凝らす", r: "こらす", p: "を", pos: "verb", hv: "NGƯNG", m: "tập trung (mắt, tâm trí); dồn công (sáng tạo)",
+      use: "Dồn sự chú ý, công sức vào một điểm: 目を凝らす (căng mắt nhìn), 工夫を凝らす (dày công sáng tạo), 息を凝らす (nín thở), 趣向を凝らす.",
+      col: ["工夫を凝らす", "目を凝らす", "息を凝らす", "趣向を凝らす"],
+      ex: [
+        ["暗闇の中で目を[[凝らす]]と、遠くに人影が見えた。", "Căng mắt nhìn trong bóng tối, tôi thấy một bóng người ở đằng xa."],
+        ["どの店も工夫を[[凝らした]]料理を出している。", "Quán nào cũng phục vụ những món ăn được dày công sáng tạo."],
+      ],
+      cmp: [["凝る", "凝る: tự động từ (say mê, cầu kỳ, cứng vai). 凝らす: tha động từ — chủ động dồn mắt, tâm trí, công sức vào."]],
+      memo: "Tha động từ của 凝る: \"làm cho đông đặc lại\" = dồn tụ ánh mắt, ý tưởng vào một điểm.",
+    },
+    {
+      no: 1051, w: "こだわる", r: "こだわる", p: "に", pos: "verb", m: "câu nệ; kỹ tính, chú trọng (chất lượng)",
+      use: "(1) Câu nệ chuyện nhỏ, bận lòng mãi (ý chê): 小さなことにこだわる. (2) Kén chọn, theo đuổi chất lượng (ý khen, rất phổ biến ngày nay): 素材にこだわる, こだわりの味. Luôn đi với 〜に.",
+      col: ["〜にこだわる", "素材にこだわる", "細かいことにこだわる", "こだわりの一品"],
+      ex: [
+        ["この店は素材に[[こだわって]]、地元の野菜だけを使っている。", "Quán này chú trọng nguyên liệu, chỉ dùng rau củ địa phương."],
+        ["過去の失敗に[[こだわって]]いても仕方がない。", "Cứ bận lòng mãi về thất bại cũ thì cũng chẳng ích gì."],
+      ],
+      memo: "Nghe \"ko-da-wa\" ~ \"cố đòi\" — cố đòi cho bằng được đúng ý mình. Danh từ: こだわり.",
+    },
+    {
+      no: 1052, w: "徹する", r: "てっする", p: "に", pos: "verb", hv: "TRIỆT", m: "toàn tâm theo, nhất quán đến cùng; thâu (đêm)",
+      use: "Làm trọn vẹn một vai trò, lập trường, không chệch: 〜に徹する (裏方に徹する, 聞き役に徹する, 守りに徹する). 夜を徹して = thâu đêm.",
+      col: ["裏方に徹する", "聞き役に徹する", "夜を徹して", "〜に徹する"],
+      ex: [
+        ["今日の会議では、私は聞き役に[[徹する]]つもりだ。", "Trong cuộc họp hôm nay, tôi định chỉ làm người lắng nghe."],
+        ["救助隊は夜を[[徹して]]捜索を続けた。", "Đội cứu hộ tìm kiếm suốt đêm."],
+      ],
+      memo: "徹 = 彳 (bước đi) + 育 + 攵 — đi suốt tới cùng. Từ quen: 徹夜 (thức trắng), 徹底 (triệt để).",
+    },
+    {
+      no: 1053, w: "極める", r: "きわめる", p: "を", pos: "verb", hv: "CỰC", m: "đạt tới đỉnh, tột độ; tinh thông",
+      use: "(1) Đạt tới đỉnh cao: 頂上を極める, 道を極める (tinh thông một nghề). (2) 〜を極める = ở mức tột cùng: 困難を極める, 多忙を極める, 混雑を極める.",
+      col: ["山頂を極める", "困難を極める", "多忙を極める", "道を極める"],
+      ex: [
+        ["悪天候のため、救助活動は困難を[[極めた]]。", "Do thời tiết xấu, công tác cứu hộ vô cùng khó khăn."],
+        ["彼は一生をかけて茶道を[[極めた]]。", "Ông ấy dành cả đời để tinh thông trà đạo."],
+      ],
+      cmp: [["究める", "Đồng âm きわめる: 究める = nghiên cứu, học tới tận cùng (真理を究める). 極める = đạt tới cực điểm (đỉnh núi, mức độ: 困難を極める)."]],
+      memo: "極 = 木 + 亟 — cây cột chống tới tận nóc nhà = cực điểm. Như 北極 (Bắc Cực).",
+    },
+    {
+      no: 1054, w: "遂げる", r: "とげる", p: "を", pos: "verb", hv: "TOẠI", m: "đạt được, hoàn thành; trải qua (thay đổi)",
+      use: "Làm trọn mục đích (目的を遂げる, 思いを遂げる); đi với danh từ chỉ biến đổi: 成長を遂げる, 発展を遂げる, 進化を遂げる, 変化を遂げる. 最期を遂げる = qua đời.",
+      col: ["目的を遂げる", "成長を遂げる", "発展を遂げる", "やり遂げる"],
+      ex: [
+        ["この町はこの十年で目覚ましい発展を[[遂げた]]。", "Thị trấn này đã phát triển vượt bậc trong mười năm qua."],
+        ["彼はついに長年の思いを[[遂げた]]。", "Cuối cùng anh ấy đã toại nguyện ước bấy lâu."],
+      ],
+      cmp: [["果たす", "果たす: hoàn thành nghĩa vụ, vai trò, lời hứa (責任を果たす). 遂げる: đạt tới mục đích sau cả quá trình; đi với 成長・発展・変化."]],
+      memo: "遂 = 辶 (đi) + 㒸 — đi tới tận đích. \"Toại\" như toại nguyện.",
+    },
+    {
+      no: 1055, w: "掲げる", r: "かかげる", p: "を", pos: "verb", hv: "YẾT", m: "treo lên, giương lên; nêu cao (mục tiêu, khẩu hiệu)",
+      use: "Giương lên cao cho mọi người thấy (旗を掲げる, 看板を掲げる); nêu ra mục tiêu, khẩu hiệu, chủ trương (目標を掲げる, 公約に掲げる); đăng bài (記事を掲げる).",
+      col: ["旗を掲げる", "目標を掲げる", "看板を掲げる", "公約に掲げる"],
+      ex: [
+        ["新社長は「売り上げ二倍」という目標を[[掲げた]]。", "Tân giám đốc đã nêu mục tiêu \"doanh thu gấp đôi\"."],
+        ["式典の会場に国旗が[[掲げられた]]。", "Quốc kỳ được treo lên tại khán đài buổi lễ."],
+      ],
+      memo: "掲 = 扌 (tay) + 曷 — tay giơ lên cao. Từ quen: 掲示板 (bảng thông báo), 掲載 (đăng tải).",
+    },
+    {
+      no: 1056, w: "図る", r: "はかる", p: "を", pos: "verb", hv: "ĐỒ", m: "mưu tính, tìm cách thực hiện",
+      use: "Lên kế hoạch và nỗ lực thực hiện; đi với danh từ Hán: 解決を図る, 改善を図る, 効率化を図る, 便宜を図る (tạo điều kiện).",
+      col: ["解決を図る", "改善を図る", "便宜を図る", "効率化を図る"],
+      ex: [
+        ["会社は新しいシステムで業務の効率化を[[図って]]いる。", "Công ty đang tìm cách nâng cao hiệu suất công việc bằng hệ thống mới."],
+        ["両国は関係の改善を[[図る]]ことで合意した。", "Hai nước đã nhất trí tìm cách cải thiện quan hệ."],
+      ],
+      cmp: [["計る・測る・量る", "計る: đo thời gian; 測る: đo chiều dài, độ sâu, nhiệt độ; 量る: cân, đo dung tích. 図る: mưu tính, tìm cách thực hiện. (謀る: âm mưu chuyện xấu.)"]],
+      memo: "図 (bản vẽ, như 地図) — vẽ ra kế hoạch rồi bắt tay thực hiện.",
+    },
+    {
+      no: 1057, w: "操る", r: "あやつる", p: "を", pos: "verb", hv: "THAO", m: "điều khiển; sử dụng thành thạo; giật dây, thao túng",
+      use: "Điều khiển khéo léo (人形を操る, 船を操る); sử dụng thông thạo (外国語を操る); thao túng người khác từ phía sau (陰で操る).",
+      col: ["人形を操る", "五か国語を操る", "陰で操る", "機械を操る"],
+      ex: [
+        ["彼女は五か国語を自由に[[操る]]。", "Cô ấy sử dụng thành thạo năm thứ tiếng."],
+        ["事件の裏で、彼を[[操って]]いた人物がいた。", "Đằng sau vụ việc có kẻ đã giật dây anh ta."],
+      ],
+      cmp: [["使う", "使う: dùng (chung chung). 操る: điều khiển khéo léo, thuần thục; hoặc thao túng người khác."]],
+      memo: "操 = 扌 (tay) + 喿 (chim hót trên cây) — tay khéo điều khiển. Từ quen: 操作 (thao tác).",
+    },
+    {
+      no: 1058, w: "仕切る", r: "しきる", p: "を", pos: "verb", hv: "SĨ THIẾT", m: "ngăn chia (không gian); điều hành, quán xuyến",
+      use: "(1) Ngăn chia không gian: 部屋をカーテンで仕切る. (2) Đứng ra quản lý, chỉ đạo: 会を仕切る, 現場を仕切る. Danh từ: 仕切り (vách ngăn), 仕切り直し (làm lại từ đầu).",
+      col: ["部屋を仕切る", "会を仕切る", "現場を仕切る", "仕切り直し"],
+      ex: [
+        ["一つの部屋を本棚で二つに[[仕切った]]。", "Tôi dùng giá sách ngăn một phòng thành hai."],
+        ["パーティーの準備は、すべて彼女が[[仕切って]]いる。", "Mọi khâu chuẩn bị tiệc đều do cô ấy điều hành."],
+      ],
+      memo: "仕 (làm) + 切る (cắt) — cắt không gian thành từng khu, rồi đứng ra lo liệu từng khu.",
+    },
+    {
+      no: 1059, w: "施す", r: "ほどこす", p: "を", pos: "verb", hv: "THI", m: "ban phát; thực hiện (biện pháp); thêm vào (trang trí)",
+      use: "(1) Ban, bố thí (貧しい人に食べ物を施す). (2) Tiến hành biện pháp: 治療を施す, 対策を施す; 手の施しようがない = bó tay. (3) Gia công, trang trí: 装飾を施す, 刺繍を施す.",
+      col: ["治療を施す", "対策を施す", "装飾を施す", "手の施しようがない"],
+      ex: [
+        ["医者はけが人に、すぐ応急処置を[[施した]]。", "Bác sĩ lập tức sơ cứu cho người bị thương."],
+        ["このドレスには美しい刺繍が[[施されて]]いる。", "Chiếc váy này được thêu những đường thêu tuyệt đẹp."],
+      ],
+      memo: "施 = 方 + 也 (lá cờ phấp phới) — lan tỏa ra khắp nơi = ban phát. Từ quen: 実施 (thực thi), 施設 (cơ sở).",
+    },
+    {
+      no: 1060, w: "間に合う", r: "まにあう", p: "に/で", pos: "verb", hv: "GIAN HỢP", m: "kịp (giờ); đủ dùng",
+      use: "(1) Kịp: 〜に間に合う (電車に間に合う, 締め切りに間に合う). (2) Đủ, tạm được: 〜で間に合う (一万円で間に合う). Câu từ chối người chào hàng: 間に合っています (tôi có đủ rồi).",
+      col: ["締め切りに間に合う", "電車に間に合う", "〜で間に合う", "間に合っています"],
+      ex: [
+        ["走ったおかげで、最終電車に[[間に合った]]。", "Nhờ chạy mà tôi kịp chuyến tàu cuối."],
+        ["新聞は今、[[間に合って]]います。", "Báo thì hiện tôi có đủ rồi (không cần đặt thêm)."],
+      ],
+      memo: "間 (khoảng) + 合う (vừa khớp) — vừa khớp khoảng thời gian. 間に合わせ = đồ dùng tạm.",
+    },
+  ],
+  quiz: [
+    {
+      type: "choice",
+      label: "Phân biệt",
+      q: "会社は業務の効率化を＿＿＿ために、新しいシステムを導入した。",
+      opts: ["図る", "計る", "測る", "量る"],
+      answer: 0,
+      explain: "〜を図る = mưu tính, tìm cách thực hiện (改善・解決・効率化を図る). 計る/測る/量る đều là \"đo\".",
+    },
+    {
+      type: "choice",
+      label: "Chọn từ thích hợp",
+      q: "暗闇の中で目を＿＿＿と、遠くに明かりが見えた。",
+      opts: ["凝らす", "凝る", "極める", "掲げる"],
+      answer: 0,
+      explain: "目を凝らす = căng mắt nhìn chăm chú. 凝る là tự động từ, không đi với 目を.",
+    },
+    {
+      type: "choice",
+      label: "Từ gần nghĩa (言い換え)",
+      q: "一度大損をして[[懲りた]]ので、もう投資はしない。",
+      opts: ["ひどい目にあって、二度としたくないと思った", "うまくいって自信がついた", "失敗の原因を詳しく調べた", "友達に厳しく責められた"],
+      answer: 0,
+      explain: "懲りる = chừa, tởn sau trải nghiệm cay đắng, không muốn làm lại.",
+    },
+    {
+      type: "choice",
+      label: "Dùng từ đúng (用法)",
+      q: "「わきまえる」の使い方が正しい文はどれか。",
+      opts: [
+        "彼女は自分の立場をわきまえて、控えめに発言した。",
+        "明日の天気をわきまえてから出かけよう。",
+        "彼は財布の中身をわきまえて、驚いた。",
+        "新しい単語を毎日十個わきまえることにした。",
+      ],
+      answer: 0,
+      explain: "わきまえる đi với 立場・礼儀・場: hiểu rõ và cư xử đúng mực. Không dùng cho xem thời tiết (調べる), kiểm tra (確かめる), học thuộc (覚える).",
+    },
+    {
+      type: "judge",
+      q: "この町は、ここ十年で大きな発展を遂げた。",
+      ok: true,
+      explain: "発展を遂げる = đạt được sự phát triển — kết hợp chuẩn của 遂げる.",
+    },
+  ],
+  kanji: {
+    慎: { hv: "THẬN", m: "thận trọng" },
+    弁: { hv: "BIỆN", m: "phân biện; nói năng" },
+    惜: { hv: "TÍCH", m: "tiếc" },
+    懲: { hv: "TRỪNG", m: "trừng phạt; chừa" },
+    咎: { hv: "CỮU", m: "lỗi, trách" },
+    償: { hv: "THƯỜNG", m: "bồi thường" },
+    凝: { hv: "NGƯNG", m: "đông đặc; tập trung" },
+    徹: { hv: "TRIỆT", m: "suốt, triệt để" },
+    極: { hv: "CỰC", m: "cực điểm" },
+    遂: { hv: "TOẠI", m: "hoàn thành, toại" },
+    掲: { hv: "YẾT", m: "giương lên, đăng" },
+    図: { hv: "ĐỒ", m: "bản vẽ; mưu tính" },
+    操: { hv: "THAO", m: "điều khiển" },
+    仕: { hv: "SĨ", m: "làm, phục vụ" },
+    施: { hv: "THI", m: "ban phát; thực thi" },
+  },
+};
