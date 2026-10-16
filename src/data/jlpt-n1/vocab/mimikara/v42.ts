@@ -58,7 +58,7 @@ export const v42: VocabLesson = {
         ["今の気持ちは、感謝の一言に[[尽きます]]。", "Cảm xúc lúc này chỉ có thể gói gọn trong hai chữ \"biết ơn\"."],
       ],
       cmp: [["尽くす", "尽きる (tự): tự cạn hết. 尽くす (tha): dốc hết, cống hiến hết mình (全力を尽くす)."]],
-      memo: "尽 = 尺 + 二 chấm — đo đến hết thước. TẬN như \"vô tận\", \"tận cùng\". (TSV ghi TẪN — âm chuẩn là TẬN.)",
+      memo: "尽 = 尺 + 二 chấm — đo đến hết thước. TẬN như \"vô tận\", \"tận cùng\".",
     },
     {
       no: 783, w: "尽くす", r: "つくす", p: "を", pos: "verb", hv: "TẬN", m: "dốc hết, làm hết sức; cống hiến, tận tụy (vì ai)",
@@ -299,9 +299,9 @@ export const v42: VocabLesson = {
     },
     {
       type: "judge",
-      q: "犯人は警察の取り調べを受け、ようやく罪を免れた。",
+      q: "毎日努力したので、念願の合格を免れることができた。",
       ok: false,
-      explain: "免れる = may mắn thoát khỏi điều xấu. Bị thẩm vấn rồi \"cuối cùng thoát tội\" là mâu thuẫn ngữ cảnh; muốn nói nhận tội phải dùng 罪を認めた.",
+      explain: "免れる chỉ dùng để thoát khỏi điều XẤU (難・責任・倒産). Đạt được điều mong muốn phải nói 合格を果たす / 合格できた.",
     },
   ],
   kanji: {
