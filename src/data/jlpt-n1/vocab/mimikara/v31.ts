@@ -1,0 +1,321 @@
+import type { VocabLesson } from "../types";
+
+export const v31: VocabLesson = {
+  id: "mk-31",
+  num: 31,
+  title: "Chuyển văn phòng",
+  titleJa: "着々・ぐったり・何とぞ",
+  scene:
+    "Công ty Mai chuyển sang văn phòng mới rộng hơn. Ngày chuyển nhà chẳng hề suôn sẻ: kho đồ bừa bộn, các phòng ban cãi nhau, và ai nấy mệt rã rời.",
+  story: [
+    {
+      jp: "オフィスの移転が決まり、準備は[[着々と]]進んでいる。しかし、古い倉庫の中は書類や機材で[[ごちゃごちゃ]]だった。",
+      vi: "Việc chuyển văn phòng đã được quyết định, khâu chuẩn bị đang tiến triển đều đặn. Thế nhưng trong kho cũ thì giấy tờ và thiết bị lộn xộn hết cả.",
+    },
+    {
+      jp: "新しいオフィスは前より[[はるかに]]広く、窓からは富士山が[[くっきり]]見える。ただ、駅からの道順が[[今一つ]]わかりにくい。",
+      vi: "Văn phòng mới rộng hơn hẳn chỗ cũ, từ cửa sổ nhìn thấy rõ nét núi Phú Sĩ. Chỉ có đường từ ga đến thì hơi khó tìm.",
+    },
+    {
+      jp: "引っ越し当日、[[がっしり]]した体の作業員たちが、重い棚を軽々と運んでいった。健太も負けずに[[ぐっと]]力を入れて箱を持ち上げたが、すぐに腰を押さえた。",
+      vi: "Ngày chuyển, những người công nhân thân hình vạm vỡ khiêng những chiếc kệ nặng nhẹ như không. Kenta cũng không chịu thua, dồn sức nhấc bổng thùng đồ lên, nhưng rồi lập tức ôm lưng.",
+    },
+    {
+      jp: "作業は[[すんなり]]とは進まなかった。荷物の置き場所をめぐって部署同士の[[ごたごた]]が起き、マイは間に入って[[さんざん]]走り回った。",
+      vi: "Công việc không trôi chảy chút nào. Các phòng ban lục đục về chỗ để đồ, Mai đứng giữa chạy ngược chạy xuôi khổ sở.",
+    },
+    {
+      jp: "夜、マイは[[ぐったり]]して床に座り込んだ。この一週間の準備で、佐藤先輩も少し[[げっそり]]している。汗で服は[[べたべた]]だ。",
+      vi: "Tối đến, Mai mệt lử ngồi phịch xuống sàn. Một tuần chuẩn bị khiến chị Satō cũng hốc hác hẳn đi. Quần áo thì dính nhớp mồ hôi.",
+    },
+    {
+      jp: "そこへ部長が来て、「みんな、[[さぞ]]疲れただろう」と冷たい飲み物を配ってくれた。そして、[[さも]]自分が全部運んだかのように「いやあ、大変だったな」と笑った。",
+      vi: "Đúng lúc ấy trưởng phòng đến, phát nước mát cho mọi người: \"Chắc mọi người mệt lắm nhỉ.\" Rồi ông cười \"Chà, vất vả thật đấy\", cứ như thể chính ông đã khiêng hết mọi thứ.",
+    },
+    {
+      jp: "取引先には「移転作業のため、[[若干]]ご不便をおかけしますが、[[何とぞ]]ご理解のほどよろしくお願い申し上げます」という案内を送った。",
+      vi: "Công ty gửi thông báo cho đối tác: \"Do công tác chuyển văn phòng, có thể gây đôi chút bất tiện, kính mong quý công ty thông cảm.\"",
+    },
+    {
+      jp: "皆が帰った後、古いオフィスは[[ひっそり]]としていた。「新しい場所で売り上げを[[ぐんぐん]]伸ばして、大きな取引先と[[がっちり]]手を組みたいね」と健太が言った。",
+      vi: "Sau khi mọi người về hết, văn phòng cũ im lìm vắng lặng. Kenta nói: \"Ở chỗ mới, mình phải làm doanh số tăng vùn vụt, bắt tay thật chặt với những đối tác lớn.\"",
+    },
+  ],
+  words: [
+    {
+      no: 561, w: "若干", r: "じゃっかん", pos: "adv", hv: "NHƯỢC CAN", m: "một ít, một chút, đôi chút",
+      use: "Văn viết, trang trọng: số lượng/mức độ ít, không xác định (若干の変更, 若干名, 若干遅れる). Hay gặp trong thông báo, tuyển dụng (若干名募集 = tuyển vài người).",
+      col: ["若干の変更", "若干名", "若干遅れる", "若干の不安"],
+      ex: [
+        ["予定に[[若干]]の変更がありますので、ご確認ください。", "Lịch trình có đôi chút thay đổi, xin vui lòng kiểm tra."],
+        ["事務スタッフを[[若干]]名募集しています。", "Chúng tôi đang tuyển vài nhân viên văn phòng."],
+      ],
+      cmp: [["幾分", "若干: một ít (số lượng, văn bản hành chính). 幾分: phần nào (mức độ thay đổi). Cả hai đều trang trọng hơn 少し."]],
+      memo: "若 (NHƯỢC = như, nếu) + 干 (CAN) — \"như can\" một tí: chỉ chút xíu. Đọc じゃっかん (若 ở đây là じゃく, không phải わか).",
+    },
+    {
+      no: 562, w: "今一つ", r: "いまひとつ", pos: "adv", hv: "KIM NHẤT", m: "còn thiếu chút, chưa được tốt lắm; thêm một cái nữa",
+      alt: "今ひとつ",
+      use: "Còn thiếu một chút để hài lòng (今一つだ, 今一つ〜ない): 味が今一つだ = vị chưa ngon lắm. Khẩu ngữ: いまいち. Nghĩa gốc: thêm một cái nữa (今一つ欲しい).",
+      col: ["今一つだ", "今一つ〜ない", "今一つ物足りない", "いまいち"],
+      ex: [
+        ["この映画は話題になったが、内容は[[今一つ]]だった。", "Bộ phim này gây xôn xao, nhưng nội dung chưa hay lắm."],
+        ["説明を聞いても、[[今一つ]]よくわからない。", "Nghe giải thích rồi mà vẫn chưa hiểu lắm."],
+      ],
+      cmp: [["いまいち", "いまいち: khẩu ngữ, thân mật của 今一つ. Trong văn viết, lịch sự dùng 今一つ."]],
+      memo: "今 (bây giờ) + 一つ (một cái) — còn thiếu đúng \"một cái nữa\" là hoàn hảo.",
+    },
+    {
+      no: 563, w: "さんざん", r: "さんざん", pos: "adv", m: "khổ sở, tơi tả, tệ hại; (làm) nhiều, mãi",
+      alt: "散々",
+      use: "① Làm gì đến mức quá nhiều (さんざん待たされる, さんざん迷う, さんざん言ったのに). ② Na-adj: kết quả tệ hại (さんざんな目に遭う, 結果はさんざんだった).",
+      col: ["さんざん待たされる", "さんざん迷った末", "さんざんな目に遭う", "さんざんな結果"],
+      ex: [
+        ["病院で二時間も[[さんざん]]待たされた。", "Ở bệnh viện tôi bị bắt chờ dài cổ suốt hai tiếng."],
+        ["旅行中に財布を盗まれて、[[さんざん]]な目に遭った。", "Trong chuyến du lịch tôi bị trộm ví, khổ sở hết chỗ nói."],
+      ],
+      memo: "散 (TÁN = tan tác) lặp lại: tan tác tơi bời — 散々な目 = trải qua chuyện tơi tả.",
+    },
+    {
+      no: 564, w: "ぐっと", r: "ぐっと", pos: "adv", m: "(dồn sức) mạnh một cái; hẳn, đáng kể; (cảm xúc) nghẹn lại, xúc động",
+      use: "① Dồn sức một hơi (ぐっと引く・押す・飲み干す). ② Thay đổi rõ rệt (ぐっと良くなる, ぐっと寒くなる). ③ Kìm nén/xúc động (ぐっとこらえる, 胸にぐっとくる).",
+      col: ["ぐっと力を入れる", "ぐっと良くなる", "ぐっとこらえる", "ぐっとくる"],
+      ex: [
+        ["ロープを[[ぐっと]]引っ張ると、箱が動いた。", "Kéo mạnh sợi dây một cái thì cái thùng chuyển động."],
+        ["十月に入って、朝晩は[[ぐっと]]寒くなった。", "Sang tháng Mười, sáng tối lạnh hẳn đi."],
+      ],
+      cmp: [["ずっと", "ずっと: hơn nhiều (so sánh tĩnh) / suốt. ぐっと: thay đổi rõ rệt (có cảm giác \"đột ngột, mạnh\"), dồn sức."]],
+      memo: "\"Gụt!\" — tiếng nghiến răng dồn sức, hay tiếng nuốt nghẹn cảm xúc.",
+    },
+    {
+      no: 565, w: "はるかに", r: "はるかに", pos: "adv", m: "hơn hẳn, vượt xa; xa xăm",
+      alt: "遥かに",
+      use: "Trong so sánh: hơn rất nhiều (〜よりはるかに〜). Cũng là na-adj はるか (xa xôi về không gian/thời gian): はるか遠く, はるか昔.",
+      col: ["〜よりはるかに", "はるかに上回る", "はるか遠く", "はるか昔"],
+      ex: [
+        ["実際の費用は、予想より[[はるかに]]高かった。", "Chi phí thực tế cao hơn dự tính rất nhiều."],
+        ["[[はるか]]遠くに富士山が見える。", "Thấy núi Phú Sĩ ở xa tít."],
+      ],
+      cmp: [["ずっと", "ずっと: hơn nhiều (khẩu ngữ). はるかに: hơn hẳn, vượt xa (mạnh hơn, hơi văn viết)."]],
+      memo: "遥 (DIÊU = xa xôi): xa đến mức không so được.",
+    },
+    {
+      no: 566, w: "がっちり", r: "がっちり", pos: "adv", m: "chắc chắn, chặt; vạm vỡ; (tiền) chắc tay, tính toán kỹ",
+      use: "Nắm, kết hợp chặt chẽ không rời (がっちり握手する, がっちり組む, 守りががっちりしている); thân hình vạm vỡ (がっちりした体); khôn ngoan về tiền (がっちり稼ぐ, がっちりしている).",
+      col: ["がっちり握手する", "がっちり手を組む", "がっちりした体", "がっちり稼ぐ"],
+      ex: [
+        ["二人は[[がっちり]]と握手を交わした。", "Hai người bắt tay nhau thật chặt."],
+        ["チームは守りを[[がっちり]]固めて、一点も与えなかった。", "Đội bóng siết chặt hàng phòng ngự, không để thủng lưới bàn nào."],
+      ],
+      cmp: [["がっしり", "Cả hai đều \"chắc\". がっちり: nhấn sự kết hợp chặt chẽ, không kẽ hở (nắm chặt, phòng thủ, tính toán tiền). がっしり: nhấn vẻ to lớn, vững chãi của thân hình, công trình."]],
+      memo: "\"Gát-chi\" — tiếng khóa \"cạch\" khít lại: chặt chẽ.",
+    },
+    {
+      no: 567, w: "がっしり", r: "がっしり", pos: "adv", m: "chắc nịch, vạm vỡ, vững chãi",
+      use: "Thân hình to, rắn chắc (がっしりした体格); đồ vật, công trình vững chãi (がっしりした柱・机). Thường dùng dạng がっしりした + N.",
+      col: ["がっしりした体格", "がっしりした柱", "がっしりと支える"],
+      ex: [
+        ["父は[[がっしり]]した体格で、若い頃は柔道をしていた。", "Bố tôi có thân hình vạm vỡ, hồi trẻ từng tập judo."],
+        ["この机は[[がっしり]]していて、上に乗っても大丈夫だ。", "Cái bàn này chắc nịch, đứng lên trên cũng không sao."],
+      ],
+      cmp: [["がっちり", "がっしり: vẻ to lớn, vững chãi tĩnh (体格, 柱). がっちり: siết chặt, khít, không lọt (握手, 守り) và còn nghĩa giỏi giữ tiền."]],
+      memo: "\"Gát-shi\" — nghe như \"gạch xây\": vững chãi như tường gạch.",
+    },
+    {
+      no: 568, w: "くっきり", r: "くっきり", pos: "adv", m: "rõ nét, rõ ràng, sắc nét",
+      use: "Hình dạng, đường viền, màu sắc nổi bật rõ ràng (くっきり見える, くっきりと浮かぶ, くっきりした二重). Dùng cho thứ nhìn thấy được.",
+      col: ["くっきり見える", "くっきりと浮かぶ", "くっきりした顔立ち", "足跡がくっきり残る"],
+      ex: [
+        ["晴れた日には、山の形が[[くっきり]]と見える。", "Ngày trời quang, hình dáng ngọn núi hiện rõ nét."],
+        ["雪の上に動物の足跡が[[くっきり]]残っていた。", "Trên tuyết in rõ dấu chân thú."],
+      ],
+      cmp: [["はっきり", "はっきり: rõ ràng (cả nhìn, nghe, nói, thái độ). くっきり: chỉ cho hình ảnh thị giác — đường nét sắc, tách bạch với nền."]],
+      memo: "\"Cút-kiri\" — như cắt (kiru) gọn đường viền: sắc nét.",
+    },
+    {
+      no: 569, w: "すんなり", r: "すんなり", pos: "adv", m: "suôn sẻ, trơn tru, dễ dàng; thon thả",
+      use: "① Mọi việc diễn ra không vướng mắc (すんなり決まる・通る・受け入れる). ② Dáng thon dài, mảnh mai (すんなりした足).",
+      col: ["すんなり決まる", "すんなり通る", "すんなり受け入れる", "すんなりした指"],
+      ex: [
+        ["反対意見もなく、計画は[[すんなり]]決まった。", "Không có ý kiến phản đối, kế hoạch được quyết định suôn sẻ."],
+        ["彼女は[[すんなり]]とした長い指をしている。", "Cô ấy có những ngón tay thon dài."],
+      ],
+      cmp: [["スムーズ", "スムーズに: trơn tru (quá trình, vận hành). すんなり: được chấp nhận/quyết định một cách dễ dàng, không gặp phản đối."]],
+      memo: "\"Sun-na-ri\" — trượt \"sùn sụt\" qua không vướng gì.",
+    },
+    {
+      no: 570, w: "着々", r: "ちゃくちゃく", pos: "adv", hv: "TRƯỚC TRƯỚC", m: "đều đặn, vững vàng từng bước",
+      use: "Công việc tiến triển ổn định từng bước theo kế hoạch: 着々と進む・準備する. Thường dùng dạng 着々と.",
+      col: ["着々と進む", "着々と準備する", "着々と成果を上げる"],
+      ex: [
+        ["新しい駅の工事は[[着々と]]進んでいる。", "Việc xây dựng nhà ga mới đang tiến triển đều đặn."],
+        ["彼は夢に向かって[[着々と]]準備を進めている。", "Anh ấy đang từng bước chuẩn bị hướng tới ước mơ."],
+      ],
+      cmp: [["どんどん", "どんどん: liên tục, nhanh (không nhất thiết có kế hoạch). 着々と: vững vàng, chắc chắn từng bước theo kế hoạch."]],
+      memo: "着 (TRƯỚC = đến nơi) lặp lại: mỗi bước đều \"tới đích\" chắc chắn.",
+    },
+    {
+      no: 571, w: "ぐんぐん", r: "ぐんぐん", pos: "adv", m: "vùn vụt, nhanh chóng (lớn lên, tiến lên)",
+      use: "Tăng trưởng, tiến bộ, di chuyển mạnh và nhanh (ぐんぐん伸びる・成長する・上達する). Thường dùng dạng ぐんぐん（と）.",
+      col: ["ぐんぐん伸びる", "ぐんぐん成長する", "ぐんぐん上達する", "ぐんぐん進む"],
+      ex: [
+        ["子どもは夏の間に背が[[ぐんぐん]]伸びた。", "Trong mùa hè đứa bé cao vụt lên."],
+        ["毎日練習したので、日本語が[[ぐんぐん]]上達した。", "Vì luyện tập mỗi ngày nên tiếng Nhật tiến bộ vùn vụt."],
+      ],
+      cmp: [["着々と", "ぐんぐん: nhanh, mạnh mẽ, thấy rõ. 着々と: chậm mà chắc, từng bước theo kế hoạch."]],
+      memo: "\"Gun-gun\" — như tiếng động cơ \"gầm gầm\" tăng tốc.",
+    },
+    {
+      no: 572, w: "ぐったり", r: "ぐったり", pos: "adv", m: "mệt lử, rã rời, kiệt sức",
+      use: "Cơ thể mệt đến mất sức, rũ ra (ぐったりする, ぐったりと横になる). Dùng cho người, động vật; cây héo rũ cũng có thể dùng.",
+      col: ["ぐったりする", "ぐったりと横になる", "暑さでぐったり", "疲れてぐったり"],
+      ex: [
+        ["一日中歩き回って、[[ぐったり]]してしまった。", "Đi bộ cả ngày, tôi mệt rã rời."],
+        ["暑さで犬が[[ぐったり]]している。", "Con chó mệt lả vì nóng."],
+      ],
+      cmp: [["げっそり", "ぐったり: mệt lử, rũ người ra (trạng thái tạm thời, sức lực). げっそり: hốc hác, gầy rộc đi (hình dáng khuôn mặt, cơ thể) hoặc chán nản."]],
+      memo: "\"Gut-tari\" — cả người \"gục\" xuống, rũ rượi.",
+    },
+    {
+      no: 573, w: "げっそり", r: "げっそり", pos: "adv", m: "gầy rộc, hốc hác; chán nản, tụt hứng",
+      use: "① Gầy sút đi trông thấy (げっそりやせる, 頬がげっそりこける). ② Mất hứng, ngán ngẩm (げっそりする): 話を聞いてげっそりした.",
+      col: ["げっそりやせる", "げっそりした顔", "げっそりする"],
+      ex: [
+        ["病気で入院していた彼は、[[げっそり]]やせていた。", "Anh ấy nằm viện vì bệnh, gầy rộc hẳn đi."],
+        ["また残業だと聞いて、[[げっそり]]した。", "Nghe nói lại phải tăng ca, tôi chán ngán."],
+      ],
+      cmp: [["ぐったり", "げっそり: hốc hác (nhìn thấy trên mặt, cơ thể) / chán ngán. ぐったり: kiệt sức, rũ ra."]],
+      memo: "\"Get-sô-ri\" — má \"gẹt\" lõm vào: gầy rộc.",
+    },
+    {
+      no: 574, w: "ひっそり", r: "ひっそり", pos: "adv", m: "yên ắng, lặng lẽ, vắng vẻ",
+      use: "Nơi chốn yên tĩnh, không bóng người (ひっそりとしている, 静まり返る); sống, làm việc lặng lẽ không gây chú ý (ひっそり暮らす).",
+      col: ["ひっそりとしている", "ひっそり暮らす", "ひっそりと咲く", "ひっそりした路地"],
+      ex: [
+        ["夜の学校は[[ひっそり]]としていて、少し怖かった。", "Trường học ban đêm vắng lặng, hơi đáng sợ."],
+        ["彼は引退後、田舎で[[ひっそり]]と暮らしている。", "Sau khi giải nghệ, ông ấy sống lặng lẽ ở quê."],
+      ],
+      cmp: [["しんと", "しんと（する）: im phăng phắc, không một tiếng động. ひっそり: vắng lặng, ít người, kín đáo (cả cách sống)."]],
+      memo: "\"Hít-sô-ri\" — nín thở (hít vào) để giữ yên lặng.",
+    },
+    {
+      no: 575, w: "ごたごた", r: "ごたごた", pos: "adv", m: "lộn xộn, rắc rối, lục đục; (danh từ) xích mích",
+      use: "Tình trạng hỗn độn (部屋がごたごたしている); lục đục, tranh chấp (社内のごたごた, ごたごたが起きる); nói lải nhải (ごたごた言うな). Dùng như danh từ và ごたごたする.",
+      col: ["ごたごたが起きる", "社内のごたごた", "ごたごたする", "ごたごた言うな"],
+      ex: [
+        ["社内の[[ごたごた]]に巻き込まれて、仕事が進まない。", "Bị cuốn vào chuyện lục đục trong công ty, công việc chẳng tiến triển."],
+        ["引っ越しの準備で、家の中が[[ごたごた]]している。", "Vì chuẩn bị chuyển nhà nên trong nhà lộn xộn."],
+      ],
+      cmp: [["ごちゃごちゃ", "ごたごた: nhấn rắc rối, xích mích giữa người với người. ごちゃごちゃ: nhấn sự lẫn lộn, bừa bộn của đồ vật, thông tin."]],
+      memo: "\"Gô-ta gô-ta\" — tiếng cãi qua cãi lại lục đục.",
+    },
+    {
+      no: 576, w: "ごちゃごちゃ", r: "ごちゃごちゃ", pos: "adv", m: "lộn xộn, lẫn lộn, bừa bộn",
+      use: "Nhiều thứ lẫn lộn, không ngăn nắp (ごちゃごちゃしている, ごちゃごちゃに混ざる); đầu óc rối (頭がごちゃごちゃになる); nói lằng nhằng (ごちゃごちゃ言う).",
+      col: ["ごちゃごちゃしている", "ごちゃごちゃになる", "頭がごちゃごちゃ", "ごちゃごちゃ言う"],
+      ex: [
+        ["机の上が[[ごちゃごちゃ]]で、どこに何があるかわからない。", "Trên bàn bừa bộn, không biết cái gì ở đâu."],
+        ["いろいろな情報を聞きすぎて、頭が[[ごちゃごちゃ]]になった。", "Nghe quá nhiều thông tin, đầu óc rối tung."],
+      ],
+      cmp: [["ごたごた", "ごちゃごちゃ: đồ vật/thông tin lẫn lộn. ごたごた: rắc rối, xích mích (chuyện giữa người)."]],
+      memo: "\"Gô-cha\" như \"gộp cả\" vào một chỗ — lẫn lộn tùng phèo.",
+    },
+    {
+      no: 577, w: "べたべた", r: "べたべた", pos: "adv", m: "nhớp nháp, dính dính; dán đầy; (người) bám dính, quấn quýt",
+      use: "Cảm giác dính (汗でべたべたする, 手がべたべただ); dán, bôi tràn lan (べたべた貼る・塗る); cặp đôi quấn quýt quá mức (人前でべたべたする).",
+      col: ["汗でべたべたする", "べたべた貼る", "べたべたくっつく", "手がべたべた"],
+      ex: [
+        ["ジュースをこぼして、テーブルが[[べたべた]]になった。", "Làm đổ nước ép, cái bàn dính nhớp nháp."],
+        ["壁にポスターが[[べたべた]]貼ってある。", "Trên tường dán đầy áp phích."],
+      ],
+      cmp: [["ねばねば", "ねばねば: dính, kéo sợi (納豆, keo). べたべた: dính nhớp trên bề mặt (mồ hôi, nước đường) — khó chịu."]],
+      memo: "\"Bê-ta\" — dính bết vào như băng dính.",
+    },
+    {
+      no: 578, w: "さも", r: "さも", pos: "adv", m: "như thể là, cứ như; thật là, rất",
+      use: "Thường dùng さも〜ように・そうに・かのように: làm ra vẻ như thể (さもおいしそうに食べる, さも知っているかのように話す). Hay kèm ý \"giả vờ, làm bộ\". Kanji 然も (hiếm).",
+      col: ["さも〜そうに", "さも〜かのように", "さも当然のように", "さもありなん"],
+      ex: [
+        ["彼は[[さも]]自分が考えたかのように、他人のアイデアを発表した。", "Anh ta trình bày ý tưởng của người khác cứ như thể chính mình nghĩ ra."],
+        ["子どもは[[さも]]おいしそうにアイスを食べている。", "Đứa bé ăn kem trông ngon lành ghê."],
+      ],
+      cmp: [["さぞ", "さも: \"như thể là\" (mô tả vẻ bề ngoài, hay giả vờ) — さも〜ように. さぞ: \"chắc hẳn\" (phỏng đoán cảm xúc người khác) — さぞ〜だろう."]],
+      memo: "さも ≈ \"sắm vai\" — sắm vai như thể thật.",
+    },
+    {
+      no: 579, w: "さぞ", r: "さぞ", pos: "adv", m: "chắc hẳn, hẳn là (rất…)",
+      use: "Phỏng đoán, cảm thông với cảm xúc/tình trạng của người khác: さぞ〜だろう・でしょう・ことだろう (さぞ疲れたでしょう). Nhấn mạnh: さぞかし, さぞや.",
+      col: ["さぞ〜だろう", "さぞお疲れでしょう", "さぞかし", "さぞ喜ぶだろう"],
+      ex: [
+        ["遠いところから来て、[[さぞ]]お疲れでしょう。", "Từ nơi xa đến, chắc hẳn anh mệt lắm."],
+        ["合格を知ったら、ご両親も[[さぞ]]喜ばれることでしょう。", "Biết tin thi đỗ, chắc hẳn bố mẹ bạn vui lắm."],
+      ],
+      cmp: [["きっと", "きっと: chắc chắn (phỏng đoán chung, cả về sự việc). さぞ: chắc hẳn rất… — dùng cho cảm xúc, trạng thái của người khác, đi với だろう."]],
+      memo: "\"Sa-dô\" — \"chắc dữ lắm\": chắc hẳn rất…",
+    },
+    {
+      no: 580, w: "何とぞ", r: "なにとぞ", pos: "adv", hv: "HÀ", m: "kính mong, xin vui lòng, rất mong",
+      alt: "何卒",
+      use: "Kính ngữ trang trọng khi nhờ vả, xin lỗi: 何とぞよろしくお願いいたします, 何とぞご理解ください. Dùng trong thư từ, thông báo, phát biểu công việc. Lịch sự hơn どうぞ・どうか.",
+      col: ["何とぞよろしくお願いいたします", "何とぞご理解ください", "何とぞご容赦ください"],
+      ex: [
+        ["今後とも[[何とぞ]]よろしくお願い申し上げます。", "Kính mong tiếp tục nhận được sự ủng hộ của quý vị."],
+        ["ご迷惑をおかけしますが、[[何とぞ]]ご理解ください。", "Xin lỗi vì sự bất tiện, kính mong quý khách thông cảm."],
+      ],
+      cmp: [["どうか", "どうか: xin hãy (tha thiết, cả trong lời nói thường). 何とぞ: trang trọng nhất, dùng trong thư công việc, thông báo chính thức."]],
+      memo: "何 (HÀ = gì) + とぞ — \"dù thế nào đi nữa (cũng) xin…\".",
+    },
+  ],
+  quiz: [
+    {
+      type: "choice",
+      label: "Phân biệt",
+      q: "遠いところをわざわざ来てくださって、＿＿＿お疲れでしょう。",
+      opts: ["さぞ", "さも", "ごく", "ぐっと"],
+      answer: 0,
+      explain: "さぞ〜でしょう = chắc hẳn rất… (cảm thông với người khác). さも là \"như thể\", đi với 〜ように・そうに.",
+    },
+    {
+      type: "choice",
+      label: "Phân biệt",
+      q: "彼はラグビーをしていたので、＿＿＿した体格をしている。",
+      opts: ["がっしり", "げっそり", "ひっそり", "すんなり"],
+      answer: 0,
+      explain: "がっしりした体格 = thân hình vạm vỡ, chắc nịch. げっそり là gầy rộc, ひっそり là vắng lặng, すんなり là suôn sẻ/thon thả.",
+    },
+    {
+      type: "choice",
+      label: "Từ gần nghĩa (言い換え)",
+      q: "新しいメニューの味は[[今一つ]]だった。",
+      opts: ["少し物足りなかった", "とてもおいしかった", "一つしかなかった", "今までと同じだった"],
+      answer: 0,
+      explain: "今一つ = còn thiếu chút, chưa thật tốt → 少し物足りない.",
+    },
+    {
+      type: "choice",
+      label: "Dùng từ đúng (用法)",
+      q: "「くっきり」の使い方が正しい文はどれか。",
+      opts: [
+        "雨上がりの空に、虹がくっきりと見えた。",
+        "彼の説明はくっきりしていて、とてもわかりやすかった。",
+        "くっきり言って、その意見には反対だ。",
+        "電話の声がくっきり聞こえた。",
+      ],
+      answer: 0,
+      explain: "くっきり chỉ dùng cho hình ảnh nhìn thấy với đường nét rõ. Lời giải thích, âm thanh, cách nói thẳng thì dùng はっきり.",
+    },
+    {
+      type: "judge",
+      q: "計画は反対もなく、すんなり決まった。",
+      ok: true,
+      explain: "すんなり決まる = được quyết định suôn sẻ, không vướng mắc. Câu dùng đúng.",
+    },
+  ],
+  kanji: {
+    若: { hv: "NHƯỢC", m: "trẻ; nếu, như" },
+    干: { hv: "CAN", m: "khô; can thiệp; một ít" },
+    今: { hv: "KIM", m: "bây giờ, nay" },
+    着: { hv: "TRƯỚC", m: "đến nơi; mặc", memo: "羊 (con dê) + 目 (mắt): dê nhìn thấy đích là tới nơi." },
+    何: { hv: "HÀ", m: "cái gì" },
+  },
+};
