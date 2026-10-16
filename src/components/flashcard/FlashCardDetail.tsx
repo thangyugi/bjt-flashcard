@@ -3,6 +3,7 @@
 import type { KeyboardEvent } from "react";
 import { Briefcase, Check, MessageSquare, PencilLine, RotateCcw, X } from "lucide-react";
 import type { CardStatus, VocabularyItem } from "@/types/vocabulary";
+import { SpeakButton } from "@/components/jlpt-n1/Speak";
 import { Furigana } from "@/components/ui/furigana";
 import { levelLabel, posLabel, readingOf } from "@/lib/vocab-labels";
 import { cn, hasTextSelection } from "@/lib/utils";
@@ -194,9 +195,10 @@ export function FlashCardDetail({
                 <span className={cn("font-mincho leading-[1.15] font-semibold", kanjiSize(item.kanji, "back"))}>
                   {item.kanji}
                 </span>
-                <div className="flex flex-wrap items-baseline gap-x-2.5">
+                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                   {reading && <span className="font-jp text-[15px] tracking-[0.06em] text-ink-2">{reading}</span>}
                   {item.romaji && <span className="text-[13px] text-ink-3">{item.romaji}</span>}
+                  <SpeakButton text={item.kanji} label={`Nghe từ ${item.kanji}`} />
                 </div>
               </div>
               <div
@@ -225,6 +227,7 @@ export function FlashCardDetail({
                   <div className="flex items-center gap-[7px] text-brand">
                     <MessageSquare className="h-3.5 w-3.5" aria-hidden />
                     <span className={LABEL}>Ví dụ</span>
+                    <SpeakButton text={item.exampleSentence} label="Nghe câu ví dụ" className="ml-auto" />
                   </div>
                   <p className="font-jp text-base leading-[2.05] sm:text-lg">
                     <Furigana markup={item.exampleSentenceFurigana} fallback={item.exampleSentence} />

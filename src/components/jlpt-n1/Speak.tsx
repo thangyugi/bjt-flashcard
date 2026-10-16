@@ -61,7 +61,9 @@ export function SpeakButton({
 
   if (!hydrated) return null;
 
-  const onClick = () => {
+  const onClick = (e: React.MouseEvent) => {
+    // Không kích hoạt hành động của khung chứa (ví dụ lật flashcard)
+    e.stopPropagation();
     if (playing) stopSpeaking();
     else speak(id, Array.isArray(text) ? text : [text], { gender, rate });
   };
@@ -71,6 +73,7 @@ export function SpeakButton({
     <button
       type="button"
       onClick={onClick}
+      onKeyDown={(e) => e.stopPropagation()}
       aria-label={playing ? "Dừng đọc" : label}
       title={playing ? "Dừng đọc" : label}
       className={cn(
@@ -152,5 +155,30 @@ export function VoiceSettings({ className }: { className?: string }) {
         </p>
       )}
     </div>
+  );
+}
+
+/** Nút gọn trên thanh tiêu đề: đổi giọng đọc Nam ↔ Nữ cho mọi nút loa trong app. */
+export function VoiceToggle({ className }: { className?: string }) {
+  const hydrated = useHydrated();
+  const { gender, setGender } = useTtsStore();
+  if (!hydrated) return <span className={cn("h-8 w-[72px]", className)} aria-hidden />;
+  const male = gender === "male";
+  return (
+    <button
+      type="button"
+      onClick={() => setGender(male ? "female" : "male")}
+      aria-label={`Giọng đọc: ${male ? "Nam" : "Nữ"} — bấm để đổi sang giọng ${male ? "Nữ" : "Nam"}`}
+      title="Giọng đọc tiếng Nhật (bấm để đổi Nam / Nữ)"
+      className={cn(
+        "flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface pr-2.5 pl-2 text-[12.5px] font-semibold text-ink-2 transition-colors hover:border-brand hover:text-ink",
+        className
+      )}
+    >
+      <Volume2 className="h-4 w-4 text-brand" aria-hidden />
+      <span className={cn(male ? "text-ink" : "text-ink-3")}>Nam</span>
+      <span className="text-ink-3">/</span>
+      <span className={cn(!male ? "text-ink" : "text-ink-3")}>Nữ</span>
+    </button>
   );
 }
