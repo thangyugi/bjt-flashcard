@@ -4,6 +4,7 @@ import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import { useProgressStats } from "@/hooks/useProgressStats";
 import { cn } from "@/lib/utils";
+import { VoiceToggle } from "@/components/jlpt-n1/Speak";
 
 export const NAV_ITEMS = [
   { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
@@ -35,12 +36,12 @@ export function Header() {
     >
       <div className="mx-auto flex h-14 max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-8 md:h-16">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex min-w-0 items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-brand font-mincho text-xl font-bold text-white">
             語
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="text-[15px] font-bold tracking-tight text-ink">BJT Flashcard</span>
+            <span className="text-[15px] font-bold tracking-tight whitespace-nowrap text-ink">BJT Flashcard</span>
             <span className="hidden font-jp text-[11px] text-ink-3 lg:block">ビジネス日本語</span>
           </div>
         </Link>
@@ -70,18 +71,21 @@ export function Header() {
           })}
         </nav>
 
-        {/* Tiến độ tổng */}
+        {/* Giọng đọc + tiến độ tổng */}
+        <div className="flex items-center gap-3">
+        <VoiceToggle />
         <div className="flex items-center gap-2.5 text-[13px]" title={`Đã thuộc ${mastered}/${total} từ`}>
           <span className="hidden font-medium text-ink-3 lg:inline">
             {mastered}/{total}
           </span>
-          <div className="h-1.5 w-14 overflow-hidden rounded-full bg-track lg:w-[88px]">
+          <div className="hidden h-1.5 w-14 overflow-hidden rounded-full bg-track sm:block lg:w-[88px]">
             <div
               className="h-full rounded-full bg-brand transition-all duration-700"
               style={{ width: `${pct}%` }}
             />
           </div>
           <span className="font-bold text-brand">{pct}%</span>
+        </div>
         </div>
       </div>
     </header>

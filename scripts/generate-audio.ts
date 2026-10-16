@@ -6,6 +6,7 @@
  *      npm run audio -- bai-02 mk-20       → chọn bài
  *      npm run audio -- --all              → toàn bộ
  *      npm run audio -- phongvan           → trang /phongvan (kịch bản phỏng vấn)
+ *      npm run audio -- bjt                → thẻ flashcard BJT (905 từ + câu ví dụ; không nằm trong --all)
  *
  * Tùy chọn: --male "青山龍星" --female "冥鳴ひまり" --voices male,female --engine URL --force
  * Kết quả: public/audio/{male|female}/<khóa>.m4a và public/audio/manifest.json (xem docs/AUDIO.md).
@@ -57,6 +58,12 @@ function collectTexts(): string[] {
     for (const w of l.words) {
       texts.push(w.say ?? (w.pos === "na-adj" ? `${w.w}な` : w.w), ...w.ex.map(([jp]) => jp));
     }
+  }
+  if (wanted?.has("bjt")) {
+    const groups = JSON.parse(readFileSync(join(process.cwd(), "public", "data", "bjt-1000.json"), "utf8")) as {
+      items: { kanji: string; exampleSentence?: string }[];
+    }[];
+    for (const g of groups) for (const it of g.items) texts.push(it.kanji, ...(it.exampleSentence ? [it.exampleSentence] : []));
   }
   if (!wanted || wanted.has("phongvan")) {
     for (const sec of INTERVIEW) texts.push(...sec.paragraphs);

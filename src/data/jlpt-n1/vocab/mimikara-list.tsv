@@ -500,3 +500,673 @@
 498	リゾート			khu nghỉ dưỡng
 499	スリル			mạo hiểm, cảm giác mạnh
 500	ミステリー			bí ẩn, huyền bí
+501	フィクション			Viễn tưởng, hư cấu
+502	ヒーロー			anh hùng, nam chính
+503	ファン			fan hâm mộ
+504	デビュー			Biểu diễn, ra mắt
+505	プロフィール			Trang cá nhân, thông tin cá nhân
+506	イニシャル			đầu tiên, viết tắt
+507	ポピュラーな			Phổ biến, thông dụng
+508	ヘルシーな			tốt cho sức khỏe
+509	レシピ			công thức, hướng dẫn sử dụng
+510	スパイス			Gia vị cay
+511	ボリューム			số lượng (nhiều hay ít)
+512	トライ			thử
+513	チャレンジ			thử thách, thử sức
+514	マイペースな			Chỉ theo ý mình
+515	チームワーク			làm việc nhóm
+516	プロジェクト			dự án
+517	パートナー			đối tác, cộng sự
+518	セミナー			hội thảo
+519	シンポジウム			hội nghị chuyên đề
+520	ゼミナール			Hội thảo
+521	レジュメ			tóm tắt
+522	リスト			danh sách
+523	ランク			cấp bậc, phân hạng
+524	インターンシップ			Nhân viên thực tập
+525	リストラ			tái cơ cấu
+526	フリーター			làm tự do
+527	セクハラ			quấy rối tình dục
+528	フェアな			công bằng, minh bạch (fair)
+529	ボイコット			tẩy chay
+530	アレルギー			Dị ứng
+531	きんねん	近年	CẬN NIÊN	Những năm gần đây
+532	かつて			Trước đây đã từng
+533	かねて			trước đây đã, từ trước đã
+534	もっか	目下	MỤC HẠ	hiện tại, ngay bây giờ
+535	しゅうじつ	終日	CHUNG NHẬT	cả ngày
+536	そうきゅうに	早急に	TẢO CẤP	khẩn cấp, càng sớm càng tốt
+537	そくざに	即座に	TỨC TỌA	ngay lập tức
+538	すかさず			Tức khắc, tranh thủ
+539	ふいに	不意に	BẤT Ý	đột nhiên, bất giác
+540	とつじょ	突如	ĐỘT NHƯ	đột nhiên
+541	ちかぢか	近々	CẬN	Một ngày gần đây
+542	じきに/もうじき			Chốc lát
+543	ぼつぼつ(と)			Sắp sửa, dần dần
+544	いまどき	今どき	KIM	ngày nay
+545	いまごろ	今ごろ		bây giờ, giờ này
+546	いまさら	今さら		Mãi đến giờ
+547	いまや	今や		Mà bây giờ (so với ngày xưa)
+548	いまに	今に		Một ngày nào đó
+549	ひんぱんに	頻繁に	TẦN PHỒN	thường xuyên, lặp đi lặp lại
+550	しじゅう	始終	THỦY CHUNG	liên tục, thường xuyên
+551	ちょくちょく			thường xuyên
+552	およそ			khoảng, đại khái
+553	きわめて	極めて	CỰC	cực kỳ, vô cùng
+554	ごく			cực kỳ, rất
+555	いたって			rất, vô cùng
+556	ひといちばい	人一倍	NHÂN NHẤT BỘI	Gấp đôi người thường
+557	ひととおり	一通り	NHẤT THÔNG	Đại khái, sơ sài, thông thường
+558	やや			một chút, hơi
+559	いくぶん	幾分	KI PHÂN	1 chút, hơi hơi
+560	そこそこ			Kha khá, vừa vừa, tàm tạm
+561	じゃっかん	若干	NHƯỢC KIỀN	Ít, một ít
+562	いまひとつ	今一つ	KIM	thiếu chút, không đủ
+563	さんざん			Khó khăn, khổ sở
+564	ぐっと			1 hơi, hơn hẳn, bực mình, đột ngột, đột nhiên
+565	はるかに			Hơn nữa, hơn hẳn
+566	がっちり			săn chắc, thắt chặt, vững chắc
+567	がっしり			chắc chắn, chắc nịch
+568	くっきり			Rõ nét, rành mạch
+569	すんなり			thanh thoát, dễ dàng, trơn tru
+570	ちゃくちゃくと	着々(と)	TRỨ	ổn định, dần dần
+571	ぐんぐん(と)			nhanh chóng, mau lẹ
+572	ぐったり			cực kì mệt, kiệt sức, mệt lử
+573	げっそり			gầy xọp đi, suy sụp
+574	ひっそり			yên lặng, lặng lẽ
+575	ごたごた			lộn xộn, hỗn loạn, bối rối
+576	ごちゃごちゃ			lộn xộn, lẫn lộn
+577	べたべた			nhớp nháp, dính dính
+578	さも			hiển nhiên, rõ ràng, như thể là
+579	さぞ			chắc chắn, ắt hẳn là
+580	なにとぞ	何とぞ	HÀ	làm ơn, vui lòng…
+581	なんなりと	何なりと		cái gì cũng, bất cứ thứ gì
+582	どうやら			Dường như, hay là
+583	よほど			rất, khá, rất nhiều
+584	さほど			không hẳn, không đặc biệt
+585	とうてい	到底	ĐÁO ĐỂ	Không thể nào ~
+586	いっけん	一見	NHẤT KIẾN	nhìn qua, thoạt nhìn
+587	いっこうに	一向に	NHẤT HƯỚNG	hoàn toàn (không), không lắm
+588	いちがいに	一概に	NHẤT KHÁI	Tuyệt đối, vô điều kiện
+589	ろくに			Hầu như không, chẳng chút gì
+590	なんでも	何でも	HÀ	Bất cứ thứ gì, nghe nói là
+591	および	及び	CẬP	và, cũng như, với
+592	ならびに	並びに	TỊNH	và, đồng thời
+593	もしくは			hoặc là
+594	ただし	但し	ĐÃN	nhưng, tuy nhiên, ngoài ra
+595	なお			hơn nữa, ngoài ra, mặt khác
+596	ちなみに			nhân đây, tiện thể
+597	もっとも			mặc dù, tuy nhiên
+598	ゆえに			vì thế, kết quả là
+599	よって			bởi vì, theo đó
+600	だいいち	第一	ĐỆ NHẤT	đầu tiên, quan trọng
+601	だんらん	団らん	ĐOÀN	Sum họp, đoàn viên
+602	こうらく	行楽	HÀNH LẠC	Giải trí, đi chơi, kỳ nghỉ
+603	ほんば	本場	BỔN TRÀNG	Nguồn gốc, xuất xứ, vùng sản xuất chính
+604	あいせき	相席	TƯƠNG TỊCH	ngồi chung bàn
+605	ほうび	褒美	BAO MĨ	phần thưởng
+606	いさん	遺産	DI SẢN	tài sản, di sản
+607	だいなし	台無し	THAI VÔ	Vô nghĩa, vô ích, tiêu tan
+608	こころがまえ	心構え	TÂM CẤU	sự sẵn sàng, chuẩn bị tâm lý
+609	ここち	心地	TÂM ĐỊA	Cảm giác
+610	こんき	根気	CĂN KHÍ	sự kiên nhẫn
+611	いじ	意地	Ý ĐỊA	tâm địa, ngoan cố
+612	じかく	自覚	TỰ GIÁC	tự giác, tự ý thức
+613	へんけん	偏見	THIÊN KIẾN	Định kiến, nghĩ phiến diện
+614	ゆうわく	誘惑	DỤ HOẶC	quyến rũ, mê hoặc, dụ dỗ
+615	そくばく	束縛	THÚC PHƯỢC	Cấm đoạt, trói buộc, ràng buộc
+616	ゆだん	油断	DU ĐOẠN	lơ là, chủ quan
+617	やしん	野心	DÃ TÂM	dã tâm, tham vọng
+618	しょうどう	衝動	XUNG ĐỘNG	Bốc đồng, bộc phát
+619	しんねん	信念	TÍN NIỆM	Lòng tin, tin tưởng
+620	はいりょ	配慮	PHỐI LỰ	xem xét, quan tâm
+621	ゆとり			Thảnh thơi, thong thả, dư dả
+622	ほうようりょく	包容力	BAO DUNG LỰC	lòng bao dung, độ lượng
+623	そうおう	相応	TƯƠNG ỨNG	phù hợp, tương ứng
+624	なみ	並み	TỊNH	bình thường, giống như là
+625	ていさい	体裁	THỂ TÀI	tác phong, bề ngoài, bố cục
+626	せのび	背伸び	BỐI THÂN	duỗi lưng, với cao, kiễng lên
+627	ぐち	愚痴	NGU SI	phàn nàn, than thở
+628	やじ	野次	DÃ THỨ	sự chế nhạo, coi thường
+629	さしいれ	差し入れ	SAI NHẬP	Đồ cấp dưỡng, đồ góp ăn cùng
+630	せいえん	声援	THANH VIỆN	ủng hộ, cổ vũ
+631	しゅのう	首脳	THỦ NÃO	Nguyên thủ, đầu não
+632	かいにゅう	介入	GIỚI NHẬP	xen vào, can thiệp
+633	へい	兵	BINH	quân đội, binh lính
+634	かんしょう	干渉	KIỀN THIỆP	xen vào, can thiệp
+635	しんがい	侵害	XÂM HẠI	xâm phạm, vi phạm
+636	けいかい	警戒	CẢNH GIỚI	cảnh giác, đề phòng, để ý
+637	きき	危機	NGUY KI	nguy kịch, khủng hoảng
+638	しょうげき	衝撃	XUNG KÍCH	shock, tác động mạnh
+639	じょうほ	譲歩	NHƯỢNG BỘ	nhượng bộ, thỏa hiệp
+640	こうけん	貢献	CỐNG HIẾN	cống hiến
+641	すいしん	推進	THÔI TIẾN	thúc tiến, đẩy mạnh
+642	せいび	整備	CHỈNH BỊ	bảo dưỡng, hoàn thiện
+643	はどめ	歯止め	XỈ CHỈ	Kiểm soát, khống chế
+644	せいか	成果	THÀNH QUẢ	thành quả
+645	せいぎ	正義	CHÍNH NGHĨA	chính nghĩa, công lý
+646	きりつ	規律	QUY LUẬT	kỷ luật, trật tự
+647	ちつじょ	秩序	TRẬT TỰ	trật tự, lề lối
+648	かくさ	格差	CÁCH SAI	Khác biệt, chênh lệch
+649	ぎせい	犠牲	HI SINH	hi sinh
+650	はんらん	氾濫	PHIẾM LẠM	lụt lội, tràn ngập
+651	みこみ	見込み	KIẾN NHẬP	Dự kiến, khả năng, tiềm năng
+652	みとおし	見通し	KIẾN THÔNG	tầm nhìn, suy đoán, xuyên suốt, triển vọng, thông thoáng...
+653	みつもり	見積もり	KIẾN TÍCH	báo giá
+654	りゅうつう	流通	LƯU THÔNG	lưu thông, phân phối
+655	ていたい	停滞	ĐÌNH TRỆ	Ngưng trệ, đình trệ
+656	ふしん	不振	BẤT CHẤN	Xấu đi, không tốt, suy thoái
+657	はいし	廃止	PHẾ CHỈ	Hủy bỏ, bãi bỏ
+658	はんえい	繁栄	PHỒN VINH	phồn vinh, phát đạt
+659	せいじゅく	成熟	THÀNH THỤC	trưởng thành, chín
+660	ひやく	飛躍	PHI DƯỢC	phát triển nhanh, tiến xa
+661	りょうりつ	両立	LƯỠNG LẬP	Song song, cân bằng
+662	とうけい	統計	THỐNG KẾ	thống kê
+663	ぶんさん	分散	PHÂN TÁN	phân tán
+664	きんこう	均衡	QUÂN HÀNH	cân bằng
+665	ちくせき	蓄積	SÚC TÍCH	tích lũy, tích tụ
+666	のべ	延べ	DUYÊN	tổng cộng
+667	じんざい	人材	NHÂN TÀI	nhân lực
+668	こうしゅう	公衆	CÔNG CHÚNG	công cộng, công chúng
+669	きょうよう	教養	GIÁO DƯỠNG	giáo dục, văn hóa
+670	してん	視点	THỊ ĐIỂM	Quan điểm, cách nhìn nhận
+671	かんてん	観点	QUAN ĐIỂM	quan điểm
+672	さゆう	左右	TẢ HỮU	trái phải, ảnh hưởng, trên dưới
+673	ちょくめん	直面	TRỰC DIỆN	Đối mặt
+674	はあく	把握	BẢ ÁC	Am hiểu, nắm bắt, nắm rõ
+675	びょうしゃ	描写	MIÊU TẢ	phác họa, miêu tả
+676	しかけ	仕掛け	SĨ QUẢI	Phương kế, làm giữa chừng, chuẩn bị, bẫy
+677	しくみ	仕組み	SĨ TỔ	Hệ thống
+678	こつ			mẹo, bí quyết
+679	わざ	技	KĨ	kỹ thuật
+680	さき	先	TIÊN	tương lai, phía trước, đích đến
+681	せんたん	先端	TIÊN ĐOAN	Đi đầu, mũi nhọn, tiên tiến
+682	かてい	過程	QUÁ TRÌNH	quá trình
+683	きげん	起源	KHỞI NGUYÊN	khởi nguyên, nguồn gốc
+684	ゆいいつ	唯一	DUY NHẤT	duy nhất
+685	こうれい	恒例	HẰNG LỆ	thông lệ
+686	もくぜん	目前	MỤC TIỀN	trước mắt, sát, gần
+687	まぎわ	間際	GIAN TẾ	ngay trước khi, lúc sắp sửa
+688	むれ	群れ	QUẦN	bầy đàn, đám đông
+689	しょうたい	正体	CHÁNH THỂ	Thân phận, danh tính
+690	わな			bẫy
+691	わく	枠	KHUNG	Khung, viền
+692	つや	艶	DIỄM	nhẵn bóng
+693	かげ	陰	ÂM	bóng râm, bí mật
+694	かげ	影	ẢNH	phản xạ, bóng, ánh sáng
+695	がら	柄	BÍNH	Chuôi, cán, hoa văn
+696	つじつま			Ăn khớp, logic, hợp lí
+697	さしつかえ	差支え	SAI CHI	Vấn đề, trở ngại
+698	しわよせ	しわ寄せ	KÍ	căng thẳng, quá tải
+699	なんらか	何らか	HÀ	nào đó, dăm ba
+700	めいめい			mỗi, cá nhân
+701	がはれる	晴れる	TÌNH	rõ ràng, minh bạch
+702	ばれる			Bại lộ, phơi bày, bị phát hiện
+703	をばらす			Tiết lộ, tháo rời, bép xép
+704	をすりかえる	すり替える	THẾ	Đánh trống lảng, đảo trộn, tráo
+705	がばらまく			gieo rắc, phát tán
+706	をまたがる	跨る	KHÓA	cưỡi, kéo dài, bắc qua
+707	がまたぐ	跨ぐ	KHÓA	Bước qua, kéo dài
+708	が/をつらぬく	貫く	QUÁN	xuyên qua, xuyên thủng
+709	がのぞく	覗く		Nhìn trộm, nhìn lén
+710	が/をひかえる	控える	KHỐNG	chờ đợi, kiềm chế, giữ gìn, ghi lại, hoãn
+711	がおこたる	怠る	ĐÃI	Bất cẩn, bỏ bê, sao nhãng
+712	をのがれる	逃れる	ĐÀO	trốn tránh
+713	がのがす	逃す	ĐÀO	bỏ lỡ
+714	おもむく	赴く	PHÓ	tiến đến, xu hướng, tới
+715	をつぐ	継ぐ	KẾ	kế thừa, nối nghiệp, kế vị
+716	をうちきる	打ち切る	ĐẢ THIẾT	Dừng, bỏ giữa chừng
+717	をさく	裂く	LIỆT	xé rách, chia cắt
+718	をさく	割く	CÁT	dành thời gian cho
+719	をわりあてる	割り当てる	CÁT ĐƯƠNG	Phân công nhiệm vụ, công việc
+720	をみなす	見なす	KIẾN	coi như, như là
+721	をみぬく	見抜く	KIẾN BẠT	nhìn thấu, đoán trúng
+722	をみきわめる	見極める	KIẾN CỰC	nhận rõ, nhìn thấu bản chất
+723	をみのがす	見逃す	KIẾN ĐÀO	Bỏ qua, làm ngơ
+724	をみそこなう	見損なう	KIẾN TỔN	Bỏ lỡ, đánh giá sai
+725	をみいだす	見いだす	KIẾN	Nhìn ra, nhìn thấy được
+726	をおだてる			tâng bốc, nịnh, khen, lấy lòng
+727	をちやほやする			nuông chiều
+728	をけなす			dèm hàng, gièm pha
+729	をひやかす	冷やかす	LÃNH	chế giễu, trêu, bỡn cợt
+730	をもてなす			tiếp đãi, chiêu đãi
+731	がつかえる	仕える	SĨ	phục vụ
+732	をみちびく	導く	ĐẠO	hướng dẫn, chỉ đạo, dẫn đến
+733	がそむく	背く	BỐI	phản bội, làm trái với
+734	をしたう	慕う	MỘ	tưởng nhớ, ngưỡng mộ
+735	をさっする	察する	SÁT	cảm nhận được
+736	をつげる	告げる	CÁO	thông báo
+737	をうながす	促す	XÚC	Lưu ý, nhắc nhở, khuyến khích
+738	をゆだねる	委ねる	ỦY	giao phó, ủy thác
+739	をうったえる	訴える	TỐ	kiện cáo, cảm thấy, nhấn mạnh
+740	がしたしむ	親しむ	THÂN	thân thiện, gần gũi
+741	がいどむ	挑む	THIÊU	Thử sức, thử thách
+742	をあおぐ	仰ぐ	NGƯỠNG	nhìn lên, tôn kính, ngước lên
+743	をおがむ	拝む	BÁI	chắp tay cầu khấn
+744	をほうむる	葬る	TÁNG	chôn cất, che dấu
+745	がおもいきる	思い切る	TƯ THIẾT	Dứt khoát, mạnh dạn
+746	をくいる	悔いる	HỐI	hối tiếc, ăn năn
+747	が/をいきどおる	憤る	PHẪN	Bức xúc, căm phẫn
+748	をなげく	嘆く	THÁN	thở dài, than trách
+749	がうぬぼれる			kiêu ngạo
+750	がもがく			vùng vẫy, giãy dụa
+751	があいつぐ	相次ぐ	TƯƠNG THỨ	Liên tục, liên tiếp, kế tục
+752	がでまわる	出回る	XUẤT HỒI	Lưu hành, xuất hiện khắp thị trường
+753	がとむ	富む	PHÚ	giàu có, phong phú
+754	がむらがる	群がる	QUẦN	kết lại thành đàn
+755	がとけこむ	溶け込む	DUNG NHẬP	hòa nhập, tan chảy, hòa tan
+756	がはみでる	はみ出る	XUẤT	lòi ra, thò ra
+757	がはずむ	弾む	ĐÀN	bật lên, hào hứng, thú vị
+758	がねばる	粘る	NIÊM	Dính, nhớp nháp
+759	がばける	化ける	HÓA	biến thành
+760	がしぼむ			Héo, xẹp, vỡ mộng
+761	がたるむ			lỏng, chảy xệ, lười nhác
+762	をもる	盛る	THỊNH	Phóng đại, chém gió
+763	をもうける	設ける	THIẾT	thiết lập, sở hữu, tạo ra
+764	をもよおす	催す	THÔI	tổ chức, sắp sửa, cảm thấy
+765	をとざす	閉ざす	BẾ	Bị hẹp lại, đóng
+766	をうめたてる	埋め立てる	MAI LẬP	lấp, chôn
+767	をようする	要する	YẾU	Cần phải có, nói tóm lại
+768	をゆうせんする	優先する	ƯU TIÊN	ưu tiên
+769	がとおざかる	遠ざかる	VIỄN	xa cách, mờ dần, mất dần
+770	をとおざける	遠ざける		Xua đi, tránh khỏi
+771	がひたる	浸る	TẨM	chìm đắm trong ~
+772	をひたす	浸す		Ngâm, nhúng
+773	がほろびる	滅びる	DIỆT	bị phá hủy, diệt vong
+774	をほろぼす	滅ぼす		phá hủy, tiêu diệt
+775	がさかえる	栄える	VINH	Hưng thịnh
+776	がさだまる	定まる	ĐỊNH	Quyết định, ổn định, xác định
+777	をさだめる	定める		quyết định, ban hành, xác định
+778	をなす			hình thành, tạo thành, đạt tới
+779	をになう	担う	ĐAM	cáng đáng, gánh vác
+780	がとどまる			bị hạn chế, dừng lại
+781	をとどめる			giới hạn, giữ lại, dừng
+782	がつきる	尽きる	TẪN	cạn kiệt
+783	をつくす	尽くす		Dốc hết, cống hiến
+784	がのぞむ	臨む	LÂM	Tiến tới, hướng tới
+785	をそこなう	損なう	TỔN	Làm tổn hại
+786	がただよう	漂う	PHIÊU	Trôi nổi, thoang thoảng, lan tỏa, lang thang, ấp úng...
+787	がみちる	満ちる	MÃN	đầy, ắp
+788	をみたす	満たす		thỏa mãn, làm đầy
+789	をまかなう			cung cấp, chi trả, trang trải
+790	がひってきする	匹敵する	THẤT ĐỊCH	Sánh với, tương đương
+791	がはびこる			lan đầy, tràn lan
+792	がおちいる	陥る	HÃM	rơi vào
+793	がまぬがれる	免れる	MIỄN	Trốn tránh
+794	がまさる	勝る	THẮNG	vượt trội, áp đảo
+795	をおびる	帯びる	ĐỚI	Dính líu, mang đeo, đảm nhận
+796	がにぶる	鈍る	ĐỘN	cùn đi, mai một, phai nhòa
+797	がありふれる			Thông thường, phổ biến
+798	がさえる			khéo léo, trong veo, minh mẫn
+799	がきわだつ	際立つ	TẾ LẬP	rõ ràng, nổi bật
+800	がずばぬける	ずば抜ける	BẠT	nổi trội, xuất chúng
+801	ソフトな			mềm mại, nhẹ nhàng
+802	ハードな			cứng, khó
+803	フォーマルな			trang trọng, lễ nghi
+804	カジュアルな			Xuề xòa, bình dị
+805	シンプルな			đơn giản
+806	ドライ			khô khan, lạnh lùng
+807	シビアな			Gay gắt, khắt khe, khắc nghiệt
+808	ピンチ			khủng hoảng, khó khăn
+809	セーフ			Vừa đủ, vừa kịp
+810	マンネリズム			lặp đi lặp lại, không có sáng tạo
+811	バラエティー			rất nhiều loại
+812	パワー			năng lượng, sức mạnh
+813	バイタリティー			dẻo dai, khả năng tồn tại lâu dài
+814	ダイナミックな			năng động, sinh động
+815	スタミナ			tinh lực, thể lực, tinh lực
+816	ピーク			đỉnh, đỉnh cao, phong độ
+817	クライマックス			đỉnh cao, đỉnh điểm
+818	インパクト			ảnh hưởng, ấn tượng, tác động
+819	コントラスト			đối lập, đối lại, phản
+820	クリア			rõ ràng, xóa
+821	トーン			Âm điệu, tông, giọng
+822	ニュアンス			sắc thái, vẻ, cảm nhận
+823	フィーリング			cảm xúc, nhạy cảm
+824	ギャップ			khoảng cách
+825	ステレオタイプな			rập khuôn, định kiến
+826	レッテル			Phán xét, đánh giá
+827	フィルター			lọc
+828	ベース			cơ bản, cơ sở
+829	インフラ			cơ sở hạ tầng
+830	ネットワーク			mạng lưới
+831	テクノロジー			công nghệ
+832	テクニック			kỹ thuật, tiểu xảo
+833	メカニズム			cơ chế
+834	プロセス			quá trình, gia công
+835	フィードバック			phản hồi
+836	コンセプト			khái niệm, hình thức
+837	ポリシー			Phong cách, quan điểm
+838	アピール			thu hút, hấp dẫn
+839	シミュレーション			mô phỏng
+840	アクセス			truy cập, kết nối
+841	ターンする			quay đầu, quay trở lại
+842	シフトする			ca làm
+843	チェンジする			thay đổi
+844	フォーム			Khuôn mẫu, tư thế, dáng
+845	ポーズ			làm mẫu, tạo dáng, ngắt nhịp
+846	タイミング			thời điểm
+847	ラスト			cuối cùng
+848	スムーズな			trôi chảy, thuận lợi
+849	サイクル			tuần hoàn
+850	ジェンダー			giới tính
+851	けいそつな	軽率な	KHINH SUẤT	Nông nổi, bồng bột
+852	たいまんな	怠慢な	ĐÃI MẠN	cẩu thả, lười, thiếu sót
+853	いいかげんな	いい加減な	GIA GIẢM	vô trách nhiệm, quá đáng
+854	なげやりな	投げやりな	ĐẦU	không trách nhiệm
+855	そっけない	素っ気ない	TỐ KHÍ	lạnh nhạt, phớt lờ, thờ ơ
+856	ひややかな	冷ややかな	LÃNH	lạnh lùng
+857	なれなれしい			quá thân thiết, suồng sã
+858	みっともない			Mất mặt, bôi bác
+859	たくましい			Chắc khỏe, tươi tắn
+860	すこやかな	健やかな	KIỆN	khỏe khoắn
+861	むじゃきな	無邪気な	VÔ TÀ KHÍ	ngây thơ
+862	むしんけいな	無神経な	VÔ THẦN KINH	Vô tâm, vô ý
+863	むぞうさな	無造作な	VÔ TẠO TÁC	Thản nhiên, sơ sài
+864	ゆうがな	優雅な	ƯU NHÃ	Nhã nhặn
+865	みごとな	見事な	KIẾN SỰ	Đẹp, quyến rũ, toàn tập
+866	もうしぶんない	申し分ない	THÂN PHÂN	Không chê vào đâu được
+867	もはんてきな	模範的な	MÔ PHẠM ĐÍCH	gương mẫu
+868	まめな			trung thành, chăm chỉ
+869	えんかつな	円滑な	VIÊN HOẠT	trôi chảy, trơn tru
+870	じんそくな	迅速な	TẤN TỐC	nhanh chóng, thần tốc
+871	すみやかな	速やかな	TỐC	Ngay lập tức
+872	すばやい	素早い	TỐ TẢO	Tức khắc, nhanh chóng
+873	びんしょうな	敏しょうな	MẪN	nhanh nhẹn
+874	しょうさいな	詳細な	TƯỜNG TẾ	chi tiết
+875	ちみつな	緻密な	TRÍ MẬT	cẩn trọng, chi li
+876	まれな			hiếm, không bình thường
+877	ひそかな			bí mật, lén lút, âm thầm
+878	こまやかな	細やかな	TẾ	ấm áp, nồng hậu, kỹ lưỡng
+879	ささやかな	細やかな		Nhỏ bé, tầm thường
+880	ささいな			Vặt vãnh, nhỏ nhặt
+881	せつじつな	切実な	THIẾT THỰC	khẩn cấp, cấp bách
+882	つうせつな	痛切な	THỐNG THIẾT	Sâu sắc, thấm thía
+883	せつない	切ない	THIẾT	Luyến tiếc, bi đát, buồn đau
+884	うっとうしい			khó chịu, âm u
+885	わずらわしい	煩わしい	PHIỀN	Phiền phức, ngán ngẩm
+886	やっかいな	厄介な	ÁCH GIỚI	Phiền hà, rắc rối, gay go
+887	たやすい	容易い	DUNG DỊCH	dễ dàng, đơn giản
+888	おもわしい	思わしい	TƯ	Thỏa mãn, vừa ý
+889	なやましい	悩ましい	NÃO	Trăn trở, phiền não, quyến rũ
+890	てもちぶさたな	手持ち無沙汰な	THỦ TRÌ VÔ SA THẢI	Chán nản, không có việc gì làm
+891	あわい	淡い	ĐẠM	Nhạt nhẽo, mong manh
+892	たんぱくな	淡白/淡泊な	ĐẠM BẠCH	Đạm bạc, thoải mái, đơn giản
+893	はかない			Ngắn ngủi, mong manh
+894	あっけない			Nhàm chán, nhạt nhẽo
+895	むなしい			vô vị, nhàm chán
+896	なだらかな			Thoai thoải
+897	ゆるやかな	緩やかな	HOÃN	Thoải, nhẹ nhàng, lỏng lẻo
+898	のどかな			Thanh bình, yên tĩnh
+899	なごやかな	和やかな	HÒA	Thân mật, ôn hòa
+900	しなやかな			Mềm dẻo, dẻo dai, uyển chuyển
+901	かけがえのない			không thể thay thế, vô giá
+902	かくべつな	格別な	CÁCH BIỆT	đặc biệt, khác biệt
+903	かっきてきな	画期的な	HỌA KÌ ĐÍCH	Đột phá, bước ngoặt
+904	ちょうほうな	重宝な	TRỌNG BẢO	tiện dụng, quý báu
+905	ぶなんな	無難な	VÔ NAN	an toàn
+906	かくいつてきな	画一的な	HỌA NHẤT ĐÍCH	Chung chung, chuẩn chung
+907	まぎらわしい	紛らわしい	PHÂN	gây hiểu lầm, dễ nhầm lẫn
+908	なまぬるい	生ぬるい	SINH	Âm ấm, nửa vời, lưng lửng
+909	したたかな			mạnh mẽ, khỏe mạnh
+910	もろい			Giòn, dễ vỡ
+911	あやうい	危うい	NGUY	Suýt chết, hiểm nghèo
+912	ややこしい			Lằng nhằng, mơ hồ, lộn xộn
+913	まちまちな			phong phú, nhiều kiểu
+914	なまなましい	生々しい	SINH	Tươi mới, sống động
+915	ろこつな	露骨な	LỘ CỐT	thẳng thắn, rõ ràng
+916	こうみょうな	巧妙な	XẢO DIỆU	tinh vi, khéo léo
+917	じゅうこうな	重厚な	TRỌNG HẬU	To lớn, đồ sộ, uy nghi
+918	おごそかな	厳かな	NGHIÊM	Uy nghiêm, trang trọng
+919	きはくな	希薄な	HI BẠC	Mong manh, loãng, mờ nhạt
+920	おうせいな	旺盛な	VƯỢNG THỊNH	Phấn chấn, năng nổ, nhiệt tình
+921	あっとうてきな	圧倒的な	ÁP ĐẢO ĐÍCH	Trầm trọng, áp đảo
+922	せいりてきな	生理的な	SINH LÍ ĐÍCH	Tính sinh học, bản năng
+923	ちめいてきな	致命的な	TRÍ MỆNH ĐÍCH	Chí mạng, nghiêm trọng
+924	いちじるしい	著しい	TRỨ	Đáng chú ý, rõ rệt
+925	けんちょな	顕著な	HIỂN TRỨ	Rõ ràng, nổi bật
+926	ばくだいな	莫大な	MẠC ĐẠI	khổng lồ, to lớn
+927	おびただしい			Nhiều, vô số, 1 loạt
+928	はなはだしい	甚だしい	THẬM	quá, cực kỳ
+929	たんてきな	端的な	ĐOAN ĐÍCH	thẳng thắn, rõ ràng
+930	たんのうな	堪能な	KHAM NĂNG	Thưởng thức, trải nghiệm
+931	しゅさい	主催	CHỦ THÔI	tài trợ, đăng cai, tổ chức
+932	きかく	企画	XÍ HỌA	kế hoạch, dự án
+933	しゅし	趣旨	THÚ CHỈ	ý đồ, mục đích
+934	ようりょう	要領	YẾU LĨNH	Tháo vát, lanh lợi
+935	ゆうずう	融通	DUNG THÔNG	Linh hoạt, nhanh nhạy
+936	べんぎ	便宜	TIỆN NGHI	thuận tiện, lợi ích
+937	くし	駆使	KHU SỬ	Tận dụng triệt để
+938	じっせん	実践	THỰC TIỄN	thực hành, thực tiễn
+939	ちゃくしゅ	着手	TRỨ THỦ	bắt đầu, bắt tay vào việc
+940	そち	措置	THỐ TRÍ	biện pháp
+941	ぜせい	是正	THỊ CHÁNH	Chỉnh đốn, khắc phục
+942	ぜひ	是非	THỊ PHI	Nhất định
+943	もさく	模索	MÔ TÁC	tìm kiếm, thăm dò
+944	せっちゅう	折衷	CHIẾT TRUNG	pha trộn, giao thoa, thỏa hiệp
+945	きょよう	許容	HỨA DUNG	cho phép, chấp nhận
+946	かんわ	緩和	HOÃN HÒA	Làm giảm, nới nỏng
+947	かいじょ	解除	GIẢI TRỪ	Chấm dứt, hủy bỏ
+948	じしゅく	自粛	TỰ TÚC	tự kiểm soát, hạn chế
+949	ちあん	治安	TRÌ AN	trị an, an ninh
+950	かんし	監視	GIAM THỊ	giám sát, quản lí
+951	きんもつ	禁物	CẤM VẬT	Kiêng kỵ, không nên
+952	ぎわく	疑惑	NGHI HOẶC	nghi ngờ, nghi hoặc
+953	けんかい	見解	KIẾN GIẢI	Nhận định
+954	にんしき	認識	NHẬN THỨC	nhận thức, nhận diện
+955	がいねん	概念	KHÁI NIỆM	khái niệm
+956	かくう	架空	GIÁ KHÔNG	ảo, hư cấu, không có thật
+957	しんぴ	神秘	THẦN BÍ	Thần bí, mầu nhiệm
+958	きょうい	驚異	KINH DỊ	Phi thường
+959	ゆうすう	有数	HỮU SỐ	hàng đầu
+960	きざし	兆し	TRIỆU	dấu hiệu
+961	まくあけ	幕開け	MẠC KHAI	bắt đầu, mở đầu, khai mạc
+962	けいい	経緯	KINH VĨ	Đầu đuôi, ngọn ngành
+963	なりゆき	成り行き	THÀNH HÀNH	Kết quả, diễn biến, quá trình
+964	いきちがい	行き違い	HÀNH VI	Không khớp, ngược, hiểu lầm
+965	みちのり	道のり	ĐẠO	Quãng đường
+966	ゆくて	行く手	HÀNH	đường đi, bước tiến, hướng đi
+967	はて	果て	QUẢ	kết thúc, tận cùng
+968	けつ	決	QUYẾT	bỏ phiếu, bầu chọn
+969	めやす	目安	MỤC AN	mục đích, mục tiêu, tiêu chuẩn
+970	めど			mục tiêu, triển vọng
+971	せんこく	宣告	TUYÊN CÁO	tuyên án, phán quyết
+972	せいめい	声明	THANH MINH	tuyên bố, thông báo
+973	じゅりつ	樹立	THỤ LẬP	Thiết lập, tạo nên
+974	とうそつ	統率	THỐNG SUẤT	lãnh đạo, chỉ huy
+975	せいりょく	勢力	THẾ LỰC	ảnh hưởng, thế lực
+976	たいとう	台頭	THAI ĐẦU	Sự xuất hiện, lộ diện
+977	けいせい	形勢	HÌNH THẾ	Tình thế, tình cảnh
+978	とっぱ	突破	ĐỘT PHÁ	bứt phá, phá vỡ
+979	てんかい	展開	TRIỂN KHAI	Khai phá, mở rộng, diễn biến (phim, truyện)
+980	かいたく	開拓	KHAI THÁC	khai phá, khai thác
+981	かくさん	拡散	KHUẾCH TÁN	Phát tán, lan truyền, lan rộng
+982	ぼうちょう	膨張	BÀNH TRƯƠNG	Bùng nổ, giãn nở, tăng lên
+983	むすう	無数	VÔ SỐ	vô số, vô kể
+984	こしつ	固執	CỐ CHẤP	Cố chấp, bảo thủ
+985	そがい	阻害	TRỞ HẠI	Cản trở, trở ngại
+986	ようご	擁護	ỦNG HỘ	ủng hộ, bênh vực
+987	ほしょう	保障	BẢO CHƯỚNG	bảo hiểm, bảo đảm, bảo vệ
+988	ほしょう	補償	BỔ THƯỜNG	Bồi thường, đền bù
+989	ほそく	補足	BỔ TÚC	bổ sung, thêm vào
+990	ほきゅう	補給	BỔ CẤP	cung cấp, bổ sung
+991	せっしゅ	摂取	NHIẾP THỦ	Hấp thụ, truyền (nước, văn hóa)
+992	けつぼう	欠乏	KHIẾM PHẠP	thiếu thốn, nghèo khó
+993	てんか	添加	THIÊM GIA	thêm vào, phụ gia
+994	せいぶん	成分	THÀNH PHÂN	thành phần
+995	うちわけ	内訳	NỘI DỊCH	liệt kê, diễn giải
+996	じょがい	除外	TRỪ NGOẠI	loại trừ
+997	かんげん	還元	HOÀN NGUYÊN	Hoàn trả, hoàn lại
+998	きょうぞん	共存	CỘNG TỒN	cùng tồn tại, chung sống
+999	しょうれい	奨励	TƯỞNG LỆ	Khuyến khích, khích lệ
+1000	ほうしゅう	報酬	BÁO THÙ	tiền công, phần thưởng, thù lao
+1001	たいぼう	待望	ĐÃI VỌNG	Chờ mong, mong đợi, kỳ vọng
+1002	せつど	節度	TIẾT ĐỘ	lễ độ, chừng mực
+1003	ぎり	義理	NGHĨA LÍ	Lễ nghĩa, đạo lý
+1004	じょうちょ	情緒	TÌNH TỰ	cảm xúc, tinh thần, tâm trạng
+1005	どうよう	動揺	ĐỘNG DAO	dao động, lung lay
+1006	むら			Không ổn định, không đều
+1007	ふうちょう	風潮	PHONG TRIỀU	xu hướng, xu thế, phong trào
+1008	じったい	実態	THỰC THÁI	thực trạng
+1009	ばくろ	暴露	BẠO LỘ	vạch trần, phơi bày
+1010	とうぼう	逃亡	ĐÀO VONG	Lưu vong, chạy trốn
+1011	とうひ	逃避	ĐÀO TỊ	trốn tránh, thoát khỏi
+1012	だいさんしゃ	第三者	ĐỆ TAM GIẢ	bên thứ 3
+1013	いいぶん	言い分	NGÔN PHÂN	giãi bày, phân trần, giải thích
+1014	いいなり	言いなり	NGÔN	vâng lời, nghe lời
+1015	もほう	模倣	MÔ PHỎNG	bắt chước, sao chép, mô phỏng
+1016	ちゃくもく	着目	TRỨ MỤC	chú ý, để ý đến, theo dõi
+1017	おもむき	趣	THÚ	Phong cách, sắc thái riêng, vẻ bề ngoài, quyến rũ
+1018	うず	渦	QUA	Vòng xoáy, hình xoắn
+1019	みぞ	溝	CÂU	Khoảng cách, sự bất đồng, rãnh
+1020	おり	折（り）	CHIẾT	cơ hội, dịp, thời điểm
+1021	がつる			xiên, đưa lên, treo, cẩu
+1022	をつるす			treo, mắc lên
+1023	をとぐ	研ぐ	NGHIÊN	mài, làm sắc, giũa, vo ( gạo)
+1024	をもむ			Bóp, xoa bóp, mát xa
+1025	をゆさぶる	揺さぶる	DAO	Lay chuyển, lay động
+1026	がもたれる			khó tiêu, tựa vào ~
+1027	がしがみつく			Dính, bám lấy
+1028	がつきまとう	付きまとう	PHÓ	Bám theo, đeo bám
+1029	がなつく	懐く	HOÀI	Bị bám lấy, theo đuổi, thân thiết
+1030	が/をかまう	構う	CẤU	quan tâm , để tâm
+1031	をみせびらかす	見せびらかす	KIẾN	Khoe khoang, thể hiện
+1032	をねだる			Nài nỉ, vòi vĩnh, đòi
+1033	をなだめる			An ủi, dỗ dành
+1034	をいたわる			Chăm sóc, quan tâm
+1035	がふれあう	触れ合う	XÚC HỢP	chạm, tiếp xúc, thấu hiểu nhau
+1036	がとぼける			giả vờ, giả nai
+1037	をごまかす			lừa dối, đánh trống lảng, che đậy
+1038	をおびやかす	脅かす	HIẾP	đe dọa, uy hiếp
+1039	がおびえる			bị dọa, bị giật mình, sợ hãi
+1040	がとまどう	戸惑う	HỘ HOẶC	Hoang mang, lúng túng, bối rối
+1041	をつつしむ	慎む	THẬN	cẩn thận, thận trọng, hạn chế
+1042	をわきまえる			Nhận thức rõ, biết rõ đạo lý
+1043	をおしむ	惜しむ	TÍCH	Tiếc nuối, tận dụng
+1044	をはばかる			Ngần ngại, ngập ngừng
+1045	がてこずる	手こずる	THỦ	Bó tay, bất trị, lì lợm, bế tắc
+1046	がこりる	懲りる	TRÙNG	Nản lòng, sáng mắt ra
+1047	が/をとがめる			Cắn rứt, khiển trách
+1048	をつぐなう	償う	THƯỜNG	Bù lại, chuộc lỗi
+1049	がこる	凝る	NGƯNG	Say mê, tinh tế, trau chuốt...
+1050	をこらす	凝らす	NGƯNG	tập trung, tìm tòi
+1051	こだわる			Chọn lọc kĩ, để ý kĩ
+1052	がてっする	徹する	TRIỆT	Nhất quán, kiên định đến cùng
+1053	をきわめる	極める	CỰC	Cực kì, cùng cực, tận cùng...
+1054	をとげる	遂げる	TOẠI	Đạt được, trải qua, làm tới cùng
+1055	をかかげる	掲げる	YẾT	Treo lên, nêu lên, đăng lên
+1056	をはかる	図る	ĐỒ	Tiến hành, lên kế hoạch
+1057	をあやつる	操る	THAO	vận hành, thông thạo, điều khiển, trôi chảy, thuần thục
+1058	をしきる	仕切る	SĨ THIẾT	phân vùng, quản lý
+1059	をほどこす	施す	THI	Ban phát, tiến hành, thêm vào
+1060	がまにあう	間に合う	GIAN HỢP	Kịp, vừa đủ
+1061	をこなす			Nắm vững, tiếp thu
+1062	がはかどる			tiến bộ , tiến triển, hiệu quả
+1063	がいきづまる	行き詰まる	HÀNH CẬT	Tới đường cùng, gặp bế tắc
+1064	がとどこおる	滞る	TRỆ	Đình trệ, tồn đọng, bị chậm
+1065	をすえおく	据え置く	CƯ TRÍ	dựng đứng, hoãn lại, để nguyên
+1066	がたずさわる	携わる	HUỀ	tham gia vào, liên quan đến
+1067	をたずさえる	携える	HUỀ	Mang theo, chung tay, hợp tác
+1068	をつのる	募る	MỘ	Chiêu mộ, thu hút,ngày càng mạnh, trưng cầu ý kiến
+1069	がおしよせる	押し寄せる	ÁP KÍ	Chen chúc, ập đến, bao vây
+1070	がたどる			Rơi vào, lần theo, trải qua
+1071	をさぐる	探る	THAM	Thăm dò, tìm ra, làm sáng tỏ
+1072	をうらづける	裏付ける	LÍ PHÓ	Xác thực, chứng minh
+1073	をうかがう			Lén lút, thăm dò, nhòm, dòm
+1074	をはかる	謀る	MƯU	âm mưu, mưu tính
+1075	をあざむく	欺く	KHI	Đánh lừa, lừa dối
+1076	をはばむ	阻む	TRỞ	cản trở, ngăn cản, chặn
+1077	をさえぎる	遮る	GIÀ	Cắt lời, chắn ngang
+1078	がさわる	障る	CHƯỚNG	ảnh hưởng đến, làm hại
+1079	をむしばむ	蝕む	THỰC	hủy hoại, ăn mòn
+1080	がこもる			Tràn đầy, giam mình
+1081	がひそむ	潜む	TIỀM	Tiềm ẩn, tiềm tàng, ẩn nấp, núp, trốn
+1082	をひそめる	潜める		ẩn giấu, che giấu
+1083	がゆらぐ	揺らぐ	DAO	lung lay, lay động, rung lắc
+1084	がもめる			Xích mích, tranh cãi, mâu thuẫn
+1085	がひるがえる	翻る	PHIÊN	rung động, lung lay
+1086	をひるがえす	翻す		lật lại, thay đổi suy nghĩ, sóng
+1087	がくつがえる	覆る	PHÚC	Bị bác bỏ, bị lật ngược
+1088	をくつがえす	覆す		Đảo ngược, lật ngược, lật đổ
+1089	がゆがむ	歪む	OAI	cong, vênh, méo, lệch lạc
+1090	がこじれる			phức tạp, chuyển biến xấu
+1091	がくいちがう	食い違う	THỰC VI	Không thống nhất
+1092	がへだたる	隔たる	CÁCH	xa cách, khác biệt
+1093	をへだてる	隔てる		chia, tách rời
+1094	がつりあう	釣り合う	ĐIẾU HỢP	cân đối, hợp lí , xứng với
+1095	がからむ	絡む	LẠC	vướng mắc, liên quan, bị dính vào
+1096	がからまる	絡まる		bị rối, vướng mắc, bị xoắn
+1097	をからめる	絡める		Bám lấy, quấn lấy, trộn lẫn
+1098	がまぎれる	紛れる	PHÂN	bị phân tâm, không phân biệt được
+1099	をまぎらす	紛らす		Làm khuây khỏa, lảng tránh
+1100	がかさばる			cồng kềnh
+1101	がかさむ			Tăng lên
+1102	がしなびる			héo, nhăn nheo
+1103	がすたれる	廃れる	PHẾ	lỗi mốt, lỗi thời
+1104	がよみがえる			được hồi sinh, được tái hiện
+1105	をもたらす			mang lại, gây ra
+1106	がうるおう	潤う	NHUẬN	ẩm ướt, hưởng lợi, dư dả
+1107	をうるおす	潤す		Giải khát, mang lại lợi ích
+1108	がやわらぐ	和らぐ	HÒA	Thả lỏng, làm giảm bớt
+1109	がとろける			Tan chảy ra
+1110	がくつろぐ			thư giãn
+1111	いっきに	一気に	NHẤT KHÍ	1 lần, 1 hơi, thẳng 1 mạch
+1112	きっぱり（と）			dứt khoát, thẳng thừng
+1113	てきぱき（と）			Nhanh chóng; nhanh nhẩu; tháo vát; thạo việc
+1114	だらだら			Lười biếng, thoai thoải
+1115	ぐずぐず			Lề mề, chần chừ
+1116	ゆうゆう（と）	悠々	DU	Dư dả, thông thả, không vội vàng
+1117	いそいそ（と）			Tíu tít, háo hức, vội vàng
+1118	とっさに			Ngay lập tức
+1119	じっくり（と）			Cẩn thận, từ từ, bình tĩnh, thoải mái, kĩ càng
+1120	おろおろ			Hoảng hốt; lúng túng; cuống cuồng; quýnh lên
+1121	まごまご			lúng túng
+1122	ぶつぶつ（と）			Làu bàu, lầm bầm, lỗ chỗ, lốm đốm
+1123	うっとり			Mải mê, chìm đắm, say sưa
+1124	ゆったり			Thoải mái, dễ chịu, thùng thình ( quần áo )
+1125	しみじみ（と）			sâu sắc, thấm thía
+1126	つくづく（と）			tỉ mỉ; sâu sắc; thật sự
+1127	がっくり			Thất vọng, đau buồn
+1128	うんざり			Sự chán; sự chán ngấy; sự ngán ngẩm
+1129	てっきり			Chắc chắn
+1130	いっそ			Thà rằng ~ còn hơn ; nên
+1131	きっかり（と）			Chính xác; hoàn hảo; đúng
+1132	きっちり（と）			Vừa đủ, đầy đủ, trọn vẹn
+1133	まことに	誠に	THÀNH	Thực sự; thực tế; chân thực; rõ ràng
+1134	ことに			Đặc biệt là; một cách đặc biệt; đặc biệt
+1135	まさに			Đúng là, quả là, quả thật là
+1136	ひたすら			Hoàn toàn; nghiêm túc, hết sức
+1137	あくまで（も）			Đơn thuần, chỉ là, đến cùng
+1138	めっきり			Rõ rệt, đáng kể, khá
+1139	かろうじて			Khó khăn lắm mới, chật vật
+1140	あえて			Mạnh dạn, mạo muội
+1141	あわや			Suýt nữa thì, chỉ trong 1 thoáng
+1142	もろに			Hoàn toàn; trực tiếp; triệt để
+1143	いやに			Kinh khủng, khủng khiếp
+1144	やけに			Bỗng dưng, bất thường, lạ thường
+1145	むやみに			thiếu suy nghĩ (người); 1 cách vô lý, bừa bãi quá mức
+1146	やたらに			Quá mức, tùy tiện, thiếu thận trọng
+1147	なにしろ	何しろ	HÀ	Dù sao thì, dù gì đi nữa
+1148	もっぱら	専ら	CHUYÊN	Hầu hết; chủ yếu
+1149	いちおう	一応	NHẤT ỨNG	nhất thời; tạm thời, để đề phòng
+1150	いったん	一旦	NHẤT ĐÁN	Một khi đã, tạm thời
+1151	ひとまず			Trước tiên, tạm thời
+1152	おって	追って	TRUY	Lập tức sau đây
+1153	げんに	現に	HIỆN	Thực sự là; thực tế là; thực sự; thật sự; thực tế
+1154	いわば	言わば	NGÔN	Hay còn gọi là, ví dụ như là...
+1155	いかに			Đến mức nào, đến thế nào, dù thế nào thì ~
+1156	いちりつに	一律に	NHẤT LUẬT	Đồng loạt, ngang bằng, đồng đều
+1157	おのおの	各々	CÁC	mỗi; cũng; tương ứng; riêng biệt
+1158	もはや			Đã~rồi
+1159	ともすれば/ともすると			Hơi một tí là, động một tí là, không chừng
+1160	いぜんとして	依然（として）	Y NHIÊN	Như thường lệ, vẫn, như thông lệ
+1161	ばくぜんと	漠然と	MẠC NHIÊN	Hàm hồ; không rõ ràng
+1162	まして			Huống chi; ngay cả
+1163	なおさら			Hơn nữa; càng thêm
+1164	ひいては			Đồng thời, kéo theo, không chỉ ~ mà còn
+1165	おのずから			Tự nhiên rồi sẽ ~
+1166	あくる	明くる	MINH	Tiếp; tiếp theo
+1167	きたる	来る	LAI	Đến, tới (tháng 9 tới)
+1168	さる	去る	KHỨ	Trước, đã qua (qua ngày 15...), vừa rồi
+1169	れいの	例の	LỆ	rằng, về... (khi chủ đề được cả 2 biết tới), lần trước
+1170	ありとあらゆる			mỗi (cách, phương pháp)
