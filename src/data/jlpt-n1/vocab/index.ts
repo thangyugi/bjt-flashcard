@@ -27,6 +27,41 @@ import { v24 } from "./mimikara/v24";
 import { v25 } from "./mimikara/v25";
 import { v26 } from "./mimikara/v26";
 import { v27 } from "./mimikara/v27";
+import { v28 } from "./mimikara/v28";
+import { v29 } from "./mimikara/v29";
+import { v30 } from "./mimikara/v30";
+import { v31 } from "./mimikara/v31";
+import { v32 } from "./mimikara/v32";
+import { v33 } from "./mimikara/v33";
+import { v34 } from "./mimikara/v34";
+import { v35 } from "./mimikara/v35";
+import { v36 } from "./mimikara/v36";
+import { v37 } from "./mimikara/v37";
+import { v38 } from "./mimikara/v38";
+import { v39 } from "./mimikara/v39";
+import { v40 } from "./mimikara/v40";
+import { v41 } from "./mimikara/v41";
+import { v42 } from "./mimikara/v42";
+import { v43 } from "./mimikara/v43";
+import { v44 } from "./mimikara/v44";
+import { v45 } from "./mimikara/v45";
+import { v46 } from "./mimikara/v46";
+import { v47 } from "./mimikara/v47";
+import { v48 } from "./mimikara/v48";
+import { v49 } from "./mimikara/v49";
+import { v50 } from "./mimikara/v50";
+import { v51 } from "./mimikara/v51";
+import { v52 } from "./mimikara/v52";
+import { v53 } from "./mimikara/v53";
+import { v54 } from "./mimikara/v54";
+import { v55 } from "./mimikara/v55";
+import { v56 } from "./mimikara/v56";
+import { v57 } from "./mimikara/v57";
+import { v58 } from "./mimikara/v58";
+import { v59 } from "./mimikara/v59";
+import { v60 } from "./mimikara/v60";
+import { v61 } from "./mimikara/v61";
+import { v62 } from "./mimikara/v62";
 
 /** Thư viện từ vựng N1 — mỗi nguồn là một bộ bài. Thêm nguồn mới: thêm phần tử vào mảng này. */
 export const VOCAB_SOURCES: VocabSource[] = [
@@ -36,6 +71,8 @@ export const VOCAB_SOURCES: VocabSource[] = [
     prefix: "mk",
     lessons: [v01, v02, v03, v04, v05, v06, v07, v08, v09, v10, v11, v12,
       v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27,
+      v28, v29, v30, v31, v32, v33, v34, v35, v36, v37, v38, v39, v40, v41, v42, v43, v44,
+      v45, v46, v47, v48, v49, v50, v51, v52, v53, v54, v55, v56, v57, v58, v59, v60, v61, v62,
     ],
   },
 ];
