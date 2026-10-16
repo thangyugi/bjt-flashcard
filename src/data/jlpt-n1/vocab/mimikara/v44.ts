@@ -88,7 +88,7 @@ export const v44: VocabLesson = {
       col: ["ステレオタイプな見方", "ステレオタイプな考え", "ステレオタイプのイメージ"],
       ex: [
         ["「日本人はみんな真面目だ」というのは[[ステレオタイプな]]見方だ。", "\"Người Nhật ai cũng nghiêm túc\" là một cách nhìn rập khuôn."],
-        ["ドラマに出てくる母親像は、[[ステレオタイプ]]なものが多い。", "Hình ảnh người mẹ trong phim truyền hình phần nhiều rập khuôn."],
+        ["ドラマに出てくる母親像は、[[ステレオタイプな]]ものが多い。", "Hình ảnh người mẹ trong phim truyền hình phần nhiều rập khuôn."],
       ],
       cmp: [["偏見", "偏見 (へんけん): thành kiến, thiên kiến (luôn tiêu cực, thiếu công bằng). ステレオタイプ: hình ảnh rập khuôn, đơn giản hóa — có thể tích cực hoặc tiêu cực."]],
       memo: "Stereotype — vốn là \"khuôn in đúc sẵn\": in ra hàng loạt giống hệt nhau.",

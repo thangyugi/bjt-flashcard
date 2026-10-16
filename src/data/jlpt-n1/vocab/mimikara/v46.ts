@@ -201,7 +201,7 @@ export const v46: VocabLesson = {
       use: "Kỹ năng, kết quả, cảnh đẹp xuất sắc (見事な演技, 見事に合格する). Mỉa mai: 見事に失敗した／外れた = thất bại hoàn toàn.",
       col: ["見事な演技", "見事に合格する", "見事な桜", "見事に外れる"],
       ex: [
-        ["彼は難しい試験に[[見事]]合格した。", "Anh ấy đã đỗ kỳ thi khó một cách xuất sắc."],
+        ["彼は難しい試験に[[見事に]]合格した。", "Anh ấy đã đỗ kỳ thi khó một cách xuất sắc."],
         ["天気予報は[[見事に]]外れた。", "Dự báo thời tiết sai bét."],
       ],
       cmp: [["すばらしい", "すばらしい: tuyệt vời (cảm thán chung). 見事: đáng ngắm, kỹ năng/kết quả hoàn hảo; còn dùng mỉa (見事に失敗)."]],
