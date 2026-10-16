@@ -1,0 +1,323 @@
+import type { VocabLesson } from "../types";
+
+export const v29: VocabLesson = {
+  id: "mk-29",
+  num: 29,
+  title: "Sinh viên thực tập & sự cố bữa trưa",
+  titleJa: "インターンシップ・即座に・突如",
+  scene:
+    "Công ty Mai đón sinh viên đại học đến thực tập. Buổi thuyết trình về vấn đề lao động diễn ra suôn sẻ — cho đến khi một sự cố bất ngờ xảy ra trong bữa trưa.",
+  story: [
+    {
+      jp: "会社で大学生の[[インターンシップ]]が始まり、マイは受け入れ担当になった。[[近年]]、在学中に職場を体験する学生が増えている。",
+      vi: "Công ty bắt đầu chương trình thực tập cho sinh viên đại học, và Mai phụ trách tiếp nhận. Những năm gần đây, số sinh viên trải nghiệm môi trường làm việc ngay khi còn đi học ngày càng tăng.",
+    },
+    {
+      jp: "初日、学生たちはゼミで作った[[レジュメ]]を配り、「日本の雇用問題」について発表した。企業の[[リストラ]]、正社員になれない[[フリーター]]、職場の[[セクハラ]]……テーマはどれも重い。",
+      vi: "Ngày đầu, các bạn sinh viên phát bản tóm tắt làm ở lớp seminar và thuyết trình về \"Vấn đề việc làm ở Nhật\". Doanh nghiệp cắt giảm nhân sự, người làm việc tự do không thành nhân viên chính thức được, quấy rối tình dục nơi công sở... chủ đề nào cũng nặng nề.",
+    },
+    {
+      jp: "一人の学生が言った。「[[かつて]]は終身雇用が当たり前でしたが、今は違います。社員を[[フェアに]]評価しない会社は、若者に[[ボイコット]]されるでしょう」",
+      vi: "Một sinh viên nói: \"Trước đây làm việc trọn đời là chuyện đương nhiên, nhưng bây giờ thì khác. Công ty nào không đánh giá nhân viên công bằng sẽ bị giới trẻ tẩy chay.\"",
+    },
+    {
+      jp: "部長は[[すかさず]]「うちは大丈夫だよ」と答え、皆が笑った。部長は[[かねて]]から若者の本音を聞きたいと言っていたのだ。",
+      vi: "Trưởng phòng lập tức đáp \"Công ty mình thì không sao đâu\", ai nấy bật cười. Từ trước ông đã nói muốn nghe suy nghĩ thật lòng của giới trẻ.",
+    },
+    {
+      jp: "ところが昼食の時、一人の学生が[[不意に]]のどを押さえて苦しみ始めた。食べ物の[[アレルギー]]だった。マイは[[即座に]]救急車を呼んだ。",
+      vi: "Thế nhưng vào bữa trưa, một sinh viên bỗng ôm cổ họng, bắt đầu khó thở. Đó là dị ứng thức ăn. Mai lập tức gọi xe cấp cứu.",
+    },
+    {
+      jp: "幸い、症状は軽かった。部長は「[[早急に]]対策を立てよう」と言い、社員食堂でアレルギーの原因になる食材の[[リスト]]を作ることになった。",
+      vi: "May là triệu chứng nhẹ. Trưởng phòng nói \"Phải lập biện pháp gấp\", và quyết định làm danh sách các nguyên liệu gây dị ứng ở căng tin công ty.",
+    },
+    {
+      jp: "翌日、マイは[[終日]]その対応に追われた。[[目下]]の課題は、取引のある弁当屋を安全性で[[ランク]]分けすることだ。",
+      vi: "Hôm sau, Mai bận rộn xử lý việc đó suốt cả ngày. Nhiệm vụ trước mắt là phân hạng các tiệm cơm hộp đối tác theo mức độ an toàn.",
+    },
+    {
+      jp: "夕方、[[突如]]激しい雨が降り出した。窓の外を見ながら、マイは「学生たちにとっても、いい経験になったはずだ」と思った。",
+      vi: "Chiều tối, bỗng nhiên trời đổ mưa dữ dội. Nhìn ra ngoài cửa sổ, Mai nghĩ: \"Với các bạn sinh viên, chắc đây cũng là một trải nghiệm quý.\"",
+    },
+  ],
+  words: [
+    {
+      no: 521, w: "レジュメ", r: "レジュメ", pos: "kata", m: "bản tóm tắt (bài phát biểu, bài giảng); sơ yếu lý lịch",
+      use: "Tờ tóm tắt nội dung phát biểu, bài giảng phát cho người nghe (レジュメを配る・作る) — hay dùng ở đại học, hội thảo. Cũng viết レジメ. Ở một số nơi còn chỉ CV (履歴書).",
+      col: ["レジュメを配る", "レジュメを作る", "発表のレジュメ"],
+      ex: [
+        ["発表の前に、内容をまとめた[[レジュメ]]を参加者に配った。", "Trước khi trình bày, tôi phát cho người tham dự bản tóm tắt nội dung."],
+        ["明日のゼミのために、[[レジュメ]]を作らなければならない。", "Tôi phải làm bản tóm tắt cho buổi seminar ngày mai."],
+      ],
+      cmp: [["要約", "要約: sự tóm tắt (hành động / đoạn văn tóm tắt). レジュメ: tờ giấy tóm tắt để phát cho người nghe."]],
+      memo: "résumé (tiếng Pháp) = tóm tắt lại. \"Rê-dư-mê\" — rút gọn cho dễ mê.",
+    },
+    {
+      no: 522, w: "リスト", r: "リスト", pos: "kata", m: "danh sách",
+      use: "Bảng liệt kê (リストを作る, リストに載せる, 〜をリストアップする). ブラックリスト = sổ đen; リストから外す = gạch khỏi danh sách.",
+      col: ["リストを作る", "リストに載る", "リストアップする", "ブラックリスト"],
+      ex: [
+        ["買い物に行く前に、必要な物の[[リスト]]を作った。", "Trước khi đi chợ, tôi lập danh sách đồ cần mua."],
+        ["彼の名前は候補者の[[リスト]]に載っていない。", "Tên anh ấy không có trong danh sách ứng viên."],
+      ],
+      cmp: [["リストラ", "Dễ nhầm hình! リスト: danh sách. リストラ (restructuring): tái cơ cấu, cắt giảm nhân sự."]],
+      memo: "list — liệt kê từng dòng.",
+    },
+    {
+      no: 523, w: "ランク", r: "ランク", pos: "kata", m: "thứ hạng, cấp bậc, xếp hạng",
+      use: "Cấp độ, thứ bậc (ランクが上がる・下がる, ランクが高い); động từ ランクする / ランク付けする = xếp hạng. ランキング = bảng xếp hạng.",
+      col: ["ランクが上がる", "ランクが高い", "ランク付けする", "上位にランクされる"],
+      ex: [
+        ["成績が上がって、クラスの[[ランク]]が一つ上がった。", "Thành tích tăng nên cấp lớp của tôi được nâng lên một bậc."],
+        ["このホテルは世界のホテルランキングで上位に[[ランク]]されている。", "Khách sạn này được xếp vào top cao trong bảng xếp hạng khách sạn thế giới."],
+      ],
+      cmp: [["レベル", "レベル: trình độ, mức độ (năng lực). ランク: thứ hạng, bậc trong một hệ thống xếp hạng."]],
+      memo: "rank — \"răng\" xếp thành hàng: có thứ tự cao thấp.",
+    },
+    {
+      no: 524, w: "インターンシップ", r: "インターンシップ", pos: "kata", m: "chương trình thực tập (cho sinh viên)",
+      use: "Sinh viên làm việc thử tại doanh nghiệp trong thời gian ngắn để trải nghiệm (インターンシップに参加する). Nói tắt インターン, cũng chỉ người thực tập (インターン生). Lưu ý: TSV dịch \"nhân viên thực tập\", nhưng インターンシップ là chương trình, người là インターン.",
+      col: ["インターンシップに参加する", "インターン生", "夏のインターンシップ", "インターンシップを受け入れる"],
+      ex: [
+        ["夏休みに、IT企業の[[インターンシップ]]に参加した。", "Kỳ nghỉ hè tôi tham gia chương trình thực tập ở một công ty IT."],
+        ["この会社は毎年多くの学生を[[インターンシップ]]で受け入れている。", "Công ty này hằng năm nhận nhiều sinh viên đến thực tập."],
+      ],
+      memo: "intern + ship (trạng thái) — giai đoạn làm \"người bên trong\" (internal) tạm thời.",
+    },
+    {
+      no: 525, w: "リストラ", r: "リストラ", pos: "kata", m: "tái cơ cấu doanh nghiệp; (thực tế) cắt giảm nhân sự, sa thải",
+      use: "Viết tắt của リストラクチャリング (restructuring). Trong tiếng Nhật thường mang nghĩa sa thải, cắt giảm nhân viên: リストラされる (bị sa thải), リストラに遭う.",
+      col: ["リストラされる", "リストラに遭う", "リストラを進める", "大規模なリストラ"],
+      ex: [
+        ["父は会社の[[リストラ]]で仕事を失った。", "Bố tôi mất việc vì công ty cắt giảm nhân sự."],
+        ["業績悪化のため、会社は大規模な[[リストラ]]を行った。", "Vì kết quả kinh doanh xấu đi, công ty đã tái cơ cấu quy mô lớn."],
+      ],
+      cmp: [["解雇", "解雇 (かいこ): sa thải (từ pháp lý, trang trọng; có thể do lỗi cá nhân). リストラ: cắt giảm người vì lý do tái cơ cấu công ty."]],
+      memo: "re-structure → \"리-스-트-라\" → リストラ: xây lại cơ cấu, và người thì bị \"lìa\" công ty.",
+    },
+    {
+      no: 526, w: "フリーター", r: "フリーター", pos: "kata", m: "người sống bằng việc làm thêm (không làm nhân viên chính thức)",
+      use: "Từ Nhật chế (free + Arbeiter): thanh niên không đi làm chính thức mà sống bằng việc bán thời gian (アルバイト). Khác \"freelancer\" (フリーランス: người làm nghề tự do có chuyên môn).",
+      col: ["フリーターになる", "フリーター生活", "フリーターの若者"],
+      ex: [
+        ["大学を卒業後、就職せずに[[フリーター]]として働いている。", "Sau khi tốt nghiệp, tôi không xin việc chính thức mà làm thêm để sống."],
+        ["[[フリーター]]の生活は自由だが、収入が不安定だ。", "Cuộc sống làm thêm tự do nhưng thu nhập không ổn định."],
+      ],
+      cmp: [["フリーランス", "フリーランス: người làm nghề tự do, nhận việc chuyên môn (thiết kế, phiên dịch). フリーター: làm アルバイト sống qua ngày."]],
+      memo: "free + アルバイター (người làm thêm) = フリーター. Đừng dịch là \"freelancer\"!",
+    },
+    {
+      no: 527, w: "セクハラ", r: "セクハラ", pos: "kata", m: "quấy rối tình dục",
+      use: "Viết tắt セクシュアルハラスメント. セクハラをする・受ける, セクハラで訴える. Cùng họ: パワハラ (lạm quyền, bắt nạt cấp dưới), モラハラ (quấy rối tinh thần).",
+      col: ["セクハラを受ける", "セクハラで訴える", "セクハラ発言", "パワハラ"],
+      ex: [
+        ["上司からの[[セクハラ]]を受けて、彼女は会社に相談した。", "Bị cấp trên quấy rối tình dục, cô ấy đã trình báo với công ty."],
+        ["容姿についての発言も[[セクハラ]]になることがある。", "Những lời bình phẩm về ngoại hình cũng có thể bị coi là quấy rối tình dục."],
+      ],
+      cmp: [["パワハラ", "パワハラ (power harassment): cấp trên lợi dụng quyền lực chèn ép, mắng nhiếc. セクハラ: quấy rối mang tính tình dục."]],
+      memo: "sexual harassment → cắt lấy \"セク\" + \"ハラ\". Người Nhật thích cắt 2+2 âm.",
+    },
+    {
+      no: 528, w: "フェア", r: "フェア", pos: "na-adj", m: "công bằng, minh bạch (fair); (danh từ) hội chợ, đợt bán hàng",
+      use: "Na-adj: công bằng, đàng hoàng (フェアな競争, フェアに戦う, フェアプレー). Danh từ: hội chợ, đợt khuyến mãi (ブックフェア, 北海道フェア).",
+      col: ["フェアな競争", "フェアに扱う", "フェアプレー", "ブックフェア"],
+      ex: [
+        ["試合では、ルールを守って[[フェアに]]戦うことが大切だ。", "Trong thi đấu, điều quan trọng là tuân thủ luật và đấu công bằng."],
+        ["一部の人だけが得をするのは[[フェア]]じゃない。", "Chỉ một số người được lợi thì không công bằng."],
+      ],
+      cmp: [["公平", "公平 (こうへい): công bằng, đối xử như nhau (văn viết, trang trọng). フェア: công bằng + đàng hoàng, đúng luật chơi (thể thao, cạnh tranh)."]],
+      memo: "fair play — chơi đẹp. Còn \"fair\" = hội chợ: cùng chữ, khác nghĩa.",
+    },
+    {
+      no: 529, w: "ボイコット", r: "ボイコット", pos: "kata", m: "tẩy chay",
+      use: "Tập thể từ chối tham gia, mua, hợp tác để phản đối (〜をボイコットする, 授業・試合・製品をボイコットする).",
+      col: ["〜をボイコットする", "授業をボイコットする", "不買運動", "大会のボイコット"],
+      ex: [
+        ["学生たちは抗議のため、授業を[[ボイコット]]した。", "Sinh viên tẩy chay giờ học để phản đối."],
+        ["その国は政治的な理由でオリンピックを[[ボイコット]]した。", "Nước đó tẩy chay Thế vận hội vì lý do chính trị."],
+      ],
+      cmp: [["不買運動", "不買運動 (ふばいうんどう): phong trào không mua hàng — một dạng ボイコット riêng về tiêu dùng."]],
+      memo: "Boycott — tên một quản lý đất người Anh bị cả làng tẩy chay (1880).",
+    },
+    {
+      no: 530, w: "アレルギー", r: "アレルギー", pos: "kata", m: "dị ứng; (nghĩa bóng) ác cảm, dị ứng với…",
+      use: "〜アレルギーがある, 〜にアレルギーがある (卵アレルギー, 花粉アレルギー). Nghĩa bóng: rất ghét, sợ (数学アレルギー, 英語アレルギー). Gốc tiếng Đức Allergie.",
+      col: ["〜にアレルギーがある", "卵アレルギー", "アレルギー反応", "数学アレルギー"],
+      ex: [
+        ["私はそばの[[アレルギー]]があるので、そばは食べられない。", "Tôi bị dị ứng kiều mạch nên không ăn được mì soba."],
+        ["彼は数学[[アレルギー]]で、数字を見るだけで嫌になるそうだ。", "Anh ấy \"dị ứng\" toán, nhìn con số thôi đã thấy ghét."],
+      ],
+      memo: "Allergie (Đức) — \"A-rê-ru-gi\": cơ thể \"rên rỉ\" khi gặp thứ không hợp.",
+    },
+    {
+      no: 531, w: "近年", r: "きんねん", pos: "noun", hv: "CẬN NIÊN", m: "những năm gần đây",
+      use: "Văn viết, trang trọng; chỉ khoảng mấy năm đến mười mấy năm trở lại đây (近年、〜が増えている; 近年の傾向). Khẩu ngữ: 最近, ここ数年.",
+      col: ["近年、〜が増えている", "近年の傾向", "近年まれな", "近年になって"],
+      ex: [
+        ["[[近年]]、日本を訪れる外国人観光客が急増している。", "Những năm gần đây, khách du lịch nước ngoài đến Nhật tăng vọt."],
+        ["これは[[近年]]まれに見る大雪だ。", "Đây là trận tuyết lớn hiếm thấy trong những năm gần đây."],
+      ],
+      cmp: [["最近", "最近: gần đây (vài ngày → vài năm), khẩu ngữ. 近年: vài năm → vài chục năm, văn viết, báo chí. Chuyện mới hôm qua không dùng 近年."]],
+      memo: "近 (CẬN = gần) + 年 (NIÊN = năm) = những năm gần.",
+    },
+    {
+      no: 532, w: "かつて", r: "かつて", pos: "adv", m: "trước đây đã từng, ngày xưa; (với phủ định) chưa từng",
+      use: "Văn viết: chỉ một thời trong quá khứ khác với hiện tại (かつて〜だった; かつての〜). Với phủ định: かつてない = chưa từng có (いまだかつてない規模). Kanji: 嘗て (ít dùng).",
+      col: ["かつて〜だった", "かつての〜", "かつてない", "いまだかつて〜ない"],
+      ex: [
+        ["この町は[[かつて]]炭鉱で栄えていた。", "Thị trấn này từng phồn thịnh nhờ mỏ than."],
+        ["今回の地震は、いまだ[[かつて]]ない規模だった。", "Trận động đất lần này có quy mô chưa từng có."],
+      ],
+      cmp: [["かねて", "かつて: một thời quá khứ (đã kết thúc, khác hiện tại). かねて: từ trước đến giờ, đã có sẵn từ trước (vẫn tiếp diễn) — かねてから希望していた."]],
+      memo: "かつて ≈ \"cát đã trôi\" — ngày xưa từng thế, nay đã khác.",
+    },
+    {
+      no: 533, w: "かねて", r: "かねて", pos: "adv", m: "từ trước, đã từ lâu (đến giờ)",
+      use: "Diễn tả việc đã có/đã nghĩ từ trước và còn kéo đến hiện tại: かねてから・かねてより (văn trang trọng), かねての (かねての希望). Kanji: 予て.",
+      col: ["かねてから", "かねてより", "かねての希望", "かねて聞いていた"],
+      ex: [
+        ["[[かねて]]から行きたかった京都に、やっと行くことができた。", "Cuối cùng tôi cũng được đến Kyoto, nơi mình muốn đi từ lâu."],
+        ["[[かねて]]より準備していた計画が、いよいよ実行される。", "Kế hoạch đã chuẩn bị từ trước cuối cùng cũng được thực hiện."],
+      ],
+      cmp: [["かつて", "かねてから: từ trước tới nay (mong muốn, dự định vẫn còn). かつて: ngày xưa từng, nay không còn như thế."]],
+      memo: "Kanji 予て: 予 = dự (trước) — đã có \"dự\" định từ trước.",
+    },
+    {
+      no: 534, w: "目下", r: "もっか", pos: "adv", hv: "MỤC HẠ", m: "hiện tại, lúc này, trước mắt",
+      use: "Văn viết, trang trọng; chỉ tình trạng đang diễn ra (目下、調査中だ; 目下の課題). Lưu ý: cùng chữ nhưng đọc めした = người dưới quyền, cấp dưới.",
+      col: ["目下、〜中だ", "目下の課題", "目下のところ", "目下検討中"],
+      ex: [
+        ["事故の原因については、[[目下]]調査中です。", "Về nguyên nhân sự cố, hiện tại đang điều tra."],
+        ["[[目下]]の課題は、人手不足をどう解決するかだ。", "Vấn đề trước mắt là giải quyết tình trạng thiếu nhân lực thế nào."],
+      ],
+      cmp: [["めした", "Cùng chữ, khác cách đọc: めした = người dưới (cấp dưới, người ít tuổi hơn), đối lập めうえ. もっか = hiện tại."]],
+      memo: "目 (mắt) + 下 (dưới) = ngay dưới mắt — việc đang diễn ra trước mắt.",
+    },
+    {
+      no: 535, w: "終日", r: "しゅうじつ", pos: "adv", hv: "CHUNG NHẬT", m: "suốt cả ngày",
+      use: "Văn viết, thông báo: cả ngày từ sáng đến tối (終日禁煙, 終日営業, 終日雨). Khẩu ngữ: 一日中.",
+      col: ["終日禁煙", "終日営業", "終日雨", "終日〜に追われる"],
+      ex: [
+        ["この建物の中は[[終日]]禁煙です。", "Trong tòa nhà này cấm hút thuốc cả ngày."],
+        ["昨日は[[終日]]会議で、メールを読む時間もなかった。", "Hôm qua họp suốt cả ngày, không có cả thời gian đọc email."],
+      ],
+      cmp: [["一日中", "一日中 (いちにちじゅう): khẩu ngữ. 終日: trang trọng, hay thấy trên biển báo, thông báo của tàu điện, cửa hàng."]],
+      memo: "終 (CHUNG = hết) + 日 (NHẬT = ngày) = trọn đến hết ngày.",
+    },
+    {
+      no: 536, w: "早急に", r: "そうきゅうに", pos: "adv", hv: "TẢO CẤP", m: "khẩn trương, càng sớm càng tốt",
+      use: "Trang trọng, hay dùng trong công việc khi yêu cầu xử lý gấp (早急に対応する・検討する; 早急な対策). Cũng đọc さっきゅう. Gần nghĩa: 至急, すぐに.",
+      col: ["早急に対応する", "早急に検討する", "早急な対策", "早急に解決する"],
+      ex: [
+        ["この問題については、[[早急に]]対策を立てる必要がある。", "Về vấn đề này cần nhanh chóng đưa ra biện pháp."],
+        ["お客様からの苦情には[[早急に]]対応してください。", "Hãy xử lý khẩn trương các khiếu nại của khách hàng."],
+      ],
+      cmp: [["至急", "至急 (しきゅう): rất gấp, ngay lập tức (thường viết trên thư, đầu email: 至急ご連絡ください). 早急に: càng sớm càng tốt, hơi rộng hơn."]],
+      memo: "早 (TẢO = sớm) + 急 (CẤP = gấp) = vừa sớm vừa gấp.",
+    },
+    {
+      no: 537, w: "即座に", r: "そくざに", pos: "adv", hv: "TỨC TỌA", m: "ngay lập tức, tức thì",
+      use: "Phản ứng ngay tại chỗ, không chần chừ (即座に答える・断る・判断する). Hơi trang trọng hơn すぐに. Dạng 即座の (即座の判断).",
+      col: ["即座に答える", "即座に断る", "即座に判断する", "即座の対応"],
+      ex: [
+        ["質問されると、彼は[[即座に]]答えた。", "Vừa được hỏi, anh ấy liền trả lời ngay."],
+        ["無理な要求だったので、[[即座に]]断った。", "Vì là yêu cầu vô lý nên tôi từ chối ngay tức khắc."],
+      ],
+      cmp: [["すかさず", "即座に: ngay tại chỗ, tức thì (trung tính). すかさず: chớp lấy thời cơ, không để lỡ khoảnh khắc (thường là phản ứng lại lời/hành động của người khác)."]],
+      memo: "即 (TỨC = ngay) + 座 (TỌA = chỗ ngồi) = ngay tại chỗ đang ngồi.",
+    },
+    {
+      no: 538, w: "すかさず", r: "すかさず", pos: "adv", m: "lập tức, không bỏ lỡ thời cơ",
+      use: "Phản ứng tức thì ngay khi có cơ hội, không để khoảng trống (すかさず答える・反論する・シャッターを切る). Hay dùng khi đáp lại lời/hành động của người khác. Kanji 透かさず ít dùng.",
+      col: ["すかさず答える", "すかさず反論する", "すかさずフォローする"],
+      ex: [
+        ["相手がミスをした瞬間、彼は[[すかさず]]攻撃した。", "Ngay khoảnh khắc đối thủ mắc lỗi, anh ấy lập tức tấn công."],
+        ["部長が冗談を言うと、佐藤さんが[[すかさず]]突っ込んだ。", "Trưởng phòng vừa đùa, chị Satō liền đáp trả ngay."],
+      ],
+      memo: "すかさず ≈ 隙(すき)を空けず — không để chừa \"kẽ hở\" nào.",
+    },
+    {
+      no: 539, w: "不意に", r: "ふいに", pos: "adv", hv: "BẤT Ý", m: "đột nhiên, bất ngờ, không báo trước",
+      use: "Xảy ra khi không ngờ tới (不意に名前を呼ばれる, 不意に涙が出る). 不意をつく = đánh bất ngờ; 不意打ち = đòn bất ngờ.",
+      col: ["不意に声をかけられる", "不意に思い出す", "不意をつく", "不意打ち"],
+      ex: [
+        ["道を歩いていたら、後ろから[[不意に]]名前を呼ばれた。", "Đang đi trên đường thì bất ngờ có người gọi tên tôi từ phía sau."],
+        ["昔の写真を見て、[[不意に]]涙がこぼれた。", "Nhìn ảnh ngày xưa, nước mắt bỗng trào ra."],
+      ],
+      cmp: [["突如", "不意に: bất ngờ với người trong cuộc (ngoài dự liệu). 突如: đột ngột xảy ra (văn viết, sự kiện lớn: 突如として現れる)."]],
+      memo: "不 (BẤT = không) + 意 (Ý = ý định) = xảy ra ngoài ý mình.",
+    },
+    {
+      no: 540, w: "突如", r: "とつじょ", pos: "adv", hv: "ĐỘT NHƯ", m: "đột nhiên, bỗng nhiên",
+      use: "Văn viết, sắc thái mạnh: sự việc đột ngột xảy ra (突如として現れる, 突如〜した). Khẩu ngữ: 突然, 急に.",
+      col: ["突如として", "突如現れる", "突如姿を消す"],
+      ex: [
+        ["晴れていた空が[[突如]]暗くなり、雷が鳴り始めた。", "Bầu trời đang nắng bỗng tối sầm, sấm bắt đầu nổ."],
+        ["人気歌手が[[突如]]として引退を発表した。", "Ca sĩ nổi tiếng đột ngột tuyên bố giải nghệ."],
+      ],
+      cmp: [["突然", "突然: đột nhiên (dùng rộng, khẩu ngữ). 突如: nghĩa giống nhưng cứng, văn viết, hay đi với として."]],
+      memo: "突 (ĐỘT = đâm ra) + 如 (NHƯ = như thế) — \"đột\" như thế mà xuất hiện.",
+    },
+  ],
+  quiz: [
+    {
+      type: "choice",
+      label: "Phân biệt",
+      q: "＿＿＿から行きたいと思っていた北海道に、ついに行くことができた。",
+      opts: ["かねて", "かつて", "目下", "近年"],
+      answer: 0,
+      explain: "かねてから = từ trước đến giờ (mong muốn vẫn còn đến hiện tại). かつて là \"ngày xưa từng\", không đi với から trong nghĩa này.",
+    },
+    {
+      type: "choice",
+      label: "Chọn từ thích hợp",
+      q: "父は会社の＿＿＿で職を失い、今は再就職先を探している。",
+      opts: ["リストラ", "リスト", "ボイコット", "インターンシップ"],
+      answer: 0,
+      explain: "リストラ = tái cơ cấu, cắt giảm nhân sự → mất việc. リスト chỉ là danh sách.",
+    },
+    {
+      type: "choice",
+      label: "Từ gần nghĩa (言い換え)",
+      q: "その件については[[目下]]検討中です。",
+      opts: ["今", "以前", "近いうちに", "改めて"],
+      answer: 0,
+      explain: "目下 (もっか) = hiện tại, lúc này → 今・現在.",
+    },
+    {
+      type: "choice",
+      label: "Dùng từ đúng (用法)",
+      q: "「すかさず」の使い方が正しい文はどれか。",
+      opts: [
+        "先生が質問すると、彼はすかさず手を挙げた。",
+        "すかさず三年前に、この町に引っ越してきた。",
+        "この料理はすかさず作れるので便利だ。",
+        "彼はすかさず休まずに練習を続けている。",
+      ],
+      answer: 0,
+      explain: "すかさず = phản ứng ngay lập tức, không bỏ lỡ thời cơ (thường đáp lại một hành động khác). Không dùng để chỉ thời gian quá khứ, độ dễ, hay sự liên tục.",
+    },
+    {
+      type: "judge",
+      q: "昨日の朝、近年財布をなくしてしまった。",
+      ok: false,
+      explain: "近年 chỉ khoảng nhiều năm gần đây, không dùng cho sự việc cụ thể ngày hôm qua. Câu đúng: 昨日の朝、財布をなくしてしまった (hoặc dùng 最近 cho việc gần đây).",
+    },
+  ],
+  kanji: {
+    近: { hv: "CẬN", m: "gần" },
+    年: { hv: "NIÊN", m: "năm" },
+    目: { hv: "MỤC", m: "mắt" },
+    下: { hv: "HẠ", m: "dưới" },
+    終: { hv: "CHUNG", m: "kết thúc, hết" },
+    早: { hv: "TẢO", m: "sớm" },
+    急: { hv: "CẤP", m: "gấp" },
+    即: { hv: "TỨC", m: "ngay, tức thì" },
+    座: { hv: "TỌA", m: "chỗ ngồi; ngồi" },
+    不: { hv: "BẤT", m: "không" },
+    意: { hv: "Ý", m: "ý, ý nghĩ" },
+    突: { hv: "ĐỘT", m: "đâm, đột ngột", memo: "穴 (cái hang) + 大 (con chó lớn — dạng cổ của 犬): chó lao vụt ra khỏi hang." },
+    如: { hv: "NHƯ", m: "như, giống như" },
+  },
+};
