@@ -35,3 +35,19 @@ export interface AudioManifest {
   /** giọng → khóa → đuôi file (m4a / mp3 / wav) */
   clips: Partial<Record<"male" | "female", Record<string, string>>>;
 }
+
+/** Chuỗi tiếng Anh để đọc: bỏ [[…]] (đánh dấu tô đậm), gộp khoảng trắng. */
+export function toEnSpeech(text: string): string {
+  return text.replace(/\[\[|\]\]/g, "").replace(/\s+/g, " ").trim();
+}
+
+/** Giọng tiếng Anh thu sẵn: giọng Anh/Mỹ × nam/nữ */
+export type EnVoiceId = "uk-male" | "uk-female" | "us-male" | "us-female";
+
+/** public/audio/en/manifest.json */
+export interface EnAudioManifest {
+  /** Tên giọng, ví dụ "Kokoro · George" */
+  voices: Partial<Record<EnVoiceId, string>>;
+  /** giọng → khóa (speechKey(toEnSpeech(câu))) → đuôi file */
+  clips: Partial<Record<EnVoiceId, Record<string, string>>>;
+}

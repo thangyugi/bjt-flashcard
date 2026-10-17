@@ -2,7 +2,18 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { Square, Volume2 } from "lucide-react";
-import { getPlaying, pickEnglishVoice, speakEnglish, stopSpeaking, subscribePlaying, ttsSupported } from "@/lib/tts";
+import {
+  enVoiceId,
+  getEnManifest,
+  getPlaying,
+  loadEnAudioManifest,
+  pickEnglishVoice,
+  speakEnglish,
+  stopSpeaking,
+  subscribeManifest,
+  subscribePlaying,
+  ttsSupported,
+} from "@/lib/tts";
 import { useTtsStore } from "@/store/tts-store";
 import { useHydrated } from "@/hooks/useHydrated";
 import { cn } from "@/lib/utils";
@@ -64,16 +75,19 @@ export function EnVoiceSettings({ className }: { className?: string }) {
   const hydrated = useHydrated();
   const { gender, rate, enAccent, setEnAccent, setRate } = useTtsStore();
   const [, force] = useState(0);
+  const enManifest = useSyncExternalStore(subscribeManifest, getEnManifest, () => null);
   useEffect(() => {
+    loadEnAudioManifest();
     if (!ttsSupported()) return;
     const f = () => force((n) => n + 1);
     speechSynthesis.addEventListener("voiceschanged", f);
     return () => speechSynthesis.removeEventListener("voiceschanged", f);
   }, []);
   if (!hydrated) return null;
-  if (!ttsSupported())
+  const recorded = enManifest?.voices[enVoiceId(enAccent, gender)];
+  if (!ttsSupported() && !recorded)
     return <p className={cn("text-[13px] text-ink-3", className)}>Trình duyệt này chưa hỗ trợ đọc. Hãy dùng Safari, Chrome hoặc Edge.</p>;
-  const pick = pickEnglishVoice(enAccent, gender);
+  const pick = ttsSupported() ? pickEnglishVoice(enAccent, gender) : { voice: null, simulated: false };
   const seg = (on: boolean) =>
     cn("rounded-lg px-3 py-1.5 text-[13px] font-semibold transition-colors", on ? "bg-surface text-ink shadow-sm" : "text-ink-3 hover:text-ink");
   return (
@@ -98,11 +112,17 @@ export function EnVoiceSettings({ className }: { className?: string }) {
         </div>
         <span className="text-[12px] text-ink-3">Nam / Nữ: nút trên thanh tiêu đề</span>
       </div>
-      <p className="text-[12px] text-ink-3">
-        {pick.voice ? `Đang dùng giọng: ${pick.voice.name} (${pick.voice.lang})` : "Chưa thấy giọng tiếng Anh trên máy."}
-        {pick.voice && !pick.voice.lang.toLowerCase().replace("_", "-").startsWith(enAccent === "uk" ? "en-gb" : "en-us") &&
-          ` — máy chưa có giọng ${enAccent === "uk" ? "Anh" : "Mỹ"}, đang dùng giọng gần nhất.`}
-      </p>
+      {recorded ? (
+        <p className="text-[12px] text-ink-3">
+          Giọng thu sẵn: {recorded} ({enAccent === "uk" ? "Anh" : "Mỹ"}, {gender === "male" ? "nam" : "nữ"}) — nghe được cả khi offline.
+        </p>
+      ) : (
+        <p className="text-[12px] text-ink-3">
+          {pick.voice ? `Đang dùng giọng: ${pick.voice.name} (${pick.voice.lang})` : "Chưa thấy giọng tiếng Anh trên máy."}
+          {pick.voice && !pick.voice.lang.toLowerCase().replace("_", "-").startsWith(enAccent === "uk" ? "en-gb" : "en-us") &&
+            ` — máy chưa có giọng ${enAccent === "uk" ? "Anh" : "Mỹ"}, đang dùng giọng gần nhất.`}
+        </p>
+      )}
     </div>
   );
 }

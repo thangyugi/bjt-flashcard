@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "audio": "tsx scripts/generate-audio.ts"
+    "audio": "tsx scripts/generate-audio.ts",
+    "audio:en": "tsx scripts/generate-en-audio.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

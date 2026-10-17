@@ -41,7 +41,7 @@ self.addEventListener("fetch", (event) => {
   if (url.pathname === "/sw.js") return;
 
   // File giọng đọc thu sẵn: lưu lại để nghe offline (trả 206 cho yêu cầu Range — Safari cần)
-  if (url.pathname.startsWith("/audio/") && url.pathname !== "/audio/manifest.json") {
+  if (url.pathname.startsWith("/audio/") && !url.pathname.endsWith("/manifest.json")) {
     event.respondWith(audioCache(request, url));
     return;
   }
