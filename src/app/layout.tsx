@@ -7,6 +7,7 @@ import { MobileTabBar } from "@/components/layout/MobileTabBar";
 import { NavProgress } from "@/components/layout/NavProgress";
 import { AppSplash } from "@/components/layout/AppSplash";
 import { ServiceWorkerRegister } from "@/components/layout/Pwa";
+import { LearningRuntime } from "@/components/learning/LearningRuntime";
 import { Suspense } from "react";
 
 // Chữ Việt / giao diện
@@ -78,6 +79,7 @@ export default function RootLayout({
           </Suspense>
           <AppSplash />
           <ServiceWorkerRegister />
+          <LearningRuntime />
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1">{children}</main>

@@ -12,6 +12,8 @@ import { VoiceSettings } from "@/components/jlpt-n1/Speak";
 import { PitchGuide } from "@/components/jlpt-n1/PitchAccent";
 import { StoryReader } from "@/components/jlpt-n1/StoryReader";
 import { LessonActions } from "@/components/jlpt-n1/LessonActions";
+import { AddToReview } from "@/components/learning/AddToReview";
+import { itemKey } from "@/lib/learning/keys";
 import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
 
 export const dynamicParams = false;
@@ -105,8 +107,9 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
             <Jp t={lesson.titleJa} className="font-mincho [&_rt]:text-[#b5ada5]" />
           </p>
           <p className="relative max-w-[640px] text-[15px] leading-relaxed text-[#d8cfc6]">{raw.words.length} từ · câu chuyện liên kết · thẻ chi tiết từng từ · 4 dạng trắc nghiệm</p>
-          <div className="relative pt-1">
+          <div className="relative flex flex-wrap gap-2 pt-1">
             <LessonActions lessonId={raw.id} kind="vocab" />
+            <AddToReview items={[...new Set(raw.words.map((w) => itemKey.jaWord(w.w, w.r)))]} course="jlpt-n1" className="[&_a]:text-paper" />
           </div>
         </header>
 

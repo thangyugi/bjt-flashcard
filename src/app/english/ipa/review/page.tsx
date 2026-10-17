@@ -21,8 +21,8 @@ export default function IpaReviewPage() {
       <header className="flex flex-col gap-2">
         <h1 className="text-[30px] leading-tight font-extrabold tracking-[-0.02em] text-ink">Ôn tập ngắt quãng</h1>
         <p className="text-[15px] leading-relaxed text-ink-2">
-          Mỗi ngày vài phút. Nhìn ký hiệu → tự đọc to & nhớ từ khóa → lật thẻ kiểm tra → tự chấm. Nhớ rõ thì lần sau
-          giãn ra (1 → 2 → 4 → 8 → 16 → 32 ngày), quên thì ôn lại ngay.
+          Mỗi ngày vài phút. Nhìn ký hiệu → tự đọc to & nhớ từ khóa → lật thẻ kiểm tra → tự chấm. Lịch ôn tính bằng FSRS
+          (thuật toán của Anki): nhớ càng chắc thì lần sau càng xa, quên thì ôn lại ngay trong phiên.
         </p>
       </header>
       <ReviewDeck phonemes={lite} />

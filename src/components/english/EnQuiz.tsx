@@ -5,6 +5,7 @@ import { Check, RotateCcw, X } from "lucide-react";
 import type { IpaQuestion } from "@/data/english/ipa/types";
 import { hashSeed, shuffle } from "@/data/english/ipa/practice";
 import { useEnStore } from "@/store/en-store";
+import { enrollPhonemes } from "./EnLessonBits";
 import { EnSpeakButton } from "./EnSpeak";
 import { cn } from "@/lib/utils";
 
@@ -42,7 +43,7 @@ export function EnQuiz({
 }) {
   const [round, setRound] = useState(0);
   const [picked, setPicked] = useState<Record<number, number>>({});
-  const { saveQuiz, markDone, enroll, quiz } = useEnStore();
+  const { saveQuiz, markDone, quiz } = useEnStore();
   const prepared = useMemo(() => questions.map((q) => prepare(q, round)), [questions, round]);
   const answered = Object.keys(picked).length;
   const score = prepared.reduce((n, p, i) => n + (picked[i] === p.correct ? 1 : 0), 0);
@@ -57,7 +58,7 @@ export function EnQuiz({
       saveQuiz(storeKey, s, questions.length);
       if (finishLesson) {
         markDone(finishLesson.id);
-        enroll(finishLesson.phonemeIds);
+        enrollPhonemes(finishLesson.phonemeIds);
       }
     }
   };

@@ -1,32 +1,28 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { CalendarCheck, RotateCcw } from "lucide-react";
 import type { PhonemeRef } from "@/data/english/ipa";
-import { SRS_DAYS, todayKey, useEnStore } from "@/store/en-store";
 import { useHydrated } from "@/hooks/useHydrated";
+import { itemKey } from "@/lib/learning/keys";
+import { fmtDate, GradeButtons, useReviewQueue } from "@/components/learning/ReviewKit";
 import { EnSpeakButton } from "./EnSpeak";
 import { Ipa } from "./EnText";
-import { cn } from "@/lib/utils";
+import { enrollPhonemes } from "./EnLessonBits";
 
 type Lite = Pick<PhonemeRef, "id" | "symbol" | "name" | "keyword" | "how" | "words" | "lessonId" | "lessonNum" | "memo">;
 
-/** Ôn tập ngắt quãng: thẻ đến hạn hôm nay → tự nhớ lại → lật → tự chấm. */
+const isPhoneme = (c: { item: string }) => c.item.startsWith("en.phoneme.");
+
+/** Ôn tập ngắt quãng các âm IPA (FSRS): thẻ đến hạn → tự nhớ lại → lật → tự chấm. */
 export function ReviewDeck({ phonemes }: { phonemes: Lite[] }) {
   const hydrated = useHydrated();
-  const { srs, grade, enroll } = useEnStore();
-  const [queue, setQueue] = useState<string[] | null>(null);
   const [flipped, setFlipped] = useState(false);
-  const [doneCount, setDoneCount] = useState(0);
-  const byId = useMemo(() => new Map(phonemes.map((p) => [p.id, p])), [phonemes]);
-
+  const r = useReviewQueue(isPhoneme);
   if (!hydrated) return null;
-  const today = todayKey();
-  const enrolled = Object.entries(srs).filter(([id]) => byId.has(id));
-  const due = enrolled.filter(([, c]) => c.due <= today).sort((a, b) => a[1].box - b[1].box).map(([id]) => id);
 
-  if (!enrolled.length)
+  if (!r.total)
     return (
       <div className="flex flex-col items-start gap-3 rounded-3xl border border-line bg-surface px-6 py-6">
         <p className="text-[15px] leading-relaxed text-ink-2">
@@ -35,7 +31,7 @@ export function ReviewDeck({ phonemes }: { phonemes: Lite[] }) {
         </p>
         <button
           type="button"
-          onClick={() => enroll(phonemes.map((p) => p.id))}
+          onClick={() => enrollPhonemes(phonemes.map((p) => p.id))}
           className="rounded-xl bg-[#1d4ed8] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#1e40af]"
         >
           Thêm tất cả âm vào bộ ôn tập
@@ -43,42 +39,34 @@ export function ReviewDeck({ phonemes }: { phonemes: Lite[] }) {
       </div>
     );
 
-  const q = queue ?? due;
-  const cur = q[0] ? byId.get(q[0]) : undefined;
+  const cur = r.current ? phonemes.find((p) => itemKey.phoneme(p.id) === r.current!.item) : undefined;
 
-  if (!cur) {
-    const next = enrolled.map(([, c]) => c.due).filter((d) => d > today).sort()[0];
+  if (!r.current || !cur)
     return (
       <div className="flex flex-col items-center gap-3 rounded-3xl border border-line bg-surface px-6 py-10 text-center">
         <CalendarCheck className="h-10 w-10 text-ok" aria-hidden />
-        <p className="text-[18px] font-extrabold text-ink">{doneCount ? `Xong ${doneCount} thẻ hôm nay! 🎉` : "Hôm nay không còn thẻ nào đến hạn."}</p>
+        <p className="text-[18px] font-extrabold text-ink">{r.done ? `Xong ${r.done} lượt ôn hôm nay! 🎉` : "Hiện không còn thẻ nào đến hạn."}</p>
         <p className="text-[14px] text-ink-2">
-          {enrolled.length} âm trong bộ ôn tập{next ? ` · lượt tiếp theo: ${next.split("-").reverse().join("/")}` : ""}.
+          {r.total} âm trong bộ ôn tập{r.nextDue ? ` · lượt tiếp theo: ${fmtDate(r.nextDue)}` : ""}.
         </p>
-        <Link href="/english/ipa/practice" className="mt-2 rounded-xl border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
-          Sang phòng luyện tập
-        </Link>
+        <div className="mt-2 flex flex-wrap justify-center gap-2">
+          <Link href="/english/ipa/practice" className="rounded-xl border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
+            Sang phòng luyện tập
+          </Link>
+          <Link href="/review" className="rounded-xl border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
+            Ôn tập mọi khóa
+          </Link>
+        </div>
       </div>
     );
-  }
-
-  const card = srs[cur.id];
-  const answer = (g: 0 | 1 | 2) => {
-    grade(cur.id, g);
-    setFlipped(false);
-    setDoneCount((n) => n + 1);
-    const rest = q.slice(1);
-    setQueue(g === 0 ? [...rest, cur.id] : rest);
-  };
-  const nextBox = Math.min(SRS_DAYS.length - 1, (card?.box ?? 1) + 1);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between text-[13px] text-ink-3">
         <span>
-          Còn <b className="text-ink">{q.length}</b> thẻ · hộp {card?.box ?? 1}/{SRS_DAYS.length - 1}
+          Còn <b className="text-ink">{r.remaining}</b> thẻ · đã ôn {r.current.reps} lần · quên {r.current.lapses} lần
         </span>
-        <span>Đã ôn: {doneCount}</span>
+        <span>Phiên này: {r.done}</span>
       </div>
 
       <div className="flex min-h-[340px] flex-col overflow-hidden rounded-3xl border border-line bg-surface">
@@ -118,11 +106,7 @@ export function ReviewDeck({ phonemes }: { phonemes: Lite[] }) {
           </div>
         ) : (
           <div className="flex flex-1 items-center justify-center p-6">
-            <button
-              type="button"
-              onClick={() => setFlipped(true)}
-              className="h-12 rounded-2xl bg-ink px-8 text-[15px] font-bold text-paper hover:bg-ink/90"
-            >
+            <button type="button" onClick={() => setFlipped(true)} className="h-12 rounded-2xl bg-ink px-8 text-[15px] font-bold text-paper hover:bg-ink/90">
               Lật thẻ
             </button>
           </div>
@@ -130,23 +114,18 @@ export function ReviewDeck({ phonemes }: { phonemes: Lite[] }) {
       </div>
 
       {flipped && (
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { g: 0 as const, label: "Quên", sub: "ôn lại ngay", cls: "border-brand text-brand-soft-ink bg-brand-soft" },
-            { g: 1 as const, label: "Mơ hồ", sub: `${Math.max(1, Math.floor(SRS_DAYS[card?.box ?? 1] / 2))} ngày`, cls: "border-line-strong bg-surface text-ink" },
-            { g: 2 as const, label: "Nhớ rõ", sub: `${SRS_DAYS[nextBox]} ngày`, cls: "border-ok bg-ok-soft text-ok-ink" },
-          ].map((b) => (
-            <button key={b.g} type="button" onClick={() => answer(b.g)} className={cn("flex flex-col items-center rounded-2xl border py-3 font-bold", b.cls)}>
-              {b.label}
-              <span className="text-[12px] font-medium opacity-80">{b.sub}</span>
-            </button>
-          ))}
-        </div>
+        <GradeButtons
+          card={r.current}
+          onGrade={(g) => {
+            r.answer(g);
+            setFlipped(false);
+          }}
+        />
       )}
       <button
         type="button"
         onClick={() => {
-          setQueue(null);
+          r.restart();
           setFlipped(false);
         }}
         className="inline-flex w-fit items-center gap-1.5 text-[13px] text-ink-3 hover:text-ink"

@@ -8,13 +8,17 @@ import { Reveal } from "@/components/jlpt-n1/Reveal";
 import { EnSpeakButton } from "./EnSpeak";
 import { EnText } from "./EnText";
 import { cn } from "@/lib/utils";
+import { enrollItems } from "@/lib/learning/review";
+import { itemKey } from "@/lib/learning/keys";
+import { useDue } from "@/hooks/useDue";
+
+export const enrollPhonemes = (ids: string[]) => enrollItems(ids.map((id) => ({ item: itemKey.phoneme(id), course: "english" })));
 
 /** Ghi nhớ bài đang học + nút "Đã học xong" (học xong → các âm của bài vào bộ ôn tập). */
 export function EnLessonActions({ lessonId, phonemeIds }: { lessonId: string; phonemeIds: string[] }) {
   const visit = useEnStore((s) => s.visitIpa);
   const done = useEnStore((s) => !!s.done[lessonId]);
   const toggle = useEnStore((s) => s.toggleDone);
-  const enroll = useEnStore((s) => s.enroll);
   const hydrated = useHydrated();
   useEffect(() => visit(lessonId), [lessonId, visit]);
   const on = hydrated && done;
@@ -22,7 +26,7 @@ export function EnLessonActions({ lessonId, phonemeIds }: { lessonId: string; ph
     <button
       type="button"
       onClick={() => {
-        if (!done) enroll(phonemeIds);
+        if (!done) enrollPhonemes(phonemeIds);
         toggle(lessonId);
       }}
       aria-pressed={on}
@@ -70,12 +74,7 @@ export function EnStory({ paras }: { paras: { en: string; vi: string }[] }) {
   );
 }
 
-/** Đếm số thẻ ôn tập đến hạn hôm nay */
+/** Đếm số thẻ âm IPA đến hạn ôn */
 export function useDueCount() {
-  const srs = useEnStore((s) => s.srs);
-  const hydrated = useHydrated();
-  if (!hydrated) return { due: 0, total: 0 };
-  const today = new Date().toISOString().slice(0, 10);
-  const cards = Object.values(srs);
-  return { due: cards.filter((c) => c.due <= today).length, total: cards.length };
+  return useDue((c) => c.item.startsWith("en.phoneme."));
 }
