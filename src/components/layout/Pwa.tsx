@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import { Download, Share, SquarePlus, X } from "lucide-react";
 import { useHydrated } from "@/hooks/useHydrated";
+import { MEDIA_BASE } from "@/lib/media";
 
 /** Đăng ký service worker (chỉ ở bản production) để cài app & học offline. */
 export function ServiceWorkerRegister() {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" || !("serviceWorker" in navigator)) return;
-    navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {});
+    // Báo cho service worker tên miền chứa âm thanh (R2) để lưu offline cả file ở đó
+    const sw = MEDIA_BASE ? `/sw.js?media=${encodeURIComponent(new URL(MEDIA_BASE).origin)}` : "/sw.js";
+    navigator.serviceWorker.register(sw, { scope: "/", updateViaCache: "none" }).catch(() => {});
   }, []);
   return null;
 }

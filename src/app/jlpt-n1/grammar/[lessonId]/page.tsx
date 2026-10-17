@@ -11,6 +11,8 @@ import { VoiceSettings } from "@/components/jlpt-n1/Speak";
 import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
 import { StoryReader } from "@/components/jlpt-n1/StoryReader";
 import { LessonActions } from "@/components/jlpt-n1/LessonActions";
+import { AddToReview } from "@/components/learning/AddToReview";
+import { itemKey } from "@/lib/learning/keys";
 
 export const dynamicParams = false;
 
@@ -119,8 +121,9 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
               </a>
             ))}
           </div>
-          <div className="relative pt-2">
+          <div className="relative flex flex-wrap gap-2 pt-2">
             <LessonActions lessonId={lesson.id} />
+            <AddToReview items={lesson.patterns.map((p) => itemKey.jaGrammar(p.id))} course="jlpt-n1" className="[&_a]:text-paper" />
           </div>
         </header>
 

@@ -8,6 +8,7 @@
  * Chuỗi đầu vào có thể chứa markup furigana {漢字|かな}, [[…]], ＿＿＿.
  */
 
+import { mediaUrl } from "./media";
 import { speechKey, toEnSpeech, toSpeech, type AudioManifest, type EnAudioManifest, type EnVoiceId } from "./audio-key";
 
 export type VoiceGender = "female" | "male";
@@ -83,7 +84,7 @@ const manifestListeners = new Set<() => void>();
 /** Nạp public/audio/manifest.json một lần (service worker lưu lại để dùng offline). */
 export function loadAudioManifest(): Promise<AudioManifest | null> {
   if (!manifestLoad) {
-    manifestLoad = fetch("/audio/manifest.json")
+    manifestLoad = fetch(mediaUrl("/audio/manifest.json"))
       .then((r) => (r.ok ? (r.json() as Promise<AudioManifest>) : null))
       .catch(() => null)
       .then((m) => {
@@ -103,7 +104,7 @@ export const getManifest = () => manifest;
 /** Đường dẫn file thu sẵn cho câu này (nếu có). */
 export function clipUrl(text: string, gender: VoiceGender): string | null {
   const ext = manifest?.clips[gender]?.[speechKey(text)];
-  return ext ? `/audio/${gender}/${speechKey(text)}.${ext}` : null;
+  return ext ? mediaUrl(`/audio/${gender}/${speechKey(text)}.${ext}`) : null;
 }
 
 let audio: HTMLAudioElement | null = null;
@@ -214,7 +215,7 @@ let enManifestLoad: Promise<EnAudioManifest | null> | null = null;
 
 export function loadEnAudioManifest(): Promise<EnAudioManifest | null> {
   if (!enManifestLoad) {
-    enManifestLoad = fetch("/audio/en/manifest.json")
+    enManifestLoad = fetch(mediaUrl("/audio/en/manifest.json"))
       .then((r) => (r.ok ? (r.json() as Promise<EnAudioManifest>) : null))
       .catch(() => null)
       .then((m) => {
@@ -233,7 +234,7 @@ export const enVoiceId = (accent: EnAccent, gender: VoiceGender): EnVoiceId => `
 export function enClipUrl(text: string, voice: EnVoiceId): string | null {
   const key = speechKey(toEnSpeech(text));
   const ext = enManifest?.clips[voice]?.[key];
-  return ext ? `/audio/en/${voice}/${key}.${ext}` : null;
+  return ext ? mediaUrl(`/audio/en/${voice}/${key}.${ext}`) : null;
 }
 
 /** Đọc tiếng Anh: ưu tiên file thu sẵn, câu chưa có file thì dùng giọng của máy. [[…]] trong chuỗi được bỏ đi. */

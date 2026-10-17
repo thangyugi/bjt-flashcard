@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useProgressStats } from "@/hooks/useProgressStats";
 import { cn } from "@/lib/utils";
 import { VoiceToggle } from "@/components/jlpt-n1/Speak";
+import { AccountButton } from "@/components/account/AccountButton";
 
 export const NAV_ITEMS = [
   { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
@@ -15,6 +16,7 @@ export const NAV_ITEMS = [
     label: "Khóa học",
     match: (p: string) => p.startsWith("/courses") || p.startsWith("/jlpt-n1") || p.startsWith("/english"),
   },
+  { href: "/progress", label: "Tiến độ", match: (p: string) => p.startsWith("/progress") || p.startsWith("/review") },
 ];
 
 export function Header() {
@@ -86,6 +88,7 @@ export function Header() {
           </div>
           <span className="font-bold text-brand">{pct}%</span>
         </div>
+        <AccountButton />
         </div>
       </div>
     </header>
