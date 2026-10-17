@@ -8,7 +8,7 @@
  * Chuỗi đầu vào có thể chứa markup furigana {漢字|かな}, [[…]], ＿＿＿.
  */
 
-import { mediaUrl } from "./media";
+import { fetchMediaJson, mediaUrl } from "./media";
 import { speechKey, toEnSpeech, toSpeech, type AudioManifest, type EnAudioManifest, type EnVoiceId } from "./audio-key";
 
 export type VoiceGender = "female" | "male";
@@ -84,14 +84,11 @@ const manifestListeners = new Set<() => void>();
 /** Nạp public/audio/manifest.json một lần (service worker lưu lại để dùng offline). */
 export function loadAudioManifest(): Promise<AudioManifest | null> {
   if (!manifestLoad) {
-    manifestLoad = fetch(mediaUrl("/audio/manifest.json"))
-      .then((r) => (r.ok ? (r.json() as Promise<AudioManifest>) : null))
-      .catch(() => null)
-      .then((m) => {
-        manifest = m;
-        manifestListeners.forEach((l) => l());
-        return m;
-      });
+    manifestLoad = fetchMediaJson<AudioManifest>("/audio/manifest.json").then((m) => {
+      manifest = m;
+      manifestListeners.forEach((l) => l());
+      return m;
+    });
   }
   return manifestLoad;
 }
@@ -215,14 +212,11 @@ let enManifestLoad: Promise<EnAudioManifest | null> | null = null;
 
 export function loadEnAudioManifest(): Promise<EnAudioManifest | null> {
   if (!enManifestLoad) {
-    enManifestLoad = fetch(mediaUrl("/audio/en/manifest.json"))
-      .then((r) => (r.ok ? (r.json() as Promise<EnAudioManifest>) : null))
-      .catch(() => null)
-      .then((m) => {
-        enManifest = m;
-        manifestListeners.forEach((l) => l());
-        return m;
-      });
+    enManifestLoad = fetchMediaJson<EnAudioManifest>("/audio/en/manifest.json").then((m) => {
+      enManifest = m;
+      manifestListeners.forEach((l) => l());
+      return m;
+    });
   }
   return enManifestLoad;
 }
