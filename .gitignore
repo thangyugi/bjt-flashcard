@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 __pycache__/
+
+# sinh tự động (npm run catalog)
+/public/data/learning-items.json
+/supabase/seed/catalog.sql
+!.env.example

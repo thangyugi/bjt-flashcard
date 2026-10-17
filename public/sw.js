@@ -12,6 +12,8 @@ const PAGE_CACHE = `bjt-pages-${VERSION}`;
 const DATA_CACHE = `bjt-data-${VERSION}`;
 const AUDIO_CACHE = "bjt-audio-v1";
 const OFFLINE_URL = "/offline";
+// Tên miền chứa âm thanh khi đã chuyển sang Cloudflare R2 (truyền qua /sw.js?media=…)
+const MEDIA_ORIGIN = new URL(self.location.href).searchParams.get("media");
 const PRECACHE = ["/", OFFLINE_URL, "/icons/icon-192.png", "/icons/icon-512.png"];
 
 self.addEventListener("install", (event) => {
@@ -37,6 +39,10 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
+  if (MEDIA_ORIGIN && url.origin === MEDIA_ORIGIN && url.pathname.startsWith("/audio/")) {
+    event.respondWith(url.pathname.endsWith("/manifest.json") ? staleWhileRevalidate(request, true) : audioCache(request, url, true));
+    return;
+  }
   if (url.origin !== self.location.origin) return;
   if (url.pathname === "/sw.js") return;
 
@@ -87,24 +93,24 @@ async function networkFirst(request, isPage) {
   }
 }
 
-async function staleWhileRevalidate(request) {
+async function staleWhileRevalidate(request, cors = false) {
   const cache = await caches.open(DATA_CACHE);
-  const hit = await cache.match(request);
-  const fresh = fetch(request)
+  const hit = await cache.match(request.url);
+  const fresh = fetch(cors ? new Request(request.url, { mode: "cors" }) : request)
     .then((res) => {
-      if (res.ok) cache.put(request, res.clone());
+      if (res.ok) cache.put(request.url, res.clone());
       return res;
     })
     .catch(() => hit || Response.error());
   return hit || fresh;
 }
 
-async function audioCache(request, url) {
+async function audioCache(request, url, cors = false) {
   const cache = await caches.open(AUDIO_CACHE);
   const key = url.origin + url.pathname;
   let res = await cache.match(key);
   if (!res) {
-    res = await fetch(key);
+    res = await fetch(key, cors ? { mode: "cors" } : undefined);
     if (!res.ok) return res;
     await cache.put(key, res.clone());
   }
