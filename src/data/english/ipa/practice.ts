@@ -96,9 +96,12 @@ export function ipaToWord(phonemes: Phoneme[], seed = 3, limit = 6): IpaQuestion
 export function findSound(phonemes: Phoneme[], pool: Phoneme[], seed = 4, limit = 6): IpaQuestion[] {
   const rand = rng(seed);
   const out: IpaQuestion[] = [];
-  for (const p of shuffle(phonemes, rand)) {
-    const right = shuffle(p.words, rand)[0];
+  const used = new Set<string>();
+  const order = Array.from({ length: limit * 2 }, (_, i) => phonemes[i % phonemes.length]);
+  for (const p of shuffle(order, rand)) {
+    const right = shuffle(p.words.filter((w) => !used.has(w.w)), rand)[0];
     if (!right) continue;
+    used.add(right.w);
     const wrong = shuffle(
       pool.filter((o) => o.id !== p.id).flatMap((o) => o.words).filter((w) => !w.ipa.includes(p.symbol)),
       rand
@@ -151,7 +154,7 @@ export function lessonPractice(lesson: IpaLesson, pool: Phoneme[]): PracticeSect
     { key: "nghe", title: "Nghe phân biệt", desc: "Máy đọc một từ trong cặp tối thiểu — chọn đúng từ bạn nghe.", qs: listenPairs(ph, seed, 8) },
     { key: "phien-am", title: "Chọn phiên âm", desc: "Nhìn từ, chọn phiên âm IPA đúng (bấm loa để nghe gợi ý).", qs: wordToIpa(ph, seed + 1, 6) },
     { key: "doc", title: "Đọc phiên âm", desc: "Nhìn ký hiệu IPA, đoán từ — kỹ năng tra từ điển.", qs: ipaToWord(ph, seed + 2, 6) },
-    { key: "tim-am", title: "Tìm âm", desc: "Chọn từ có chứa âm đang học.", qs: findSound(ph, pool, seed + 3, Math.min(6, ph.length * 2)) },
+    { key: "tim-am", title: "Tìm âm", desc: "Chọn từ có chứa âm đang học.", qs: findSound(ph, pool, seed + 3, 6) },
   ];
   return sections.filter((s) => s.qs.length > 0);
 }

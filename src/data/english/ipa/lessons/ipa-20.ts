@@ -54,7 +54,7 @@ export const ipa20: IpaLesson = {
         { w: "her eyes", ipa: "hər‿ˈaɪz", vi: "đôi mắt cô ấy" },
       ],
       sentences: [
-        { en: "[[Where is]] the [[car a]]nd [[your umbrella]]?", vi: "Xe và ô của bạn đâu rồi?", ipa: "ˈweər‿ɪz ðə ˈkɑːr‿ənd jɔːr‿ʌmˈbrel.ə" },
+        { en: "[[Where are]] the [[four apples]] and [[your umbrella]]?", vi: "Bốn quả táo và cái ô của bạn đâu rồi?", ipa: "ˈweər‿ə ðə ˌfɔːr‿ˈæp.əlz ənd jɔːr‿ʌmˈbrel.ə" },
       ],
     },
     {
@@ -70,7 +70,7 @@ export const ipa20: IpaLesson = {
         { w: "vegetable", ipa: "ˈvedʒ.tə.bəl", vi: "rau củ" },
       ],
       sentences: [
-        { en: "I saw him [[last night]], and he [[must be]] tired the [[next day]].", vi: "Tối qua tôi gặp anh ấy, chắc hôm sau anh ấy mệt lắm.", ipa: "aɪ ˈsɔː ɪm ˌlɑːs ˈnaɪt ən i ˈmʌs bi ˈtaɪəd ðə ˌneks ˈdeɪ" },
+        { en: "We met [[last night]] and agreed to talk the [[next day]]. It [[must be]] important.", vi: "Tối qua chúng tôi gặp nhau và hẹn hôm sau nói chuyện. Chắc là chuyện quan trọng.", ipa: "wi ˈmet ˌlɑːs ˈnaɪt ən əˈɡriːd tə ˈtɔːk ðə ˌneks ˈdeɪ ɪt ˈmʌs bi ɪmˈpɔː.tənt" },
       ],
     },
     {
@@ -86,7 +86,7 @@ export const ipa20: IpaLesson = {
         { w: "that girl", ipa: "ðæk ˈɡɜːl", vi: "cô gái đó" },
       ],
       sentences: [
-        { en: "[[Would you]] like to [[meet you]]r friends [[this year]]?", vi: "Năm nay bạn có muốn gặp bạn bè không?", ipa: "wʊdʒu ˈlaɪk tə ˈmiːtʃə ˈfrendz ðɪʃ ˈjɪə" },
+        { en: "[[Would you]] like to [[meet your]] friends [[this year]]?", vi: "Năm nay bạn có muốn gặp bạn bè không?", ipa: "wʊdʒu ˈlaɪk tə ˈmiːtʃə ˈfrendz ðɪʃ ˈjɪə" },
         { en: "[[Did you]] see [[ten boys]] [[in bed]]?", vi: "Bạn có thấy mười cậu bé trên giường không?", ipa: "dɪdʒu ˈsiː ˌtem ˈbɔɪz ɪm ˈbed" },
       ],
     },
@@ -165,18 +165,18 @@ export const ipa20: IpaLesson = {
         vi: "Tom cười và nói chậm lại: \"Khi nói nhanh, bọn anh nối hết vào nhau. 'Pick it up' thành 'pi-ki-tắp'. 'Next day' mất âm t. 'Would you' thành 'wúd-giu'.\" Linh ghi hết vào sổ: ‿ là nối âm, ↘ là xuống giọng.",
       },
       {
-        en: "Then Jake joined them on a video call from New York. \"[[Are you]] [[having a]] good time?\" ↗ he asked. \"Yes! [[I am]]!\" Linh said, linking \"I‿y‿am\" without a break. Jake whistled: \"[[Now you]] sound like a local!\"",
+        en: "Then Jake joined them on a video call from New York. \"[[Are you]] [[having a]] good time?\" ↗ he asked. \"Yes! [[I am]]!\" Linh said, linking \"I‿y‿am\" without a break. Jake whistled: \"Now you sound like a local!\"",
         vi: "Rồi Jake gọi video từ New York: \"Mọi người vui không?\" ↗ anh hỏi. \"Có! Vui lắm!\" Linh nói, nối \"I‿y‿am\" không ngắt quãng. Jake huýt sáo: \"Giờ cậu nói như người bản xứ rồi đấy!\"",
       },
       {
-        en: "Back home, Mrs Brown was waiting [[up]]. \"[[Did you]] have fun, dear?\" ↗ \"It was the [[best evening]] [[of all]],\" Linh smiled. \"And I finally understood [[fish and chips]]: fish'n'chips!\"",
+        en: "Back home, Mrs Brown was [[waiting up]]. \"[[Did you]] have fun, dear?\" ↗ \"It was the [[best evening]] [[of all]],\" Linh smiled. \"And I finally understood [[fish and chips]]: fish'n'chips!\"",
         vi: "Về đến nhà, bà Brown vẫn thức đợi. \"Cháu chơi vui chứ?\" ↗ \"Đó là buổi tối tuyệt nhất từ trước đến giờ\", Linh mỉm cười. \"Và cuối cùng cháu cũng hiểu 'fish and chips': nghe là 'fish'n'chips'!\"",
       },
     ],
   },
   twister: {
     en: "Would you like an apple or an orange in an hour?",
-    vi: "Một tiếng nữa bạn muốn một quả táo hay một quả cam? (Luyện /wʊdʒu/ và nối: lai‿kə‿næp.əl ɔː‿rə‿nɒr.ɪndʒ ɪ‿nə‿naʊ.ə.)",
+    vi: "Một tiếng nữa bạn muốn một quả táo hay một quả cam? (Luyện /wʊdʒu/ và nối: laɪ‿kə‿ˈnæp.əl ɔː‿rə‿ˈnɒr.ɪndʒ ɪ‿nə‿ˈnaʊ.ə.)",
   },
   quiz: [
     {
