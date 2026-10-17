@@ -103,7 +103,7 @@ export const ipa17: IpaLesson = {
         { w: "tomorrow", ipa: "təˈmɒr.əʊ", vi: "ngày mai" },
       ],
       sentences: [
-        { en: "[[Rain]], [[rain]], go away, [[come]] again another day.", vi: "Mưa ơi mưa, đi đi, hôm khác hãy quay lại.", ipa: "reɪn reɪn ɡəʊ əˈweɪ kʌm əˈɡen əˈnʌð.ə deɪ" },
+        { en: "[[Rain]], [[rain]], go away, come again another day.", vi: "Mưa ơi mưa, đi đi, hôm khác hãy quay lại.", ipa: "reɪn reɪn ɡəʊ əˈweɪ kʌm əˈɡen əˈnʌð.ə deɪ" },
         { en: "I'm [[very]] [[sorry]], that's the [[wrong]] [[room]].", vi: "Tôi rất xin lỗi, đó là phòng nhầm rồi." },
         { en: "[[Rob]] will [[write]] a [[report]] [[tomorrow]].", vi: "Ngày mai Rob sẽ viết một bản báo cáo." },
       ],
@@ -164,7 +164,7 @@ export const ipa17: IpaLesson = {
       sentences: [
         { en: "[[We]] [[want]] [[warm]] [[water]], [[William]].", vi: "Chúng tôi muốn nước ấm, William.", ipa: "wiː wɒnt wɔːm ˈwɔː.tə ˈwɪl.jəm" },
         { en: "[[What]] [[would]] you like to [[wear]] on [[Wednesday]]?", vi: "Thứ Tư bạn muốn mặc gì?" },
-        { en: "Open the [[window]] [[quickly]], [[please]]... it's [[quite]] [[warm]].", vi: "Mở cửa sổ nhanh lên nào... trời khá ấm." },
+        { en: "Open the [[window]] [[quickly]], please... it's [[quite]] [[warm]].", vi: "Mở cửa sổ nhanh lên nào... trời khá ấm." },
       ],
       pairs: [
         { a: { w: "west", ipa: "west", vi: "phía tây" }, b: { w: "vest", ipa: "vest", vi: "áo gi-lê" } },
@@ -220,7 +220,7 @@ export const ipa17: IpaLesson = {
       sentences: [
         { en: "[[Yes]], [[you]] can [[use]] my [[yellow]] pen.", vi: "Được, bạn có thể dùng cây bút màu vàng của tôi.", ipa: "jes juː kən juːz maɪ ˈjel.əʊ pen" },
         { en: "[[Young]] people love [[new]] [[music]].", vi: "Người trẻ thích âm nhạc mới." },
-        { en: "I met [[a]] [[few]] [[students]] from [[Europe]] [[yesterday]].", vi: "Hôm qua tôi gặp vài sinh viên đến từ châu Âu." },
+        { en: "I met a [[few]] [[students]] from [[Europe]] [[yesterday]].", vi: "Hôm qua tôi gặp vài sinh viên đến từ châu Âu." },
       ],
       pairs: [
         { a: { w: "year", ipa: "jɪə", vi: "năm" }, b: { w: "ear", ipa: "ɪə", vi: "tai" } },
@@ -264,7 +264,7 @@ export const ipa17: IpaLesson = {
         { w: "far away", ipa: "ˌfɑːr əˈweɪ", vi: "xa xôi (r nối)" },
       ],
       sentences: [
-        { en: "My [[car]] is [[here]].", vi: "Xe tôi ở đây.", ipa: "maɪ ˈkɑːr ɪz ˈhɪə" },
+        { en: "My [[car]] is here.", vi: "Xe tôi ở đây.", ipa: "maɪ ˈkɑːr ɪz ˈhɪə" },
       ],
     },
     {
@@ -297,15 +297,15 @@ export const ipa17: IpaLesson = {
         vi: "Một ngày thứ Tư mưa, Linh đi bộ tới chỗ làm cùng Tom. \"Nhìn những chiếc lá vàng đáng yêu kìa\", cô nói. Tom bật cười: \"Lá vàng vào tháng Tư á? Em thật sự cần kính mới rồi!\"",
       },
       {
-        en: "At the office, Linh [[wrote]] a [[report]]. \"Is this [[right]]?\" she asked. Tom [[read]] it: \"It's [[correct]]... but you [[wrote]] '[[collect]]' [[where]] you [[wanted]] '[[correct]]'. [[R]] and [[L]] [[are]] [[very]] [[different]]!\"",
+        en: "At the office, Linh [[wrote]] a [[report]]. \"Is this [[right]]?\" she asked. Tom [[read]] it: \"It's [[correct]]... but you [[wrote]] '[[collect]]' [[where]] you [[wanted]] '[[correct]]'. R and L are [[very]] [[different]]!\"",
         vi: "Ở văn phòng, Linh viết một bản báo cáo. \"Thế này đúng chưa anh?\" cô hỏi. Tom đọc: \"Đúng rồi... nhưng em viết 'collect' (thu thập) ở chỗ em muốn viết 'correct' (đúng). R và L khác nhau lắm đấy!\"",
       },
       {
-        en: "In the evening, Mrs Brown [[asked]], \"[[Would]] [[you]] [[like]] a [[glass]] of [[wine]], dear?\" Linh [[smiled]]: \"[[Yes]], please. [[Wine]], not a [[vine]]!\"",
+        en: "In the evening, Mrs Brown asked, \"[[Would]] [[you]] [[like]] a [[glass]] of [[wine]], dear?\" Linh [[smiled]]: \"[[Yes]], please. [[Wine]], not a vine!\"",
         vi: "Buổi tối, bà Brown hỏi: \"Cháu có muốn một ly rượu vang không?\" Linh mỉm cười: \"Dạ có ạ. Rượu vang, chứ không phải dây nho!\"",
       },
       {
-        en: "Later, Jake called. \"[[Hey]], Linh, [[what's]] [[new]]?\" — \"In [[London]] they say /njuː/, Jake. You [[Americans]] say /nuː/.\" Jake [[laughed]]: \"[[Well]], [[you're]] [[learning]] [[really]] [[quickly]]!\"",
+        en: "Later, Jake called. \"Hey, Linh, [[what's]] [[new]]?\" — \"In [[London]] they say /njuː/, Jake. You [[Americans]] say /nuː/.\" Jake [[laughed]]: \"[[Well]], [[you're]] [[learning]] [[really]] [[quickly]]!\"",
         vi: "Sau đó Jake gọi: \"Này Linh, có gì mới không?\" — \"Ở London người ta nói /njuː/ đấy Jake. Người Mỹ các cậu nói /nuː/.\" Jake cười: \"Chà, cậu học nhanh thật đấy!\"",
       },
     ],

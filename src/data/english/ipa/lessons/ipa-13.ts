@@ -301,19 +301,19 @@ export const ipa13: IpaLesson = {
     title: "Sinh nhật ngày thứ Năm",
     paras: [
       {
-        en: "[[Thursday]] was Linh's [[birthday]]. At [[the]] [[office]], [[Tom]] gave her a card: \"Happy [[birthday]]! How old are you — [[thirty]]?\" Linh [[laughed]]: \"No, I'm [[twenty]]-[[three]]... I mean [[twenty]]-[[three]], not '[[twenty]]-tree'!\"",
-        vi: "Thứ Năm là sinh nhật Linh. Ở văn phòng, Tom tặng cô một tấm thiệp: \"Chúc mừng sinh nhật! Em bao nhiêu tuổi rồi — ba mươi à?\" Linh cười: \"Không ạ, em hai mươi ba... ý em là hai mươi BA, chứ không phải 'hai mươi cái cây'!\"",
+        en: "[[Thursday]] was Linh's [[birthday]]. At [[the]] [[office]], Tom gave her a card: \"Happy [[birthday]]! How old are you — [[thirty]]?\" Linh [[laughed]]: \"No, I'm twenty-[[three]]. [[Three]], not 'tree'!\"",
+        vi: "Thứ Năm là sinh nhật Linh. Ở văn phòng, Tom tặng cô một tấm thiệp: \"Chúc mừng sinh nhật! Em bao nhiêu tuổi rồi — ba mươi à?\" Linh cười: \"Không ạ, em hai mươi ba. Ba (three), chứ không phải 'cái cây' (tree)!\"",
       },
       {
-        en: "Tom showed her a [[mirror]] trick. \"Put your tongue between your [[teeth]] and blow: [[thanks]], [[thing]], [[think]]. Now switch on your voice: [[this]], [[that]], [[the]], [[mother]].\" Linh tried. \"[[Thank]] you!\" — and [[for]] [[the]] [[first]] time it didn't sound like \"tank you\".",
+        en: "Tom showed her a mirror trick. \"Put your tongue between your [[teeth]] and blow: [[thanks]], [[thing]], [[think]]. Now switch on your voice: [[this]], [[that]], [[the]], [[mother]].\" Linh tried. \"[[Thank]] you!\" — and [[for]] [[the]] [[first]] time it didn't sound like \"tank you\".",
         vi: "Tom chỉ cho cô mẹo soi gương. \"Đặt lưỡi giữa hai hàm răng rồi thổi: thanks, thing, think. Giờ bật giọng lên: this, that, the, mother.\" Linh thử. \"Thank you!\" — và lần đầu tiên nó không nghe như \"tank you\" (cảm ơn cái bể).",
       },
       {
-        en: "In [[the]] evening Jake came [[with]] a cake and [[five]] candles. \"Make a [[wish]]... [[very]] quickly!\" Linh said \"[[very]]\" and Jake [[laughed]]: \"You said '[[berry]]'! Bite your lip a little — [[v]], [[v]], [[very]].\"",
+        en: "In [[the]] evening Jake came [[with]] a cake and [[five]] candles. \"Make a wish... [[very]] quickly!\" Linh said \"[[very]]\" and Jake [[laughed]]: \"You said 'berry'! Bite your lip a little — [[v]], [[v]], [[very]].\"",
         vi: "Buổi tối Jake mang tới một chiếc bánh và năm cây nến. \"Ước đi... nhanh lên!\" Linh nói \"very\" và Jake bật cười: \"Cậu vừa nói 'berry' (quả mọng) đấy! Cắn nhẹ môi một chút — v, v, very.\"",
       },
       {
-        en: "Mrs Brown knocked [[with]] a [[gift]]: a soft [[scarf]] and [[gloves]]. \"[[For]] [[the]] cold [[weather]], dear.\" Linh hugged her. \"[[Thank]] you so much — I [[love]] [[them]]! [[This]] is [[the]] [[best]] [[birthday]] [[ever]].\"",
+        en: "Mrs Brown knocked [[with]] a [[gift]]: a soft [[scarf]] and [[gloves]]. \"[[For]] [[the]] cold [[weather]], dear.\" Linh hugged her. \"[[Thank]] you so much — I [[love]] [[them]]! [[This]] is [[the]] best [[birthday]] [[ever]].\"",
         vi: "Bà Brown gõ cửa mang theo một món quà: chiếc khăn quàng mềm và đôi găng tay. \"Cho thời tiết lạnh đấy, cháu yêu.\" Linh ôm bà: \"Cháu cảm ơn bà nhiều lắm — cháu thích lắm! Đây là sinh nhật tuyệt nhất từ trước tới giờ.\"",
       },
     ],
