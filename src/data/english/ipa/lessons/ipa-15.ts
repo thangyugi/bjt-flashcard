@@ -1,0 +1,317 @@
+import type { IpaLesson } from "../types";
+
+export const ipa15: IpaLesson = {
+  id: "ipa-15",
+  num: 15,
+  title: "ch, j và h — cheap, jeep và chữ h câm",
+  mark: "tʃ · dʒ · h",
+  level: "Trung cấp",
+  group: "Phụ âm",
+  intro:
+    "Người Việt hay đọc /tʃ/ thành \"ch\" tiếng Việt (bẹt, không có tiếng xì) và đọc /dʒ/ thành \"gi\"/\"d\" (/z/) → \"job\" nghe thành \"zóp\". Hai âm này cần môi chu ra và có luồng hơi xát sau khi bật. Còn /h/ thì dễ, nhưng phải biết khi nào chữ h CÂM (hour, honest) và không bao giờ đọc /h/ ở cuối từ.",
+  phonemes: [
+    {
+      id: "ch",
+      symbol: "tʃ",
+      kind: "consonant",
+      name: "ch xì (chu môi)",
+      keyword: { w: "cheese", ipa: "tʃiːz", vi: "phô mai" },
+      viLike:
+        "Gần \"ch\" trong \"chào\" hoặc \"tr\" giọng miền Bắc, nhưng \"ch\" Việt là âm tắc bẹt (mặt lưỡi chạm vòm, không có tiếng xì). /tʃ/ tiếng Anh = /t/ + /ʃ/ dính liền: bật ra rồi xì hơi \"tsh\", môi chu tròn ra trước. \"tr\" giọng miền Nam (uốn lưỡi) nghe gần hơn \"ch\" miền Bắc.",
+      how: [
+        "Môi: chu tròn và hơi đẩy ra phía trước (như chuẩn bị nói \"suỵt\").",
+        "Lưỡi: đầu lưỡi và phần trước mặt lưỡi áp vào vùng sau lợi (ngay sau chân răng cửa trên), chặn hơi lại.",
+        "Bật: hạ đầu lưỡi ra từ từ để hơi thoát qua khe hẹp → nghe tiếng \"tsh\" (tắc rồi xát).",
+        "Dây thanh: KHÔNG rung — đặt tay lên cổ họng sẽ không thấy rung.",
+        "Ở đầu từ có bật hơi mạnh: để tờ giấy trước miệng nói \"cheap\" giấy sẽ lay.",
+      ],
+      consonant: { place: "sau lợi", manner: "âm tắc–xát", voiced: false },
+      spellings: [
+        { pattern: "ch", words: ["cheese", "chair", "much", "teacher"] },
+        { pattern: "tch (sau nguyên âm ngắn)", words: ["watch", "catch", "kitchen", "match"] },
+        { pattern: "t + ure / u (không nhấn)", words: ["picture", "nature", "future", "actually"] },
+        { pattern: "t + ion sau s", words: ["question", "suggestion"] },
+        { pattern: "Ngoại lệ: ch KHÔNG đọc /tʃ/", words: ["school /k/", "Christmas /k/", "chef /ʃ/", "machine /ʃ/"] },
+      ],
+      words: [
+        { w: "chair", ipa: "tʃeə", vi: "cái ghế" },
+        { w: "cheap", ipa: "tʃiːp", vi: "rẻ" },
+        { w: "watch", ipa: "wɒtʃ", vi: "xem; đồng hồ đeo tay" },
+        { w: "teacher", ipa: "ˈtiː.tʃə", vi: "giáo viên" },
+        { w: "kitchen", ipa: "ˈkɪtʃ.ɪn", vi: "nhà bếp" },
+        { w: "picture", ipa: "ˈpɪk.tʃə", vi: "bức tranh, bức ảnh" },
+        { w: "question", ipa: "ˈkwes.tʃən", vi: "câu hỏi" },
+        { w: "future", ipa: "ˈfjuː.tʃə", vi: "tương lai" },
+      ],
+      sentences: [
+        { en: "The [[teacher]] sat on a [[cheap]] [[chair]] in the [[kitchen]].", vi: "Cô giáo ngồi trên một chiếc ghế rẻ tiền trong bếp.", ipa: "ðə ˈtiː.tʃə sæt ɒn ə tʃiːp tʃeər ɪn ðə ˈkɪtʃ.ɪn" },
+        { en: "[[Which]] [[picture]] did you [[choose]]?", vi: "Bạn đã chọn bức ảnh nào?" },
+        { en: "Let's [[watch]] the [[match]] at [[lunch]].", vi: "Mình xem trận đấu vào giờ ăn trưa nhé." },
+      ],
+      pairs: [
+        { a: { w: "cheap", ipa: "tʃiːp", vi: "rẻ" }, b: { w: "jeep", ipa: "dʒiːp", vi: "xe jeep" } },
+        { a: { w: "choke", ipa: "tʃəʊk", vi: "nghẹn" }, b: { w: "joke", ipa: "dʒəʊk", vi: "câu đùa" } },
+        { a: { w: "rich", ipa: "rɪtʃ", vi: "giàu" }, b: { w: "ridge", ipa: "rɪdʒ", vi: "sống núi" } },
+        { a: { w: "chair", ipa: "tʃeə", vi: "cái ghế" }, b: { w: "share", ipa: "ʃeə", vi: "chia sẻ" } },
+        { a: { w: "watch", ipa: "wɒtʃ", vi: "xem" }, b: { w: "wash", ipa: "wɒʃ", vi: "rửa" } },
+      ],
+      mistakes: [
+        "Đọc như \"ch\" tiếng Việt, môi bẹt, không có tiếng xì → \"cheese\" nghe cứng và lạ. Hãy chu môi và để hơi xì ra \"tsh\".",
+        "Nuốt /tʃ/ ở cuối từ: \"watch\" đọc thành \"wót\", \"much\" thành \"mắt\". Phải nghe rõ tiếng \"tsh\" ở cuối.",
+        "Đọc mọi chữ \"ch\" thành /tʃ/: \"school\", \"chef\", \"machine\" — sai. Từ gốc Hy Lạp đọc /k/, gốc Pháp đọc /ʃ/.",
+      ],
+      tips: [
+        "Nói /t/ rồi /ʃ/ (\"suỵt\") thật nhanh, dính liền: t-sh → tsh → /tʃ/.",
+        "Chuỗi luyện: \"share – chair\", \"wash – watch\", \"sheep – cheap\" (cùng khẩu hình, /tʃ/ có thêm cú bật đầu).",
+        "Từ có đuôi -ture (picture, nature, future) luôn đọc /tʃə/ — không đọc \"tu-rờ\".",
+      ],
+      memo: "Ký hiệu tʃ = chữ t + chữ ʃ (âm \"suỵt\") ghép lại → bật t rồi xì sh. Từ khóa: \"cheese\" — chụp ảnh nói \"cheese\" môi phải chu rồi mới cười: /tʃiːz/.",
+      usUk: "Giống nhau ở Anh và Mỹ. Một số từ Anh có /tj/ hoặc /tʃ/ (tune /tʃuːn/ hoặc /tjuːn/), giọng Mỹ đọc /tuːn/.",
+    },
+    {
+      id: "j",
+      symbol: "dʒ",
+      kind: "consonant",
+      name: "j rung (chu môi)",
+      keyword: { w: "job", ipa: "dʒɒb", vi: "công việc" },
+      viLike:
+        "Không có trong tiếng Việt. Người miền Bắc hay thay bằng \"gi\"/\"d\" (/z/ — chỉ xát, không tắc), người miền Nam thay bằng \"d\" (/j/). /dʒ/ là /tʃ/ có rung dây thanh: chặn hơi rồi bật ra xát \"dzh\", môi chu tròn.",
+      how: [
+        "Môi: chu tròn, đẩy ra trước giống hệt /tʃ/.",
+        "Lưỡi: đầu lưỡi áp vào vùng sau lợi, chặn hơi hoàn toàn (khác \"gi\" tiếng Việt — không chặn).",
+        "Bật: thả lưỡi ra để hơi xát qua khe hẹp → nghe \"dzh\".",
+        "Dây thanh: RUNG — đặt tay lên cổ họng sẽ thấy rung.",
+        "Hơi yếu hơn /tʃ/, không bật hơi mạnh.",
+      ],
+      consonant: { place: "sau lợi", manner: "âm tắc–xát", voiced: true },
+      spellings: [
+        { pattern: "j", words: ["job", "juice", "enjoy", "January"] },
+        { pattern: "g + e / i / y", words: ["gym", "giant", "German", "page"] },
+        { pattern: "dge (sau nguyên âm ngắn)", words: ["bridge", "judge", "badge", "fridge"] },
+        { pattern: "-age / -ege (không nhấn) = /ɪdʒ/", words: ["village", "message", "language", "college"] },
+        { pattern: "d + u / ure", words: ["soldier", "procedure", "schedule (UK có thể /ˈʃedʒ.uːl/)"] },
+        { pattern: "Ngoại lệ: g + e/i vẫn đọc /ɡ/", words: ["get", "give", "girl", "begin"] },
+      ],
+      words: [
+        { w: "job", ipa: "dʒɒb", vi: "công việc" },
+        { w: "juice", ipa: "dʒuːs", vi: "nước ép" },
+        { w: "page", ipa: "peɪdʒ", vi: "trang giấy" },
+        { w: "large", ipa: "lɑːdʒ", vi: "lớn" },
+        { w: "bridge", ipa: "brɪdʒ", vi: "cây cầu" },
+        { w: "orange", ipa: "ˈɒr.ɪndʒ", vi: "quả cam; màu cam" },
+        { w: "language", ipa: "ˈlæŋ.ɡwɪdʒ", vi: "ngôn ngữ" },
+        { w: "soldier", ipa: "ˈsəʊl.dʒə", vi: "người lính" },
+      ],
+      sentences: [
+        { en: "[[Jane]] [[enjoys]] her [[job]] in [[July]].", vi: "Jane thích công việc của mình vào tháng Bảy.", ipa: "dʒeɪn ɪnˈdʒɔɪz hə dʒɒb ɪn dʒuˈlaɪ" },
+        { en: "A [[large]] [[orange]] [[juice]], please.", vi: "Cho tôi một ly nước cam lớn." },
+        { en: "The [[village]] [[bridge]] is very old.", vi: "Cây cầu của làng rất cũ." },
+      ],
+      pairs: [
+        { a: { w: "jeep", ipa: "dʒiːp", vi: "xe jeep" }, b: { w: "cheap", ipa: "tʃiːp", vi: "rẻ" } },
+        { a: { w: "joke", ipa: "dʒəʊk", vi: "câu đùa" }, b: { w: "choke", ipa: "tʃəʊk", vi: "nghẹn" } },
+        { a: { w: "badge", ipa: "bædʒ", vi: "huy hiệu" }, b: { w: "batch", ipa: "bætʃ", vi: "mẻ, lô" } },
+        { a: { w: "age", ipa: "eɪdʒ", vi: "tuổi" }, b: { w: "H", ipa: "eɪtʃ", vi: "chữ H" } },
+        { a: { w: "jet", ipa: "dʒet", vi: "máy bay phản lực" }, b: { w: "yet", ipa: "jet", vi: "chưa" } },
+      ],
+      mistakes: [
+        "Đọc như \"gi\"/\"d\" miền Bắc (/z/): \"job\" → \"zóp\", \"June\" → \"zun\". Lưỡi phải CHẠM sau lợi để chặn hơi trước.",
+        "Bỏ âm cuối: \"page\" → \"pây\", \"orange\" → \"o-rần\". Cuối từ phải nghe \"dzh\" rõ.",
+        "Đọc -age không nhấn thành \"ây\": \"village\" → \"vi-lây\". Đúng là /ˈvɪl.ɪdʒ/, \"message\" /ˈmes.ɪdʒ/.",
+      ],
+      tips: [
+        "Bắt đầu bằng /tʃ/ (\"cheap\"), giữ nguyên miệng, chỉ thêm rung cổ họng → /dʒ/ (\"jeep\").",
+        "Luyện cuối từ: \"age – page – cage – change – orange\" — kéo dài tiếng rung ở cuối.",
+        "Nhớ quy tắc g mềm: g + e/i/y thường là /dʒ/ (gym, giant, page), nhưng các từ rất thông dụng như get, give, girl vẫn là /ɡ/.",
+      ],
+      memo: "dʒ = d + ʒ (âm \"giờ\" rung của measure) → bật d rồi xát rung. Từ khóa: \"job\" — Linh mới có job ở London: /dʒɒb/.",
+      usUk: "Giống nhau. Anh: \"schedule\" /ˈʃedʒ.uːl/ (hoặc /ˈsked-/), Mỹ: /ˈskedʒ.uːl/. \"job\" Mỹ /dʒɑːb/.",
+    },
+    {
+      id: "h",
+      symbol: "h",
+      kind: "consonant",
+      name: "h thở",
+      keyword: { w: "house", ipa: "haʊs", vi: "ngôi nhà" },
+      viLike:
+        "Gần giống \"h\" trong \"hát\", \"học\". Khác biệt: /h/ tiếng Anh nhẹ hơn, chỉ là hơi thở ra (như hà hơi lên kính), không khàn như \"kh\". /h/ chỉ đứng trước nguyên âm — KHÔNG bao giờ phát âm ở cuối từ.",
+      how: [
+        "Môi và lưỡi: đặt sẵn ở vị trí của nguyên âm theo sau (\"he\" → miệng cười /iː/, \"who\" → môi tròn /uː/).",
+        "Thanh hầu: mở rộng, đẩy một luồng hơi nhẹ đi qua — như hà hơi lau kính.",
+        "Lưỡi KHÔNG nâng lên chạm ngạc mềm (nếu chạm sẽ thành \"kh\").",
+        "Dây thanh: không rung trong lúc thở ra, rung ngay khi vào nguyên âm.",
+      ],
+      consonant: { place: "thanh hầu", manner: "âm xát", voiced: false },
+      spellings: [
+        { pattern: "h (đầu từ / đầu âm tiết)", words: ["hello", "house", "happy", "behind"] },
+        { pattern: "wh + o", words: ["who", "whose", "whole", "whom"] },
+        { pattern: "h giữa từ (sau tiền tố)", words: ["perhaps", "ahead", "inhale", "rehearse"] },
+        { pattern: "h CÂM", words: ["hour", "honest", "honour", "heir"] },
+        { pattern: "h câm sau chữ khác", words: ["what /w/", "ghost /ɡ/", "Thomas /t/", "exhausted /ɪɡˈzɔː.stɪd/"] },
+      ],
+      words: [
+        { w: "hello", ipa: "həˈləʊ", vi: "xin chào" },
+        { w: "house", ipa: "haʊs", vi: "ngôi nhà" },
+        { w: "happy", ipa: "ˈhæp.i", vi: "vui vẻ" },
+        { w: "hungry", ipa: "ˈhʌŋ.ɡri", vi: "đói" },
+        { w: "who", ipa: "huː", vi: "ai" },
+        { w: "behind", ipa: "bɪˈhaɪnd", vi: "phía sau" },
+        { w: "perhaps", ipa: "pəˈhæps", vi: "có lẽ" },
+        { w: "hospital", ipa: "ˈhɒs.pɪ.təl", vi: "bệnh viện" },
+      ],
+      sentences: [
+        { en: "[[Henry]] is [[hungry]] and [[happy]] at [[home]].", vi: "Henry đang đói và vui vẻ ở nhà.", ipa: "ˈhen.ri ɪz ˈhʌŋ.ɡri ən ˈhæp.i ət həʊm" },
+        { en: "[[Who]] left the [[hat]] [[behind]] the [[house]]?", vi: "Ai để quên cái mũ sau nhà vậy?" },
+        { en: "I waited an hour at the [[hospital]].", vi: "Tôi đã đợi một tiếng ở bệnh viện. (hour: h câm)" },
+      ],
+      pairs: [
+        { a: { w: "hat", ipa: "hæt", vi: "cái mũ" }, b: { w: "at", ipa: "æt", vi: "ở, tại" } },
+        { a: { w: "heat", ipa: "hiːt", vi: "hơi nóng" }, b: { w: "eat", ipa: "iːt", vi: "ăn" } },
+        { a: { w: "hair", ipa: "heə", vi: "tóc" }, b: { w: "air", ipa: "eə", vi: "không khí" } },
+        { a: { w: "hold", ipa: "həʊld", vi: "cầm, giữ" }, b: { w: "old", ipa: "əʊld", vi: "cũ, già" } },
+        { a: { w: "hand", ipa: "hænd", vi: "bàn tay" }, b: { w: "and", ipa: "ænd", vi: "và" } },
+      ],
+      mistakes: [
+        "Đọc chữ h câm: \"hour\" thành \"hao-ơ\", \"honest\" thành \"hon-nớt\". Đúng: /ˈaʊ.ə/, /ˈɒn.ɪst/ — và vì thế nói \"AN hour\", \"AN honest man\".",
+        "Đọc /h/ quá nặng, khàn như \"kh\" → \"house\" nghe như \"khao\". /h/ chỉ là hơi thở nhẹ.",
+        "Bỏ /h/ khi nói nhanh ở từ quan trọng (\"hair\" → \"air\", \"heat\" → \"eat\") làm đổi nghĩa.",
+      ],
+      tips: [
+        "Hà hơi vào lòng bàn tay như làm ấm tay mùa đông — đó chính là /h/.",
+        "Luyện cặp có / không có h: \"at – hat, eat – heat, air – hair, old – hold\".",
+        "Học thuộc nhóm h câm: hour, honest, honour, heir (và các từ phái sinh: hourly, honestly, honourable).",
+      ],
+      memo: "Chữ h trông như cái ghế có lưng — ngồi xuống thở phào \"hhh\". Từ khóa: \"house\" — về đến nhà thở phào: /haʊs/.",
+      usUk: "Giống nhau. \"herb\": Anh /hɜːb/ (có h), Mỹ /ɝːb/ (h câm). Trong lời nói nhanh, cả hai giọng đều bỏ /h/ ở he, him, her, have khi không nhấn: \"tell him\" /ˈtel ɪm/.",
+    },
+  ],
+  rules: [
+    {
+      title: "Chữ \"ch\" có ba cách đọc",
+      body:
+        "Phần lớn \"ch\" đọc /tʃ/ (chair, much, teacher). Từ gốc Hy Lạp đọc /k/: school, stomach, chemistry, character, Christmas, technology, ache. Từ gốc Pháp đọc /ʃ/: chef, machine, brochure, moustache. Khi gặp từ học thuật hay từ chuyên ngành, đừng vội đọc /tʃ/ — tra từ điển.",
+      examples: [
+        { w: "chair", ipa: "tʃeə", vi: "cái ghế" },
+        { w: "school", ipa: "skuːl", vi: "trường học" },
+        { w: "chemistry", ipa: "ˈkem.ɪ.stri", vi: "hóa học" },
+        { w: "machine", ipa: "məˈʃiːn", vi: "máy móc" },
+      ],
+    },
+    {
+      title: "t, d + u không nhấn → /tʃ/, /dʒ/",
+      body:
+        "Khi t hoặc d đứng trước \"u\" / \"ure\" không nhấn, chúng biến thành /tʃ/ và /dʒ/: -ture = /tʃə/, -dure = /dʒə/. Tương tự \"-stion\" đọc /stʃən/. Đây cũng là lý do \"Would you…?\" khi nói nhanh nghe như /wʊdʒu/ (xem bài nối âm).",
+      examples: [
+        { w: "picture", ipa: "ˈpɪk.tʃə", vi: "bức tranh" },
+        { w: "nature", ipa: "ˈneɪ.tʃə", vi: "thiên nhiên" },
+        { w: "actually", ipa: "ˈæk.tʃu.ə.li", vi: "thật ra" },
+        { w: "procedure", ipa: "prəˈsiː.dʒə", vi: "thủ tục" },
+      ],
+    },
+    {
+      title: "h câm và mạo từ \"an\"",
+      body:
+        "Mạo từ a/an chọn theo ÂM đầu, không theo chữ. Từ có h câm bắt đầu bằng nguyên âm nên dùng \"an\": an hour, an honest man, an honour. Từ có /h/ thật dùng \"a\": a house, a hotel, a horse. Ngoài ra trong câu nói nhanh, các đại từ / trợ động từ không nhấn (he, him, her, his, have) thường mất /h/: \"Did he?\" /ˈdɪd i/.",
+      examples: [
+        { w: "an hour", ipa: "ən ˈaʊ.ə", vi: "một tiếng đồng hồ" },
+        { w: "an honest man", ipa: "ən ˈɒn.ɪst mæn", vi: "một người đàn ông trung thực" },
+        { w: "a hotel", ipa: "ə həʊˈtel", vi: "một khách sạn" },
+      ],
+      sentences: [
+        { en: "I'll be back in an hour.", vi: "Một tiếng nữa tôi quay lại.", ipa: "aɪl bi ˈbæk ɪn ən ˈaʊ.ə" },
+      ],
+    },
+    {
+      title: "Đuôi -s/-es sau /tʃ/, /dʒ/ đọc /ɪz/",
+      body:
+        "Danh từ số nhiều, động từ ngôi thứ ba và sở hữu cách kết thúc bằng /tʃ/ hoặc /dʒ/ thêm một âm tiết /ɪz/: watch → watches /ˈwɒtʃ.ɪz/, page → pages /ˈpeɪ.dʒɪz/. Đừng nuốt âm tiết này — \"watches\" có hai âm tiết.",
+      examples: [
+        { w: "watches", ipa: "ˈwɒtʃ.ɪz", vi: "những chiếc đồng hồ; xem (ngôi 3)" },
+        { w: "pages", ipa: "ˈpeɪ.dʒɪz", vi: "các trang" },
+        { w: "bridges", ipa: "ˈbrɪdʒ.ɪz", vi: "những cây cầu" },
+      ],
+    },
+  ],
+  story: {
+    title: "Bữa trưa của bà Brown",
+    paras: [
+      {
+        en: "On Saturday, Mrs Brown knocked on Linh's door. \"[[Hello]], dear! Would you like some [[cheese]] and [[jam]] for [[lunch]]? I [[have]] some [[orange]] [[juice]] too.\"",
+        vi: "Thứ Bảy, bà Brown gõ cửa phòng Linh: \"Chào cháu! Cháu có muốn ăn chút phô mai với mứt cho bữa trưa không? Bà cũng có nước cam nữa.\"",
+      },
+      {
+        en: "Linh [[had]] an hour before meeting Tom at the [[bridge]]. \"An hour, not a [[house]],\" she told [[herself]]. \"The h in 'hour' and 'honest' is silent.\"",
+        vi: "Linh còn một tiếng trước khi gặp Tom ở cây cầu. \"An hour, chứ không phải a house\", cô tự nhắc. \"Chữ h trong 'hour' và 'honest' là h câm.\"",
+      },
+      {
+        en: "Tom was [[holding]] two [[cheap]] tickets for a [[jazz]] concert. \"[[Choose]] a [[chair]] near the stage,\" he said. \"And [[watch]] the drummer — [[he]]'s a [[genius]].\"",
+        vi: "Tom cầm hai vé rẻ đi xem hòa nhạc jazz. \"Chọn ghế gần sân khấu nhé\", anh nói. \"Và xem tay trống — anh ta là thiên tài đấy.\"",
+      },
+      {
+        en: "Later, Jake sent a [[message]]: \"[[Hey]]! [[How]]'s the new [[job]]? Any [[jokes]] from your British colleagues?\" Linh laughed: \"Lots of [[jokes]]. But I nearly said '[[choke]]' instead of '[[joke]]'!\"",
+        vi: "Tối đó Jake nhắn tin: \"Này! Công việc mới thế nào? Đồng nghiệp người Anh có hay đùa không?\" Linh cười: \"Đùa nhiều lắm. Nhưng tớ suýt nói 'choke' (nghẹn) thay vì 'joke' (câu đùa)!\"",
+      },
+    ],
+  },
+  twister: {
+    en: "Jolly Jake chose a cheap jeep and hurried home to Hampshire.",
+    vi: "Jake vui tính chọn một chiếc jeep rẻ tiền rồi vội về nhà ở Hampshire. (Luân phiên /dʒ/ – /tʃ/ – /h/.)",
+  },
+  quiz: [
+    {
+      type: "choice",
+      label: "Nghe và chọn",
+      q: "Bạn nghe thấy từ nào?",
+      say: "cheap",
+      opts: ["cheap /tʃiːp/", "jeep /dʒiːp/"],
+      answer: 0,
+      explain: "cheap /tʃiːp/ bắt đầu bằng /tʃ/ vô thanh, bật hơi mạnh. jeep /dʒiːp/ có rung dây thanh.",
+    },
+    {
+      type: "choice",
+      label: "Chọn âm",
+      q: "Từ nào có chữ h CÂM?",
+      opts: ["honest", "hotel", "happy", "behind"],
+      answer: 0,
+      explain: "honest /ˈɒn.ɪst/ — h câm, nên nói \"an honest man\". hotel, happy, behind đều có /h/.",
+    },
+    {
+      type: "choice",
+      label: "Nhìn chữ đoán âm",
+      q: "Chữ \"ch\" trong từ nào đọc là /tʃ/?",
+      opts: ["teacher", "school", "chef", "machine"],
+      answer: 0,
+      explain: "teacher /ˈtiː.tʃə/. school /skuːl/ đọc /k/ (gốc Hy Lạp); chef /ʃef/ và machine /məˈʃiːn/ đọc /ʃ/ (gốc Pháp).",
+    },
+    {
+      type: "choice",
+      label: "Phiên âm",
+      q: "Phiên âm đúng của \"picture\" là?",
+      opts: ["/ˈpɪk.tʃə/", "/ˈpɪk.tjuː.rə/", "/ˈpɪk.tə/", "/ˈpɪk.ʃə/"],
+      answer: 0,
+      explain: "picture /ˈpɪk.tʃə/ — đuôi -ture luôn đọc /tʃə/.",
+    },
+    {
+      type: "choice",
+      label: "Chọn âm",
+      q: "Từ nào KHÔNG chứa âm /dʒ/?",
+      opts: ["give", "page", "gym", "bridge"],
+      answer: 0,
+      explain: "give /ɡɪv/ — ngoại lệ: g + i vẫn đọc /ɡ/. page /peɪdʒ/, gym /dʒɪm/, bridge /brɪdʒ/ đều có /dʒ/.",
+    },
+    {
+      type: "choice",
+      label: "Nhìn chữ đoán âm",
+      q: "Cụm nào dùng mạo từ đúng?",
+      opts: ["an hour", "a hour", "an house", "an hotel"],
+      answer: 0,
+      explain: "hour /ˈaʊ.ə/ bắt đầu bằng nguyên âm (h câm) → \"an hour\". house, hotel có /h/ thật → \"a house\", \"a hotel\".",
+    },
+    {
+      type: "judge",
+      q: "Âm /tʃ/ tiếng Anh giống hệt \"ch\" trong \"chào\" của tiếng Việt.",
+      ok: false,
+      explain: "Sai. \"ch\" Việt là âm tắc bẹt, môi không chu. /tʃ/ là âm tắc–xát: bật rồi xì hơi \"tsh\", môi chu tròn ra trước.",
+    },
+  ],
+};
