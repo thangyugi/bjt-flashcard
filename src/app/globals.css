@@ -12,6 +12,7 @@
   --font-heading: var(--font-be-vietnam), system-ui, sans-serif;
   --font-mincho: var(--font-shippori), "Hiragino Mincho ProN", "Yu Mincho", serif;
   --font-jp: var(--font-zen), "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  --font-ipa: var(--font-noto-ipa), "Noto Sans", "Doulos SIL", "Charis SIL", "Segoe UI", "Lucida Grande", "Arial Unicode MS", sans-serif;
 
   /* Bảng màu đỏ – trắng (washi) */
   --color-paper: var(--paper);

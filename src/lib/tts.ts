@@ -181,3 +181,53 @@ export async function speak(id: string, texts: string[], { gender, rate }: Speak
   };
   next();
 }
+
+// ── Tiếng Anh (khóa IPA) ──
+export type EnAccent = "uk" | "us";
+
+const EN_MALE = /daniel|arthur|oliver|george|fred|alex\b|aaron|tom\b|rishi|guy|ryan|eric|davis|andrew|brian|christopher|roger|steffan|thomas|male/i;
+const EN_FEMALE = /samantha|karen|moira|serena|kate|stephanie|martha|victoria|allison|ava|susan|zira|aria|jenny|sonia|libby|emma|michelle|ana\b|female|google us english/i;
+const EN_QUALITY = /natural|neural|online|enhanced|premium|google/i;
+
+/** Chọn giọng tiếng Anh theo giọng (Anh/Mỹ) và giới tính; không có thì lấy giọng tiếng Anh bất kỳ. */
+export function pickEnglishVoice(accent: EnAccent, gender: VoiceGender): VoicePick {
+  if (!ttsSupported()) return { voice: null, simulated: false };
+  const want = accent === "uk" ? "en-gb" : "en-us";
+  const all = speechSynthesis.getVoices().filter((v) => v.lang.replace("_", "-").toLowerCase().startsWith("en"));
+  const g = (v: SpeechSynthesisVoice): VoiceGender | null => (EN_MALE.test(v.name) ? "male" : EN_FEMALE.test(v.name) ? "female" : null);
+  const score = (v: SpeechSynthesisVoice) =>
+    (v.lang.replace("_", "-").toLowerCase() === want ? 8 : 0) + (g(v) === gender ? 4 : g(v) === null ? 1 : 0) + (EN_QUALITY.test(v.name) ? 2 : 0);
+  const best = [...all].sort((a, b) => score(b) - score(a))[0] ?? null;
+  return { voice: best, simulated: !!best && g(best) !== gender && gender === "male" };
+}
+
+/** Đọc tiếng Anh bằng giọng của máy. [[…]] trong chuỗi được bỏ đi. */
+export function speakEnglish(id: string, texts: string[], { gender, rate, accent }: SpeakOptions & { accent: EnAccent }) {
+  if (!ttsSupported()) return;
+  stopSpeaking();
+  const my = ++token;
+  const queue = texts.map((t) => t.replace(/\[\[|\]\]/g, "").trim()).filter(Boolean);
+  if (!queue.length) return;
+  current = id;
+  emit();
+  const { voice, simulated } = pickEnglishVoice(accent, gender);
+  let i = 0;
+  const finish = () => {
+    if (my !== token) return;
+    current = null;
+    emit();
+  };
+  const next = () => {
+    if (my !== token) return;
+    if (i >= queue.length) return finish();
+    const u = new SpeechSynthesisUtterance(queue[i++]);
+    u.lang = accent === "uk" ? "en-GB" : "en-US";
+    if (voice) u.voice = voice;
+    u.rate = rate;
+    u.pitch = simulated ? 0.75 : 1;
+    u.onend = next;
+    u.onerror = finish;
+    speechSynthesis.speak(u);
+  };
+  next();
+}

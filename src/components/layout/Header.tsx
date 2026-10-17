@@ -13,7 +13,7 @@ export const NAV_ITEMS = [
   {
     href: "/courses",
     label: "Khóa học",
-    match: (p: string) => p.startsWith("/courses") || p.startsWith("/jlpt-n1"),
+    match: (p: string) => p.startsWith("/courses") || p.startsWith("/jlpt-n1") || p.startsWith("/english"),
   },
 ];
 

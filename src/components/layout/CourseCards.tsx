@@ -7,12 +7,13 @@ const TONE = {
   red: "bg-brand text-white",
   ink: "bg-ink text-paper",
   amber: "bg-[#f3e3c3] text-[#7a4b12]",
+  blue: "bg-[#0f1f47] text-white",
 };
 
 /** Thẻ các khóa học — dùng ở trang chủ và trang /courses. */
 export function CourseCards({ compact }: { compact?: boolean }) {
   return (
-    <div className={cn("grid grid-cols-1 gap-4 md:grid-cols-3", compact && "gap-3")}>
+    <div className={cn("grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4", compact && "gap-3")}>
       {COURSES.map((c) => (
         <Link
           key={c.id}

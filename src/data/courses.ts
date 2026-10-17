@@ -9,10 +9,20 @@ export interface CourseCard {
   desc: string;
   tags: string[];
   /** Màu nền ảnh bìa */
-  tone: "red" | "ink" | "amber";
+  tone: "red" | "ink" | "amber" | "blue";
 }
 
 export const COURSES: CourseCard[] = [
+  {
+    id: "english",
+    href: "/english",
+    mark: "Aa",
+    kicker: "English · IPA",
+    title: "Tiếng Anh",
+    desc: "Bắt đầu với phát âm chuẩn IPA: 44 âm, cách đặt miệng, nghe mẫu, cặp từ dễ nhầm, câu chuyện, luyện tập 3 cấp độ và ôn tập ngắt quãng.",
+    tags: ["Phát âm IPA", "20 bài", "Luyện nghe"],
+    tone: "blue",
+  },
   {
     id: "jlpt-n1",
     href: "/jlpt-n1",

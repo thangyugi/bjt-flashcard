@@ -1,0 +1,320 @@
+import type { IpaLesson } from "../types";
+
+export const ipa16: IpaLesson = {
+  id: "ipa-16",
+  num: 16,
+  title: "Ba âm mũi m, n, ng — thin hay thing?",
+  mark: "m · n · ŋ",
+  level: "Trung cấp",
+  group: "Phụ âm",
+  intro:
+    "Tiếng Việt có đủ m, n, ng nên ba âm này có vẻ dễ — nhưng lỗi lại nằm ở CUỐI từ: nhiều người lẫn n/ng (\"thin\" ↔ \"thing\", \"ran\" ↔ \"rang\"), đọc \"-ing\" thành \"-inh\", và không biết chữ n trước k/g phải đọc /ŋ/ (think /θɪŋk/). Bài này cũng giải quyết các chữ câm hay gặp: climb, autumn, know, sign.",
+  phonemes: [
+    {
+      id: "m",
+      symbol: "m",
+      kind: "consonant",
+      name: "m mím môi",
+      keyword: { w: "mother", ipa: "ˈmʌð.ə", vi: "mẹ" },
+      viLike:
+        "Giống \"m\" trong \"mẹ\", \"mưa\". Khác biệt duy nhất ở cuối từ: tiếng Anh vẫn mím môi và để hơi ngân qua mũi một chút (\"home\" /həʊm/ — nghe rõ tiếng \"mmm\"), còn người Việt hay đọc quá nhanh, gần như mất âm.",
+      how: [
+        "Môi: mím hai môi lại hoàn toàn.",
+        "Lưỡi: thả lỏng nằm dưới đáy miệng.",
+        "Hơi: ngạc mềm hạ xuống, hơi đi ra hoàn toàn qua mũi.",
+        "Dây thanh: RUNG — ngân \"mmm\" như khi khen món ngon.",
+        "Cuối từ: giữ môi mím thêm một nhịp ngắn, đừng bật môi ra.",
+      ],
+      consonant: { place: "hai môi", manner: "âm mũi", voiced: true },
+      spellings: [
+        { pattern: "m", words: ["me", "make", "time", "home"] },
+        { pattern: "mm", words: ["summer", "swimming", "comment", "hammer"] },
+        { pattern: "mb cuối từ (b câm)", words: ["climb", "comb", "thumb", "bomb"] },
+        { pattern: "mn cuối từ (n câm)", words: ["autumn", "column", "condemn"] },
+        { pattern: "lm (l câm)", words: ["calm", "palm", "salmon"] },
+      ],
+      words: [
+        { w: "me", ipa: "miː", vi: "tôi (tân ngữ)" },
+        { w: "mother", ipa: "ˈmʌð.ə", vi: "mẹ" },
+        { w: "time", ipa: "taɪm", vi: "thời gian" },
+        { w: "home", ipa: "həʊm", vi: "nhà" },
+        { w: "summer", ipa: "ˈsʌm.ə", vi: "mùa hè" },
+        { w: "remember", ipa: "rɪˈmem.bə", vi: "nhớ" },
+        { w: "climb", ipa: "klaɪm", vi: "leo trèo" },
+        { w: "autumn", ipa: "ˈɔː.təm", vi: "mùa thu" },
+      ],
+      sentences: [
+        { en: "[[My]] [[mum]] [[makes]] [[lemon]] cake every [[summer]].", vi: "Mẹ tôi làm bánh chanh mỗi mùa hè.", ipa: "maɪ mʌm meɪks ˈlem.ən keɪk ˈev.ri ˈsʌm.ə" },
+        { en: "[[Remember]] to [[come]] [[home]] on [[time]].", vi: "Nhớ về nhà đúng giờ nhé." },
+        { en: "We [[climbed]] the hill in [[autumn]].", vi: "Chúng tôi leo đồi vào mùa thu." },
+      ],
+      pairs: [
+        { a: { w: "some", ipa: "sʌm", vi: "một vài" }, b: { w: "sun", ipa: "sʌn", vi: "mặt trời" } },
+        { a: { w: "team", ipa: "tiːm", vi: "đội, nhóm" }, b: { w: "teen", ipa: "tiːn", vi: "thiếu niên" } },
+        { a: { w: "comb", ipa: "kəʊm", vi: "cái lược" }, b: { w: "cone", ipa: "kəʊn", vi: "hình nón; ốc quế" } },
+        { a: { w: "mice", ipa: "maɪs", vi: "những con chuột" }, b: { w: "nice", ipa: "naɪs", vi: "dễ chịu" } },
+      ],
+      mistakes: [
+        "Đọc /m/ cuối quá nhẹ hoặc mở môi sớm: \"team\" nghe như \"tea\" hay \"teen\". Phải mím môi đến hết âm.",
+        "Đọc chữ câm: \"climb\" thành \"clai-bơ\", \"autumn\" thành \"o-tầm-nơ\". Đúng: /klaɪm/, /ˈɔː.təm/.",
+        "Thêm nguyên âm sau /m/ cuối: \"home\" thành \"hâu-mơ\". /m/ cuối không có \"ơ\".",
+      ],
+      tips: [
+        "Kiểm tra bằng gương: kết thúc \"some\" môi phải khép; kết thúc \"sun\" môi mở.",
+        "Ngân \"mmm\" nửa giây ở cuối từ khi luyện: \"home-mmm\", \"time-mmm\".",
+        "Học theo nhóm chữ câm: climb – comb – thumb (b câm), autumn – column (n câm).",
+      ],
+      memo: "Chữ m có hai \"bướu\" như hai môi mím lại. Từ khóa: \"mother\" — tiếng gọi \"mẹ\" đầu tiên của em bé là mím môi: /ˈmʌð.ə/.",
+    },
+    {
+      id: "n",
+      symbol: "n",
+      kind: "consonant",
+      name: "n đầu lưỡi",
+      keyword: { w: "nine", ipa: "naɪn", vi: "số chín" },
+      viLike:
+        "Giống \"n\" trong \"nắng\", \"no\". Khác biệt: ở cuối từ, đầu lưỡi phải CHẠM lợi trên và giữ lại (\"nine\" /naɪn/). Người miền Nam hay đọc \"n\" cuối thành \"ng\" (\"ăn\" → \"ăng\"), người miền Bắc một số vùng lẫn n với l.",
+      how: [
+        "Lưỡi: đầu lưỡi chạm chắc vào lợi trên (gờ ngay sau răng cửa trên).",
+        "Môi: mở tự nhiên, không mím.",
+        "Hơi: ngạc mềm hạ xuống, hơi đi qua mũi.",
+        "Dây thanh: RUNG.",
+        "Cuối từ: giữ đầu lưỡi ở lợi đến khi hết âm — không lùi lưỡi về sau (sẽ thành /ŋ/).",
+      ],
+      consonant: { place: "lợi", manner: "âm mũi", voiced: true },
+      spellings: [
+        { pattern: "n", words: ["no", "nine", "ten", "dinner"] },
+        { pattern: "nn", words: ["dinner", "funny", "tennis", "beginning"] },
+        { pattern: "kn đầu từ (k câm)", words: ["know", "knife", "knee", "knock"] },
+        { pattern: "gn (g câm)", words: ["sign", "design", "foreign", "gnome"] },
+        { pattern: "-en / -on / -ain không nhấn (n âm tiết)", words: ["listen", "garden", "button", "certain"] },
+      ],
+      words: [
+        { w: "nine", ipa: "naɪn", vi: "số chín" },
+        { w: "know", ipa: "nəʊ", vi: "biết" },
+        { w: "dinner", ipa: "ˈdɪn.ə", vi: "bữa tối" },
+        { w: "money", ipa: "ˈmʌn.i", vi: "tiền" },
+        { w: "knife", ipa: "naɪf", vi: "con dao" },
+        { w: "sign", ipa: "saɪn", vi: "biển báo; ký tên" },
+        { w: "listen", ipa: "ˈlɪs.ən", vi: "lắng nghe" },
+        { w: "garden", ipa: "ˈɡɑː.dən", vi: "khu vườn" },
+      ],
+      sentences: [
+        { en: "[[Nine]] [[new]] [[nurses]] [[need]] [[lunch]].", vi: "Chín y tá mới cần ăn trưa.", ipa: "naɪn njuː ˈnɜː.sɪz niːd lʌntʃ" },
+        { en: "I [[know]] [[Ben]] [[can]] cook [[dinner]].", vi: "Tôi biết Ben có thể nấu bữa tối." },
+        { en: "[[Listen]]! [[Someone]] is [[knocking]] [[on]] the [[garden]] door.", vi: "Nghe kìa! Có ai đang gõ cửa vườn." },
+      ],
+      pairs: [
+        { a: { w: "thin", ipa: "θɪn", vi: "gầy, mỏng" }, b: { w: "thing", ipa: "θɪŋ", vi: "đồ vật, điều" } },
+        { a: { w: "ran", ipa: "ræn", vi: "đã chạy" }, b: { w: "rang", ipa: "ræŋ", vi: "đã reo, gọi điện" } },
+        { a: { w: "win", ipa: "wɪn", vi: "thắng" }, b: { w: "wing", ipa: "wɪŋ", vi: "cánh" } },
+        { a: { w: "sun", ipa: "sʌn", vi: "mặt trời" }, b: { w: "some", ipa: "sʌm", vi: "một vài" } },
+        { a: { w: "night", ipa: "naɪt", vi: "ban đêm" }, b: { w: "light", ipa: "laɪt", vi: "ánh sáng" } },
+      ],
+      mistakes: [
+        "Đọc /n/ cuối thành \"ng\" (thói quen miền Nam): \"thin\" → \"thing\", \"ban\" → \"bang\". Đầu lưỡi phải chạm lợi.",
+        "Lẫn n và l (thói quen một số vùng miền Bắc): \"night\" → \"light\", \"no\" → \"low\".",
+        "Đọc chữ câm: \"know\" thành \"cờ-nâu\", \"sign\" thành \"xai-gơn\". k và g câm hoàn toàn.",
+      ],
+      tips: [
+        "Nói \"thin\" rồi dừng lại, giữ nguyên miệng: đầu lưỡi phải đang chạm sau răng trên. Nếu lưỡi đang nằm dưới, bạn đã nói \"thing\".",
+        "Luyện cặp: \"thin – thing, win – wing, ran – rang, sun – sung\".",
+        "Âm tiết -en, -on không nhấn thường chỉ là /ən/ hoặc /n/ ngân: listen /ˈlɪs.ən/, button /ˈbʌt.ən/ — không đọc \"lít-ten\".",
+      ],
+      memo: "Chữ n có một \"bướu\" như đầu lưỡi cong lên chạm lợi. Từ khóa: \"nine\" — đầu và cuối từ đều là /n/, lưỡi chạm lợi hai lần: /naɪn/.",
+      usUk: "Giống nhau. \"new\": Anh /njuː/, Mỹ /nuː/. Chữ t trước n âm tiết (button, written) ở Mỹ thường là âm tắc thanh hầu.",
+    },
+    {
+      id: "ng",
+      symbol: "ŋ",
+      kind: "consonant",
+      name: "ng cuống lưỡi",
+      keyword: { w: "sing", ipa: "sɪŋ", vi: "hát" },
+      viLike:
+        "Giống \"ng\" trong \"sang\", \"không\". Khác biệt: /ŋ/ tiếng Anh KHÔNG bao giờ đứng đầu từ; và \"-ing\" không đọc như \"-inh\" tiếng Việt (lưỡi đẩy về trước) — lưỡi phải lùi về sau, gốc lưỡi chạm ngạc mềm như \"ng\" trong \"sang\", \"xong\".",
+      how: [
+        "Lưỡi: nâng phần cuống (gốc) lưỡi lên chạm ngạc mềm ở phía sau vòm miệng — giống vị trí /k/, /ɡ/.",
+        "Đầu lưỡi: nằm thấp, chạm chân răng dưới, KHÔNG chạm lợi trên.",
+        "Môi: mở, không mím.",
+        "Hơi: đi qua mũi; dây thanh RUNG.",
+        "Cuối từ: kết thúc gọn, KHÔNG bật thêm /ɡ/ hay /k/ (\"sing\" không phải \"sing-gơ\").",
+      ],
+      consonant: { place: "ngạc mềm", manner: "âm mũi", voiced: true },
+      spellings: [
+        { pattern: "ng cuối từ", words: ["sing", "long", "young", "morning"] },
+        { pattern: "n + k / c / q (= /ŋk/)", words: ["think", "bank", "uncle", "drink"] },
+        { pattern: "n + g giữa từ gốc (= /ŋɡ/)", words: ["finger", "English", "hungry", "angry"] },
+        { pattern: "Tính từ so sánh -ger (= /ŋɡ/)", words: ["longer", "younger", "stronger"] },
+        { pattern: "Ngoại lệ: nge / ngi = /ndʒ/ (không có /ŋ/)", words: ["change", "danger", "strange", "angel"] },
+      ],
+      words: [
+        { w: "sing", ipa: "sɪŋ", vi: "hát" },
+        { w: "long", ipa: "lɒŋ", vi: "dài" },
+        { w: "morning", ipa: "ˈmɔː.nɪŋ", vi: "buổi sáng" },
+        { w: "think", ipa: "θɪŋk", vi: "nghĩ" },
+        { w: "bank", ipa: "bæŋk", vi: "ngân hàng" },
+        { w: "uncle", ipa: "ˈʌŋ.kəl", vi: "chú, bác" },
+        { w: "singer", ipa: "ˈsɪŋ.ə", vi: "ca sĩ" },
+        { w: "finger", ipa: "ˈfɪŋ.ɡə", vi: "ngón tay" },
+      ],
+      sentences: [
+        { en: "The [[young]] [[singer]] is [[singing]] a [[long]] [[song]].", vi: "Ca sĩ trẻ đang hát một bài hát dài.", ipa: "ðə jʌŋ ˈsɪŋ.ər ɪz ˈsɪŋ.ɪŋ ə lɒŋ sɒŋ" },
+        { en: "I [[think]] my [[uncle]] is at the [[bank]].", vi: "Tôi nghĩ chú tôi đang ở ngân hàng." },
+        { en: "[[Thanks]] for [[bringing]] the [[pink]] [[ring]].", vi: "Cảm ơn bạn đã mang chiếc nhẫn hồng đến." },
+      ],
+      pairs: [
+        { a: { w: "thing", ipa: "θɪŋ", vi: "đồ vật, điều" }, b: { w: "thin", ipa: "θɪn", vi: "gầy, mỏng" } },
+        { a: { w: "wing", ipa: "wɪŋ", vi: "cánh" }, b: { w: "win", ipa: "wɪn", vi: "thắng" } },
+        { a: { w: "rang", ipa: "ræŋ", vi: "đã reo" }, b: { w: "ran", ipa: "ræn", vi: "đã chạy" } },
+        { a: { w: "sung", ipa: "sʌŋ", vi: "đã hát (phân từ)" }, b: { w: "sun", ipa: "sʌn", vi: "mặt trời" } },
+        { a: { w: "sink", ipa: "sɪŋk", vi: "bồn rửa; chìm" }, b: { w: "sick", ipa: "sɪk", vi: "ốm" } },
+      ],
+      mistakes: [
+        "Đọc n trước k/g là /n/: \"think\" → \"thin-k\", \"thank\" → \"than-k\". Đúng: /θɪŋk/, /θæŋk/ — lưỡi lùi về sau ngay từ trước /k/.",
+        "Thêm /ɡ/ sau /ŋ/ cuối: \"sing\" → \"sing-gơ\", \"singer\" → /ˈsɪŋ.ɡə/. Đúng: /sɪŋ/, /ˈsɪŋ.ə/ (chỉ finger, English, hungry, longer mới có /ŋɡ/).",
+        "Đọc \"-ing\" như \"-inh\" tiếng Việt (miền Bắc), lưỡi đẩy về trước → nghe giống /ɪn/. Lùi lưỡi về sau như /k/.",
+      ],
+      tips: [
+        "Nói /k/ rồi giữ nguyên lưỡi, ngân qua mũi → /ŋ/. Luyện \"thing – think\", \"sing – sink\".",
+        "Kiểm tra: nói \"sing\" rồi dừng — đầu lưỡi phải chạm răng DƯỚI, không chạm lợi trên.",
+        "Phân biệt nhanh: động từ + -er (singer, hanger) giữ /ŋ/; từ gốc (finger, anger) và so sánh hơn (longer, younger) thêm /ɡ/.",
+      ],
+      memo: "Ký hiệu ŋ là chữ n có cái \"đuôi\" của chữ g kéo xuống → n + g dính làm một âm. Từ khóa: \"sing\" — hát \"sing, sing, sing\" kết thúc bằng tiếng ngân ở cuống lưỡi: /sɪŋ/.",
+      usUk: "Âm /ŋ/ giống nhau. \"long\": Anh /lɒŋ/, Mỹ /lɔːŋ/ hoặc /lɑːŋ/. Trong khẩu ngữ thân mật (cả Anh và Mỹ), \"-ing\" đôi khi đọc /ɪn/ (\"goin'\", \"nothin'\") — đừng bắt chước khi nói trang trọng.",
+    },
+  ],
+  rules: [
+    {
+      title: "Chữ \"ng\": /ŋ/ hay /ŋɡ/ hay /ndʒ/?",
+      body:
+        "Cuối từ và trong từ phái sinh từ động từ: chỉ /ŋ/, không có /ɡ/ (sing, singer, singing, long, hanger). Giữa từ gốc: /ŋɡ/ (finger, English, hungry, angry, language). So sánh hơn/nhất của long, young, strong: /ŋɡ/ (longer, youngest). Còn \"nge\", \"ngi\" thì g mềm → /ndʒ/: change, danger, strange, angel.",
+      examples: [
+        { w: "singer", ipa: "ˈsɪŋ.ə", vi: "ca sĩ" },
+        { w: "finger", ipa: "ˈfɪŋ.ɡə", vi: "ngón tay" },
+        { w: "longer", ipa: "ˈlɒŋ.ɡə", vi: "dài hơn" },
+        { w: "danger", ipa: "ˈdeɪn.dʒə", vi: "nguy hiểm" },
+      ],
+    },
+    {
+      title: "n trước /k/, /ɡ/ đọc /ŋ/",
+      body:
+        "Khi chữ n đứng trước âm /k/ hoặc /ɡ/ (viết k, c, q, x, g) trong cùng một từ, lưỡi đã lùi về sẵn → n đọc thành /ŋ/. Đây là đồng hóa tự nhiên — người bản xứ không bao giờ nói \"thin-k\".",
+      examples: [
+        { w: "think", ipa: "θɪŋk", vi: "nghĩ" },
+        { w: "thank", ipa: "θæŋk", vi: "cảm ơn" },
+        { w: "anxious", ipa: "ˈæŋk.ʃəs", vi: "lo lắng" },
+        { w: "English", ipa: "ˈɪŋ.ɡlɪʃ", vi: "tiếng Anh" },
+      ],
+      sentences: [
+        { en: "[[Thank]] you, I [[think]] I'll [[drink]] some [[pink]] lemonade.", vi: "Cảm ơn, tôi nghĩ tôi sẽ uống chút nước chanh hồng.", ipa: "ˈθæŋk ju aɪ ˈθɪŋk aɪl ˈdrɪŋk səm ˈpɪŋk ˌlem.əˈneɪd" },
+      ],
+    },
+    {
+      title: "Chữ câm quanh âm mũi",
+      body:
+        "mb cuối từ: b câm (climb, comb, thumb, lamb). mn cuối từ: n câm (autumn, column) — nhưng khi thêm hậu tố, n có thể sống lại: autumnal /ɔːˈtʌm.nəl/. kn đầu từ: k câm (know, knife, knee, knock). gn: g câm (sign, design, foreign) — nhưng signature /ˈsɪɡ.nə.tʃə/ lại đọc g.",
+      examples: [
+        { w: "thumb", ipa: "θʌm", vi: "ngón tay cái" },
+        { w: "column", ipa: "ˈkɒl.əm", vi: "cột" },
+        { w: "knee", ipa: "niː", vi: "đầu gối" },
+        { w: "foreign", ipa: "ˈfɒr.ən", vi: "nước ngoài" },
+      ],
+    },
+    {
+      title: "Đuôi \"-ing\" luôn là /ɪŋ/",
+      body:
+        "Mọi động từ thêm -ing đều kết thúc bằng /ɪŋ/: lưỡi lùi về sau, không bật /ɡ/. Khi từ sau bắt đầu bằng nguyên âm, /ŋ/ nối thẳng sang: \"going out\" /ˌɡəʊ.ɪŋ ˈaʊt/, \"thinking about\" — đừng chèn /ɡ/ vào giữa.",
+      examples: [
+        { w: "going", ipa: "ˈɡəʊ.ɪŋ", vi: "đang đi" },
+        { w: "evening", ipa: "ˈiːv.nɪŋ", vi: "buổi tối" },
+        { w: "interesting", ipa: "ˈɪn.trə.stɪŋ", vi: "thú vị" },
+      ],
+      sentences: [
+        { en: "We're [[going]] out this [[evening]].", vi: "Tối nay chúng tôi đi chơi.", ipa: "wɪə ˈɡəʊ.ɪŋ ˈaʊt ðɪs ˈiːv.nɪŋ" },
+      ],
+    },
+  ],
+  story: {
+    title: "Tiếng chuông điện thoại buổi sáng",
+    paras: [
+      {
+        en: "[[On]] [[Monday]] [[morning]], Linh's phone [[rang]]. It was [[Mrs]] Brown: \"Linh, dear, the [[kitchen]] [[sink]] is [[leaking]]. I [[think]] I [[need]] a [[man]] with a toolbox!\"",
+        vi: "Sáng thứ Hai, điện thoại của Linh reo. Là bà Brown: \"Linh à, bồn rửa trong bếp bị rò nước. Bà nghĩ bà cần một người có hộp đồ nghề!\"",
+      },
+      {
+        en: "Linh [[ran]] downstairs. \"[[Don't]] worry, [[Mrs]] Brown. [[My]] colleague Tom [[knows]] [[something]] about pipes. I'll [[ring]] him.\"",
+        vi: "Linh chạy xuống tầng dưới. \"Bà đừng lo. Đồng nghiệp Tom của cháu biết chút về ống nước. Cháu sẽ gọi cho anh ấy.\"",
+      },
+      {
+        en: "Tom [[came]] [[in]] ten [[minutes]]. \"It's a [[thin]] pipe — [[nothing]] serious,\" he said. Linh laughed: \"I [[almost]] said 'it's a [[thing]] pipe'! [[Thin]] with n, [[thing]] with ng.\"",
+        vi: "Mười phút sau Tom tới. \"Chỉ là cái ống mỏng thôi — không có gì nghiêm trọng\", anh nói. Linh cười: \"Suýt nữa em nói 'a thing pipe'! Thin có n, thing có ng.\"",
+      },
+      {
+        en: "That [[evening]], Jake called from [[New]] York. \"[[Thanks]] for the photos! [[London]] looks [[amazing]]. Are you [[singing]] [[in]] the rain yet?\" \"[[Not]] yet,\" said Linh, \"but I'm [[thinking]] about it!\"",
+        vi: "Tối đó Jake gọi từ New York: \"Cảm ơn mấy tấm ảnh nhé! London trông tuyệt quá. Cậu đã 'hát dưới mưa' chưa?\" \"Chưa\", Linh đáp, \"nhưng tớ đang tính đây!\"",
+      },
+    ],
+  },
+  twister: {
+    en: "Nine young singers sang a long morning song in the sunny garden.",
+    vi: "Chín ca sĩ trẻ hát một bài ca buổi sáng dài trong khu vườn đầy nắng. (Luân phiên /n/ – /ŋ/ – /m/.)",
+  },
+  quiz: [
+    {
+      type: "choice",
+      label: "Nghe và chọn",
+      q: "Bạn nghe thấy từ nào?",
+      say: "thing",
+      opts: ["thing /θɪŋ/", "thin /θɪn/"],
+      answer: 0,
+      explain: "thing /θɪŋ/ kết thúc bằng /ŋ/ (gốc lưỡi chạm ngạc mềm). thin /θɪn/ kết thúc bằng /n/ (đầu lưỡi chạm lợi).",
+    },
+    {
+      type: "choice",
+      label: "Phiên âm",
+      q: "Phiên âm đúng của \"think\" là?",
+      opts: ["/θɪŋk/", "/θɪnk/", "/θɪŋ/", "/tɪŋk/"],
+      answer: 0,
+      explain: "think /θɪŋk/ — chữ n trước /k/ đọc thành /ŋ/.",
+    },
+    {
+      type: "choice",
+      label: "Chọn âm",
+      q: "Từ nào có /ŋɡ/ (có bật âm /ɡ/ sau /ŋ/)?",
+      opts: ["finger", "singer", "singing", "long"],
+      answer: 0,
+      explain: "finger /ˈfɪŋ.ɡə/ là từ gốc nên có /ŋɡ/. singer /ˈsɪŋ.ə/, singing /ˈsɪŋ.ɪŋ/, long /lɒŋ/ chỉ có /ŋ/.",
+    },
+    {
+      type: "choice",
+      label: "Nhìn chữ đoán âm",
+      q: "Chữ \"ng\" trong từ nào KHÔNG đọc /ŋ/?",
+      opts: ["change", "young", "morning", "English"],
+      answer: 0,
+      explain: "change /tʃeɪndʒ/ — \"nge\" đọc /ndʒ/. young /jʌŋ/, morning /ˈmɔː.nɪŋ/, English /ˈɪŋ.ɡlɪʃ/ đều có /ŋ/.",
+    },
+    {
+      type: "choice",
+      label: "Nhìn chữ đoán âm",
+      q: "Từ nào có một chữ cái CÂM?",
+      opts: ["climb", "number", "remember", "summer"],
+      answer: 0,
+      explain: "climb /klaɪm/ — b câm sau m ở cuối từ. number /ˈnʌm.bə/ và remember /rɪˈmem.bə/ vẫn đọc /b/.",
+    },
+    {
+      type: "choice",
+      label: "Nghe và chọn",
+      q: "Bạn nghe thấy câu nào?",
+      say: "The phone rang.",
+      opts: ["The phone rang. /ræŋ/", "The phone ran. /ræn/"],
+      answer: 0,
+      explain: "rang /ræŋ/ (reo) kết thúc bằng /ŋ/; ran /ræn/ (chạy) kết thúc bằng /n/.",
+    },
+    {
+      type: "judge",
+      q: "Âm /ŋ/ có thể đứng đầu một từ tiếng Anh, giống \"ng\" trong \"ngày\".",
+      ok: false,
+      explain: "Sai. Trong tiếng Anh /ŋ/ chỉ đứng giữa hoặc cuối từ (sing, singer), không bao giờ đứng đầu từ.",
+    },
+  ],
+};
