@@ -59,3 +59,33 @@ hoặc chỉ một giọng (`--voices male`).
 - Script: `scripts/generate-audio.ts`. Khóa file = băm câu đã bỏ furigana (`src/lib/audio-key.ts`), dùng chung với trình phát.
 - Chuyển WAV → M4A bằng `ffmpeg` nếu có, nếu không dùng `afconvert` có sẵn trên macOS.
 - Service worker lưu file âm thanh đã nghe để dùng offline.
+
+---
+
+# Giọng đọc tiếng Anh (Kokoro — miễn phí, mã nguồn mở)
+
+Khóa IPA phát file thu sẵn trong `public/audio/en/` (4 giọng: 🇬🇧 Anh nam/nữ, 🇺🇸 Mỹ nam/nữ); câu chưa có file thì dùng giọng của máy.
+File được tạo bằng **Kokoro-82M** (giấy phép Apache 2.0, dùng thương mại được) qua gói `kokoro-onnx`, chạy hoàn toàn trên máy.
+
+| Giọng app | Kokoro | Ghi chú |
+|---|---|---|
+| 🇬🇧 Anh — nam | `bm_george` (George) | Anh chuẩn (RP) |
+| 🇬🇧 Anh — nữ | `bf_emma` (Emma) | Anh chuẩn (RP) |
+| 🇺🇸 Mỹ — nam | `am_michael` (Michael) | General American |
+| 🇺🇸 Mỹ — nữ | `af_heart` (Heart) | Giọng tốt nhất của Kokoro |
+
+**Phát âm khớp với phiên âm của bài:** câu được phiên âm tự động bằng espeak-ng (Anh: biến thể RP `en-gb-x-rp`).
+Với từ có phiên âm trong bài, nếu espeak đọc khác (từ đồng tự khác âm như *live* /lɪv/, *record (v)*, dạng yếu /tə/ /kən/,
+ví dụ nối âm *look‿at‿it*…) thì script đọc theo đúng phiên âm của bài. Giọng Mỹ đổi phiên âm Anh sang Mỹ (əʊ→oʊ, ɒ→ɑː, thêm r).
+
+## Cách tạo lại (khi thêm/sửa bài)
+
+```bash
+pip install kokoro-onnx soundfile     # Python 3.10+; cần ffmpeg (macOS có sẵn afconvert)
+npm run audio:en                      # mọi bài IPA, 4 giọng; bỏ qua câu đã có file
+npm run audio:en -- ipa-05            # chỉ một bài
+npm run audio:en -- --voices uk-male --uk-male bm_fable   # đổi giọng
+```
+
+Lần đầu script tự tải mô hình (~120 MB) về `~/.cache/kokoro`. Mỗi câu ~15 KB; toàn khóa IPA ≈ 1.060 câu × 4 giọng ≈ 60 MB.
+Script: `scripts/generate-en-audio.ts` (gom câu, nén, ghi `public/audio/en/manifest.json`) + `scripts/kokoro_tts.py` (đọc).

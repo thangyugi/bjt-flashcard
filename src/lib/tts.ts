@@ -8,7 +8,7 @@
  * Chuỗi đầu vào có thể chứa markup furigana {漢字|かな}, [[…]], ＿＿＿.
  */
 
-import { speechKey, toSpeech, type AudioManifest } from "./audio-key";
+import { speechKey, toEnSpeech, toSpeech, type AudioManifest, type EnAudioManifest, type EnVoiceId } from "./audio-key";
 
 export type VoiceGender = "female" | "male";
 
@@ -150,7 +150,18 @@ export async function speak(id: string, texts: string[], { gender, rate }: Speak
       return ttsSupported() ? chunks(t).map((c) => ({ kind: "tts", text: c }) as Item) : [];
     });
   const { voice, simulated } = pickVoice(gender);
+  play(my, items, rate, (text) => {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "ja-JP";
+    if (voice) u.voice = voice;
+    u.rate = rate;
+    u.pitch = simulated ? 0.6 : 1;
+    return u;
+  });
+}
 
+/** Phát lần lượt: file thu sẵn bằng <audio>, còn lại bằng giọng của máy. */
+function play(my: number, items: Item[], rate: number, utter: (text: string) => SpeechSynthesisUtterance) {
   let i = 0;
   const finish = () => {
     if (my !== token) return;
@@ -170,11 +181,7 @@ export async function speak(id: string, texts: string[], { gender, rate }: Speak
       return;
     }
     if (it.kind !== "tts") return next();
-    const u = new SpeechSynthesisUtterance(it.text);
-    u.lang = "ja-JP";
-    if (voice) u.voice = voice;
-    u.rate = rate;
-    u.pitch = simulated ? 0.6 : 1;
+    const u = utter(it.text);
     u.onend = next;
     u.onerror = finish;
     speechSynthesis.speak(u);
@@ -201,33 +208,60 @@ export function pickEnglishVoice(accent: EnAccent, gender: VoiceGender): VoicePi
   return { voice: best, simulated: !!best && g(best) !== gender && gender === "male" };
 }
 
-/** Đọc tiếng Anh bằng giọng của máy. [[…]] trong chuỗi được bỏ đi. */
-export function speakEnglish(id: string, texts: string[], { gender, rate, accent }: SpeakOptions & { accent: EnAccent }) {
-  if (!ttsSupported()) return;
+// ── File tiếng Anh thu sẵn (Kokoro — xem docs/AUDIO.md) ──
+let enManifest: EnAudioManifest | null = null;
+let enManifestLoad: Promise<EnAudioManifest | null> | null = null;
+
+export function loadEnAudioManifest(): Promise<EnAudioManifest | null> {
+  if (!enManifestLoad) {
+    enManifestLoad = fetch("/audio/en/manifest.json")
+      .then((r) => (r.ok ? (r.json() as Promise<EnAudioManifest>) : null))
+      .catch(() => null)
+      .then((m) => {
+        enManifest = m;
+        manifestListeners.forEach((l) => l());
+        return m;
+      });
+  }
+  return enManifestLoad;
+}
+export const getEnManifest = () => enManifest;
+
+export const enVoiceId = (accent: EnAccent, gender: VoiceGender): EnVoiceId => `${accent}-${gender}`;
+
+/** Đường dẫn file tiếng Anh thu sẵn (nếu có). */
+export function enClipUrl(text: string, voice: EnVoiceId): string | null {
+  const key = speechKey(toEnSpeech(text));
+  const ext = enManifest?.clips[voice]?.[key];
+  return ext ? `/audio/en/${voice}/${key}.${ext}` : null;
+}
+
+/** Đọc tiếng Anh: ưu tiên file thu sẵn, câu chưa có file thì dùng giọng của máy. [[…]] trong chuỗi được bỏ đi. */
+export async function speakEnglish(id: string, texts: string[], { gender, rate, accent }: SpeakOptions & { accent: EnAccent }) {
   stopSpeaking();
   const my = ++token;
-  const queue = texts.map((t) => t.replace(/\[\[|\]\]/g, "").trim()).filter(Boolean);
+  const queue = texts.map(toEnSpeech).filter(Boolean);
   if (!queue.length) return;
   current = id;
   emit();
+  if (!audio && typeof Audio !== "undefined") audio = new Audio();
+  if (!enManifest) {
+    await loadEnAudioManifest();
+    if (my !== token) return;
+  }
+  const vid = enVoiceId(accent, gender);
+  const items: Item[] = queue.flatMap((t): Item[] => {
+    const url = enClipUrl(t, vid);
+    if (url) return [{ kind: "clip", url }];
+    return ttsSupported() ? [{ kind: "tts", text: t }] : [];
+  });
   const { voice, simulated } = pickEnglishVoice(accent, gender);
-  let i = 0;
-  const finish = () => {
-    if (my !== token) return;
-    current = null;
-    emit();
-  };
-  const next = () => {
-    if (my !== token) return;
-    if (i >= queue.length) return finish();
-    const u = new SpeechSynthesisUtterance(queue[i++]);
+  play(my, items, rate, (text) => {
+    const u = new SpeechSynthesisUtterance(text);
     u.lang = accent === "uk" ? "en-GB" : "en-US";
     if (voice) u.voice = voice;
     u.rate = rate;
     u.pitch = simulated ? 0.75 : 1;
-    u.onend = next;
-    u.onerror = finish;
-    speechSynthesis.speak(u);
-  };
-  next();
+    return u;
+  });
 }
