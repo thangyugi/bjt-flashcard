@@ -106,7 +106,7 @@ export const ipa14: IpaLesson = {
       ],
       sentences: [
         { en: "[[Zoe]] [[is]] [[busy]] at the [[zoo]].", vi: "Zoe đang bận ở sở thú.", ipa: "ˈzəʊ.i ɪz ˈbɪz.i ət ðə zuː" },
-        { en: "[[These]] [[music]] [[lessons]] [[are]] [[easy]].", vi: "Những bài học nhạc này rất dễ." },
+        { en: "[[These]] [[music]] [[lessons]] are [[easy]].", vi: "Những bài học nhạc này rất dễ." },
         { en: "My [[dogs]] [[always]] [[choose]] the [[biggest]] [[toys]].", vi: "Những chú chó của tôi luôn chọn đồ chơi to nhất." },
       ],
       pairs: [
@@ -306,7 +306,7 @@ export const ipa14: IpaLesson = {
     title: "Ngày hội giảm giá",
     paras: [
       {
-        en: "On [[Saturday]], Linh and Jake went to the [[sales]] on Oxford [[Street]]. Linh [[saw]] a [[beige]] [[sweater]] and [[asked]], \"[[Is]] [[this]] [[size]] [[six]]?\" The [[assistant]] [[said]], \"[[Sure]]! And the [[shoes]] over there [[are]] half price.\"",
+        en: "On [[Saturday]], Linh and Jake went to the [[sales]] on Oxford [[Street]]. Linh [[saw]] a [[beige]] [[sweater]] and [[asked]], \"[[Is]] [[this]] [[size]] [[six]]?\" The [[assistant]] [[said]], \"[[Sure]]! And the [[shoes]] over there are half price.\"",
         vi: "Thứ Bảy, Linh và Jake đi săn đồ giảm giá ở phố Oxford. Linh thấy một chiếc áo len màu be và hỏi: \"Cái này cỡ sáu phải không ạ?\" Cô bán hàng đáp: \"Đúng rồi! Còn giày đằng kia đang giảm nửa giá.\"",
       },
       {
@@ -314,7 +314,7 @@ export const ipa14: IpaLesson = {
         vi: "\"Bình thường tớ ghét đi mua sắm,\" Jake nói, \"nhưng hôm nay thật là vui.\" Cậu chỉ vào một chiếc ti vi khổng lồ: \"Quyết định rồi, mua cái này!\" Linh để ý rằng trong giọng Mỹ của Jake, \"version\" có cùng âm với \"vision\".",
       },
       {
-        en: "On Monday, Tom gave her a [[pronunciation]] [[exercise]]. \"[[Listen]]: '[[rice]]' and '[[rise]]', '[[place]]' and '[[plays]]'. [[S]] [[is]] a [[snake]], [[Z]] [[is]] a [[buzzing]] bee, and [[sh]] [[is]] a librarian [[saying]] '[[shh]]'.\" The whole team [[laughed]].",
+        en: "On Monday, Tom gave her a [[pronunciation]] [[exercise]]. \"[[Listen]]: '[[rice]]' and '[[rise]]', '[[place]]' and '[[plays]]'. [[S]] [[is]] a [[snake]], [[Z]] [[is]] a [[buzzing]] bee, and [[sh]] [[is]] a librarian [[saying]] '[[shh]]'.\" The whole team laughed.",
         vi: "Thứ Hai, Tom đưa cho cô một bài luyện phát âm. \"Nghe này: 'rice' và 'rise', 'place' và 'plays'. S là con rắn, Z là con ong vo ve, còn sh là cô thủ thư nói 'suỵt'.\" Cả nhóm cùng bật cười.",
       },
       {
