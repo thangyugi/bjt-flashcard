@@ -5,6 +5,7 @@ import { useFlashcardStore } from "@/store/flashcard-store";
 import { GroupIcon } from "@/components/ui/group-icon";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { VocabularyBrowser } from "@/components/flashcard/VocabularyBrowser";
 
 export default function StudyIndexPage() {
   const { data: groups, isLoading } = useAllVocabularyGroups();
@@ -68,6 +69,8 @@ export default function StudyIndexPage() {
           })}
         </div>
       )}
+
+      <VocabularyBrowser />
     </div>
   );
 }
