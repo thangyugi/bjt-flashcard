@@ -12,6 +12,7 @@ import { useOciAiStore } from "@/store/oci-ai-store";
 import { useFlashcardStore } from "@/store/flashcard-store";
 import { useSrsStore, stateFromName, stateName, type CardKind, type StoredCard } from "@/store/srs-store";
 import { useActivityStore } from "@/store/activity-store";
+import { useLandStore } from "@/store/land-store";
 import { useTtsStore } from "@/store/tts-store";
 import { assessmentKey, lessonKey, n1LessonKey } from "./keys";
 import { uuidFrom, useOutbox, type LearningEvent } from "./events";
@@ -288,6 +289,8 @@ export async function signOutAndClear() {
     useFlashcardStore.setState({ reviewIds: [], quizSeen: {} });
     useSrsStore.setState({ cards: {}, migratedLeitner: true });
     useActivityStore.setState({ days: {}, active: {} });
+    // Vùng đất (cây đã gieo, Tinh thể đã tiêu) cũng là dữ liệu của người vừa đăng xuất
+    useLandStore.getState().reset();
     useOutbox.setState({ events: [], pulledAt: {}, imported: [], lastSyncAt: null, lastError: null });
   });
   await sb?.auth.signOut();
