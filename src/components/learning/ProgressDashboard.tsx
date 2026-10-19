@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Flame, Repeat2, Timer, Trophy } from "lucide-react";
 import { useHydrated } from "@/hooks/useHydrated";
@@ -10,8 +10,8 @@ import { useSrsStore, State } from "@/store/srs-store";
 import { useN1Store } from "@/store/n1-store";
 import { useEnStore } from "@/store/en-store";
 import { useOciAiStore } from "@/store/oci-ai-store";
-import { useFlashcardStore } from "@/store/flashcard-store";
-import { lessonKey, n1LessonKey } from "@/lib/learning/keys";
+import { useLearningProgress } from "@/hooks/useLearningProgress";
+import { courseProgress } from "@/lib/learning/progress";
 import { COURSE_LABEL, loadItemIndex, type ItemIndex } from "@/lib/learning/items";
 import { cn } from "@/lib/utils";
 
@@ -35,21 +35,12 @@ export function ProgressDashboard() {
   const n1 = useN1Store();
   const en = useEnStore();
   const oci = useOciAiStore();
-  const fc = useFlashcardStore((s) => s.progress);
   const [idx, setIdx] = useState<ItemIndex | null>(null);
   useEffect(() => {
     loadItemIndex().then(setIdx, () => {});
   }, []);
 
-  const doneKeys = useMemo(
-    () =>
-      new Set([
-        ...Object.keys(n1.done).map(n1LessonKey),
-        ...Object.keys(en.done).map(lessonKey.ipa),
-        ...Object.keys(oci.done).map(lessonKey.oci),
-      ]),
-    [n1.done, en.done, oci.done]
-  );
+  const { doneKeys, bjtKnown } = useLearningProgress();
 
   if (!hydrated) return null;
 
@@ -71,14 +62,8 @@ export function ProgressDashboard() {
     mature: list.filter((c) => c.state === State.Review && c.stability >= 21).length,
   };
 
-  const bjtTotal = idx ? Object.keys(idx.aliases).length : 0;
-  const bjtKnown = Object.values(fc).filter((p) => p.status === "mastered").length;
-  const courses = idx
-    ? Object.entries(idx.courses).map(([key, c]) => {
-        if (key === "bjt") return { key, title: c.title, done: bjtKnown, total: bjtTotal, unit: "từ đã thuộc" };
-        return { key, title: c.title, done: c.lessons.filter((l) => doneKeys.has(l)).length, total: c.lessons.length, unit: "bài" };
-      })
-    : [];
+  const bjt = { known: bjtKnown, total: idx ? Object.keys(idx.aliases).length : 0 };
+  const courses = idx ? Object.entries(idx.courses).map(([key, c]) => courseProgress({ key, ...c }, doneKeys, bjt)) : [];
 
   const quizzes = [
     ...Object.entries(n1.quiz).map(([k, q]) => ({ course: "jlpt-n1", k, score: q.last, total: q.total, at: q.at })),
@@ -120,7 +105,7 @@ export function ProgressDashboard() {
         <Card title="Tiến độ khóa học">
           <ul className="flex flex-col gap-4">
             {courses.map((c) => {
-              const pct = c.total ? Math.round((100 * c.done) / c.total) : 0;
+              const pct = c.pct;
               return (
                 <li key={c.key} className="flex flex-col gap-1.5">
                   <div className="flex items-baseline justify-between gap-2 text-[14px]">
