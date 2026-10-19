@@ -88,6 +88,10 @@ export function AccountPanel() {
           Bạn vẫn học được khi mất mạng; mọi hoạt động được lưu trên máy và tự gửi lên khi có kết nối.{" "}
           <Link href="/progress" className="font-semibold text-ink-2 underline">
             Xem tiến độ học tập
+          </Link>{" "}
+          ·{" "}
+          <Link href="/land" className="font-semibold text-ink-2 underline">
+            Vùng đất
           </Link>
         </p>
       </section>
