@@ -17,6 +17,7 @@ export const NAV_ITEMS = [
     match: (p: string) => p.startsWith("/courses") || p.startsWith("/jlpt-n1") || p.startsWith("/english"),
   },
   { href: "/progress", label: "Tiến độ", match: (p: string) => p.startsWith("/progress") || p.startsWith("/review") },
+  { href: "/land", label: "Vùng đất", match: (p: string) => p.startsWith("/land") },
 ];
 
 export function Header() {
