@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Flame } from "lucide-react";
 import { computeStreak, emptyDay, localDate, useActivityStore } from "@/store/activity-store";
-import { DAILY_GOAL, WELCOME_GIFT, XP_PER_CRYSTAL } from "@/lib/land/economy";
+import { WELCOME_GIFT, XP_PER_CRYSTAL } from "@/lib/land/economy";
+import { dailyPlan } from "@/lib/land/plan";
 import { cn } from "@/lib/utils";
 import { GEM_STYLE } from "./ui";
 
@@ -32,12 +33,7 @@ export function PlanStrip({ balance, earned, spent, xpToNext }: { balance: numbe
     };
   }, [open]);
 
-  const tasks = [
-    { label: `Đạt ${DAILY_GOAL.xp} XP hôm nay`, value: today.xp, goal: DAILY_GOAL.xp, unit: "XP", href: "/courses", cta: "Học tiếp" },
-    { label: `Ôn ${DAILY_GOAL.reviews} thẻ`, value: today.reviews, goal: DAILY_GOAL.reviews, unit: "thẻ", href: "/review", cta: "Ôn ngay" },
-    { label: `Học ${DAILY_GOAL.lessons} bài mới`, value: today.lessons, goal: DAILY_GOAL.lessons, unit: "bài", href: "/courses", cta: "Chọn khóa" },
-  ];
-  const done = tasks.filter((t) => t.value >= t.goal).length;
+  const { tasks, done } = dailyPlan(today);
 
   return (
     <div className="relative z-20 flex flex-wrap items-center gap-2 border-b border-line bg-surface px-4 py-2.5 sm:px-6 md:flex-nowrap md:gap-3">
@@ -75,7 +71,7 @@ export function PlanStrip({ balance, earned, spent, xpToNext }: { balance: numbe
             </h3>
             <ol className="flex flex-col gap-2.5">
               {tasks.map((t) => {
-                const ok = t.value >= t.goal;
+                const ok = t.done;
                 return (
                   <li key={t.label} className={cn("flex items-center gap-2.5 text-[13.5px]", ok ? "text-ink" : "text-ink-2")}>
                     <span
