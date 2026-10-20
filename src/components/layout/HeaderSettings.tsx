@@ -1,27 +1,23 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
-import { Pause, Play, Volume2 } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
+import { Volume2 } from "lucide-react";
 import { useTtsStore } from "@/store/tts-store";
 import { useHydrated } from "@/hooks/useHydrated";
-import { getPlaying, loadAudioManifest, speak, stopSpeaking, subscribePlaying, ttsSupported } from "@/lib/tts";
+import { loadAudioManifest } from "@/lib/tts";
 import { cn } from "@/lib/utils";
-
-const SAMPLE_ID = "header-voice-sample";
-const SAMPLE = "はじめまして。一緒に日本語を勉強しましょう。";
 
 /**
  * Nút "Giọng đọc" trên thanh tiêu đề: biểu tượng loa (+ chữ trên màn rộng), mở bảng chọn giọng đọc tiếng Nhật
- * (Nam / Nữ) dùng cho mọi nút loa trong app, kèm nút "Nghe thử".
+ * (Nam / Nữ) dùng cho mọi nút loa trong app.
  */
 export function HeaderSettings() {
   const hydrated = useHydrated();
-  const { gender, rate, setGender } = useTtsStore();
+  const { gender, setGender } = useTtsStore();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
   const panelId = useId();
-  const playing = useSyncExternalStore(subscribePlaying, getPlaying, () => null) === SAMPLE_ID;
 
   useEffect(() => {
     if (!open) return;
@@ -46,7 +42,6 @@ export function HeaderSettings() {
     { v: "male" as const, label: "Nam" },
     { v: "female" as const, label: "Nữ" },
   ];
-  const canSpeak = hydrated && ttsSupported();
 
   return (
     <div ref={root} className="relative">
@@ -94,16 +89,6 @@ export function HeaderSettings() {
               );
             })}
           </div>
-          {canSpeak && (
-            <button
-              type="button"
-              onClick={() => (playing ? stopSpeaking() : speak(SAMPLE_ID, [SAMPLE], { gender, rate }))}
-              className="flex h-9 items-center justify-center gap-2 rounded-lg border border-line-strong text-[13.5px] font-semibold text-ink transition-colors hover:border-ink-3 hover:bg-surface"
-            >
-              {playing ? <Pause className="h-4 w-4" aria-hidden /> : <Play className="h-4 w-4" aria-hidden />}
-              {playing ? "Dừng" : "Nghe thử"}
-            </button>
-          )}
           <p className="text-[12.5px] leading-snug text-ink-3">Áp dụng cho mọi nút loa trong các bài tiếng Nhật.</p>
         </div>
       )}
