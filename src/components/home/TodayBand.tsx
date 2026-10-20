@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { useViewer } from "./viewer";
 import { useWordOfDay } from "./vocab";
 import { Arrow, Gem } from "./icons";
+import { ChestSoon, DayOffSoon, GiftSoon } from "./Soon";
 
 const WEEKDAY_LONG = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
 const WEEKDAY_SHORT = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
@@ -26,9 +27,132 @@ function Pending({ lines = 3 }: { lines?: number }) {
   );
 }
 
+type Week = { key: string; label: string; today: boolean; on: boolean }[];
+
+/** Nhãn "Ví dụ" cho số liệu minh họa khách thấy (không phải số liệu của họ) */
+function Example({ children = "Ví dụ" }: { children?: string }) {
+  return <span className="tag ex-tag">{children}</span>;
+}
+
+/** Danh sách kế hoạch; bản ví dụ không phải liên kết */
+function PlanList({ plan, sample }: { plan: ReturnType<typeof dailyPlan>; sample?: boolean }) {
+  const pct = Math.round((100 * plan.done) / plan.tasks.length);
+  return (
+    <div className="stack">
+      <div className="row">
+        <span>
+          <b className="num">
+            {plan.done}/{plan.tasks.length}
+          </b>{" "}
+          mục đã xong
+        </span>
+        {sample ? <Example /> : <span className="num">{pct}%</span>}
+      </div>
+      <div
+        className="meter"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={plan.tasks.length}
+        aria-valuenow={plan.done}
+        aria-label={`${sample ? "Ví dụ: " : ""}Đã xong ${plan.done} trên ${plan.tasks.length} mục`}
+      >
+        <span style={{ width: `${pct}%` }} />
+      </div>
+      <ul className={cn("plan", sample && "sample")}>
+        {plan.tasks.map((t) => {
+          const inner = (
+            <>
+              <span className="box" aria-hidden />
+              <span className="t">
+                {t.label}
+                <span className="sr-only">{t.done ? " — đã xong" : sample ? "" : ` — ${t.cta}`}</span>
+              </span>
+              <span className="m">
+                {Math.min(t.value, t.goal)}/{t.goal} {t.unit}
+              </span>
+            </>
+          );
+          return (
+            <li key={t.id}>
+              {sample ? (
+                <div className={cn("chk", t.done && "done")}>{inner}</div>
+              ) : (
+                <Link href={t.href} className={cn("chk", t.done && "done")}>
+                  {inner}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function Rewards({ balance, todayXp, xpInto, sample }: { balance: number; todayXp: number; xpInto: number; sample?: boolean }) {
+  return (
+    <div className="stack">
+      <div className="kv">
+        <span className="kv-l">
+          Tinh thể {sample && <Example />}
+        </span>
+        <span className="v">
+          <Gem />
+          <span className="num">{balance.toLocaleString("vi-VN")}</span>
+        </span>
+        <span>Hôm nay</span>
+        <span className="v sm num">+{todayXp} XP</span>
+      </div>
+      <div className="prog">
+        <div className="row">
+          <span>Tinh thể tiếp theo</span>
+          <span className="num">còn {XP_PER_CRYSTAL - xpInto} XP</span>
+        </div>
+        <div className="meter" aria-hidden>
+          <span style={{ width: `${(100 * xpInto) / XP_PER_CRYSTAL}%` }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Streak({ streak, week, longest, todayOn, sample }: { streak: number; week: Week; longest: number; todayOn: boolean; sample?: boolean }) {
+  return (
+    <div className="stack lg">
+      <div className="row">
+        <p className="streak-n">
+          <b className="num">{streak}</b> ngày liên tiếp
+        </p>
+        {sample && <Example />}
+      </div>
+      <ol className="week" aria-label={sample ? "Ví dụ 7 ngày" : "7 ngày gần nhất"}>
+        {week.map((d) => (
+          <li key={d.key} className={cn("day", d.on && "done", d.today && "today")}>
+            <i aria-hidden />
+            <span>
+              {d.label}
+              <span className="sr-only">{d.on ? ": có học" : ": chưa học"}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+      <div className="rest">
+        <span>
+          Dài nhất <b className="num">{longest}</b> ngày
+        </span>
+        <span>{todayOn ? "Hôm nay đã học" : "Hôm nay chưa học"}</span>
+      </div>
+    </div>
+  );
+}
+
+/** Số liệu minh họa cho khách (gắn nhãn "Ví dụ") */
+const SAMPLE_DAY = { ...emptyDay(), xp: 30, reviews: 12, lessons: 0 };
+
 /**
  * Dải "Hôm nay": Ngày của bạn · Kế hoạch hôm nay · Phần thưởng · Chuỗi ngày.
- * Mọi số liệu lấy từ hoạt động học thật (activity-store) và vùng đất (land-store); khách thấy phần giới thiệu.
+ * Đã đăng nhập: số liệu thật từ activity-store và land-store. Khách: bản ví dụ có nhãn "Ví dụ" + lời mời đăng nhập.
+ * Quà hôm nay, Rương hiếm 7 ngày, Ngày nghỉ chưa làm: nội dung giới thiệu có nhãn "Sắp ra mắt".
  */
 export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode; streak: ReactNode } }) {
   const viewer = useViewer();
@@ -46,18 +170,17 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
   const xpInto = totalXp(days) % XP_PER_CRYSTAL;
   const streak = computeStreak(active, now);
   const longest = longestStreak(active);
-  const week = Array.from({ length: 7 }, (_, i) => {
+  const week: Week = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(now);
     d.setDate(d.getDate() - (6 - i));
     return { key: localDate(d), label: WEEKDAY_SHORT[d.getDay()], today: i === 6, on: !!active[localDate(d)] };
   });
+  const sampleWeek: Week = week.map((d, i) => ({ ...d, on: i >= 1 && i <= 5 }));
   const user = viewer === "user";
   const guest = viewer === "guest";
 
   return (
     <div className="cols c4 today" aria-busy={viewer === "loading"}>
-      <span className="edge-tab" aria-hidden />
-
       {/* ── Ngày của bạn ── */}
       <div className="col">
         <div className="art">
@@ -119,7 +242,8 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
           )}
           {guest && (
             <div className="signin">
-              <p>Đăng nhập để lập kế hoạch và giữ chuỗi ngày</p>
+              <p>Đăng nhập để có kế hoạch, phần thưởng và chuỗi ngày của riêng bạn</p>
+              <p className="sub">Các cột bên cạnh đang hiện số liệu ví dụ.</p>
               <div className="cta-row">
                 <Link className="btn btn-p btn-s" href="/login?next=/">
                   Đăng nhập
@@ -143,57 +267,10 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
             <span>hôm nay</span>
           </h3>
           {viewer === "loading" && <Pending />}
-          {user && (
-            <div className="stack">
-              <div className="row">
-                <span>
-                  <b className="num">
-                    {plan.done}/{plan.tasks.length}
-                  </b>{" "}
-                  mục đã xong
-                </span>
-                <span className="num">{Math.round((100 * plan.done) / plan.tasks.length)}%</span>
-              </div>
-              <div
-                className="meter"
-                role="progressbar"
-                aria-valuemin={0}
-                aria-valuemax={plan.tasks.length}
-                aria-valuenow={plan.done}
-                aria-label={`Đã xong ${plan.done} trên ${plan.tasks.length} mục`}
-              >
-                <span style={{ width: `${(100 * plan.done) / plan.tasks.length}%` }} />
-              </div>
-              <ul className="plan">
-                {plan.tasks.map((t) => (
-                  <li key={t.id}>
-                    <Link href={t.href} className={cn("chk", t.done && "done")}>
-                      <span className="box" aria-hidden />
-                      <span className="t">
-                        {t.label}
-                        <span className="sr-only">{t.done ? " — đã xong" : ` — ${t.cta}`}</span>
-                      </span>
-                      <span className="m">
-                        {Math.min(t.value, t.goal)}/{t.goal} {t.unit}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {guest && (
-            <div className="gdesc">
-              <p>Kế hoạch mỗi ngày:</p>
-              <ul>
-                {plan.tasks.map((t) => (
-                  <li key={t.id}>{t.label}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {user && <PlanList plan={plan} />}
+          {guest && <PlanList plan={dailyPlan(SAMPLE_DAY)} sample />}
           <p className="note foot">
-            Các mục tự đánh dấu xong khi bạn học, không cần tích tay.
+            Ba mục vừa sức, tự đánh dấu xong khi bạn học, không cần tích tay.
             {user && due > 0 && (
               <>
                 {" "}
@@ -213,41 +290,12 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
             <span>thưởng</span>
           </h3>
           {viewer === "loading" && <Pending />}
-          {user && (
-            <div className="stack">
-              <div className="kv">
-                <span>Tinh thể</span>
-                <span className="v">
-                  <Gem />
-                  <span className="num">{balance.toLocaleString("vi-VN")}</span>
-                </span>
-                <span>Hôm nay</span>
-                <span className="v sm num">+{today.xp} XP</span>
-              </div>
-              <div className="prog">
-                <div className="row">
-                  <span>Tinh thể tiếp theo</span>
-                  <span className="num">còn {XP_PER_CRYSTAL - xpInto} XP</span>
-                </div>
-                <div className="meter" aria-hidden>
-                  <span style={{ width: `${(100 * xpInto) / XP_PER_CRYSTAL}%` }} />
-                </div>
-              </div>
-              <div className="soon-row">
-                <span>Quà hôm nay · Rương hiếm 7 ngày</span>
-                <span className="tag">Sắp ra mắt</span>
-              </div>
-            </div>
-          )}
-          {guest && (
-            <div className="gdesc">
-              <p>
-                Mỗi {XP_PER_CRYSTAL} XP học được thành 1 Tinh thể. Lần đầu mở vùng đất, bạn được tặng {WELCOME_GIFT} Tinh thể để gieo cây đầu tiên.
-              </p>
-            </div>
-          )}
+          {user && <Rewards balance={balance} todayXp={today.xp} xpInto={xpInto} />}
+          {guest && <Rewards balance={WELCOME_GIFT + 20} todayXp={24} xpInto={4} sample />}
+          <GiftSoon />
+          <ChestSoon />
           <p className="note foot">
-            Tinh thể dùng để gieo cây quý ở Thảo nguyên Pha Lê.{" "}
+            Mỗi {XP_PER_CRYSTAL} XP thành 1 Tinh thể, dùng để gieo cây quý ở Thảo nguyên Pha Lê.{" "}
             <Link className="lnk" href="/land">
               Mở vùng đất
             </Link>
@@ -264,36 +312,10 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
             <span>ngày</span>
           </h3>
           {viewer === "loading" && <Pending />}
-          {user && (
-            <div className="stack lg">
-              <p className="streak-n">
-                <b className="num">{streak}</b> ngày liên tiếp
-              </p>
-              <ol className="week" aria-label="7 ngày gần nhất">
-                {week.map((d) => (
-                  <li key={d.key} className={cn("day", d.on && "done", d.today && "today")}>
-                    <i aria-hidden />
-                    <span>
-                      {d.label}
-                      <span className="sr-only">{d.on ? ": có học" : ": chưa học"}</span>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-              <div className="rest">
-                <span>
-                  Dài nhất <b className="num">{longest}</b> ngày
-                </span>
-                <span>{active[localDate(now)] ? "Hôm nay đã học" : "Hôm nay chưa học"}</span>
-              </div>
-            </div>
-          )}
-          {guest && (
-            <div className="gdesc">
-              <p>Mỗi ngày có học thật (ôn thẻ, học bài hoặc làm câu hỏi) là một ngày trong chuỗi. Bỏ một ngày thì chuỗi bắt đầu lại.</p>
-            </div>
-          )}
-          <p className="note foot">Chỉ mở trang thì chưa tính; cần ôn thẻ, học bài hoặc làm câu hỏi.</p>
+          {user && <Streak streak={streak} week={week} longest={longest} todayOn={!!active[localDate(now)]} />}
+          {guest && <Streak streak={5} week={sampleWeek} longest={12} todayOn={false} sample />}
+          <DayOffSoon />
+          <p className="note foot">Mỗi ngày có học thật (ôn thẻ, học bài hoặc làm câu hỏi) là một ngày trong chuỗi. Chỉ mở trang thì chưa tính.</p>
         </div>
       </div>
     </div>
