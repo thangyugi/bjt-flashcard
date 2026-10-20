@@ -86,7 +86,7 @@ export function InstallAppCard() {
   };
 
   return (
-    <div className="relative flex items-start gap-4 rounded-[18px] border border-line bg-surface p-5">
+    <div className="relative flex items-start gap-4 panel p-5">
       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand font-mincho text-xl font-bold text-white">
         語
       </div>

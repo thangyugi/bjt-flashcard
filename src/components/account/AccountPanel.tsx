@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Page, PageHeader } from "@/components/ui/page";
 import { useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { CloudOff, Download, LogOut, RefreshCw, Trash2 } from "lucide-react";
@@ -65,13 +66,11 @@ export function AccountPanel() {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-[640px] flex-col gap-5 px-4 py-8 sm:py-12">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-[28px] leading-tight font-extrabold tracking-[-0.02em] text-ink">Tài khoản</h1>
-        <p className="text-[15px] text-ink-2">{user.email}</p>
-      </header>
+    <Page>
+      <PageHeader eyebrow="Tài khoản" title="Tài khoản" lead={user.email} size="md" />
+      <div className="flex w-full max-w-[720px] flex-col gap-5">
 
-      <section className="flex flex-col gap-3 rounded-3xl border border-line bg-surface px-5 py-5 sm:px-6">
+      <section className="flex flex-col gap-3 panel px-5 py-5 sm:px-6">
         <h2 className="text-[16px] font-bold text-ink">Đồng bộ tiến độ</h2>
         <div className="flex flex-wrap items-center gap-3 text-[14px] text-ink-2">
           {status === "offline" ? <CloudOff className="h-4 w-4" aria-hidden /> : <RefreshCw className={`h-4 w-4 ${status === "syncing" ? "animate-spin" : ""}`} aria-hidden />}
@@ -96,12 +95,12 @@ export function AccountPanel() {
         </p>
       </section>
 
-      <section className="flex flex-col gap-3 rounded-3xl border border-line bg-surface px-5 py-5 sm:px-6">
+      <section className="flex flex-col gap-3 panel px-5 py-5 sm:px-6">
         <h2 className="text-[16px] font-bold text-ink">Hồ sơ</h2>
         <ProfileForm key={user.id} initial={(user.user_metadata?.display_name as string | undefined) ?? ""} onError={setErr} />
       </section>
 
-      <section className="flex flex-col gap-3 rounded-3xl border border-line bg-surface px-5 py-5 sm:px-6">
+      <section className="flex flex-col gap-3 panel px-5 py-5 sm:px-6">
         <h2 className="text-[16px] font-bold text-ink">Dữ liệu của bạn</h2>
         <p className="text-[13px] leading-relaxed text-ink-3">
           Bạn có quyền tải về hoặc xóa toàn bộ dữ liệu cá nhân bất cứ lúc nào (Nghị định 13/2023/NĐ-CP).{" "}
@@ -144,7 +143,8 @@ export function AccountPanel() {
           <Trash2 className="h-4 w-4" aria-hidden /> {busy === "delete" ? "Đang xóa…" : "Xóa vĩnh viễn"}
         </button>
       </section>
-    </div>
+      </div>
+    </Page>
   );
 }
 

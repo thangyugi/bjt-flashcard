@@ -11,6 +11,7 @@ import { ELIGIBLE, QUESTION_TYPES, eligibleWords, type QuestionType } from "@/li
 import { resolveScope, type ScopeKey } from "@/lib/quiz-scope";
 import type { SourceType } from "@/types/vocabulary";
 import { cn } from "@/lib/utils";
+import { PageHeader } from "@/components/ui/page";
 
 const COUNTS = [10, 20, 30, 50];
 const LEVEL_STYLE = {
@@ -175,15 +176,13 @@ export function QuizHub() {
     );
 
   return (
-    <div className="mx-auto flex max-w-[1280px] flex-col gap-6 px-4 pt-6 pb-36 sm:px-8 sm:pt-10 lg:flex-row lg:items-start lg:gap-8 lg:pb-12">
+    <div className="page-x flex flex-col gap-10 pt-6 pb-36 sm:gap-12 sm:pt-10 lg:pb-16">
+    <PageHeader eyebrow="Trắc nghiệm" title="Trắc nghiệm" lead="Chọn phạm vi ôn tập, số câu và dạng câu hỏi rồi bắt đầu." />
+    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
       <div className="flex min-w-0 flex-1 flex-col gap-8">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-extrabold tracking-tight text-ink sm:text-[28px]">Trắc nghiệm</h1>
-          <p className="text-sm text-ink-3">Chọn phạm vi ôn tập, số câu và dạng câu hỏi rồi bắt đầu.</p>
-        </div>
 
         <section className="flex flex-col gap-3">
-          <h2 className="text-[17px] font-extrabold text-ink">Ôn tập nhanh</h2>
+          <h2 className="hx-title border-b border-line pb-3 text-[clamp(22px,2.2vw,30px)]">Ôn tập nhanh</h2>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {quick.map((q) => {
               const n = stats[q.key] ?? 0;
@@ -217,8 +216,8 @@ export function QuizHub() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-[17px] font-extrabold text-ink">Theo chủ đề</h2>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-3">
+            <h2 className="hx-title text-[clamp(22px,2.2vw,30px)]">Theo chủ đề</h2>
             <div role="group" aria-label="Lọc theo nguồn" className="flex gap-1 rounded-xl bg-surface-2 p-1">
               {(["ALL", "BJT", "JLPT"] as const).map((s) => (
                 <button
@@ -265,11 +264,11 @@ export function QuizHub() {
         </section>
 
         {/* Mobile / tablet: phần thiết lập nằm dưới danh sách */}
-        <section className="rounded-[20px] border border-line bg-surface p-5 lg:hidden">{setup}</section>
+        <section className="panel p-5 lg:hidden">{setup}</section>
       </div>
 
       {/* Desktop: thiết lập cố định bên phải */}
-      <aside className="sticky top-24 hidden w-[380px] shrink-0 rounded-[20px] border border-line bg-surface p-5 lg:block">{setup}</aside>
+      <aside className="sticky top-[calc(var(--header-h)+24px)] hidden w-[380px] shrink-0 panel p-5 lg:block">{setup}</aside>
 
       {/* Mobile / tablet: nút bắt đầu cố định */}
       <div className="fixed inset-x-0 bottom-20 z-40 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur md:bottom-0 lg:hidden">
@@ -291,7 +290,7 @@ export function QuizHub() {
           </button>
         </div>
       </div>
-
+    </div>
     </div>
   );
 }

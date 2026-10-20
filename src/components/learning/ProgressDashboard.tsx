@@ -77,7 +77,7 @@ export function ProgressDashboard() {
   return (
     <div className="flex flex-col gap-6">
       {enabled && !user && (
-        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-surface-2 px-4 py-3 text-[14px] text-ink-2">
+        <div className="flex flex-wrap items-center gap-3 panel-2 px-4 py-3 text-[14px] text-ink-2">
           Tiến độ đang lưu trên trình duyệt này.
           <Link href="/login?next=/progress" className="ml-auto rounded-lg bg-ink px-3 py-1.5 text-[13px] font-bold text-paper">
             Đăng nhập để đồng bộ
@@ -201,7 +201,7 @@ function Stat({
       <span className="text-[12.5px] text-ink-3">{sub}</span>
     </>
   );
-  const cls = "flex flex-col gap-1 rounded-3xl border border-line bg-surface px-4 py-4";
+  const cls = "flex flex-col gap-1 panel px-4 py-4";
   return href ? (
     <Link href={href} className={cn(cls, "hover:border-line-strong")}>
       {body}
@@ -213,7 +213,7 @@ function Stat({
 
 function Card({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-3 rounded-3xl border border-line bg-surface px-5 py-5 sm:px-6">
+    <section className="flex flex-col gap-3 panel px-5 py-5 sm:px-6">
       <div className="flex flex-col gap-0.5">
         <h2 className="text-[16px] font-bold text-ink">{title}</h2>
         {note && <p className="text-[12.5px] text-ink-3">{note}</p>}

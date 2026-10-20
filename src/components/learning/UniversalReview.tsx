@@ -75,7 +75,7 @@ function Session({ idx, course }: { idx: ItemIndex; course: CourseFilter }) {
 
   if (!r.total)
     return (
-      <div className="flex flex-col gap-3 rounded-3xl border border-line bg-surface px-6 py-6">
+      <div className="flex flex-col gap-3 panel px-6 py-6">
         <p className="text-[15px] leading-relaxed text-ink-2">
           Bộ ôn tập đang trống. Thêm mục học từ các bài: nút <b>“Thêm … vào ôn tập”</b> ở đầu mỗi bài từ vựng / ngữ pháp N1, học xong bài
           IPA, hoặc đánh dấu từ BJT là “đang học”.
@@ -97,7 +97,7 @@ function Session({ idx, course }: { idx: ItemIndex; course: CourseFilter }) {
   const info = r.current ? idx.items[r.current.item] : undefined;
   if (!r.current)
     return (
-      <div className="flex flex-col items-center gap-3 rounded-3xl border border-line bg-surface px-6 py-10 text-center">
+      <div className="flex flex-col items-center gap-3 panel px-6 py-10 text-center">
         <CalendarCheck className="h-10 w-10 text-ok" aria-hidden />
         <p className="text-[18px] font-extrabold text-ink">{r.done ? `Xong ${r.done} lượt ôn! 🎉` : "Hiện không còn thẻ nào đến hạn."}</p>
         <p className="text-[14px] text-ink-2">
@@ -117,7 +117,7 @@ function Session({ idx, course }: { idx: ItemIndex; course: CourseFilter }) {
         </span>
         <span>Phiên này: {r.done}</span>
       </div>
-      <div className="flex min-h-[320px] flex-col overflow-hidden rounded-3xl border border-line bg-surface">
+      <div className="flex min-h-[320px] flex-col overflow-hidden panel">
         <Front info={info} fallback={r.current.item} />
         {flipped ? (
           <Back info={info} />
