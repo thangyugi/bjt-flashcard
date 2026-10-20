@@ -279,7 +279,7 @@ export function OciShell({ modules, lessons, children }: Props) {
 
           <div className="oci-side-foot">
             <Link href="/" className="oci-side-link">
-              <ArrowLeft aria-hidden /> Về BJT Flashcard
+              <ArrowLeft aria-hidden /> Về trang chủ LeoEdu
             </Link>
           </div>
         </aside>

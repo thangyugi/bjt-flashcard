@@ -40,7 +40,7 @@ export function HomeFooter() {
             <span className="mark" aria-hidden>
               語
             </span>
-            <span className="bn">BJT Flashcard</span>
+            <span className="bn">LeoEdu</span>
           </Link>
           <p className="note">Học ngôn ngữ và chứng chỉ bằng tiếng Việt.</p>
         </div>
@@ -56,7 +56,7 @@ export function HomeFooter() {
         ))}
       </div>
       <div className="legal">
-        <span>© 2026 BJT Flashcard</span>
+        <span>© 2026 LeoEdu</span>
         <span className="jp" lang="ja">
           一歩ずつ
         </span>

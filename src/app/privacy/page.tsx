@@ -45,7 +45,7 @@ const SECTIONS: { h: string; p: string[] }[] = [
 export default function PrivacyPage() {
   return (
     <Page>
-      <PageHeader eyebrow="Phiên bản 17/10/2026" title="Chính sách quyền riêng tư" size="md" />
+      <PageHeader eyebrow="LeoEdu · Phiên bản 17/10/2026" title="Chính sách quyền riêng tư" size="md" />
       <div className="flex max-w-[760px] flex-col gap-8">
       {SECTIONS.map((s) => (
         <section key={s.h} className="flex flex-col gap-2">

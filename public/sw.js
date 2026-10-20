@@ -1,4 +1,4 @@
-/* Service worker của BJT Flashcard — cho phép cài app (PWA) và học khi mất mạng.
+/* Service worker của LeoEdu — cho phép cài app (PWA) và học khi mất mạng.
  *
  * - Tài nguyên tĩnh có hash (/_next/static, icon): lấy từ cache trước.
  * - Trang HTML & dữ liệu RSC: lấy mạng trước, lưu bản mới vào cache; mất mạng thì dùng bản đã lưu,

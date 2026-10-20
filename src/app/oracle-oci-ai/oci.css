@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════
    OCI AI Foundations — giao diện riêng cho /oracle-oci-ai
    Mọi selector đều nằm dưới .oci-root để không ảnh hưởng
-   tới phần BJT Flashcard của ứng dụng.
+   tới phần còn lại của LeoEdu.
 ══════════════════════════════════════════════════════════ */
 
 .oci-root {

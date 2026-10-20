@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WifiOff } from "lucide-react";
 
-export const metadata: Metadata = { title: "Mất kết nối — BJT Flashcard" };
+export const metadata: Metadata = { title: "Mất kết nối" };
 
 /** Trang service worker trả về khi mất mạng và trang cần mở chưa từng được lưu. */
 export default function OfflinePage() {

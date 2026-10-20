@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-/** Tiến độ khóa JLPT N1 — lưu riêng, không đụng tới dữ liệu BJT Flashcard / OCI. */
+/** Tiến độ khóa JLPT N1 — lưu riêng, không đụng tới dữ liệu từ vựng BJT / OCI. */
 interface N1Store {
   /** Chương đã học xong: id → thời điểm (ISO) */
   done: Record<string, string>;

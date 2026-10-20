@@ -95,7 +95,7 @@ export function Divider({ label }: { label: string }) {
 /** Supabase chưa cấu hình: app vẫn chạy, tiến độ lưu trên máy */
 export function NotConfigured() {
   return (
-    <AuthShell title="Tài khoản chưa bật" sub="Bản app này chưa kết nối máy chủ tài khoản.">
+    <AuthShell title="Tài khoản chưa bật" sub="Bản LeoEdu này chưa kết nối máy chủ tài khoản.">
       <Notice>
         Bạn vẫn học bình thường — tiến độ được lưu trên trình duyệt này. Khi quản trị viên bật tài khoản (đặt biến môi trường
         NEXT_PUBLIC_SUPABASE_URL và NEXT_PUBLIC_SUPABASE_ANON_KEY), bạn có thể đăng nhập để đồng bộ giữa các thiết bị.

@@ -40,7 +40,7 @@ export function Header() {
   return (
     <header className={cn("sticky top-0 z-50 border-b border-line-strong bg-paper", hideOnMobile && "hidden md:block")}>
       <div className="page-x flex h-[var(--header-h)] items-center justify-between gap-4">
-        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="BJT Flashcard, trang chủ">
+        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="LeoEdu, trang chủ">
           <span
             className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-brand font-mincho text-[18px] leading-none font-bold text-white"
             aria-hidden
@@ -48,7 +48,7 @@ export function Header() {
             語
           </span>
           <span className="text-[15px] font-bold tracking-[-0.01em] whitespace-nowrap text-ink md:hidden lg:inline">
-            BJT Flashcard
+            LeoEdu
           </span>
         </Link>
 

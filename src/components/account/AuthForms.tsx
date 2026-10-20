@@ -96,7 +96,7 @@ export function LoginForm() {
   return (
     <AuthShell
       title="Đăng nhập"
-      sub="Đồng bộ tiến độ học giữa điện thoại và máy tính."
+      sub="Đăng nhập LeoEdu để đồng bộ tiến độ học giữa điện thoại và máy tính."
       foot={
         <>
           Chưa có tài khoản?{" "}
@@ -172,7 +172,7 @@ export function RegisterForm() {
   return (
     <AuthShell
       title="Tạo tài khoản"
-      sub="Miễn phí. Tiến độ đang có trên máy này sẽ được chuyển vào tài khoản."
+      sub="Tài khoản LeoEdu miễn phí. Tiến độ đang có trên máy này sẽ được chuyển vào tài khoản."
       foot={
         <>
           Đã có tài khoản?{" "}

@@ -91,7 +91,7 @@ export function InstallAppCard() {
         語
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-1.5 pr-6">
-        <span className="font-bold text-ink">Cài BJT Flashcard lên máy</span>
+        <span className="font-bold text-ink">Cài LeoEdu lên máy</span>
         {ios ? (
           <p className="text-sm leading-relaxed text-ink-2">
             Trên Safari, nhấn <Share className="inline h-4 w-4 align-[-3px] text-brand" aria-label="Chia sẻ" /> rồi chọn{" "}

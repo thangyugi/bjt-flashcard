@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-/** Tiến độ khóa OCI AI Foundations — lưu riêng, không đụng tới dữ liệu BJT Flashcard. */
+/** Tiến độ khóa OCI AI Foundations — lưu riêng, không đụng tới dữ liệu từ vựng BJT. */
 interface OciAiStore {
   /** Bài đã học xong: id → thời điểm đánh dấu (ISO) */
   done: Record<string, string>;

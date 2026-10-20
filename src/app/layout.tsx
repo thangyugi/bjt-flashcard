@@ -39,19 +39,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BJT Flashcard — Học từ vựng tiếng Nhật thương mại",
+  title: {
+    default: "LeoEdu — Học ngôn ngữ và chứng chỉ bằng tiếng Việt",
+    template: "%s — LeoEdu",
+  },
   description:
-    "Ứng dụng học từ vựng tiếng Nhật phục vụ ôn thi BJT Business Japanese Test. Flashcard thông minh nhóm theo chủ đề, có ghi chú ngữ cảnh business.",
-  keywords: ["BJT", "tiếng Nhật", "business Japanese", "từ vựng", "flashcard", "JLPT N1"],
-  applicationName: "BJT Flashcard",
-  appleWebApp: { capable: true, title: "BJT Flashcard", statusBarStyle: "default" },
+    "LeoEdu: ngữ pháp và từ vựng JLPT N1 kể thành truyện, phát âm tiếng Anh IPA, chứng chỉ OCI AI Foundations và từ vựng tiếng Nhật thương mại BJT — học bằng tiếng Việt, ôn tập FSRS.",
+  keywords: ["LeoEdu", "JLPT N1", "tiếng Nhật", "IPA", "tiếng Anh", "OCI AI Foundations", "BJT", "flashcard", "FSRS"],
+  applicationName: "LeoEdu",
+  appleWebApp: { capable: true, title: "LeoEdu", statusBarStyle: "default" },
   icons: {
     icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],
     apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
   },
   openGraph: {
-    title: "BJT Flashcard",
-    description: "Học từ vựng tiếng Nhật thương mại hiệu quả",
+    title: "LeoEdu",
+    description: "Học ngôn ngữ và chứng chỉ bằng tiếng Việt",
     type: "website",
   },
 };
