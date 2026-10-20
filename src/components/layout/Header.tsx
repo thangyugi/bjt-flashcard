@@ -2,10 +2,15 @@
 
 import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
-import { useProgressStats } from "@/hooks/useProgressStats";
 import { cn } from "@/lib/utils";
-import { VoiceToggle } from "@/components/jlpt-n1/Speak";
+import { useAuth } from "@/hooks/useAuth";
+import { useHydrated } from "@/hooks/useHydrated";
+import { useActivityStore } from "@/store/activity-store";
+import { useLandStore } from "@/store/land-store";
+import { crystalBalance } from "@/lib/land/economy";
 import { AccountButton } from "@/components/account/AccountButton";
+import { HeaderSettings } from "@/components/layout/HeaderSettings";
+import { Gem } from "@/components/home/icons";
 
 export const NAV_ITEMS = [
   { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
@@ -20,9 +25,15 @@ export const NAV_ITEMS = [
   { href: "/land", label: "Vùng đất", match: (p: string) => p.startsWith("/land") },
 ];
 
+/** Trên thanh ngang, logo đã dẫn về trang chủ nên bỏ mục "Tổng quan" cho gọn (thanh dưới đáy trên mobile vẫn có). */
+const BAR_ITEMS = NAV_ITEMS.filter((i) => i.href !== "/");
+
+/**
+ * Thanh tiêu đề chung: toàn bề ngang, nền giấy, một vạch mảnh phía dưới.
+ * Logo + tên, các mục điều hướng, chip Tinh thể (khi đã đăng nhập), cài đặt giọng đọc và nút tài khoản.
+ */
 export function Header() {
   const pathname = usePathname();
-  const { mastered, total, pct } = useProgressStats();
 
   // Trang học OCI AI Foundations có thanh điều hướng riêng
   if (pathname.startsWith("/oracle-oci-ai")) return null;
@@ -31,30 +42,22 @@ export function Header() {
   const hideOnMobile = pathname.startsWith("/study/") || pathname.startsWith("/quiz/play");
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-xl",
-        hideOnMobile && "hidden md:block"
-      )}
-    >
-      <div className="mx-auto flex h-14 max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-8 md:h-16">
-        {/* Logo */}
-        <Link href="/" className="flex min-w-0 items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-brand font-mincho text-xl font-bold text-white">
+    <header className={cn("sticky top-0 z-50 border-b border-line-strong bg-paper", hideOnMobile && "hidden md:block")}>
+      <div className="page-x flex h-[var(--header-h)] items-center justify-between gap-4">
+        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="BJT Flashcard, trang chủ">
+          <span
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-brand font-mincho text-[18px] leading-none font-bold text-white"
+            aria-hidden
+          >
             語
-          </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-[15px] font-bold tracking-tight whitespace-nowrap text-ink">BJT Flashcard</span>
-            <span className="hidden font-jp text-[11px] text-ink-3 lg:block">ビジネス日本語</span>
-          </div>
+          </span>
+          <span className="text-[15px] font-bold tracking-[-0.01em] whitespace-nowrap text-ink md:hidden lg:inline">
+            BJT Flashcard
+          </span>
         </Link>
 
-        {/* Nav — tablet / desktop */}
-        <nav
-          aria-label="Điều hướng chính"
-          className="hidden items-center gap-1 rounded-xl bg-surface-2 p-1 md:flex"
-        >
-          {NAV_ITEMS.map((item) => {
+        <nav aria-label="Điều hướng chính" className="hidden h-full items-stretch gap-5 md:flex lg:gap-7">
+          {BAR_ITEMS.map((item) => {
             const active = item.match(pathname);
             return (
               <Link
@@ -62,37 +65,45 @@ export function Header() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "rounded-[9px] px-3 py-2 text-sm transition-colors lg:px-4",
-                  active
-                    ? "bg-surface font-semibold text-ink shadow-[0_1px_2px_rgba(28,25,23,0.04),0_2px_8px_rgba(28,25,23,0.04)]"
-                    : "font-medium text-ink-2 hover:text-ink"
+                  "relative flex items-center text-[14px] whitespace-nowrap transition-colors",
+                  active ? "font-semibold text-ink" : "font-medium text-ink-2 hover:text-ink"
                 )}
               >
                 <PendingLabel label={item.label} />
+                {active && <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-brand" aria-hidden />}
               </Link>
             );
           })}
         </nav>
 
-        {/* Giọng đọc + tiến độ tổng */}
-        <div className="flex items-center gap-3">
-        <VoiceToggle />
-        <div className="flex items-center gap-2.5 text-[13px]" title={`Đã thuộc ${mastered}/${total} từ`}>
-          <span className="hidden font-medium text-ink-3 lg:inline">
-            {mastered}/{total}
-          </span>
-          <div className="hidden h-1.5 w-14 overflow-hidden rounded-full bg-track sm:block lg:w-[88px]">
-            <div
-              className="h-full rounded-full bg-brand transition-all duration-700"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <span className="font-bold text-brand">{pct}%</span>
-        </div>
-        <AccountButton />
+        <div className="flex items-center gap-2.5">
+          <CrystalChip />
+          <HeaderSettings />
+          <AccountButton />
         </div>
       </div>
     </header>
+  );
+}
+
+/** Chip Tinh thể: số dư thật (hoạt động học − đã tiêu ở vùng đất), chỉ hiện khi đã đăng nhập */
+function CrystalChip() {
+  const hydrated = useHydrated();
+  const { user } = useAuth();
+  const days = useActivityStore((s) => s.days);
+  const spent = useLandStore((s) => s.spent);
+  if (!hydrated || !user) return null;
+  const balance = crystalBalance(days, spent);
+  return (
+    <Link
+      href="/land"
+      title="Tinh thể — mở vùng đất"
+      aria-label={`${balance.toLocaleString("vi-VN")} Tinh thể, mở vùng đất`}
+      className="flex h-9 items-center gap-2 rounded-lg border border-line-strong px-3 text-[13.5px] font-semibold text-ink tabular-nums transition-colors hover:border-ink-3 [&_svg]:h-3.5 [&_svg]:w-3.5"
+    >
+      <Gem />
+      {balance.toLocaleString("vi-VN")}
+    </Link>
   );
 }
 
