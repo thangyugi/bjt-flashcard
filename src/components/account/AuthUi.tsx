@@ -30,7 +30,7 @@ function AuthBenefits() {
         ))}
       </ul>
       <p className="text-[13.5px] leading-relaxed text-ink-3">
-        Mọi bài học vẫn mở miễn phí khi chưa đăng nhập. Tài khoản chỉ để lưu tiến độ và đồng bộ giữa điện thoại và máy tính.
+        Tài khoản LeoEdu miễn phí và cần có để học: mọi bài học, trắc nghiệm và ôn tập lưu tiến độ vào tài khoản, đồng bộ giữa điện thoại và máy tính.
       </p>
     </div>
   );
@@ -138,13 +138,13 @@ export function Divider({ label }: { label: string }) {
   );
 }
 
-/** Supabase chưa cấu hình: app vẫn chạy, tiến độ lưu trên máy */
+/** Supabase chưa cấu hình: chưa có tài khoản nên chưa vào học được (trang công khai vẫn mở) */
 export function NotConfigured() {
   return (
     <AuthShell title="Tài khoản chưa bật" sub="Bản LeoEdu này chưa kết nối máy chủ tài khoản.">
       <Notice>
-        Bạn vẫn học bình thường — tiến độ được lưu trên trình duyệt này. Khi quản trị viên bật tài khoản (đặt biến môi trường
-        NEXT_PUBLIC_SUPABASE_URL và NEXT_PUBLIC_SUPABASE_ANON_KEY), bạn có thể đăng nhập để đồng bộ giữa các thiết bị.
+        Học trên LeoEdu cần tài khoản, nên bản này chưa vào học được. Quản trị viên cần bật tài khoản bằng biến môi trường
+        NEXT_PUBLIC_SUPABASE_URL và NEXT_PUBLIC_SUPABASE_ANON_KEY.
       </Notice>
       <Link href="/" className="text-center text-[14px] font-semibold text-brand hover:underline">
         Về trang chủ

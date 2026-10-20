@@ -52,7 +52,12 @@ export function CourseLink({
   const p = user ? courseProgress(lessons, doneKeys, { known: bjtKnown, total: bjtTotal }) : null;
 
   return (
-    <Link className="col course" href={(user && cont) || href} style={{ "--c": color } as CSSProperties}>
+    <Link
+      className="col course"
+      // Khách: đăng ký trước, xong quay về đúng khóa học (mọi nội dung học cần tài khoản)
+      href={user ? cont || href : viewer === "guest" ? `/register?next=${encodeURIComponent(href)}` : href}
+      style={{ "--c": color } as CSSProperties}
+    >
       <div className="art">{art}</div>
       <div className="cbody">
         {body}
@@ -70,7 +75,7 @@ export function CourseLink({
           </div>
         )}
         <div className="go foot">
-          <span>{user ? "Học tiếp" : viewer === "guest" ? "Xem khóa học" : " "}</span>
+          <span>{user ? "Học tiếp" : viewer === "guest" ? "Đăng ký để học" : " "}</span>
           <ArrowLong />
         </div>
       </div>

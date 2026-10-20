@@ -250,19 +250,23 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
           )}
           {guest && (
             <div className="signin">
-              <p>Đăng nhập để có kế hoạch, phần thưởng và chuỗi ngày của riêng bạn</p>
+              <p>Tạo tài khoản miễn phí để bắt đầu học và có kế hoạch, phần thưởng, chuỗi ngày của riêng bạn</p>
               <p className="sub">Các cột bên cạnh đang hiện số liệu ví dụ.</p>
               <div className="cta-row">
-                <Link className="btn btn-p btn-s" href="/login?next=/">
-                  Đăng nhập
+                <Link className="btn btn-p btn-s" href="/register?next=/">
+                  Đăng ký miễn phí
                 </Link>
-                <Link className="btn btn-g btn-s" href="/register?next=/">
-                  Tạo tài khoản
+                <Link className="btn btn-g btn-s" href="/login?next=/">
+                  Đăng nhập
                 </Link>
               </div>
             </div>
           )}
-          <p className="note foot">Mọi bài học đều mở để xem miễn phí. Tài khoản giúp lưu tiến độ, chuỗi ngày và Tinh thể trên mọi thiết bị.</p>
+          <p className="note foot">
+            {user
+              ? "Tiến độ, lịch ôn, chuỗi ngày và Tinh thể được lưu vào tài khoản của bạn, dùng được trên mọi thiết bị."
+              : "Học trên LeoEdu cần một tài khoản miễn phí: tiến độ, lịch ôn, chuỗi ngày và Tinh thể được lưu vào tài khoản, dùng được trên mọi thiết bị."}
+          </p>
         </div>
       </div>
 

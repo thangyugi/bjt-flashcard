@@ -33,7 +33,7 @@ export default function HomePage() {
           id="h-courses"
           eyebrow="Khóa học"
           title={[`${totals.courses} khóa`, `${totals.lessons.toLocaleString("vi-VN")} bài`, `${totals.items.toLocaleString("vi-VN")} mục học`]}
-          lead="Nội dung mở để xem miễn phí. Đăng nhập khi bạn muốn lưu tiến độ, lịch ôn và phần thưởng."
+          lead="Tạo tài khoản miễn phí để vào học: tiến độ, lịch ôn và phần thưởng được lưu vào tài khoản của bạn."
         />
         <CourseBand catalog={catalog} />
       </section>

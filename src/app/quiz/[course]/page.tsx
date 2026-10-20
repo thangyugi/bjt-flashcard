@@ -55,7 +55,7 @@ export default async function CourseQuizPage({ params }: PageProps<"/quiz/[cours
         aside={
           <>
             <AsideNote title="Sau khi làm bài">
-              <p>Câu sai được đưa vào ôn tập ngắt quãng, kết quả lần gần nhất hiện ngay trên ô của từng dạng.</p>
+              <p>Kết quả lần gần nhất hiện ngay trên ô của từng dạng. Muốn ôn lại theo lịch, thêm các mục của bài vào lịch ôn ngay trong trang bài học.</p>
               <Link href="/review" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
                 Ôn tập tổng hợp
               </Link>

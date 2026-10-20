@@ -1,7 +1,16 @@
 # LeoEdu
 
 LeoEdu là ứng dụng học ngôn ngữ và chứng chỉ bằng tiếng Việt: ngữ pháp và từ vựng JLPT N1, phát âm tiếng Anh (IPA),
-OCI AI Foundations và từ vựng tiếng Nhật thương mại (BJT), ôn tập theo lịch FSRS, dùng được offline (PWA).
+OCI AI Foundations và từ vựng tiếng Nhật thương mại (BJT), lịch ôn thông minh (thuật toán FSRS), dùng được offline (PWA).
+
+## Tài khoản và quyền truy cập
+
+Học trên LeoEdu cần tài khoản (miễn phí). Không cần đăng nhập: trang chủ (bản giới thiệu cho khách), `/login`, `/register`,
+`/forgot-password`, `/reset-password`, `/auth/callback`, `/privacy`, `/offline`. Mọi trang khác (khóa học, học bài, trắc nghiệm,
+ôn tập, tiến độ, vùng đất, tài khoản…) hiện màn "Bạn cần tài khoản để học" cho khách, với nút Đăng ký / Đăng nhập quay lại đúng trang.
+Cổng đăng nhập chạy phía trình duyệt (`src/components/account/RequireAuth.tsx`, đặt một lần trong `src/app/layout.tsx`);
+danh sách trang công khai là `PUBLIC_PATHS` trong file đó. Người đã đăng nhập vẫn vào học được khi mất mạng nhờ phiên lưu trên máy.
+Chưa đặt `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` thì các trang học hiện màn mời đăng nhập kèm ghi chú chưa bật tài khoản.
 
 Tên repo (`bjt-flashcard`) và các khóa lưu trữ trên trình duyệt giữ nguyên để không mất dữ liệu học của người dùng.
 
