@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./oci.css";
 import { getCourseMeta } from "@/data/oci-ai/course";
 import { OciShell } from "@/components/oci-ai/OciShell";
-import { THEME_INIT_SCRIPT } from "@/components/oci-ai/theme-script";
 
 export const metadata: Metadata = {
   title: {
@@ -13,25 +12,15 @@ export const metadata: Metadata = {
     "Khóa học Oracle Cloud Infrastructure AI Foundations bằng tiếng Việt: AI, ML, Deep Learning, Generative AI, OCI Enterprise AI, AI Services và Agentic AI cho Oracle Database — có sơ đồ, ví dụ và trắc nghiệm giải thích.",
 };
 
+// Nền sáng/tối của bài đọc được áp trong OciShell (useLayoutEffect, trước lần vẽ đầu): khung này chỉ render phía trình duyệt
+// sau cổng đăng nhập nên không cần script nội tuyến.
 export default function OciAiLayout({ children }: LayoutProps<"/oracle-oci-ai">) {
   const { modules, lessons } = getCourseMeta();
   return (
     <div id="oci-root" className="oci-root" suppressHydrationWarning>
-      <InlineScript html={THEME_INIT_SCRIPT} />
       <OciShell modules={modules} lessons={lessons}>
         {children}
       </OciShell>
     </div>
-  );
-}
-
-/** Script nội tuyến chạy khi trình duyệt phân tích HTML (trước lần vẽ đầu tiên). */
-function InlineScript({ html }: { html: string }) {
-  return (
-    <script
-      type={typeof window === "undefined" ? "text/javascript" : "text/plain"}
-      suppressHydrationWarning
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
   );
 }

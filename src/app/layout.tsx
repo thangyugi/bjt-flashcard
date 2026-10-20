@@ -8,6 +8,7 @@ import { NavProgress } from "@/components/layout/NavProgress";
 import { AppSplash } from "@/components/layout/AppSplash";
 import { ServiceWorkerRegister } from "@/components/layout/Pwa";
 import { LearningRuntime } from "@/components/learning/LearningRuntime";
+import { RequireAuth } from "@/components/account/RequireAuth";
 import { Suspense } from "react";
 
 // Chữ Việt / giao diện
@@ -85,7 +86,10 @@ export default function RootLayout({
           <LearningRuntime />
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              {/* Mọi trang học cần đăng nhập; trang công khai: xem PUBLIC_PATHS */}
+              <RequireAuth>{children}</RequireAuth>
+            </main>
             <MobileTabBar />
           </div>
         </QueryProvider>
