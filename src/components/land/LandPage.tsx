@@ -48,19 +48,19 @@ function LandPreview() {
     <LandScene interactive={false} plantings={records} events={events} engineRef={engineRef} className={FULL_H}>
       <SceneTitle />
       <div className="absolute inset-0 z-[5] grid place-items-center bg-[rgba(10,14,18,0.28)] px-4">
-        <div className="flex w-full max-w-[420px] flex-col gap-3 rounded-3xl border border-line bg-surface px-5 py-6 shadow-[0_8px_32px_rgba(0,0,0,0.25)] sm:px-7">
-          <span className="text-[11px] tracking-[0.08em] text-ink-3 uppercase">Vùng đất của bạn</span>
-          <h2 className="text-[22px] leading-tight font-extrabold tracking-[-0.01em] text-ink">Đăng nhập để mở vùng đất của bạn</h2>
+        <div className="flex w-full max-w-[420px] flex-col gap-3 panel px-5 py-6 shadow-[0_8px_32px_rgba(0,0,0,0.25)] sm:px-7">
+          <span className="eyebrow-label">Vùng đất của bạn</span>
+          <h2 className="hx-title text-[26px]">Đăng nhập để mở vùng đất của bạn</h2>
           <p className="text-[14px] leading-relaxed text-ink-2">
             Mỗi {XP_PER_CRYSTAL} XP bạn học được thành 1 Tinh thể. Dùng Tinh thể gieo cây quý vào tám ô đất trên Thảo nguyên Pha Lê, đi dạo cùng Lữ khách và ngắm cây lớn lên.
           </p>
           <div className="mt-1 flex flex-wrap gap-2">
-            <Link href="/login?next=/land" className="flex h-11 flex-1 items-center justify-center rounded-xl bg-brand px-4 text-[15px] font-bold whitespace-nowrap text-white hover:bg-brand-hover">
+            <Link href="/login?next=/land" className="flex h-11 flex-1 items-center justify-center rounded-[10px] bg-brand px-4 text-[14.5px] font-semibold whitespace-nowrap text-white hover:bg-brand-hover">
               Đăng nhập
             </Link>
             <Link
               href="/register?next=/land"
-              className="flex h-11 flex-1 items-center justify-center rounded-xl border border-line-strong px-4 text-[15px] font-bold whitespace-nowrap text-ink hover:bg-surface-2"
+              className="flex h-11 flex-1 items-center justify-center rounded-[10px] border border-line-strong px-4 text-[14.5px] font-semibold whitespace-nowrap text-ink hover:bg-surface-2"
             >
               Tạo tài khoản
             </Link>
