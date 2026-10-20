@@ -13,7 +13,7 @@ export default function GlossaryPage() {
       <div className="oci-crumb">Tra cứu</div>
       <header className="oci-lesson-head" style={{ marginBottom: 6, borderBottom: 0, paddingBottom: 0 }}>
         <h1 style={{ marginTop: 14 }}>Từ điển thuật ngữ Anh–Việt</h1>
-        <p style={{ margin: "10px 0 0", color: "var(--o-text-2)", fontSize: 15.5, lineHeight: 1.65 }}>
+        <p style={{ margin: "10px 0 0", maxWidth: "72ch", color: "var(--o-text-2)", fontSize: 15.5, lineHeight: 1.65 }}>
           Toàn bộ {GLOSSARY.length} thuật ngữ chuyên ngành xuất hiện trong khóa học. Gõ để tìm, lọc theo phần, hoặc chuyển
           sang <b>thẻ ghi nhớ</b> để tự kiểm tra.
         </p>

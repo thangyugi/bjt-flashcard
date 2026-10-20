@@ -31,9 +31,6 @@ export const NAV_ITEMS = [
 export function Header() {
   const pathname = usePathname();
 
-  // Trang học OCI AI Foundations có thanh điều hướng riêng
-  if (pathname.startsWith("/oracle-oci-ai")) return null;
-
   // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng
   const hideOnMobile = /^\/bjt\/[^/]+/.test(pathname) || pathname.startsWith("/quiz/play");
 

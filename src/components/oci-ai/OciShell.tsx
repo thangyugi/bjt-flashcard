@@ -12,7 +12,7 @@ import {
   CircleCheck,
   House,
   Menu,
-  Monitor,
+  ListChecks,
   Moon,
   Search,
   Sun,
@@ -24,10 +24,10 @@ import { useHydrated } from "@/hooks/useHydrated";
 
 export const OCI_BASE = "/oracle-oci-ai";
 const THEME_KEY = "oci-ai-theme";
-type Theme = "system" | "light" | "dark";
+type Theme = "light" | "dark";
 
-/** Script chạy trước khi trình duyệt vẽ trang để áp chủ đề sáng/tối đã lưu (tránh nháy màu). */
-export const THEME_INIT_SCRIPT = `try{var t=localStorage.getItem("${THEME_KEY}");if(t==="light"||t==="dark")document.getElementById("oci-root").setAttribute("data-theme",t)}catch(e){}`;
+/** Script chạy trước khi trình duyệt vẽ trang để áp nền tối đã chọn cho bài đọc (tránh nháy màu). Mặc định: sáng như cả app. */
+export const THEME_INIT_SCRIPT = `try{if(localStorage.getItem("${THEME_KEY}")==="dark")document.getElementById("oci-root").setAttribute("data-theme","dark")}catch(e){}`;
 
 const themeListeners = new Set<() => void>();
 function subscribeTheme(cb: () => void) {
@@ -40,10 +40,9 @@ function subscribeTheme(cb: () => void) {
 }
 function readTheme(): Theme {
   try {
-    const t = localStorage.getItem(THEME_KEY);
-    if (t === "light" || t === "dark") return t;
+    if (localStorage.getItem(THEME_KEY) === "dark") return "dark";
   } catch {}
-  return "system";
+  return "light";
 }
 
 interface Props {
@@ -58,7 +57,7 @@ export function OciShell({ modules, lessons, children }: Props) {
   const done = useOciAiStore((s) => s.done);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const theme = useSyncExternalStore(subscribeTheme, readTheme, () => "system" as Theme);
+  const theme = useSyncExternalStore(subscribeTheme, readTheme, () => "light" as Theme);
 
   const activeId = pathname.startsWith(`${OCI_BASE}/`) ? pathname.slice(OCI_BASE.length + 1).replace(/^practice\//, "") : "";
   const activeModuleId = lessons.find((l) => l.id === activeId)?.moduleId;
@@ -84,19 +83,17 @@ export function OciShell({ modules, lessons, children }: Props) {
   useLayoutEffect(() => {
     const root = document.getElementById("oci-root");
     if (!root) return;
-    if (theme === "system") root.removeAttribute("data-theme");
-    else root.setAttribute("data-theme", theme);
+    if (theme === "dark") root.setAttribute("data-theme", "dark");
+    else root.removeAttribute("data-theme");
   }, [theme]);
-  const cycleTheme = () => {
-    const next: Theme = theme === "system" ? "light" : theme === "light" ? "dark" : "system";
+  const toggleTheme = () => {
     try {
-      if (next === "system") localStorage.removeItem(THEME_KEY);
-      else localStorage.setItem(THEME_KEY, next);
+      if (theme === "dark") localStorage.removeItem(THEME_KEY);
+      else localStorage.setItem(THEME_KEY, "dark");
     } catch {}
     themeListeners.forEach((l) => l());
   };
-  const ThemeIcon = theme === "light" ? Sun : theme === "dark" ? Moon : Monitor;
-  const themeLabel = theme === "light" ? "Giao diện sáng" : theme === "dark" ? "Giao diện tối" : "Theo hệ thống";
+  const ThemeIcon = theme === "dark" ? Moon : Sun;
 
   // Khóa cuộn trang khi ngăn kéo mở (mobile)
   useEffect(() => {
@@ -130,49 +127,37 @@ export function OciShell({ modules, lessons, children }: Props) {
 
   return (
     <>
-      <header className="oci-top">
-        <button className="oci-icon-btn oci-menu-btn" aria-label="Mở danh sách bài học" onClick={() => setOpen(true)}>
+      {/* Thanh phụ của khóa (chỉ màn hẹp), dính ngay dưới thanh tiêu đề chung: mở ngăn bài học */}
+      <div className="oci-subbar">
+        <button className="oci-subbar-btn" aria-label="Mở danh sách bài học" aria-expanded={open} onClick={() => setOpen(true)}>
           <Menu aria-hidden />
+          <span>Bài học</span>
         </button>
-        <Link href="/" className="oci-app-mark" aria-label="LeoEdu, trang chủ" title="LeoEdu, trang chủ">
-          <span aria-hidden>語</span>
+        <Link href={OCI_BASE} className="oci-subbar-title">
+          OCI AI Foundations
         </Link>
-        <nav aria-label="Đường dẫn" className="oci-crumbs">
-          <Link href="/courses" className="oci-crumb-up">
-            Khóa học
-          </Link>
-          <span aria-hidden className="oci-crumb-up">›</span>
-          <Link href={OCI_BASE} className="oci-brand" aria-label="Trang chủ khóa OCI AI Foundations">
-            <span className="oci-brand-t1">OCI AI Foundations</span>
-          </Link>
-        </nav>
-        <nav aria-label="Điều hướng chính" className="oci-appnav">
-          <Link href="/study">Học bài</Link>
-          <Link href="/quiz?course=oci-ai">Trắc nghiệm</Link>
-          <Link href="/review">Ôn tập</Link>
-          <Link href="/progress">Tiến độ</Link>
-        </nav>
-        <div className="oci-top-spacer" />
-        <div className="oci-top-progress" title={`Đã học ${doneCount}/${lessons.length} bài`}>
-          <div className="oci-bar bar">
-            <i style={{ width: `${pct}%` }} />
-          </div>
-          <span className="lbl">
-            <b>{doneCount}</b>/{lessons.length}
-            <span className="lbl-long"> bài</span>
-          </span>
-        </div>
-        <Link href="/courses" className="oci-icon-btn" aria-label="Về danh sách khóa học" title="Về danh sách khóa học">
-          <House aria-hidden />
-        </Link>
-        <button className="oci-icon-btn" onClick={cycleTheme} aria-label={`Đổi giao diện (hiện tại: ${themeLabel})`} title={themeLabel}>
-          <ThemeIcon aria-hidden />
-        </button>
-      </header>
+        <span className="oci-subbar-prog" title={`Đã học ${doneCount}/${lessons.length} bài`}>
+          <b>{doneCount}</b>/{lessons.length}
+        </span>
+      </div>
 
       <div className="oci-shell">
         <div className={`oci-backdrop${open ? " open" : ""}`} onClick={() => setOpen(false)} aria-hidden />
         <aside className={`oci-side${open ? " open" : ""}`} aria-label="Danh sách bài học">
+          <div className="oci-side-course">
+            <span className="oci-side-eyebrow">Khóa học · 1Z0-1122</span>
+            <Link href={OCI_BASE} className="oci-side-title">
+              OCI AI Foundations
+            </Link>
+            <div className="oci-side-prog" title={`Đã học ${doneCount}/${lessons.length} bài`}>
+              <div className="oci-bar">
+                <i style={{ width: `${pct}%` }} />
+              </div>
+              <span>
+                <b>{doneCount}</b>/{lessons.length} bài
+              </span>
+            </div>
+          </div>
           <div className="oci-side-head">
             <label className="oci-side-search">
               <Search aria-hidden />
@@ -207,14 +192,9 @@ export function OciShell({ modules, lessons, children }: Props) {
                 >
                   <FileCheck2 aria-hidden /> Luyện tập &amp; thi thử
                 </Link>
-                <div className="oci-side-sep" />
-                <div className="oci-side-app">
-                  <Link href="/courses">Khóa học</Link>
-                  <Link href="/study">Học bài</Link>
-                  <Link href="/quiz">Trắc nghiệm</Link>
-                  <Link href="/review">Ôn tập</Link>
-                  <Link href="/progress">Tiến độ</Link>
-                </div>
+                <Link href="/quiz/oci" className="oci-side-link">
+                  <ListChecks aria-hidden /> Trắc nghiệm OCI
+                </Link>
                 <div className="oci-side-sep" />
               </>
             )}
@@ -278,9 +258,12 @@ export function OciShell({ modules, lessons, children }: Props) {
           </nav>
 
           <div className="oci-side-foot">
-            <Link href="/" className="oci-side-link">
-              <ArrowLeft aria-hidden /> Về trang chủ LeoEdu
+            <Link href="/courses" className="oci-side-link">
+              <ArrowLeft aria-hidden /> Tất cả khóa học
             </Link>
+            <button className="oci-side-link" onClick={toggleTheme} aria-pressed={theme === "dark"} title="Chỉ áp dụng cho trang học OCI">
+              <ThemeIcon aria-hidden /> {theme === "dark" ? "Bài đọc: nền tối" : "Bài đọc: nền sáng"}
+            </button>
           </div>
         </aside>
 

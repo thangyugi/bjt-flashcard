@@ -37,6 +37,7 @@ export function OciHome({ modules, lessons, stats }: Props) {
   return (
     <div className="oci-home">
       <section className="oci-hero">
+        <div className="oci-hero-main">
         <div className="oci-eyebrow">
           <GraduationCap size={16} aria-hidden /> Ghi chú học tập song ngữ · Anh–Việt
         </div>
@@ -58,6 +59,8 @@ export function OciHome({ modules, lessons, stats }: Props) {
             <BookA aria-hidden /> Từ điển thuật ngữ
           </Link>
         </div>
+        </div>
+        <div className="oci-hero-side">
         <div className="oci-stats">
           <div className="oci-stat">
             <div className="n">{modules.length}</div>
@@ -76,24 +79,24 @@ export function OciHome({ modules, lessons, stats }: Props) {
             <div className="l">thuật ngữ</div>
           </div>
         </div>
+        {started && target && (
+          <Link href={`${OCI_BASE}/${target.id}`} className="oci-continue">
+            <span className="ic">
+              <Play aria-hidden />
+            </span>
+            <span className="tx">
+              <span className="k" style={{ display: "block" }}>
+                Học tiếp · Phần {targetModule?.num} · {doneCount}/{lessons.length} bài đã xong
+              </span>
+              <span className="v" style={{ display: "block" }}>
+                {target.kind === "summary" ? "Tổng kết & Trắc nghiệm" : `${target.code} ${target.navTitle}`}
+              </span>
+            </span>
+            <ArrowRight className="arrow" aria-hidden />
+          </Link>
+        )}
+        </div>
       </section>
-
-      {started && target && (
-        <Link href={`${OCI_BASE}/${target.id}`} className="oci-continue">
-          <span className="ic">
-            <Play aria-hidden />
-          </span>
-          <span className="tx">
-            <span className="k" style={{ display: "block" }}>
-              Học tiếp · Phần {targetModule?.num} · {doneCount}/{lessons.length} bài đã xong
-            </span>
-            <span className="v" style={{ display: "block" }}>
-              {target.kind === "summary" ? "Tổng kết & Trắc nghiệm" : `${target.code} ${target.navTitle}`}
-            </span>
-          </span>
-          <ArrowRight className="arrow" aria-hidden />
-        </Link>
-      )}
 
       <div className="oci-section-title">
         <h2>Lộ trình {modules.length} phần</h2>
