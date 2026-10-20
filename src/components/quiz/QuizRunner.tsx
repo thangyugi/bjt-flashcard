@@ -362,7 +362,7 @@ export function QuizRunner({ questions, title, onFinish, onNewSession, onRetryWr
   const partLabel = `Phần ${partIndex + 1}/${parts.length} · ${TYPE_LABEL[currentQ.type]}`;
 
   return (
-    <div className="mx-auto flex w-full max-w-[1280px] flex-col md:gap-4 md:px-8 md:py-5 lg:h-[calc(100dvh-4rem)] lg:gap-5 lg:py-6">
+    <div className="flex w-full flex-col md:gap-4 md:px-[var(--gutter)] md:py-5 lg:h-[calc(100dvh-4rem)] lg:gap-5 lg:py-6">
       {/* Mobile: thanh trên */}
       <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur md:hidden">
         <div className="flex h-[60px] items-center justify-between px-2">
@@ -788,7 +788,7 @@ function QuizResult({ questions, answers, graded, title, filter, setFilter, open
   );
 
   return (
-    <div className="mx-auto flex w-full max-w-[1280px] flex-col lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:px-8 lg:py-6">
+    <div className="flex w-full flex-col lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:px-[var(--gutter)] lg:py-6">
       {/* Mobile: thanh trên */}
       <header className="sticky top-0 z-40 flex h-[60px] items-center justify-between border-b border-line bg-paper/95 px-2 backdrop-blur md:hidden">
         <Link href="/quiz" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">

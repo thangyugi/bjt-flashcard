@@ -164,7 +164,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
     "flex h-12 items-center justify-center gap-2 rounded-xl border border-line-strong bg-surface text-[15px] font-semibold text-ink transition-colors hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-40 lg:h-11 lg:px-5 lg:text-sm";
 
   return (
-    <div className="mx-auto flex h-dvh w-full max-w-[1280px] flex-col md:h-auto md:gap-4 md:px-8 md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7">
+    <div className="flex h-dvh w-full flex-col md:h-auto md:gap-4 md:px-[var(--gutter)] md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7">
       {/* ── Mobile: thanh trên cùng (chế độ tập trung) — ‹ tên nhóm + bộ đếm › ── */}
       <header className="shrink-0 bg-paper/95 backdrop-blur md:hidden">
         <div className="flex h-14 items-center justify-between px-1">

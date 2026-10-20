@@ -75,7 +75,7 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
         sections={toc.filter((t) => !lesson.patterns.some((p) => p.id === t.id))}
         items={navItems}
       />
-      <div className="flex min-w-0 flex-1 flex-col gap-10">
+      <div className="flex min-w-0 flex-1 flex-col gap-10 xl:max-w-[1120px]">
         {/* Đường dẫn */}
         <nav aria-label="Đường dẫn" className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
           <Link href="/courses" className="hover:text-ink">

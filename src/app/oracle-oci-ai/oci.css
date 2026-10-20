@@ -986,3 +986,10 @@
   max-width: 900px;
 }
 .oci-hero .lead { margin-top: 20px; font-size: 16px; line-height: 1.65; }
+
+/* Toàn bề ngang như mọi trang khác: bỏ giới hạn 1120px của trang chủ khóa/luyện tập/thuật ngữ;
+   riêng bài đọc (.oci-article) vẫn giữ độ dài dòng dễ đọc bên trong khung rộng. */
+.oci-home,
+.oci-lesson-grid,
+.oci-practice,
+.oci-gloss { max-width: none; }
