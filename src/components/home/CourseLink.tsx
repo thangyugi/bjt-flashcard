@@ -20,7 +20,7 @@ function useContinueHref(id: string): string | undefined {
   if (id === "jlpt-n1" && n1) return `/jlpt-n1/grammar/${n1}`;
   if (id === "english" && ipa) return `/english/ipa/${ipa}`;
   if (id === "oci-ai" && oci) return `/oracle-oci-ai/${oci}`;
-  if (id === "bjt" && group) return `/study/${group.id}`;
+  if (id === "bjt" && group) return `/bjt/${group.id}`;
   return undefined;
 }
 

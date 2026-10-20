@@ -34,8 +34,8 @@ export function VocabularyBrowser() {
   }, [groups, q]);
 
   return (
-    <section aria-labelledby="vocab-browse" className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4 border-b border-line pb-4 md:flex-row md:items-center md:justify-between">
+    <section id="tra-tu" aria-labelledby="vocab-browse" className="flex scroll-mt-24 flex-col gap-8">
+      <div className="flex flex-col gap-4 border-b border-line-strong pb-4 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-wrap items-center gap-4 sm:gap-5">
           <h2 id="vocab-browse" className="hx-title text-[clamp(22px,2.2vw,30px)]">
             Chủ đề từ vựng

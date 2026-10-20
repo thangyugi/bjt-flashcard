@@ -87,7 +87,7 @@ function Session({ idx, course }: { idx: ItemIndex; course: CourseFilter }) {
           <Link href="/english/ipa" className="rounded-xl border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
             Phát âm IPA
           </Link>
-          <Link href="/study" className="rounded-xl border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
+          <Link href="/bjt" className="rounded-xl border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
             Flashcard BJT
           </Link>
         </div>

@@ -45,7 +45,7 @@ export const COURSES: CourseCard[] = [
   },
   {
     id: "bjt",
-    href: "/study",
+    href: "/bjt",
     mark: "語",
     kicker: "Business Japanese Test",
     title: "Từ vựng BJT",

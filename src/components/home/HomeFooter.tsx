@@ -7,14 +7,15 @@ const COLS: { h: string; links: [string, string][] }[] = [
       ["JLPT N1", "/jlpt-n1"],
       ["Phát âm IPA", "/english"],
       ["OCI AI Foundations", "/oracle-oci-ai"],
-      ["Từ vựng BJT", "/study"],
+      ["Từ vựng BJT", "/bjt"],
     ],
   },
   {
     h: "Nền tảng",
     links: [
+      ["Học bài", "/study"],
+      ["Trắc nghiệm", "/quiz"],
       ["Ôn tập FSRS", "/review"],
-      ["Trắc nghiệm tổng hợp", "/quiz?scope=all"],
       ["Tiến độ học tập", "/progress"],
       ["Vùng đất của bạn", "/land"],
     ],

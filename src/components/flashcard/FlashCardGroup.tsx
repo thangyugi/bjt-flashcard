@@ -49,13 +49,13 @@ export function FlashCardGroup({ group, className }: FlashCardGroupProps) {
             </span>
           </div>
           <Link
-            href={`/quiz?groupId=${group.id}`}
+            href={`/quiz/bjt?groupId=${group.id}`}
             className="flex h-10 items-center rounded-[10px] border border-line-strong bg-surface px-4 text-[13px] font-semibold whitespace-nowrap text-ink transition-colors hover:bg-surface-2"
           >
             Trắc nghiệm
           </Link>
           <Link
-            href={`/study/${group.id}`}
+            href={`/bjt/${group.id}`}
             className="flex h-10 items-center gap-1.5 rounded-[10px] bg-brand px-4 text-[13px] font-bold whitespace-nowrap text-white transition-colors hover:bg-brand-hover"
           >
             Học ngay

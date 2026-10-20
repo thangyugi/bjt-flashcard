@@ -39,7 +39,7 @@ export function Header() {
   if (pathname.startsWith("/oracle-oci-ai")) return null;
 
   // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng
-  const hideOnMobile = pathname.startsWith("/study/") || pathname.startsWith("/quiz/play");
+  const hideOnMobile = /^\/bjt\/[^/]+/.test(pathname) || pathname.startsWith("/quiz/play");
 
   return (
     <header className={cn("sticky top-0 z-50 border-b border-line-strong bg-paper", hideOnMobile && "hidden md:block")}>

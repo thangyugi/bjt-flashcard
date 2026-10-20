@@ -168,7 +168,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
       {/* ── Mobile: thanh trên cùng (chế độ tập trung) — ‹ tên nhóm + bộ đếm › ── */}
       <header className="shrink-0 bg-paper/95 backdrop-blur md:hidden">
         <div className="flex h-14 items-center justify-between px-1">
-          <Link href="/study" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
+          <Link href="/bjt" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
             <X className="h-5 w-5" strokeWidth={2.2} />
           </Link>
           <div className="flex min-w-0 items-center gap-0.5">
@@ -240,7 +240,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
       <section className="flex min-h-0 min-w-0 flex-1 flex-col items-center gap-3 px-3 pt-3 pb-[max(env(safe-area-inset-bottom),12px)] md:gap-4 md:p-0">
         <div className="hidden w-full max-w-[880px] items-center justify-between md:flex">
           <Link
-            href="/study"
+            href="/bjt"
             className="flex h-10 items-center gap-1.5 rounded-[10px] pr-3.5 pl-2 text-sm font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
           >
             <ArrowLeft className="h-[18px] w-[18px]" strokeWidth={2.2} />

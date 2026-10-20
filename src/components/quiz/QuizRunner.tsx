@@ -119,7 +119,7 @@ export function QuizRunner({ questions, title, onFinish, onNewSession, onRetryWr
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center">
         <p className="font-medium text-ink-2">Không có từ nào trong phạm vi này để làm trắc nghiệm.</p>
-        <Link href="/quiz" className="rounded-xl border border-line-strong bg-surface px-4 py-2.5 text-sm font-semibold text-ink">
+        <Link href="/quiz/bjt" className="rounded-xl border border-line-strong bg-surface px-4 py-2.5 text-sm font-semibold text-ink">
           Chọn phạm vi khác
         </Link>
       </div>
@@ -366,7 +366,7 @@ export function QuizRunner({ questions, title, onFinish, onNewSession, onRetryWr
       {/* Mobile: thanh trên */}
       <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur md:hidden">
         <div className="flex h-[60px] items-center justify-between px-2">
-          <Link href="/quiz" aria-label="Thoát bài thi" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
+          <Link href="/quiz/bjt" aria-label="Thoát bài thi" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
             <X className="h-5 w-5" strokeWidth={2.2} />
           </Link>
           <div className="flex min-w-0 flex-col items-center">
@@ -387,7 +387,7 @@ export function QuizRunner({ questions, title, onFinish, onNewSession, onRetryWr
       {/* Tablet / desktop: hàng tiêu đề */}
       <div className="hidden items-center justify-between md:flex">
         <Link
-          href="/quiz"
+          href="/quiz/bjt"
           className="flex h-10 items-center gap-1.5 rounded-[10px] pr-3.5 pl-2 text-sm font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
         >
           <ArrowLeft className="h-[18px] w-[18px]" strokeWidth={2.2} />
@@ -729,7 +729,7 @@ function QuizResult({ questions, answers, graded, title, filter, setFilter, open
         <Shuffle className="h-[17px] w-[17px]" strokeWidth={2.2} aria-hidden />
         Làm đề mới (từ khác)
       </button>
-      <Link href="/quiz" className="flex h-11 items-center justify-center rounded-xl text-sm font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
+      <Link href="/quiz/bjt" className="flex h-11 items-center justify-center rounded-xl text-sm font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
         Về trang trắc nghiệm
       </Link>
     </>
@@ -791,7 +791,7 @@ function QuizResult({ questions, answers, graded, title, filter, setFilter, open
     <div className="flex w-full flex-col lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:px-[var(--gutter)] lg:py-6">
       {/* Mobile: thanh trên */}
       <header className="sticky top-0 z-40 flex h-[60px] items-center justify-between border-b border-line bg-paper/95 px-2 backdrop-blur md:hidden">
-        <Link href="/quiz" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
+        <Link href="/quiz/bjt" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
           <X className="h-5 w-5" strokeWidth={2.2} />
         </Link>
         <h1 className="text-base font-bold text-ink">Kết quả</h1>

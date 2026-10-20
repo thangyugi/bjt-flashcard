@@ -15,7 +15,7 @@ import { courseProgress } from "@/lib/learning/progress";
 import { COURSE_LABEL, loadItemIndex, type ItemIndex } from "@/lib/learning/items";
 import { cn } from "@/lib/utils";
 
-const COURSE_HREF: Record<string, string> = { "jlpt-n1": "/jlpt-n1", english: "/english", "oci-ai": "/oracle-oci-ai", bjt: "/study" };
+const COURSE_HREF: Record<string, string> = { "jlpt-n1": "/jlpt-n1", english: "/english", "oci-ai": "/oracle-oci-ai", bjt: "/bjt" };
 const WEEKDAYS = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
 
 const dayOffset = (n: number) => {
