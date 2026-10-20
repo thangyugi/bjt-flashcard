@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { useDue } from "@/hooks/useDue";
 import { computeStreak, emptyDay, localDate, longestStreak, useActivityStore } from "@/store/activity-store";
@@ -181,10 +181,8 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
 
   return (
     <div className="cols c4 today" aria-busy={viewer === "loading"}>
-      <span className="edge-tab" aria-hidden />
-
       {/* ── Ngày của bạn ── */}
-      <div className="col">
+      <div className="col tcol" style={{ "--c": "var(--brand)" } as CSSProperties}>
         <div className="art">
           <div className="wod">
             <p className="wod-lbl">
@@ -261,7 +259,7 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
       </div>
 
       {/* ── Kế hoạch hôm nay ── */}
-      <div className="col">
+      <div className="col tcol" style={{ "--c": "var(--ok)" } as CSSProperties}>
         <div className="art">{icons.plan}</div>
         <div className="cbody">
           <h3 className="hx h3">
@@ -284,7 +282,7 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
       </div>
 
       {/* ── Phần thưởng ── */}
-      <div className="col">
+      <div className="col tcol" style={{ "--c": "var(--warn)" } as CSSProperties}>
         <div className="art">{icons.gift}</div>
         <div className="cbody">
           <h3 className="hx h3">
@@ -306,7 +304,7 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
       </div>
 
       {/* ── Chuỗi ngày ── */}
-      <div className="col">
+      <div className="col tcol" style={{ "--c": "var(--blossom)" } as CSSProperties}>
         <div className="art">{icons.streak}</div>
         <div className="cbody">
           <h3 className="hx h3">
