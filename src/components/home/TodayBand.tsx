@@ -181,6 +181,8 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
 
   return (
     <div className="cols c4 today" aria-busy={viewer === "loading"}>
+      <span className="edge-tab" aria-hidden />
+
       {/* ── Ngày của bạn ── */}
       <div className="col">
         <div className="art">
@@ -192,7 +194,7 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
               </span>
             </p>
             {viewer !== "loading" && word ? (
-              <Link href={`/study/${word.group.id}`} className="wod-word" aria-label={`Từ của hôm nay: ${word.item.kanji}, ${word.item.meaningVn}. Học nhóm ${word.group.name}`}>
+              <Link href={`/bjt/${word.group.id}`} className="wod-word" aria-label={`Từ của hôm nay: ${word.item.kanji}, ${word.item.meaningVn}. Học nhóm ${word.group.name}`}>
                 <span className="jp wod-r" lang="ja">
                   {word.item.hiragana || word.item.katakana}
                 </span>

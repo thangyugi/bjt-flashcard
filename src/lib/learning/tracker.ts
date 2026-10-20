@@ -85,7 +85,7 @@ const LEARNING_PATHS: [RegExp, string | null][] = [
   [/^\/jlpt-n1/, "jlpt-n1"],
   [/^\/english/, "english"],
   [/^\/oracle-oci-ai/, "oci-ai"],
-  [/^\/(study|quiz)/, "bjt"],
+  [/^\/(bjt|quiz\/(bjt|play))/, "bjt"],
   [/^\/review/, null],
 ];
 const TICK = 15;

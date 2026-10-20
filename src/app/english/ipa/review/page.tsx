@@ -12,7 +12,7 @@ export default function IpaReviewPage() {
   return (
     <Page>
       <PageHeader
-        crumbs={[{ label: "Tiếng Anh", href: "/english" }, { label: "IPA", href: "/english/ipa" }, { label: "Ôn tập" }]}
+        crumbs={[{ label: "Khóa học", href: "/courses" }, { label: "Tiếng Anh", href: "/english" }, { label: "IPA", href: "/english/ipa" }, { label: "Ôn tập" }]}
         accent="#1d4ed8"
         eyebrow="Phát âm IPA"
         title="Ôn tập ngắt quãng"

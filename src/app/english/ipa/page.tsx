@@ -41,9 +41,9 @@ export default function IpaHomePage() {
       <IpaPracticeCards />
 
       <Section title="Cách học để nhớ lâu" id="ipa-method">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="cells grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
           {METHOD.map((m) => (
-            <div key={m.title} className="flex flex-col gap-2 panel px-4 py-4">
+            <div key={m.title} className="flex flex-col gap-2 px-4 py-4">
               <m.icon className="h-6 w-6 text-[#1d4ed8]" aria-hidden />
               <span className="font-bold text-ink">{m.title}</span>
               <span className="font-ipa text-[13.5px] leading-relaxed text-ink-2">{m.body}</span>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, BookMarked, Lightbulb, Mic, Scale, Trophy } from "lucide-react";
+import { BookMarked, Lightbulb, Mic, Scale, Trophy } from "lucide-react";
 import { ALL_PHONEMES, IPA_LESSONS, getIpaLesson } from "@/data/english/ipa";
 import { lessonPractice } from "@/data/english/ipa/practice";
 import { PhonemeCard } from "@/components/english/PhonemeCard";
@@ -10,6 +9,8 @@ import { EnSpeakButton, EnVoiceSettings } from "@/components/english/EnSpeak";
 import { EnText, Ipa } from "@/components/english/EnText";
 import { EnLessonActions, EnStory } from "@/components/english/EnLessonBits";
 import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
+import { Breadcrumbs } from "@/components/ui/page";
+import { LessonPager } from "@/components/ui/lesson-pager";
 
 export const dynamicParams = false;
 
@@ -65,15 +66,14 @@ export default async function IpaLessonPage({ params }: PageProps<"/english/ipa/
         items={navItems}
       />
 
-      <nav aria-label="Đường dẫn" className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
-        <Link href="/courses" className="hover:text-ink">Khóa học</Link>
-        <span>/</span>
-        <Link href="/english" className="hover:text-ink">Tiếng Anh</Link>
-        <span>/</span>
-        <Link href="/english/ipa" className="hover:text-ink">IPA</Link>
-        <span>/</span>
-        <span className="text-ink-2">Bài {lesson.num}</span>
-      </nav>
+      <Breadcrumbs
+        items={[
+          { label: "Khóa học", href: "/courses" },
+          { label: "Tiếng Anh", href: "/english" },
+          { label: "IPA", href: "/english/ipa" },
+          { label: `Bài ${lesson.num}` },
+        ]}
+      />
 
       <header className="relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-[#0f1f47] px-6 py-8 text-white sm:px-10 sm:py-10">
         <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-[#1d4ed8]/80 sm:h-72 sm:w-72" aria-hidden />
@@ -155,34 +155,29 @@ export default async function IpaLessonPage({ params }: PageProps<"/english/ipa/
         ))}
       </section>
 
-      <nav aria-label="Chuyển bài" className="grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
-        {prev ? (
-          <Link href={`/english/ipa/${prev.id}`} className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 hover:border-[#1d4ed8]">
-            <ArrowLeft className="h-5 w-5 shrink-0 text-ink-3" aria-hidden />
-            <span className="flex min-w-0 flex-col">
-              <span className="text-xs text-ink-3">Bài {prev.num}</span>
-              <span className="truncate font-semibold text-ink">{prev.title}</span>
-            </span>
-          </Link>
-        ) : (
-          <Link href="/english/ipa" className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 hover:border-[#1d4ed8]">
-            <ArrowLeft className="h-5 w-5 shrink-0 text-ink-3" aria-hidden />
-            <span className="font-semibold text-ink">Bảng IPA & mục lục</span>
-          </Link>
-        )}
-        {next && (
-          <Link
-            href={`/english/ipa/${next.id}`}
-            className="flex items-center justify-end gap-3 rounded-2xl bg-[#1d4ed8] px-4 py-3 text-right text-white hover:bg-[#1e40af] sm:col-start-2"
-          >
-            <span className="flex min-w-0 flex-col">
-              <span className="text-xs text-white/80">Bài {next.num}</span>
-              <span className="truncate font-semibold">{next.title}</span>
-            </span>
-            <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
-          </Link>
-        )}
-      </nav>
+      <LessonPager
+
+        label="Chuyển bài"
+
+        prev={prev ? { href: `/english/ipa/${prev.id}`, kicker: `Bài ${prev.num}`, title: prev.title } : undefined}
+
+        next={next ? { href: `/english/ipa/${next.id}`, kicker: `Bài ${next.num}`, title: next.title } : undefined}
+
+        back={{ href: "/english/ipa", title: "Bảng IPA & mục lục" }}
+
+        links={[
+
+          { href: "/english", label: "Về khóa Tiếng Anh" },
+
+          { href: "/english/ipa/practice", label: "Phòng luyện tập IPA" },
+
+          { href: "/quiz?course=english", label: "Trắc nghiệm tiếng Anh khác" },
+
+          { href: "/review", label: "Ôn tập thẻ đến hạn" },
+
+        ]}
+
+      />
     </div>
   );
 }

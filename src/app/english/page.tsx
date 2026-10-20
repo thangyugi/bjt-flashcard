@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookA, Languages, MessagesSquare, PenLine } from "lucide-react";
 import { ipaStats } from "@/data/english/ipa";
-import { Page, PageHeader, Section, SoonTag } from "@/components/ui/page";
+import { Page, PageHeader, Section, SoonTag, btn } from "@/components/ui/page";
 
 export const metadata: Metadata = {
   title: "Tiếng Anh — Khóa học",
@@ -25,10 +25,23 @@ export default function EnglishHome() {
         eyebrow="English"
         title="Khóa tiếng Anh"
         lead="Bắt đầu từ nền móng: phát âm chuẩn với IPA. Nghe đúng — nói đúng — rồi mới học từ vựng và ngữ pháp thật nhanh."
+        actions={
+          <>
+            <Link href="/english/ipa" className={btn.primary}>
+              Vào lộ trình IPA
+            </Link>
+            <Link href="/english/ipa/practice" className={btn.ghost}>
+              Phòng luyện tập
+            </Link>
+            <Link href="/quiz?course=english" className={btn.ghost}>
+              Trắc nghiệm tiếng Anh
+            </Link>
+          </>
+        }
       />
 
       <Section title="Bước 1 · Phát âm" id="en-step1">
-        <Link href="/english/ipa" className="group panel flex flex-col gap-3 px-6 py-7 transition-colors hover:border-[#1d4ed8] sm:flex-row sm:items-center sm:gap-10 sm:px-9">
+        <Link href="/english/ipa" className="group panel flex flex-col gap-3 px-6 py-7 sm:flex-row sm:items-center sm:gap-10 sm:px-9">
           <span className="font-ipa text-[44px] leading-none font-semibold text-[#1d4ed8] sm:text-[56px]">/aɪ piː eɪ/</span>
           <span className="flex min-w-0 flex-1 flex-col gap-2">
             <span className="flex items-center gap-2 eyebrow-label">
@@ -49,9 +62,9 @@ export default function EnglishHome() {
       </Section>
 
       <Section title="Sắp có" id="en-soon">
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="cells grid-cols-1 sm:grid-cols-3">
           {SOON.map((c) => (
-            <div key={c.title} className="flex flex-col gap-2 rounded-[14px] bg-surface-2/60 px-5 py-5">
+            <div key={c.title} className="flex flex-col gap-2 px-5 py-5">
               <div className="flex items-center justify-between">
                 <c.icon className="h-6 w-6 text-ink-3" aria-hidden />
                 <SoonTag />

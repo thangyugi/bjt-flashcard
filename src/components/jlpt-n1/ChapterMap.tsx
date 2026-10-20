@@ -44,7 +44,7 @@ export function ChapterMap({ lessons, total }: { lessons: N1LessonMeta[]; total:
         )}
       </div>
 
-      <ol className="grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-2">
+      <ol className="cells grid-cols-[minmax(0,1fr)] md:grid-cols-2">
         {lessons.map((l) => {
           const isDone = hydrated && !!done[l.id];
           const q = hydrated ? quiz[l.id] : undefined;
@@ -53,8 +53,8 @@ export function ChapterMap({ lessons, total }: { lessons: N1LessonMeta[]; total:
               <Link
                 href={`/jlpt-n1/grammar/${l.id}`}
                 className={cn(
-                  "group flex h-full gap-4 rounded-2xl border bg-surface p-4 transition-colors hover:border-brand sm:p-5",
-                  isDone ? "border-ok/40" : "border-line"
+                  "group flex h-full gap-4 p-4 transition-colors hover:bg-surface sm:p-5",
+                  isDone && "bg-ok-soft/30"
                 )}
               >
                 <div className="flex w-12 shrink-0 flex-col items-center gap-1 pt-0.5">

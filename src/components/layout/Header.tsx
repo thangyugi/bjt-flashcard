@@ -12,21 +12,17 @@ import { AccountButton } from "@/components/account/AccountButton";
 import { HeaderSettings } from "@/components/layout/HeaderSettings";
 import { Gem } from "@/components/home/icons";
 
+const COURSE_PATHS = ["/courses", "/jlpt-n1", "/english", "/oracle-oci-ai", "/bjt"];
+
+/** Điều hướng chính (thanh tiêu đề và thanh dưới đáy trên mobile dùng chung); logo dẫn về trang chủ */
 export const NAV_ITEMS = [
-  { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
-  { href: "/study", label: "Học bài", match: (p: string) => p.startsWith("/study") },
-  { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => p.startsWith("/quiz") },
-  {
-    href: "/courses",
-    label: "Khóa học",
-    match: (p: string) => p.startsWith("/courses") || p.startsWith("/jlpt-n1") || p.startsWith("/english"),
-  },
-  { href: "/progress", label: "Tiến độ", match: (p: string) => p.startsWith("/progress") || p.startsWith("/review") },
+  { href: "/courses", label: "Khóa học", match: (p: string) => COURSE_PATHS.some((c) => p === c || p.startsWith(`${c}/`)) },
+  { href: "/study", label: "Học bài", match: (p: string) => p === "/study" || p.startsWith("/study/") },
+  { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => p === "/quiz" || p.startsWith("/quiz/") },
+  { href: "/review", label: "Ôn tập", match: (p: string) => p.startsWith("/review") },
+  { href: "/progress", label: "Tiến độ", match: (p: string) => p.startsWith("/progress") },
   { href: "/land", label: "Vùng đất", match: (p: string) => p.startsWith("/land") },
 ];
-
-/** Trên thanh ngang, logo đã dẫn về trang chủ nên bỏ mục "Tổng quan" cho gọn (thanh dưới đáy trên mobile vẫn có). */
-const BAR_ITEMS = NAV_ITEMS.filter((i) => i.href !== "/");
 
 /**
  * Thanh tiêu đề chung: toàn bề ngang, nền giấy, một vạch mảnh phía dưới.
@@ -39,12 +35,12 @@ export function Header() {
   if (pathname.startsWith("/oracle-oci-ai")) return null;
 
   // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng
-  const hideOnMobile = pathname.startsWith("/study/") || pathname.startsWith("/quiz/play");
+  const hideOnMobile = /^\/bjt\/[^/]+/.test(pathname) || pathname.startsWith("/quiz/play");
 
   return (
     <header className={cn("sticky top-0 z-50 border-b border-line-strong bg-paper", hideOnMobile && "hidden md:block")}>
       <div className="page-x flex h-[var(--header-h)] items-center justify-between gap-4">
-        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="BJT Flashcard, trang chủ">
+        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="LeoEdu, trang chủ">
           <span
             className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-brand font-mincho text-[18px] leading-none font-bold text-white"
             aria-hidden
@@ -52,12 +48,12 @@ export function Header() {
             語
           </span>
           <span className="text-[15px] font-bold tracking-[-0.01em] whitespace-nowrap text-ink md:hidden lg:inline">
-            BJT Flashcard
+            LeoEdu
           </span>
         </Link>
 
         <nav aria-label="Điều hướng chính" className="hidden h-full items-stretch gap-5 md:flex lg:gap-7">
-          {BAR_ITEMS.map((item) => {
+          {NAV_ITEMS.map((item) => {
             const active = item.match(pathname);
             return (
               <Link

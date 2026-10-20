@@ -3,12 +3,13 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /*
- * Khung trang dùng chung cho mọi trang (trừ trang chủ đã có bố cục riêng nhưng cùng lề):
- * Page → PageHeader (nhãn + tiêu đề in hoa sát chữ + lời dẫn + một vạch mảnh) → Section → Panel.
- * Bề rộng và lề lấy từ .page-x (globals.css), trùng với thanh tiêu đề nên mép luôn thẳng hàng.
+ * Khung trang dùng chung cho mọi trang, cùng ngôn ngữ "lưới kẻ mảnh" với trang chủ:
+ * Page (toàn bề ngang, lề chung) → PageHeader (vạch cột nền, tiêu đề in hoa sát chữ, vạch mảnh dưới)
+ * → Section (tiêu đề in hoa trên một vạch mảnh) → Cells/Panel (ô vuông viền mảnh, dùng chung vạch).
+ * Lề lấy từ .page-x (globals.css), trùng với thanh tiêu đề nên mép luôn thẳng hàng.
  */
 
-/** Khung ngang của trang: cùng bề rộng tối đa và lề với thanh tiêu đề */
+/** Khung ngang của trang: toàn bề ngang, cùng lề với thanh tiêu đề */
 export function Page({
   children,
   className,
@@ -38,7 +39,7 @@ export function Breadcrumbs({ items, className }: { items: Crumb[]; className?: 
     <nav aria-label="Đường dẫn" className={cn("flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3", className)}>
       {items.map((c, i) => (
         <span key={`${c.label}-${i}`} className="flex items-center gap-1.5">
-          {i > 0 && <span aria-hidden>/</span>}
+          {i > 0 && <span aria-hidden>›</span>}
           {c.href ? (
             <Link href={c.href} className="hover:text-ink">
               {c.label}
@@ -55,7 +56,8 @@ export function Breadcrumbs({ items, className }: { items: Crumb[]; className?: 
 }
 
 /**
- * Đầu trang: nhãn nhỏ, tiêu đề in hoa sát chữ, lời dẫn, nút; một vạch mảnh bên dưới.
+ * Đầu trang như phần đầu trang chủ: vạch cột nền 12 cột, nhãn nhỏ, tiêu đề in hoa sát chữ, lời dẫn, nút;
+ * cột phải (aside) ngăn bằng một vạch dọc; một vạch mảnh bên dưới.
  * `accent` (màu khóa học) chỉ tô chấm nhỏ cạnh nhãn, không đổi màu tiêu đề.
  */
 export function PageHeader({
@@ -85,10 +87,10 @@ export function PageHeader({
 }) {
   const lines = Array.isArray(title) ? title : null;
   return (
-    <header className={cn("flex flex-col gap-5 border-b border-line-strong pb-8 sm:pb-10", className)}>
-      {crumbs && <Breadcrumbs items={crumbs} />}
-      <div className={cn("flex flex-col gap-8", aside && "lg:flex-row lg:items-end lg:justify-between")}>
-        <div className="flex max-w-[820px] min-w-0 flex-col gap-5">
+    <header className={cn("col-rules -mt-6 flex flex-col gap-5 border-b border-line-strong pt-6 sm:-mt-10 sm:pt-10", className)}>
+      {crumbs && <Breadcrumbs items={crumbs} className="rule-pad" />}
+      <div className={cn("flex flex-col", aside ? "gap-8 lg:flex-row lg:items-stretch lg:justify-between lg:gap-0" : "")}>
+        <div className="rule-pad flex max-w-[860px] min-w-0 flex-col gap-5 pb-8 sm:pb-10">
           {eyebrow && (
             <p className="eyebrow-label flex flex-wrap items-center gap-2.5">
               {accent && <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: accent }} aria-hidden />}
@@ -107,13 +109,17 @@ export function PageHeader({
           {actions && <div className="flex flex-wrap items-center gap-3 pt-1">{actions}</div>}
           {children}
         </div>
-        {aside && <div className="min-w-0 lg:max-w-[460px] lg:shrink-0">{aside}</div>}
+        {aside && (
+          <div className="flex min-w-0 flex-col justify-end border-t border-line-strong pt-6 pb-8 lg:w-[min(460px,38%)] lg:shrink-0 lg:border-t-0 lg:border-l lg:bg-paper lg:pt-0 lg:pb-10 lg:pl-[clamp(16px,1.6vw,24px)]">
+            {aside}
+          </div>
+        )}
       </div>
     </header>
   );
 }
 
-/** Một mục trong trang: hàng tiêu đề (in hoa) + nút phụ, một vạch mảnh, rồi nội dung */
+/** Một mục trong trang: hàng tiêu đề (in hoa) + nút phụ trên một vạch mảnh, rồi nội dung */
 export function Section({
   title,
   eyebrow,
@@ -133,7 +139,7 @@ export function Section({
 }) {
   return (
     <Tag className={cn("flex flex-col gap-5", className)} aria-labelledby={id}>
-      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-line pb-3">
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-line-strong pb-3">
         <div className="flex min-w-0 flex-col gap-1.5">
           {eyebrow && <p className="eyebrow-label">{eyebrow}</p>}
           <h2 id={id} className="hx-title text-[clamp(22px,2.2vw,30px)]">
@@ -147,7 +153,7 @@ export function Section({
   );
 }
 
-/** Mặt giấy trắng với một viền mảnh, bo vừa */
+/** Ô giấy vuông với một viền mảnh (không bo). Đặt nhiều ô cạnh nhau thì dùng Cells để chung vạch. */
 export function Panel({
   children,
   className,
@@ -165,18 +171,30 @@ export function Panel({
   );
 }
 
-/** Nhãn "Sắp ra mắt" / "Ví dụ": nền nhạt, không viền */
-export function SoonTag({ children = "Sắp ra mắt", className }: { children?: ReactNode; className?: string }) {
+/**
+ * Lưới ô kẻ mảnh: các ô con dùng chung một vạch như dải cột trang chủ.
+ * Truyền số cột bằng lớp grid-cols-* (vd. "sm:grid-cols-2 xl:grid-cols-3").
+ */
+export function Cells({
+  children,
+  className,
+  as: Tag = "div",
+  ...rest
+}: {
+  children: ReactNode;
+  className?: string;
+  as?: ElementType;
+} & Record<string, unknown>) {
   return (
-    <span
-      className={cn(
-        "inline-flex w-fit items-center rounded-md bg-[#fbf1e3] px-2 py-0.5 text-[12px] font-semibold whitespace-nowrap text-[#8a4b00]",
-        className
-      )}
-    >
+    <Tag className={cn("cells grid-cols-1", className)} {...rest}>
       {children}
-    </span>
+    </Tag>
   );
+}
+
+/** Nhãn "Sắp ra mắt": viền đứt màu cam như bản vẽ gốc */
+export function SoonTag({ children = "Sắp ra mắt", className }: { children?: ReactNode; className?: string }) {
+  return <span className={cn("tag-soon", className)}>{children}</span>;
 }
 
 /** Lớp nút dùng chung (giống nút trang chủ) cho Link/a/button */

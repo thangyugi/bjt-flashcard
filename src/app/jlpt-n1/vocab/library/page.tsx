@@ -32,7 +32,7 @@ export default function VocabLibraryPage() {
   return (
     <Page>
       <PageHeader
-        crumbs={[{ label: "JLPT N1", href: "/jlpt-n1" }, { label: "Từ vựng", href: "/jlpt-n1/vocab" }, { label: "Thư viện" }]}
+        crumbs={[{ label: "Khóa học", href: "/courses" }, { label: "JLPT N1", href: "/jlpt-n1" }, { label: "Từ vựng", href: "/jlpt-n1/vocab" }, { label: "Thư viện" }]}
         accent="#b8202f"
         eyebrow="Từ vựng N1"
         title="Thư viện từ vựng"

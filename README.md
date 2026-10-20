@@ -1,3 +1,12 @@
+# LeoEdu
+
+LeoEdu là ứng dụng học ngôn ngữ và chứng chỉ bằng tiếng Việt: ngữ pháp và từ vựng JLPT N1, phát âm tiếng Anh (IPA),
+OCI AI Foundations và từ vựng tiếng Nhật thương mại (BJT), ôn tập theo lịch FSRS, dùng được offline (PWA).
+
+Tên repo (`bjt-flashcard`) và các khóa lưu trữ trên trình duyệt giữ nguyên để không mất dữ liệu học của người dùng.
+
+## Phát triển
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

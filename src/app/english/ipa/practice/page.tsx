@@ -11,7 +11,7 @@ export default function IpaPracticePage() {
   return (
     <Page>
       <PageHeader
-        crumbs={[{ label: "Tiếng Anh", href: "/english" }, { label: "IPA", href: "/english/ipa" }, { label: "Luyện tập" }]}
+        crumbs={[{ label: "Khóa học", href: "/courses" }, { label: "Tiếng Anh", href: "/english" }, { label: "IPA", href: "/english/ipa" }, { label: "Luyện tập" }]}
         accent="#1d4ed8"
         eyebrow="Phát âm IPA"
         title="Phòng luyện tập IPA"

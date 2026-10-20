@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════
    OCI AI Foundations — giao diện riêng cho /oracle-oci-ai
    Mọi selector đều nằm dưới .oci-root để không ảnh hưởng
-   tới phần BJT Flashcard của ứng dụng.
+   tới phần còn lại của LeoEdu.
 ══════════════════════════════════════════════════════════ */
 
 .oci-root {
@@ -986,3 +986,106 @@
   max-width: 900px;
 }
 .oci-hero .lead { margin-top: 20px; font-size: 16px; line-height: 1.65; }
+
+/* Toàn bề ngang như mọi trang khác: bỏ giới hạn 1120px của trang chủ khóa/luyện tập/thuật ngữ;
+   riêng bài đọc (.oci-article) vẫn giữ độ dài dòng dễ đọc bên trong khung rộng. */
+.oci-home,
+.oci-lesson-grid,
+.oci-practice,
+.oci-gloss { max-width: none; }
+
+/* Lưới kẻ mảnh như trang chủ: thẻ học phần, công cụ, thuật ngữ và mục luyện tập là các ô vuông
+   dùng chung một vạch; tiêu đề mục in hoa nằm trên một vạch mảnh. */
+.oci-module-grid,
+.oci-tools,
+.oci-gloss-list { gap: 0; padding: 0 1px 1px 0; }
+.oci-module-card,
+.oci-tool,
+.oci-gloss-item {
+  border-radius: 0;
+  border: 1px solid var(--o-line-strong);
+  margin: 0 -1px -1px 0;
+  background: var(--o-bg);
+  box-shadow: none;
+  transform: none;
+}
+.oci-module-card:hover,
+.oci-tool:hover {
+  border-color: var(--o-line-strong);
+  background: var(--o-surface);
+  box-shadow: none;
+  transform: none;
+}
+.oci-tool .ic,
+.oci-continue .ic { border-radius: 0; }
+.oci-section-title {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--o-line-strong);
+}
+.oci-section-title h2 {
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.oci-stats { gap: 0; border-top: 1px solid var(--o-line-strong); }
+.oci-stat { border-radius: 0; background: none; padding: 12px 14px 0 0; }
+.oci-stat + .oci-stat { padding-left: 14px; border-left: 1px solid var(--o-line-strong); }
+.oci-continue,
+.oci-home-note,
+.oci-exam-intro,
+.oci-domain-list,
+.oci-mix,
+.oci-practice-cta,
+.oci-result,
+.oci-q { border-radius: 0; box-shadow: none; }
+.oci-continue:hover { transform: none; }
+.oci-exam-intro,
+.oci-domain-list,
+.oci-mix,
+.oci-q { border-color: var(--o-line-strong); background: var(--o-bg); }
+.oci-lp-item {
+  border-radius: 0;
+  border-color: var(--o-line-strong);
+  background: var(--o-bg);
+  margin-top: -1px;
+}
+.oci-lp-item:hover { background: var(--o-surface); }
+.oci-pager { gap: 0; }
+.oci-pager a {
+  border-radius: 0;
+  border-color: var(--o-line-strong);
+  background: var(--o-bg);
+  box-shadow: none;
+  transform: none;
+}
+.oci-pager a + a { margin-top: -1px; }
+@media (min-width: 640px) { .oci-pager a + a { margin-top: 0; margin-left: -1px; } }
+.oci-pager a:hover { background: var(--o-surface); border-color: var(--o-line-strong); box-shadow: none; transform: none; }
+
+/* Thanh trên của khóa OCI nối với cả app: logo LeoEdu → trang chủ, đường dẫn Khóa học › OCI,
+   các mục điều hướng chính (màn rộng); trong ngăn bài học có cùng các lối đó cho mobile. */
+.oci-app-mark {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: #b8202f;
+  color: #fff;
+  font: 700 18px/1 var(--font-shippori), serif;
+}
+.oci-crumbs { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 13.5px; }
+.oci-crumb-up { color: var(--o-text-3); white-space: nowrap; }
+a.oci-crumb-up:hover { color: var(--o-text); }
+.oci-crumbs .oci-brand { min-width: 0; }
+@media (max-width: 480px) { .oci-crumb-up { display: none; } }
+.oci-appnav { display: none; align-items: center; gap: 22px; margin-left: 28px; font-size: 14px; font-weight: 500; }
+.oci-appnav a { color: var(--o-text-2); white-space: nowrap; }
+.oci-appnav a:hover { color: var(--o-text); }
+@media (min-width: 1100px) { .oci-appnav { display: flex; } }
+.oci-side-app { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; padding: 2px 10px; font-size: 13.5px; }
+.oci-side-app a { padding: 6px 2px; color: var(--o-text-2); }
+.oci-side-app a:hover { color: var(--o-text); }

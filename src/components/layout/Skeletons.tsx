@@ -119,7 +119,7 @@ export function DeckSkeleton() {
   return (
     <Screen
       label="Đang tải flashcard"
-      className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-4 py-4 md:px-8 md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7"
+      className="flex w-full flex-col gap-4 px-[var(--gutter)] py-4 md:px-[var(--gutter)] md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7"
     >
       <div className="hidden w-[336px] shrink-0 flex-col gap-3.5 rounded-[20px] border border-line bg-surface p-5 lg:flex">
         <Bone className="h-5 w-40" />
@@ -167,7 +167,7 @@ export function QuizSkeleton() {
   return (
     <Screen
       label="Đang tạo đề trắc nghiệm"
-      className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-4 py-4 md:px-8 md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-6"
+      className="flex w-full flex-col gap-4 px-[var(--gutter)] py-4 md:px-[var(--gutter)] md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-6"
     >
       <div className="hidden w-[336px] shrink-0 flex-col gap-4 rounded-[20px] border border-line bg-surface p-5 lg:flex">
         <Bone className="h-5 w-40" />

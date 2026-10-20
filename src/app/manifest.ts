@@ -4,10 +4,10 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "BJT Flashcard — Tiếng Nhật thương mại & JLPT N1",
-    short_name: "BJT Flashcard",
+    name: "LeoEdu — Học ngôn ngữ và chứng chỉ",
+    short_name: "LeoEdu",
     description:
-      "Học từ vựng tiếng Nhật thương mại (BJT), ngữ pháp & từ vựng JLPT N1 và khóa OCI AI Foundations.",
+      "Ngữ pháp & từ vựng JLPT N1, phát âm tiếng Anh IPA, OCI AI Foundations và từ vựng tiếng Nhật thương mại (BJT) — học bằng tiếng Việt.",
     lang: "vi",
     start_url: "/",
     scope: "/",
@@ -23,8 +23,8 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icons/maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
-      { name: "Khóa học", url: "/courses", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
-      { name: "JLPT N1", url: "/jlpt-n1", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
+      { name: "Học bài", url: "/study", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
+      { name: "Ôn tập", url: "/review", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
       { name: "Trắc nghiệm", url: "/quiz", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
     ],
   };

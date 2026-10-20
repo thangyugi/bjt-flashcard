@@ -260,7 +260,7 @@ bjt.forEach((g, i) => {
         attributes: { reading: it.hiragana, pos: it.partOfSpeech, source: "bjt", bjt_id: it.id },
         gloss: it.meaningVn,
         speech: it.kanji,
-        href: `/study/${g.id}`,
+        href: `/bjt/${g.id}`,
       },
       "bjt"
     ))
@@ -272,7 +272,7 @@ bjt.forEach((g, i) => {
     module: "bjt.vocab",
     type: "flashcards",
     title: g.name,
-    href: `/study/${g.id}`,
+    href: `/bjt/${g.id}`,
     version: hash(g),
     position: i + 1,
     items: [...new Set(keys)],

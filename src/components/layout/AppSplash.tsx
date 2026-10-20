@@ -13,7 +13,7 @@ export function AppSplash() {
   const { isFetched } = useVocabularyStats();
   const [removed, setRemoved] = useState(false);
   const pathname = usePathname();
-  // Màn khởi động chỉ dành cho BJT Flashcard, không hiện ở trang OCI AI Foundations
+  // Màn khởi động của LeoEdu (không hiện ở trang OCI AI Foundations, khóa đó có khung riêng)
   if (removed || pathname.startsWith("/oracle-oci-ai")) return null;
 
   return (
@@ -33,13 +33,13 @@ export function AppSplash() {
           </span>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <span className="text-lg font-extrabold tracking-tight text-ink">BJT Flashcard</span>
-          <span className="font-jp text-xs text-ink-3">ビジネス日本語</span>
+          <span className="text-lg font-extrabold tracking-tight text-ink">LeoEdu</span>
+          <span className="text-xs text-ink-3">Học ngôn ngữ và chứng chỉ bằng tiếng Việt</span>
         </div>
         <div className="h-1 w-40 overflow-hidden rounded-full bg-track">
           <div className="loading-bar h-full w-1/3 rounded-full bg-brand" />
         </div>
-        <span className="sr-only">Đang tải dữ liệu từ vựng</span>
+        <span className="sr-only">Đang tải LeoEdu</span>
       </div>
     </div>
   );

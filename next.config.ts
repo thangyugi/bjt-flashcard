@@ -10,6 +10,16 @@ const mediaOrigin = (() => {
 })();
 
 const nextConfig: NextConfig = {
+  // Đường dẫn cũ (lịch sử, dấu trang, liên kết đã chia sẻ) vẫn dùng được sau khi tách Học bài / Trắc nghiệm theo khóa
+  async redirects() {
+    return [
+      // Nhóm flashcard BJT: /study/<nhóm> → /bjt/<nhóm>
+      { source: "/study/:groupId", destination: "/bjt/:groupId", permanent: true },
+      // Thiết lập trắc nghiệm BJT cũ: /quiz?groupId=… hoặc /quiz?scope=… → /quiz/bjt (giữ nguyên tham số)
+      { source: "/quiz", has: [{ type: "query", key: "groupId" }], destination: "/quiz/bjt", permanent: true },
+      { source: "/quiz", has: [{ type: "query", key: "scope" }], destination: "/quiz/bjt", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

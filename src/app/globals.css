@@ -125,9 +125,11 @@
   --sidebar-border: var(--line);
   --sidebar-ring: var(--brand);
 
-  /* Khung trang dùng chung: thanh tiêu đề, trang chủ và mọi trang khác thẳng mép với nhau */
-  --page-max: 1440px;
+  /* Khung trang dùng chung: toàn bề ngang màn hình, chỉ có lề hai bên (16/24/32px),
+     thanh tiêu đề, trang chủ và mọi trang khác thẳng mép với nhau */
   --gutter: 16px;
+  /* độ dài dòng dễ đọc cho văn bản dài (bài học, đoạn văn) đặt bên trong khung toàn bề ngang */
+  --measure: 72ch;
   /* chiều cao thanh tiêu đề dính (Header) */
   --header-h: 3.5rem;
 }
@@ -245,11 +247,9 @@
 
 /* ── Ngôn ngữ thiết kế chung: khung trang, tiêu đề in hoa sát chữ, mặt giấy ── */
 @layer components {
-  /* Khung ngang duy nhất của app (cùng bề rộng và lề với thanh tiêu đề) */
+  /* Khung ngang duy nhất của app: toàn bề ngang, cùng lề với thanh tiêu đề */
   .page-x {
     width: 100%;
-    max-width: var(--page-max);
-    margin-inline: auto;
     padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
     padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
   }
@@ -271,11 +271,63 @@
     text-transform: uppercase;
     color: var(--ink-3);
   }
-  /* Mặt giấy: một viền mảnh, bo vừa, không đổ bóng */
+  /* Ô giấy vuông, viền mảnh (giống các cột kẻ của trang chủ), không bo, không đổ bóng */
   .panel {
-    border: 1px solid var(--line);
-    border-radius: 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+    background: var(--paper);
+  }
+  a.panel,
+  button.panel {
+    transition: background-color 0.2s;
+  }
+  a.panel:hover,
+  button.panel:hover,
+  a.panel:focus-visible {
     background: var(--surface);
+  }
+  /*
+   * Lưới ô kẻ mảnh: các ô dùng chung một vạch (như dải cột trang chủ). Dùng kèm grid-cols-*.
+   * Mỗi ô có viền đủ 4 cạnh và lấn -1px sang phải/xuống dưới để hai vạch chồng thành một;
+   * hàng cuối thiếu ô thì phần trống để trơn, không bị tô vạch.
+   */
+  .cells {
+    display: grid;
+    gap: 0 !important;
+    padding: 0 1px 1px 0;
+  }
+  .cells > * {
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+    margin: 0 -1px -1px 0;
+    min-width: 0;
+    background: var(--paper);
+  }
+  /* Vạch cột nền 12 cột (4 cột trên màn hẹp) như phần đầu trang chủ */
+  .col-rules {
+    background: linear-gradient(to right, var(--line) 0 1px, transparent 1px) 0 0 / calc(100% / 12) 100% repeat-x;
+  }
+  @media (max-width: 1100px) {
+    .col-rules {
+      background-size: calc(100% / 4) 100%;
+    }
+  }
+  /* Lề chữ bên trong một cột kẻ (cách vạch cột) */
+  .rule-pad {
+    padding-left: clamp(0px, 1.4vw, 24px);
+  }
+  /* Nhãn "Sắp ra mắt": viền đứt màu cam như bản vẽ gốc */
+  .tag-soon {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 600;
+    color: #a35a00;
+    border: 1px dashed #a35a00;
+    border-radius: 6px;
+    padding: 2px 8px;
   }
 }
 

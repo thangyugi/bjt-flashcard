@@ -11,7 +11,8 @@ import { ELIGIBLE, QUESTION_TYPES, eligibleWords, type QuestionType } from "@/li
 import { resolveScope, type ScopeKey } from "@/lib/quiz-scope";
 import type { SourceType } from "@/types/vocabulary";
 import { cn } from "@/lib/utils";
-import { PageHeader } from "@/components/ui/page";
+import { PageHeader, btn } from "@/components/ui/page";
+import Link from "next/link";
 
 const COUNTS = [10, 20, 30, 50];
 const LEVEL_STYLE = {
@@ -169,21 +170,35 @@ export function QuizHub() {
 
   const scopeCard = (on: boolean) =>
     cn(
-      "relative flex rounded-[18px] border bg-surface text-left transition-all",
-      on
-        ? "border-brand shadow-[0_0_0_3px_rgba(184,32,47,0.12)]"
-        : "border-line hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[0_2px_4px_rgba(28,25,23,0.04),0_10px_24px_rgba(28,25,23,0.06)]"
+      "relative flex text-left transition-colors",
+      on ? "bg-brand-soft/50 shadow-[inset_0_0_0_2px_var(--brand)]" : "hover:bg-surface"
     );
 
   return (
     <div className="page-x flex flex-col gap-10 pt-6 pb-36 sm:gap-12 sm:pt-10 lg:pb-16">
-    <PageHeader eyebrow="Trắc nghiệm" title="Trắc nghiệm" lead="Chọn phạm vi ôn tập, số câu và dạng câu hỏi rồi bắt đầu." />
+    <PageHeader
+      crumbs={[{ label: "Trắc nghiệm", href: "/quiz" }, { label: "Từ vựng BJT" }]}
+      eyebrow="Trắc nghiệm · Từ vựng BJT"
+      accent="#a14f06"
+      title="Trắc nghiệm từ vựng BJT"
+      lead="Chọn phạm vi ôn tập, số câu và dạng câu hỏi rồi bắt đầu. Muốn làm trắc nghiệm khóa khác? Quay lại danh sách trắc nghiệm."
+      actions={
+        <>
+          <Link href="/quiz" className={cn(btn.ghost, btn.sm)}>
+            Tất cả trắc nghiệm
+          </Link>
+          <Link href="/bjt" className={cn(btn.ghost, btn.sm)}>
+            Học flashcard BJT
+          </Link>
+        </>
+      }
+    />
     <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
       <div className="flex min-w-0 flex-1 flex-col gap-8">
 
         <section className="flex flex-col gap-3">
-          <h2 className="hx-title border-b border-line pb-3 text-[clamp(22px,2.2vw,30px)]">Ôn tập nhanh</h2>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+          <h2 className="hx-title border-b border-line-strong pb-3 text-[clamp(22px,2.2vw,30px)]">Ôn tập nhanh</h2>
+          <div className="cells grid-cols-2 md:grid-cols-3">
             {quick.map((q) => {
               const n = stats[q.key] ?? 0;
               const on = scope === q.key;
@@ -216,7 +231,7 @@ export function QuizHub() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line-strong pb-3">
             <h2 className="hx-title text-[clamp(22px,2.2vw,30px)]">Theo chủ đề</h2>
             <div role="group" aria-label="Lọc theo nguồn" className="flex gap-1 rounded-xl bg-surface-2 p-1">
               {(["ALL", "BJT", "JLPT"] as const).map((s) => (
@@ -235,7 +250,7 @@ export function QuizHub() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="cells grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3">
             {shownGroups.map((g) => {
               const key: ScopeKey = `group:${g.id}`;
               const on = scope === key;
@@ -268,7 +283,7 @@ export function QuizHub() {
       </div>
 
       {/* Desktop: thiết lập cố định bên phải */}
-      <aside className="sticky top-[calc(var(--header-h)+24px)] hidden w-[380px] shrink-0 panel p-5 lg:block">{setup}</aside>
+      <aside className="sticky top-[calc(var(--header-h)+24px)] hidden w-[400px] shrink-0 panel p-5 lg:block">{setup}</aside>
 
       {/* Mobile / tablet: nút bắt đầu cố định */}
       <div className="fixed inset-x-0 bottom-20 z-40 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur md:bottom-0 lg:hidden">

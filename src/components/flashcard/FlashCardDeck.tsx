@@ -164,11 +164,11 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
     "flex h-12 items-center justify-center gap-2 rounded-xl border border-line-strong bg-surface text-[15px] font-semibold text-ink transition-colors hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-40 lg:h-11 lg:px-5 lg:text-sm";
 
   return (
-    <div className="mx-auto flex h-dvh w-full max-w-[1280px] flex-col md:h-auto md:gap-4 md:px-8 md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7">
+    <div className="flex h-dvh w-full flex-col md:h-auto md:gap-4 md:px-[var(--gutter)] md:py-5 lg:h-[calc(100dvh-4rem)] lg:flex-row lg:gap-8 lg:py-7">
       {/* ── Mobile: thanh trên cùng (chế độ tập trung) — ‹ tên nhóm + bộ đếm › ── */}
       <header className="shrink-0 bg-paper/95 backdrop-blur md:hidden">
         <div className="flex h-14 items-center justify-between px-1">
-          <Link href="/study" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
+          <Link href="/bjt" aria-label="Thoát" className="flex h-11 w-11 items-center justify-center rounded-xl text-ink">
             <X className="h-5 w-5" strokeWidth={2.2} />
           </Link>
           <div className="flex min-w-0 items-center gap-0.5">
@@ -240,7 +240,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
       <section className="flex min-h-0 min-w-0 flex-1 flex-col items-center gap-3 px-3 pt-3 pb-[max(env(safe-area-inset-bottom),12px)] md:gap-4 md:p-0">
         <div className="hidden w-full max-w-[880px] items-center justify-between md:flex">
           <Link
-            href="/study"
+            href="/bjt"
             className="flex h-10 items-center gap-1.5 rounded-[10px] pr-3.5 pl-2 text-sm font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
           >
             <ArrowLeft className="h-[18px] w-[18px]" strokeWidth={2.2} />

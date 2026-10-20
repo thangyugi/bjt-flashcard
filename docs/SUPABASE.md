@@ -4,7 +4,7 @@ App chạy **offline-first**: mọi hoạt động học được ghi trên máy
 đăng nhập, hàng chờ được gửi lên Supabase và tiến độ từ các thiết bị khác được gộp về. Chưa cấu hình Supabase thì app
 vẫn chạy như cũ, chỉ không có tài khoản.
 
-Thiết kế đầy đủ: tài liệu "Thiết kế Cơ sở dữ liệu — Nền tảng học tập BJT Flashcard".
+Thiết kế đầy đủ: tài liệu "Thiết kế Cơ sở dữ liệu — Nền tảng học tập BJT Flashcard" (sản phẩm nay mang tên LeoEdu; tên repo và khóa lưu trữ giữ nguyên).
 
 ## Các bước bật (làm một lần, ~20 phút)
 

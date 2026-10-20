@@ -7,14 +7,15 @@ const COLS: { h: string; links: [string, string][] }[] = [
       ["JLPT N1", "/jlpt-n1"],
       ["Phát âm IPA", "/english"],
       ["OCI AI Foundations", "/oracle-oci-ai"],
-      ["Từ vựng BJT", "/study"],
+      ["Từ vựng BJT", "/bjt"],
     ],
   },
   {
     h: "Nền tảng",
     links: [
+      ["Học bài", "/study"],
+      ["Trắc nghiệm", "/quiz"],
       ["Ôn tập FSRS", "/review"],
-      ["Trắc nghiệm tổng hợp", "/quiz?scope=all"],
       ["Tiến độ học tập", "/progress"],
       ["Vùng đất của bạn", "/land"],
     ],
@@ -39,7 +40,7 @@ export function HomeFooter() {
             <span className="mark" aria-hidden>
               語
             </span>
-            <span className="bn">BJT Flashcard</span>
+            <span className="bn">LeoEdu</span>
           </Link>
           <p className="note">Học ngôn ngữ và chứng chỉ bằng tiếng Việt.</p>
         </div>
@@ -55,7 +56,7 @@ export function HomeFooter() {
         ))}
       </div>
       <div className="legal">
-        <span>© 2026 BJT Flashcard</span>
+        <span>© 2026 LeoEdu</span>
         <span className="jp" lang="ja">
           一歩ずつ
         </span>

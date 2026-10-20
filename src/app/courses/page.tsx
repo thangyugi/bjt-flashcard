@@ -5,7 +5,7 @@ import { CourseBand } from "@/components/home/CourseBand";
 import { PageHeader } from "@/components/ui/page";
 
 export const metadata: Metadata = {
-  title: "Khóa học — BJT Flashcard",
+  title: "Khóa học",
   description: "Các khóa học: JLPT N1 (ngữ pháp kể thành truyện), phát âm IPA, OCI AI Foundations, từ vựng BJT.",
 };
 

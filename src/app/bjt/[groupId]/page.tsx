@@ -25,7 +25,7 @@ export default function StudyGroupPage({ params }: PageProps) {
         <SearchX className="h-10 w-10 text-ink-3" aria-hidden />
         <p className="font-medium text-ink-2">Không tìm thấy nhóm từ vựng này</p>
         <Link
-          href="/study"
+          href="/bjt"
           className="flex items-center gap-1.5 rounded-xl border border-line-strong bg-surface px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
         >
           <ArrowLeft className="h-4 w-4" /> Quay lại chọn nhóm
