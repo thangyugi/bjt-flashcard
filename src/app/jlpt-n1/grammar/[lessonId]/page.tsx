@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, BookMarked, Link2, Sparkles, Table2, Trophy } from "lucide-react";
+import { BookMarked, Link2, Sparkles, Table2, Trophy } from "lucide-react";
 import { N1_LESSONS, getN1Lesson } from "@/data/jlpt-n1/course";
 import { withFurigana } from "@/data/jlpt-n1/furigana";
 import { Jp } from "@/components/jlpt-n1/Jp";
@@ -13,6 +12,8 @@ import { StoryReader } from "@/components/jlpt-n1/StoryReader";
 import { LessonActions } from "@/components/jlpt-n1/LessonActions";
 import { AddToReview } from "@/components/learning/AddToReview";
 import { itemKey } from "@/lib/learning/keys";
+import { Breadcrumbs } from "@/components/ui/page";
+import { LessonPager } from "@/components/ui/lesson-pager";
 
 export const dynamicParams = false;
 
@@ -76,22 +77,14 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
         items={navItems}
       />
       <div className="flex min-w-0 flex-1 flex-col gap-10 xl:max-w-[1120px]">
-        {/* Đường dẫn */}
-        <nav aria-label="Đường dẫn" className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
-          <Link href="/courses" className="hover:text-ink">
-            Khóa học
-          </Link>
-          <span>/</span>
-          <Link href="/jlpt-n1" className="hover:text-ink">
-            JLPT N1
-          </Link>
-          <span>/</span>
-          <Link href="/jlpt-n1/grammar" className="hover:text-ink">
-            Ngữ pháp
-          </Link>
-          <span>/</span>
-          <span className="text-ink-2">Chương {lesson.num}</span>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { label: "Khóa học", href: "/courses" },
+            { label: "JLPT N1", href: "/jlpt-n1" },
+            { label: "Ngữ pháp", href: "/jlpt-n1/grammar" },
+            { label: `Chương ${lesson.num}` },
+          ]}
+        />
 
         {/* Đầu chương */}
         <header className="relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-ink px-6 py-8 text-paper sm:px-10 sm:py-10">
@@ -204,34 +197,17 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
         </section>
 
         {/* Chương trước / sau */}
-        <nav aria-label="Chuyển chương" className="grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
-          {prev ? (
-            <Link href={`/jlpt-n1/grammar/${prev.id}`} className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 hover:border-brand">
-              <ArrowLeft className="h-5 w-5 shrink-0 text-ink-3" aria-hidden />
-              <span className="flex min-w-0 flex-col">
-                <span className="text-xs text-ink-3">Chương {prev.num}</span>
-                <span className="truncate font-semibold text-ink">{prev.chapterVi}</span>
-              </span>
-            </Link>
-          ) : (
-            <Link href="/jlpt-n1/grammar" className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 hover:border-brand">
-              <ArrowLeft className="h-5 w-5 shrink-0 text-ink-3" aria-hidden />
-              <span className="font-semibold text-ink">Mục lục ngữ pháp</span>
-            </Link>
-          )}
-          {next && (
-            <Link
-              href={`/jlpt-n1/grammar/${next.id}`}
-              className="flex items-center justify-end gap-3 rounded-2xl bg-brand px-4 py-3 text-right text-white hover:bg-brand-hover sm:col-start-2"
-            >
-              <span className="flex min-w-0 flex-col">
-                <span className="text-xs text-white/80">Chương {next.num}</span>
-                <span className="truncate font-semibold">{next.chapterVi}</span>
-              </span>
-              <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
-            </Link>
-          )}
-        </nav>
+        <LessonPager
+          label="Chuyển chương"
+          prev={prev ? { href: `/jlpt-n1/grammar/${prev.id}`, kicker: `Chương ${prev.num}`, title: prev.chapterVi } : undefined}
+          next={next ? { href: `/jlpt-n1/grammar/${next.id}`, kicker: `Chương ${next.num}`, title: next.chapterVi } : undefined}
+          back={{ href: "/jlpt-n1/grammar", title: "Mục lục ngữ pháp" }}
+          links={[
+            { href: "/jlpt-n1", label: "Về khóa JLPT N1" },
+            { href: "/quiz?course=jlpt-n1", label: "Trắc nghiệm N1 khác" },
+            { href: "/review", label: "Ôn tập thẻ đến hạn" },
+          ]}
+        />
       </div>
 
       {/* Mục lục bên phải */}

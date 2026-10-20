@@ -1063,3 +1063,29 @@
 .oci-pager a + a { margin-top: -1px; }
 @media (min-width: 640px) { .oci-pager a + a { margin-top: 0; margin-left: -1px; } }
 .oci-pager a:hover { background: var(--o-surface); border-color: var(--o-line-strong); box-shadow: none; transform: none; }
+
+/* Thanh trên của khóa OCI nối với cả app: logo LeoEdu → trang chủ, đường dẫn Khóa học › OCI,
+   các mục điều hướng chính (màn rộng); trong ngăn bài học có cùng các lối đó cho mobile. */
+.oci-app-mark {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: #b8202f;
+  color: #fff;
+  font: 700 18px/1 var(--font-shippori), serif;
+}
+.oci-crumbs { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 13.5px; }
+.oci-crumb-up { color: var(--o-text-3); white-space: nowrap; }
+a.oci-crumb-up:hover { color: var(--o-text); }
+.oci-crumbs .oci-brand { min-width: 0; }
+@media (max-width: 480px) { .oci-crumb-up { display: none; } }
+.oci-appnav { display: none; align-items: center; gap: 22px; margin-left: 28px; font-size: 14px; font-weight: 500; }
+.oci-appnav a { color: var(--o-text-2); white-space: nowrap; }
+.oci-appnav a:hover { color: var(--o-text); }
+@media (min-width: 1100px) { .oci-appnav { display: flex; } }
+.oci-side-app { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; padding: 2px 10px; font-size: 13.5px; }
+.oci-side-app a { padding: 6px 2px; color: var(--o-text-2); }
+.oci-side-app a:hover { color: var(--o-text); }

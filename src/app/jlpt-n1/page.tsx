@@ -60,6 +60,9 @@ export default function JlptN1Home() {
             <Link href="/jlpt-n1/grammar" className={btn.ghost}>
               Xem mục lục & nhân vật
             </Link>
+            <Link href="/quiz?course=jlpt-n1" className={btn.ghost}>
+              Trắc nghiệm N1
+            </Link>
           </>
         }
         aside={

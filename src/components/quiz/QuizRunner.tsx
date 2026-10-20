@@ -730,8 +730,19 @@ function QuizResult({ questions, answers, graded, title, filter, setFilter, open
         Làm đề mới (từ khác)
       </button>
       <Link href="/quiz/bjt" className="flex h-11 items-center justify-center rounded-xl text-sm font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
-        Về trang trắc nghiệm
+        Đổi phạm vi trắc nghiệm BJT
       </Link>
+      <nav aria-label="Đi tiếp" className="flex flex-wrap justify-center gap-x-5 gap-y-1 border-t border-line pt-3 text-[13.5px] font-semibold text-ink-2">
+        <Link href="/bjt" className="hover:text-ink hover:underline">
+          Về khóa Từ vựng BJT
+        </Link>
+        <Link href="/review" className="hover:text-ink hover:underline">
+          Ôn tập thẻ đến hạn
+        </Link>
+        <Link href="/quiz" className="hover:text-ink hover:underline">
+          Trắc nghiệm khóa khác
+        </Link>
+      </nav>
     </>
   );
 

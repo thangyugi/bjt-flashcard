@@ -134,15 +134,24 @@ export function OciShell({ modules, lessons, children }: Props) {
         <button className="oci-icon-btn oci-menu-btn" aria-label="Mở danh sách bài học" onClick={() => setOpen(true)}>
           <Menu aria-hidden />
         </button>
-        <Link href={OCI_BASE} className="oci-brand" aria-label="Trang chủ khóa OCI AI Foundations">
-          <span className="oci-brand-mark" aria-hidden>
-            OCI
-          </span>
-          <span className="oci-brand-text">
-            <span className="oci-brand-t1">OCI AI Foundations</span>
-            <span className="oci-brand-t2">Oracle Cloud Infrastructure · Ghi chú Anh–Việt</span>
-          </span>
+        <Link href="/" className="oci-app-mark" aria-label="LeoEdu, trang chủ" title="LeoEdu, trang chủ">
+          <span aria-hidden>語</span>
         </Link>
+        <nav aria-label="Đường dẫn" className="oci-crumbs">
+          <Link href="/courses" className="oci-crumb-up">
+            Khóa học
+          </Link>
+          <span aria-hidden className="oci-crumb-up">›</span>
+          <Link href={OCI_BASE} className="oci-brand" aria-label="Trang chủ khóa OCI AI Foundations">
+            <span className="oci-brand-t1">OCI AI Foundations</span>
+          </Link>
+        </nav>
+        <nav aria-label="Điều hướng chính" className="oci-appnav">
+          <Link href="/study">Học bài</Link>
+          <Link href="/quiz?course=oci-ai">Trắc nghiệm</Link>
+          <Link href="/review">Ôn tập</Link>
+          <Link href="/progress">Tiến độ</Link>
+        </nav>
         <div className="oci-top-spacer" />
         <div className="oci-top-progress" title={`Đã học ${doneCount}/${lessons.length} bài`}>
           <div className="oci-bar bar">
@@ -198,6 +207,14 @@ export function OciShell({ modules, lessons, children }: Props) {
                 >
                   <FileCheck2 aria-hidden /> Luyện tập &amp; thi thử
                 </Link>
+                <div className="oci-side-sep" />
+                <div className="oci-side-app">
+                  <Link href="/courses">Khóa học</Link>
+                  <Link href="/study">Học bài</Link>
+                  <Link href="/quiz">Trắc nghiệm</Link>
+                  <Link href="/review">Ôn tập</Link>
+                  <Link href="/progress">Tiến độ</Link>
+                </div>
                 <div className="oci-side-sep" />
               </>
             )}

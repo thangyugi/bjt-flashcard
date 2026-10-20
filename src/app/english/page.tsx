@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookA, Languages, MessagesSquare, PenLine } from "lucide-react";
 import { ipaStats } from "@/data/english/ipa";
-import { Page, PageHeader, Section, SoonTag } from "@/components/ui/page";
+import { Page, PageHeader, Section, SoonTag, btn } from "@/components/ui/page";
 
 export const metadata: Metadata = {
   title: "Tiếng Anh — Khóa học",
@@ -25,6 +25,19 @@ export default function EnglishHome() {
         eyebrow="English"
         title="Khóa tiếng Anh"
         lead="Bắt đầu từ nền móng: phát âm chuẩn với IPA. Nghe đúng — nói đúng — rồi mới học từ vựng và ngữ pháp thật nhanh."
+        actions={
+          <>
+            <Link href="/english/ipa" className={btn.primary}>
+              Vào lộ trình IPA
+            </Link>
+            <Link href="/english/ipa/practice" className={btn.ghost}>
+              Phòng luyện tập
+            </Link>
+            <Link href="/quiz?course=english" className={btn.ghost}>
+              Trắc nghiệm tiếng Anh
+            </Link>
+          </>
+        }
       />
 
       <Section title="Bước 1 · Phát âm" id="en-step1">

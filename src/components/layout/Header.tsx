@@ -12,21 +12,17 @@ import { AccountButton } from "@/components/account/AccountButton";
 import { HeaderSettings } from "@/components/layout/HeaderSettings";
 import { Gem } from "@/components/home/icons";
 
+const COURSE_PATHS = ["/courses", "/jlpt-n1", "/english", "/oracle-oci-ai", "/bjt"];
+
+/** Điều hướng chính (thanh tiêu đề và thanh dưới đáy trên mobile dùng chung); logo dẫn về trang chủ */
 export const NAV_ITEMS = [
-  { href: "/", label: "Tổng quan", match: (p: string) => p === "/" },
-  { href: "/study", label: "Học bài", match: (p: string) => p.startsWith("/study") },
-  { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => p.startsWith("/quiz") },
-  {
-    href: "/courses",
-    label: "Khóa học",
-    match: (p: string) => p.startsWith("/courses") || p.startsWith("/jlpt-n1") || p.startsWith("/english"),
-  },
-  { href: "/progress", label: "Tiến độ", match: (p: string) => p.startsWith("/progress") || p.startsWith("/review") },
+  { href: "/courses", label: "Khóa học", match: (p: string) => COURSE_PATHS.some((c) => p === c || p.startsWith(`${c}/`)) },
+  { href: "/study", label: "Học bài", match: (p: string) => p === "/study" || p.startsWith("/study/") },
+  { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => p === "/quiz" || p.startsWith("/quiz/") },
+  { href: "/review", label: "Ôn tập", match: (p: string) => p.startsWith("/review") },
+  { href: "/progress", label: "Tiến độ", match: (p: string) => p.startsWith("/progress") },
   { href: "/land", label: "Vùng đất", match: (p: string) => p.startsWith("/land") },
 ];
-
-/** Trên thanh ngang, logo đã dẫn về trang chủ nên bỏ mục "Tổng quan" cho gọn (thanh dưới đáy trên mobile vẫn có). */
-const BAR_ITEMS = NAV_ITEMS.filter((i) => i.href !== "/");
 
 /**
  * Thanh tiêu đề chung: toàn bề ngang, nền giấy, một vạch mảnh phía dưới.
@@ -57,7 +53,7 @@ export function Header() {
         </Link>
 
         <nav aria-label="Điều hướng chính" className="hidden h-full items-stretch gap-5 md:flex lg:gap-7">
-          {BAR_ITEMS.map((item) => {
+          {NAV_ITEMS.map((item) => {
             const active = item.match(pathname);
             return (
               <Link

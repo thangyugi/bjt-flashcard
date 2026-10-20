@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, BookMarked, LibraryBig, ListOrdered, Trophy } from "lucide-react";
+import { BookMarked, LibraryBig, ListOrdered, Trophy } from "lucide-react";
 import { KANJI, VOCAB_LESSONS, getVocabLesson, wordAnchor } from "@/data/jlpt-n1/vocab";
 import { buildVocabQuiz, display, rubyOf } from "@/data/jlpt-n1/vocab/quiz";
 import { withFurigana } from "@/data/jlpt-n1/furigana";
@@ -15,6 +14,8 @@ import { LessonActions } from "@/components/jlpt-n1/LessonActions";
 import { AddToReview } from "@/components/learning/AddToReview";
 import { itemKey } from "@/lib/learning/keys";
 import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
+import { Breadcrumbs } from "@/components/ui/page";
+import { LessonPager } from "@/components/ui/lesson-pager";
 
 export const dynamicParams = false;
 
@@ -77,21 +78,14 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
     <div className="page-x flex gap-10 pt-6 pb-12 sm:pt-10 sm:pb-16">
       <LessonNavigator title={`Bài ${raw.num} · ${raw.words.length} từ (${range})`} sections={toc} items={navItems} />
       <div className="flex min-w-0 flex-1 flex-col gap-10 xl:max-w-[1120px]">
-        <nav aria-label="Đường dẫn" className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
-          <Link href="/courses" className="hover:text-ink">
-            Khóa học
-          </Link>
-          <span>/</span>
-          <Link href="/jlpt-n1" className="hover:text-ink">
-            JLPT N1
-          </Link>
-          <span>/</span>
-          <Link href="/jlpt-n1/vocab" className="hover:text-ink">
-            Từ vựng
-          </Link>
-          <span>/</span>
-          <span className="text-ink-2">Bài {raw.num}</span>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { label: "Khóa học", href: "/courses" },
+            { label: "JLPT N1", href: "/jlpt-n1" },
+            { label: "Từ vựng", href: "/jlpt-n1/vocab" },
+            { label: `Bài ${raw.num}` },
+          ]}
+        />
 
         <header className="relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-ink px-6 py-8 text-paper sm:px-10 sm:py-10">
           <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-brand/90 sm:h-72 sm:w-72" aria-hidden />
@@ -178,34 +172,29 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
           ))}
         </section>
 
-        <nav aria-label="Chuyển bài" className="grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
-          {prev ? (
-            <Link href={`/jlpt-n1/vocab/${prev.id}`} className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 hover:border-brand">
-              <ArrowLeft className="h-5 w-5 shrink-0 text-ink-3" aria-hidden />
-              <span className="flex min-w-0 flex-col">
-                <span className="text-xs text-ink-3">Bài {prev.num}</span>
-                <span className="truncate font-semibold text-ink">{prev.title}</span>
-              </span>
-            </Link>
-          ) : (
-            <Link href="/jlpt-n1/vocab" className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 hover:border-brand">
-              <ArrowLeft className="h-5 w-5 shrink-0 text-ink-3" aria-hidden />
-              <span className="font-semibold text-ink">Mục lục từ vựng</span>
-            </Link>
-          )}
-          {next && (
-            <Link
-              href={`/jlpt-n1/vocab/${next.id}`}
-              className="flex items-center justify-end gap-3 rounded-2xl bg-brand px-4 py-3 text-right text-white hover:bg-brand-hover sm:col-start-2"
-            >
-              <span className="flex min-w-0 flex-col">
-                <span className="text-xs text-white/80">Bài {next.num}</span>
-                <span className="truncate font-semibold">{next.title}</span>
-              </span>
-              <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
-            </Link>
-          )}
-        </nav>
+        <LessonPager
+
+          label="Chuyển bài"
+
+          prev={prev ? { href: `/jlpt-n1/vocab/${prev.id}`, kicker: `Bài ${prev.num}`, title: prev.title } : undefined}
+
+          next={next ? { href: `/jlpt-n1/vocab/${next.id}`, kicker: `Bài ${next.num}`, title: next.title } : undefined}
+
+          back={{ href: "/jlpt-n1/vocab", title: "Mục lục từ vựng" }}
+
+          links={[
+
+            { href: "/jlpt-n1", label: "Về khóa JLPT N1" },
+
+            { href: "/jlpt-n1/vocab/library", label: "Thư viện từ vựng" },
+
+            { href: "/quiz?course=jlpt-n1", label: "Trắc nghiệm N1 khác" },
+
+            { href: "/review", label: "Ôn tập thẻ đến hạn" },
+
+          ]}
+
+        />
       </div>
 
       <aside className="sticky top-24 hidden h-fit w-56 shrink-0 flex-col gap-1 xl:flex" aria-label="Mục lục bài">
