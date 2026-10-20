@@ -192,6 +192,29 @@ export function Cells({
   );
 }
 
+/**
+ * Bố cục "việc chính + ghi chú bên lề" cho trang có khối làm bài (thẻ ôn, phòng luyện): khối chính giữ bề ngang dễ dùng,
+ * cột phải (màn rộng) chứa ghi chú, cài đặt, liên kết thay vì để trống. Màn hẹp: ghi chú xuống dưới.
+ */
+export function WithAside({ children, aside, className }: { children: ReactNode; aside: ReactNode; className?: string }) {
+  return (
+    <div className={cn("grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(300px,380px)] xl:gap-12 2xl:grid-cols-[minmax(0,1fr)_420px]", className)}>
+      <div className="min-w-0">{children}</div>
+      <aside className="flex min-w-0 flex-col gap-6 xl:border-l xl:border-line-strong xl:pl-[clamp(20px,2vw,32px)]">{aside}</aside>
+    </div>
+  );
+}
+
+/** Một khối ghi chú nhỏ bên lề: tiêu đề in hoa nhỏ + nội dung */
+export function AsideNote({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="flex flex-col gap-2.5 border-t border-line-strong pt-3 text-[14px] leading-relaxed text-ink-2">
+      <h2 className="eyebrow-label">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
 /** Nhãn "Sắp ra mắt": viền đứt màu cam như bản vẽ gốc */
 export function SoonTag({ children = "Sắp ra mắt", className }: { children?: ReactNode; className?: string }) {
   return <span className={cn("tag-soon", className)}>{children}</span>;

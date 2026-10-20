@@ -77,7 +77,7 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
   return (
     <div className="page-x flex gap-10 pt-6 pb-12 sm:pt-10 sm:pb-16">
       <LessonNavigator title={`Bài ${raw.num} · ${raw.words.length} từ (${range})`} sections={toc} items={navItems} />
-      <div className="flex min-w-0 flex-1 flex-col gap-10 xl:max-w-[1120px]">
+      <div className="flex min-w-0 flex-1 flex-col gap-10">
         <Breadcrumbs
           items={[
             { label: "Khóa học", href: "/courses" },
@@ -110,12 +110,12 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
         {/* Danh sách từ */}
         <section className="flex flex-col gap-4">
           <Heading id="danh-sach" icon={ListOrdered} kicker="単語リスト · Danh sách" title="Các từ trong bài" />
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="cells grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 min-[112.5rem]:grid-cols-5">
             {raw.words.map((w, i) => (
               <a
                 key={w.no}
                 href={`#${wordAnchor(source.prefix, w.no)}`}
-                className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-3.5 py-2 transition-colors hover:border-brand"
+                className="flex items-center gap-3 px-3.5 py-2 transition-colors hover:bg-surface"
               >
                 <span className="w-8 shrink-0 text-[12px] font-bold text-ink-3">{w.no}</span>
                 <span className="flex min-w-0 flex-col">
@@ -133,14 +133,18 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
         {/* Câu chuyện */}
         <section className="flex flex-col gap-5">
           <Heading id="truyen" icon={BookMarked} kicker="物語 · Câu chuyện" title="Đọc truyện — gặp từ trong ngữ cảnh" />
-          <p className="rounded-2xl bg-surface-2 px-5 py-4 text-[15px] leading-relaxed text-ink-2">{raw.scene}</p>
-          <VoiceSettings />
-          <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8">
-            <StoryReader story={lesson.story} />
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(260px,340px)] lg:gap-8 2xl:grid-cols-[minmax(0,1fr)_400px]">
+            <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8 lg:order-1">
+              <StoryReader story={lesson.story} />
+            </div>
+            <div className="flex flex-col gap-4 lg:order-2">
+              <p className="rounded-2xl bg-surface-2 px-5 py-4 text-[15px] leading-relaxed text-ink-2">{raw.scene}</p>
+              <VoiceSettings />
+              <p className="text-[13px] text-ink-3">
+                Các từ <mark className="n1-mark">tô đỏ</mark> là từ của bài. Đọc một lượt, đoán nghĩa, rồi học kỹ từng từ bên dưới.
+              </p>
+            </div>
           </div>
-          <p className="text-[13px] text-ink-3">
-            Các từ <mark className="n1-mark">tô đỏ</mark> là từ của bài. Đọc một lượt, đoán nghĩa, rồi học kỹ từng từ bên dưới.
-          </p>
         </section>
 
         {/* Thẻ từ */}
@@ -153,8 +157,10 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
         </section>
 
         {/* Trắc nghiệm */}
-        <section className="flex flex-col gap-8">
-          <Heading id="trac-nghiem" icon={Trophy} kicker="練習 · Trắc nghiệm" title="Luyện tập nhiều dạng" />
+        <section className="grid gap-8 2xl:grid-cols-2 2xl:gap-x-10">
+          <div className="2xl:col-span-2">
+            <Heading id="trac-nghiem" icon={Trophy} kicker="練習 · Trắc nghiệm" title="Luyện tập nhiều dạng" />
+          </div>
           {sections.map((s, i) => (
             <div key={s.key} id={`quiz-${s.key}`} className="flex scroll-mt-24 flex-col gap-3">
               <div className="flex flex-col gap-0.5">
@@ -188,7 +194,7 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
 
             { href: "/jlpt-n1/vocab/library", label: "Thư viện từ vựng" },
 
-            { href: "/quiz?course=jlpt-n1", label: "Trắc nghiệm N1 khác" },
+            { href: "/quiz/jlpt-n1", label: "Trắc nghiệm N1 khác" },
 
             { href: "/review", label: "Ôn tập thẻ đến hạn" },
 

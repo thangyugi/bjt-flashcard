@@ -76,7 +76,7 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
         sections={toc.filter((t) => !lesson.patterns.some((p) => p.id === t.id))}
         items={navItems}
       />
-      <div className="flex min-w-0 flex-1 flex-col gap-10 xl:max-w-[1120px]">
+      <div className="flex min-w-0 flex-1 flex-col gap-10">
         <Breadcrumbs
           items={[
             { label: "Khóa học", href: "/courses" },
@@ -123,17 +123,20 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
         {/* Câu chuyện */}
         <section className="flex flex-col gap-5">
           <Heading id="truyen" icon={BookMarked} kicker="物語 · Câu chuyện" title="Đọc truyện trước — đoán nghĩa từ ngữ cảnh" />
-          <p className="rounded-2xl bg-surface-2 px-5 py-4 text-[15px] leading-relaxed text-ink-2">
-            <Jp t={lesson.scene} vi />
-          </p>
-          <VoiceSettings />
-          <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8">
-            <StoryReader story={lesson.story} />
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(260px,340px)] lg:gap-8 2xl:grid-cols-[minmax(0,1fr)_400px]">
+            <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8 lg:order-1">
+              <StoryReader story={lesson.story} />
+            </div>
+            <div className="flex flex-col gap-4 lg:order-2">
+              <p className="rounded-2xl bg-surface-2 px-5 py-4 text-[15px] leading-relaxed text-ink-2">
+                <Jp t={lesson.scene} vi />
+              </p>
+              <VoiceSettings />
+              <p className="text-[13px] text-ink-3">
+                Phần <mark className="n1-mark">tô đỏ</mark> là mẫu ngữ pháp của chương. Hãy thử đoán nghĩa trước, rồi kéo xuống học kỹ từng mẫu.
+              </p>
+            </div>
           </div>
-          <p className="text-[13px] text-ink-3">
-            Phần <mark className="n1-mark">tô đỏ</mark> là mẫu ngữ pháp của chương. Hãy thử đoán nghĩa trước, rồi kéo xuống
-            học kỹ từng mẫu.
-          </p>
         </section>
 
         {/* Các mẫu ngữ pháp */}
@@ -173,7 +176,7 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
         {/* Liên kết kiến thức */}
         <section className="flex flex-col gap-4">
           <Heading id="lien-ket" icon={Link2} kicker="つながり · Liên kết" title="Liên kết kiến thức & mẹo nhớ cả nhóm" />
-          <ul className="flex flex-col gap-2.5">
+          <ul className="grid gap-2.5 lg:grid-cols-2">
             {lesson.links.map((l, i) => (
               <li key={i} className="flex gap-3 rounded-2xl border border-line bg-surface px-4 py-3 text-[15px] leading-relaxed text-ink">
                 <Link2 className="mt-1 h-4 w-4 shrink-0 text-brand" aria-hidden />
@@ -204,7 +207,7 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
           back={{ href: "/jlpt-n1/grammar", title: "Mục lục ngữ pháp" }}
           links={[
             { href: "/jlpt-n1", label: "Về khóa JLPT N1" },
-            { href: "/quiz?course=jlpt-n1", label: "Trắc nghiệm N1 khác" },
+            { href: "/quiz/jlpt-n1", label: "Trắc nghiệm N1 khác" },
             { href: "/review", label: "Ôn tập thẻ đến hạn" },
           ]}
         />

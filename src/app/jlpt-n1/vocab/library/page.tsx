@@ -39,9 +39,7 @@ export default function VocabLibraryPage() {
         size="md"
         lead="Gõ kanji, hiragana, nghĩa tiếng Việt hoặc âm Hán Việt (không cần dấu). Chạm một từ để mở thẻ chi tiết trong bài học."
       />
-      <div className="w-full max-w-[960px]">
-        <VocabLibrary entries={entries} sources={VOCAB_SOURCES.map((s) => ({ id: s.id, name: s.name }))} />
-      </div>
+      <VocabLibrary entries={entries} sources={VOCAB_SOURCES.map((s) => ({ id: s.id, name: s.name }))} />
     </Page>
   );
 }
