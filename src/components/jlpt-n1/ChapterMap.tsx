@@ -21,7 +21,7 @@ export function ChapterMap({ lessons, total }: { lessons: N1LessonMeta[]; total:
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 panel p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex items-baseline justify-between gap-4">
             <span className="text-sm font-semibold text-ink-2">Tiến độ câu chuyện</span>
@@ -44,7 +44,7 @@ export function ChapterMap({ lessons, total }: { lessons: N1LessonMeta[]; total:
         )}
       </div>
 
-      <ol className="grid gap-3 md:grid-cols-2">
+      <ol className="grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-2">
         {lessons.map((l) => {
           const isDone = hydrated && !!done[l.id];
           const q = hydrated ? quiz[l.id] : undefined;

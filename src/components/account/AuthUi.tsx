@@ -2,18 +2,18 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Page, PageHeader } from "@/components/ui/page";
 
 /** Khung chung cho các trang đăng nhập / đăng ký */
 export function AuthShell({ title, sub, children, foot }: { title: string; sub?: string; children: React.ReactNode; foot?: React.ReactNode }) {
   return (
-    <div className="mx-auto flex w-full max-w-[440px] flex-col gap-5 px-4 py-8 sm:py-14">
-      <div className="flex flex-col gap-1.5">
-        <h1 className="text-[28px] leading-tight font-extrabold tracking-[-0.02em] text-ink">{title}</h1>
-        {sub && <p className="text-[15px] leading-relaxed text-ink-2">{sub}</p>}
+    <Page>
+      <PageHeader eyebrow="Tài khoản" title={title} lead={sub} size="md" />
+      <div className="flex w-full max-w-[440px] flex-col gap-5">
+        <div className="flex flex-col gap-4 panel px-5 py-6 sm:px-7">{children}</div>
+        {foot && <div className="text-[14px] text-ink-2">{foot}</div>}
       </div>
-      <div className="flex flex-col gap-4 rounded-3xl border border-line bg-surface px-5 py-6 sm:px-7">{children}</div>
-      {foot && <div className="text-center text-[14px] text-ink-2">{foot}</div>}
-    </div>
+    </Page>
   );
 }
 

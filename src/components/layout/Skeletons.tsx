@@ -53,7 +53,7 @@ export function CardRowSkeleton({ count = 5 }: { count?: number }) {
 /** Trang chủ */
 export function HomeSkeleton() {
   return (
-    <Screen label="Đang tải trang chủ" className="mx-auto flex max-w-[1280px] flex-col gap-8 px-4 py-6 sm:px-8 sm:py-10 lg:gap-10">
+    <Screen label="Đang tải trang chủ" className="page-x flex flex-col gap-8 py-6 sm:py-10 lg:gap-10">
       <div className="flex items-center justify-between gap-12 rounded-3xl border border-line bg-surface p-6 sm:p-10 lg:p-14">
         <div className="flex w-full max-w-[560px] flex-col gap-5">
           <Bone className="h-4 w-56" />
@@ -93,7 +93,7 @@ export function HomeSkeleton() {
 /** Danh sách nhóm (Học bài) */
 export function StudyListSkeleton() {
   return (
-    <Screen label="Đang tải danh sách nhóm" className="mx-auto max-w-[960px] space-y-8 px-4 py-6 sm:px-8 sm:py-10">
+    <Screen label="Đang tải danh sách nhóm" className="page-x space-y-8 py-6 sm:py-10">
       <div className="flex flex-col gap-2">
         <Bone className="h-7 w-52" />
         <Bone className="h-4 w-64" />
@@ -206,7 +206,7 @@ export function HubSkeleton() {
   return (
     <Screen
       label="Đang tải trắc nghiệm"
-      className="mx-auto flex max-w-[1280px] flex-col gap-6 px-4 pt-6 pb-12 sm:px-8 sm:pt-10 lg:flex-row lg:items-start lg:gap-8"
+      className="page-x flex flex-col gap-6 pt-6 pb-12 sm:pt-10 lg:flex-row lg:items-start lg:gap-8"
     >
       <div className="flex min-w-0 flex-1 flex-col gap-8">
         <div className="flex flex-col gap-2">

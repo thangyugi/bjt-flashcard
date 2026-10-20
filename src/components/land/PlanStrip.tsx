@@ -36,14 +36,14 @@ export function PlanStrip({ balance, earned, spent, xpToNext }: { balance: numbe
   const { tasks, done } = dailyPlan(today);
 
   return (
-    <div className="relative z-20 flex flex-wrap items-center gap-2 border-b border-line bg-surface px-4 py-2.5 sm:px-6 md:flex-nowrap md:gap-3">
+    <div className="relative z-20 flex flex-wrap items-center gap-2 border-b border-line-strong bg-paper px-[var(--gutter)] py-2.5 md:flex-nowrap md:gap-3">
       <div ref={box} className="relative order-3 w-full min-w-0 md:order-none md:w-auto md:flex-1">
         <button
           type="button"
           aria-expanded={open}
           aria-controls="land-plan"
           onClick={() => setOpen((o) => !o)}
-          className="flex w-full min-w-0 items-center gap-2.5 rounded-xl border border-line bg-paper px-3 py-1.5 text-left text-[14px] hover:border-line-strong md:w-auto md:max-w-full"
+          className="flex w-full min-w-0 items-center gap-2.5 rounded-lg border border-line-strong bg-paper px-3 py-1.5 text-left text-[14px] hover:border-line-strong md:w-auto md:max-w-full"
         >
           <span className="font-semibold whitespace-nowrap text-ink">Kế hoạch hôm nay</span>
           <span
@@ -65,7 +65,7 @@ export function PlanStrip({ balance, earned, spent, xpToNext }: { balance: numbe
           <ChevronDown className={cn("ml-auto h-4 w-4 flex-none text-ink-3 transition-transform", open && "rotate-180")} aria-hidden />
         </button>
         {open && (
-          <div id="land-plan" className="absolute top-[calc(100%+8px)] left-0 z-30 w-full rounded-2xl border border-line bg-surface p-4 shadow-[0_1px_2px_rgba(28,25,23,0.06),0_8px_24px_rgba(28,25,23,0.08)] md:w-[340px]">
+          <div id="land-plan" className="absolute top-[calc(100%+8px)] left-0 z-30 w-full panel p-4 shadow-[0_1px_2px_rgba(28,25,23,0.06),0_8px_24px_rgba(28,25,23,0.08)] md:w-[340px]">
             <h3 className="mb-2.5 text-[13.5px] font-bold text-ink">
               Kế hoạch hôm nay · {done}/{tasks.length}
             </h3>

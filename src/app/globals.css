@@ -124,6 +124,21 @@
   --sidebar-accent-foreground: var(--ink-2);
   --sidebar-border: var(--line);
   --sidebar-ring: var(--brand);
+
+  /* Khung trang dùng chung: thanh tiêu đề, trang chủ và mọi trang khác thẳng mép với nhau */
+  --page-max: 1440px;
+  --gutter: 16px;
+  /* chiều cao thanh tiêu đề dính (Header) */
+  --header-h: 3.5rem;
+}
+@media (min-width: 640px) {
+  :root { --gutter: 24px; }
+}
+@media (min-width: 768px) {
+  :root { --header-h: 4rem; }
+}
+@media (min-width: 1024px) {
+  :root { --gutter: 32px; }
 }
 
 /* ── Base ─────────────────────────────────────────────────── */
@@ -226,6 +241,42 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .skeleton { animation: none; }
+}
+
+/* ── Ngôn ngữ thiết kế chung: khung trang, tiêu đề in hoa sát chữ, mặt giấy ── */
+@layer components {
+  /* Khung ngang duy nhất của app (cùng bề rộng và lề với thanh tiêu đề) */
+  .page-x {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  }
+  /* Tiêu đề in hoa, đậm, sát chữ (Be Vietnam Pro 800) */
+  .hx-title {
+    font-family: var(--font-be-vietnam), system-ui, sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  /* Nhãn nhỏ phía trên tiêu đề */
+  .eyebrow-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  /* Mặt giấy: một viền mảnh, bo vừa, không đổ bóng */
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+  }
 }
 
 /* ── Utility ──────────────────────────────────────────────── */

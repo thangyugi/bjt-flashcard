@@ -74,7 +74,7 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
   }));
 
   return (
-    <div className="mx-auto flex max-w-[1180px] gap-10 px-4 py-6 sm:px-8 sm:py-10">
+    <div className="page-x flex gap-10 pt-6 pb-12 sm:pt-10 sm:pb-16">
       <LessonNavigator title={`Bài ${raw.num} · ${raw.words.length} từ (${range})`} sections={toc} items={navItems} />
       <div className="flex min-w-0 flex-1 flex-col gap-10">
         <nav aria-label="Đường dẫn" className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">

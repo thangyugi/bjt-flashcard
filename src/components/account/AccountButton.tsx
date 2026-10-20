@@ -14,7 +14,7 @@ export function AccountButton() {
     return (
       <Link
         href="/login"
-        className="rounded-lg border border-line-strong px-2.5 py-1.5 text-[13px] font-semibold whitespace-nowrap text-ink hover:bg-surface-2"
+        className="flex h-9 items-center rounded-lg border border-line-strong px-3 text-[13.5px] font-semibold whitespace-nowrap text-ink transition-colors hover:border-ink-3 hover:bg-surface"
       >
         Đăng nhập
       </Link>
@@ -25,7 +25,7 @@ export function AccountButton() {
       href="/account"
       title={`Tài khoản: ${name}`}
       aria-label="Tài khoản"
-      className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13px] font-bold text-paper uppercase"
+      className="flex h-9 w-9 items-center justify-center rounded-full border border-line-strong bg-surface-2 text-[13.5px] font-bold text-ink-2 uppercase transition-colors hover:border-ink-3 hover:text-ink"
     >
       {name ? name.trim()[0] : <CircleUserRound className="h-4 w-4" aria-hidden />}
     </Link>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Page, PageHeader } from "@/components/ui/page";
 
 export const metadata: Metadata = { title: "Chính sách quyền riêng tư" };
 
@@ -43,11 +44,9 @@ const SECTIONS: { h: string; p: string[] }[] = [
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto flex max-w-[720px] flex-col gap-6 px-4 py-8 sm:px-8 sm:py-12">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-[30px] leading-tight font-extrabold tracking-[-0.02em] text-ink">Chính sách quyền riêng tư</h1>
-        <p className="text-[14px] text-ink-3">Phiên bản 17/10/2026</p>
-      </header>
+    <Page>
+      <PageHeader eyebrow="Phiên bản 17/10/2026" title="Chính sách quyền riêng tư" size="md" />
+      <div className="flex max-w-[760px] flex-col gap-8">
       {SECTIONS.map((s) => (
         <section key={s.h} className="flex flex-col gap-2">
           <h2 className="text-[18px] font-bold text-ink">{s.h}</h2>
@@ -63,6 +62,7 @@ export default function PrivacyPage() {
       <Link href="/account" className="text-[14px] font-semibold text-brand hover:underline">
         Đến trang tài khoản →
       </Link>
-    </div>
+      </div>
+    </Page>
   );
 }
