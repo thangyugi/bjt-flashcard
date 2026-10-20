@@ -1,37 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { chooserData } from "@/lib/choosers";
-import { QuizChooser } from "@/components/choosers/QuizChooser";
+import { QuizCourseChooser } from "@/components/choosers/QuizChooser";
 import { Page, PageHeader, Section, btn } from "@/components/ui/page";
 
 export const metadata: Metadata = {
   title: "Trắc nghiệm",
-  description: "Chọn bài trắc nghiệm: từ vựng BJT, ngữ pháp và từ vựng JLPT N1, luyện nghe IPA, luyện tập và thi thử OCI AI Foundations.",
+  description: "Chọn khóa để làm trắc nghiệm: JLPT N1, phát âm IPA, OCI AI Foundations, từ vựng BJT — hoặc ôn tập tổng hợp thẻ đến hạn.",
 };
 
-/** "Trắc nghiệm": mọi dạng trắc nghiệm của các khóa, lọc theo khóa (?course=…). */
-export default async function QuizPage({ searchParams }: PageProps<"/quiz">) {
-  const { course } = await searchParams;
+/**
+ * "Trắc nghiệm", bước 1: chọn khóa (→ /quiz/[khóa], bước 2: chọn dạng trắc nghiệm của khóa đó)
+ * hoặc ôn tập tổng hợp. Liên kết cũ /quiz?course=… được chuyển sang /quiz/[khóa] (next.config.ts).
+ */
+export default function QuizPage() {
   const data = chooserData();
   return (
     <Page>
       <PageHeader
-        eyebrow="Trắc nghiệm"
-        title={["Chọn bài", "trắc nghiệm"]}
-        lead="Mọi dạng trắc nghiệm của các khóa ở một chỗ. Lọc theo khóa, chọn bài rồi làm ngay; câu sai được đưa vào ôn tập."
+        eyebrow="Trắc nghiệm · Bước 1/2"
+        title={["Bạn muốn", "kiểm tra khóa nào?"]}
+        lead="Chọn một khóa, trang sau chỉ còn vài dạng trắc nghiệm của khóa đó và một gợi ý nên làm trước. Câu sai được đưa vào ôn tập."
         actions={
-          <>
-            <Link href="/study" className={btn.ghost}>
-              Học bài trước
-            </Link>
-            <Link href="/review" className={btn.ghost}>
-              Ôn tập tổng hợp
-            </Link>
-          </>
+          <Link href="/study" className={btn.ghost}>
+            Học bài trước
+          </Link>
         }
       />
-      <Section title="Các dạng trắc nghiệm" id="quiz-kinds">
-        <QuizChooser data={data} initial={typeof course === "string" ? course : undefined} />
+      <Section title="Chọn khóa" id="quiz-courses">
+        <QuizCourseChooser data={data} />
       </Section>
     </Page>
   );

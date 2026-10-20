@@ -33,7 +33,7 @@ export default function EnglishHome() {
             <Link href="/english/ipa/practice" className={btn.ghost}>
               Phòng luyện tập
             </Link>
-            <Link href="/quiz?course=english" className={btn.ghost}>
+            <Link href="/quiz/english" className={btn.ghost}>
               Trắc nghiệm tiếng Anh
             </Link>
           </>

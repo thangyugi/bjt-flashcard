@@ -178,14 +178,14 @@ export function QuizHub() {
     <div className="page-x flex flex-col gap-10 pt-6 pb-36 sm:gap-12 sm:pt-10 lg:pb-16">
     <PageHeader
       crumbs={[{ label: "Trắc nghiệm", href: "/quiz" }, { label: "Từ vựng BJT" }]}
-      eyebrow="Trắc nghiệm · Từ vựng BJT"
+      eyebrow="Trắc nghiệm · Bước 2/2 · Từ vựng BJT"
       accent="#a14f06"
       title="Trắc nghiệm từ vựng BJT"
-      lead="Chọn phạm vi ôn tập, số câu và dạng câu hỏi rồi bắt đầu. Muốn làm trắc nghiệm khóa khác? Quay lại danh sách trắc nghiệm."
+      lead="Chọn phạm vi ôn tập, số câu và dạng câu hỏi rồi bắt đầu. Mặc định đã sẵn sàng: bấm Bắt đầu là làm ngay."
       actions={
         <>
           <Link href="/quiz" className={cn(btn.ghost, btn.sm)}>
-            Tất cả trắc nghiệm
+            Đổi khóa
           </Link>
           <Link href="/bjt" className={cn(btn.ghost, btn.sm)}>
             Học flashcard BJT

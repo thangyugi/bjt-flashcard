@@ -289,7 +289,7 @@ function PracticeMode({
   }
 
   return (
-    <div className="oci-practice" ref={topRef}>
+    <div className="oci-practice run" ref={topRef}>
       <PracticeHeader title={title} subtitle={subtitle} backHref={backHref} backLabel={backLabel} />
       <div className="oci-pr-bar">
         <div className="oci-bar" style={{ flex: 1 }}>
@@ -503,7 +503,7 @@ function ExamMode({
   const mm = Math.floor(left / 60000);
   const ss = Math.floor((left % 60000) / 1000);
   return (
-    <div className="oci-practice">
+    <div className="oci-practice run">
       <PracticeHeader title={title} subtitle={subtitle} backHref={backHref} backLabel={backLabel} />
       <div className="oci-pr-bar oci-exam-bar">
         <span className={`oci-timer${left < 5 * 60_000 ? " low" : ""}`}>

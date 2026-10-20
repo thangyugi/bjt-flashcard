@@ -63,13 +63,15 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
       </header>
 
       <div className="flex flex-col gap-7 px-5 py-6 sm:px-7">
+        <div className="grid gap-7 xl:grid-cols-2 xl:gap-10">
+          <div className="flex min-w-0 flex-col gap-7">
         <Section icon={BookOpenText} title="Ý nghĩa & sắc thái">
           <p className="text-[15px] leading-relaxed text-ink">
             <Jp t={p.nuance} vi />
           </p>
         </Section>
 
-        <div className="grid gap-7 md:grid-cols-2">
+        <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-1 min-[112.5rem]:grid-cols-2">
           <Section icon={Wrench} title="Cách chia">
             <ul className="flex flex-col gap-2">
               {p.forms.map((f) => (
@@ -117,33 +119,7 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
           </ul>
         </Section>
 
-        <Section icon={MessageSquareQuote} title="Ví dụ">
-          <SpeakButton text={p.examples.map((e) => e.jp)} label="Nghe tất cả ví dụ" showLabel className="self-start" />
-          <ol className="flex flex-col gap-3">
-            {p.examples.map((e, i) => (
-              <li key={i} className="flex gap-3 rounded-2xl border border-line px-4 py-3">
-                <span className="mt-1.5 text-sm font-bold text-ink-3">{i + 1}</span>
-                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                  <div className="flex items-start gap-2">
-                    <p className="min-w-0 flex-1 text-[17px] leading-[2.2] text-ink">
-                      <Jp t={e.jp} />
-                    </p>
-                    <SpeakButton text={e.jp} label="Nghe câu ví dụ" className="mt-1.5" />
-                  </div>
-                  <Reveal className="text-[14px] leading-relaxed text-ink-2">{e.vi}</Reveal>
-                  {e.note && (
-                    <p className="text-[13px] text-ink-3">
-                      💡 <Jp t={e.note} vi />
-                    </p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ol>
-          <p className="text-[12.5px] text-ink-3">Mẹo: tự dịch trong đầu trước, rồi chạm vào dòng mờ để kiểm tra.</p>
-        </Section>
-
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-1 min-[112.5rem]:grid-cols-2">
           <div className="flex flex-col gap-2.5 rounded-2xl bg-ok-soft px-4 py-4">
             <h4 className="flex items-center gap-2 text-sm font-bold text-ok-ink">
               <CircleCheck className="h-4 w-4" aria-hidden /> Khi nào nên dùng
@@ -184,9 +160,37 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
           </div>
         </div>
 
+          </div>
+          <div className="flex min-w-0 flex-col gap-7">
+        <Section icon={MessageSquareQuote} title="Ví dụ">
+          <SpeakButton text={p.examples.map((e) => e.jp)} label="Nghe tất cả ví dụ" showLabel className="self-start" />
+          <ol className="flex flex-col gap-3">
+            {p.examples.map((e, i) => (
+              <li key={i} className="flex gap-3 rounded-2xl border border-line px-4 py-3">
+                <span className="mt-1.5 text-sm font-bold text-ink-3">{i + 1}</span>
+                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                  <div className="flex items-start gap-2">
+                    <p className="min-w-0 flex-1 text-[17px] leading-[2.2] text-ink">
+                      <Jp t={e.jp} />
+                    </p>
+                    <SpeakButton text={e.jp} label="Nghe câu ví dụ" className="mt-1.5" />
+                  </div>
+                  <Reveal className="text-[14px] leading-relaxed text-ink-2">{e.vi}</Reveal>
+                  {e.note && (
+                    <p className="text-[13px] text-ink-3">
+                      💡 <Jp t={e.note} vi />
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p className="text-[12.5px] text-ink-3">Mẹo: tự dịch trong đầu trước, rồi chạm vào dòng mờ để kiểm tra.</p>
+        </Section>
+
         {p.compare.length > 0 && (
           <Section icon={GitCompareArrows} title="So sánh với mẫu gần nghĩa">
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 min-[112.5rem]:grid-cols-2">
               {p.compare.map((c) => (
                 <div key={c.other} className="flex flex-col gap-1.5 rounded-2xl border border-line px-4 py-3.5">
                   <span className="text-[16px] leading-[2] font-bold text-ink">
@@ -212,7 +216,7 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
           </Section>
         )}
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-1 min-[112.5rem]:grid-cols-2">
           <div className="flex gap-3 rounded-2xl border border-[#e7c46a]/60 bg-[#fdf6e3] px-4 py-4">
             <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-[#b7791f]" aria-hidden />
             <div className="flex flex-col gap-1">
@@ -236,6 +240,9 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
               </div>
             </div>
           )}
+        </div>
+
+          </div>
         </div>
 
         <Section icon={Puzzle} title="Kiểm tra nhanh">

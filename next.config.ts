@@ -18,6 +18,13 @@ const nextConfig: NextConfig = {
       // Thiết lập trắc nghiệm BJT cũ: /quiz?groupId=… hoặc /quiz?scope=… → /quiz/bjt (giữ nguyên tham số)
       { source: "/quiz", has: [{ type: "query", key: "groupId" }], destination: "/quiz/bjt", permanent: true },
       { source: "/quiz", has: [{ type: "query", key: "scope" }], destination: "/quiz/bjt", permanent: true },
+      // Bộ lọc khóa cũ /quiz?course=… → trang trắc nghiệm của khóa /quiz/[khóa]
+      { source: "/quiz", has: [{ type: "query", key: "course", value: "jlpt-n1" }], destination: "/quiz/jlpt-n1", permanent: true },
+      { source: "/quiz", has: [{ type: "query", key: "course", value: "english" }], destination: "/quiz/english", permanent: true },
+      { source: "/quiz", has: [{ type: "query", key: "course", value: "(?:oci|oci-ai)" }], destination: "/quiz/oci", permanent: true },
+      { source: "/quiz", has: [{ type: "query", key: "course", value: "bjt" }], destination: "/quiz/bjt", permanent: true },
+      { source: "/quiz", has: [{ type: "query", key: "course", value: "mixed" }], destination: "/review", permanent: true },
+      { source: "/quiz/oci-ai", destination: "/quiz/oci", permanent: true },
     ];
   },
   async headers() {

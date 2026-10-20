@@ -2,7 +2,7 @@ import { DRAW, HID, INK, INK3, PAPER, dp, r1, type Pt, type Pt3 } from "./kit";
 
 /*
  * Hình isometric nét mảnh cho các cột (Kế hoạch, Phần thưởng, Chuỗi, từng khóa học).
- * Tính sẵn lúc render phía server; mặt nào có class "acc" sẽ được tô màu khóa học khi rê chuột (xem home.css).
+ * Tính sẵn lúc render phía server; mặt nào có class "acc" sẽ được tô màu của cột (khóa học / dải Hôm nay) khi rê chuột (xem home.css).
  */
 
 type El =
@@ -129,9 +129,9 @@ function iso(draw: (I: Api) => void) {
 const ICONS = {
   plan(I: Api) {
     I.box(0, 0, 0, 12, 0.8, 15);
-    I.box(4, 0.8, -1.2, 4, 1.3, 2.2, {});
+    I.box(4, 0.8, -1.2, 4, 1.3, 2.2, { acc: "tlr" });
     [3, 7, 11].forEach((z, i) => {
-      I.box(1.4, 0.8, z, 2, 0.5, 2);
+      I.box(1.4, 0.8, z, 2, 0.5, 2, { acc: "tlr" });
       I.box(5, 0.8, z + 0.45, 5.6, 0.3, 1.1, { noHid: true });
       I.box(5, 0.8, z + 1.9, 3.4, 0.2, 0.6, { noHid: true });
       if (i < 2)
@@ -146,8 +146,8 @@ const ICONS = {
     });
   },
   gift(I: Api) {
-    I.box(0, 0, 0, 9, 4.4, 6);
-    I.box(-0.2, 4.4, -0.2, 9.4, 1.6, 6.4);
+    I.box(0, 0, 0, 9, 4.4, 6, { acc: "lr" });
+    I.box(-0.2, 4.4, -0.2, 9.4, 1.6, 6.4, { acc: "tlr" });
     I.line([4, 0, 6], [4, 4.4, 6]);
     I.line([5, 0, 6], [5, 4.4, 6]);
     I.line([3.95, 4.4, 6.2], [3.95, 6, 6.2]);
@@ -179,7 +179,7 @@ const ICONS = {
   streak(I: Api) {
     for (let i = 0; i < 7; i++) {
       if (i === 6) I.box(i * 1.75, 0, 0, 1.4, 1.2 + i * 0.95, 4, { wire: true });
-      else I.box(i * 1.75, 0, 0, 1.4, 1.2 + i * 0.95, 4, { noHid: i > 0 });
+      else I.box(i * 1.75, 0, 0, 1.4, 1.2 + i * 0.95, 4, { acc: "tlr", noHid: i > 0 });
     }
     I.line([0, 0, 4.8], [12, 0, 4.8], { hid: true });
   },

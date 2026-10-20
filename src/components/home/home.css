@@ -8,6 +8,8 @@
   --draw: #9b948c;
   --hid: #c8c1b8;
   --warn: #a35a00;
+  /* hoa anh đào: đậm hơn --brand-muted một chút để mặt khối không bạc trắng */
+  --blossom: #cf6b7d;
   --f-sans: var(--font-be-vietnam), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --f-mincho: var(--font-shippori), "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
   --f-jp: var(--font-zen), "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
@@ -362,7 +364,6 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   padding-block: clamp(56px, 7vw, 104px) 28px;
   gap: 0;
-  background: linear-gradient(to right, var(--line) 0 1px, transparent 1px) 0 0 / calc(100% / 12) 100% repeat-x;
 }
 .hp .sec-head .l {
   grid-column: 1 / 7;
@@ -1215,7 +1216,6 @@
     --k: 1.6;
   }
   .hp .hero-grid,
-  .hp .sec-head,
   .hp .final {
     background-size: calc(100% / 4) 100%;
   }
@@ -1313,16 +1313,77 @@
   }
 }
 
-/*
- * Dải "Hôm nay" (Mỗi ngày một kế hoạch): theo góp ý, riêng dải này không có vạch dọc giữa các cột
- * và không có vạch đứt giữa hình và chữ. Vẫn giữ vạch mảnh trên/dưới của dải; mọi dải khác giữ lưới kẻ.
- */
-.hp .cols.today {
-  background: var(--paper);
-  column-gap: 0;
+/* Cột "Hôm nay" có vạch mảnh như dải khóa học; rê chuột / focus thì hình được tô màu riêng của cột */
+.hp .tcol {
+  transition: background 0.25s;
 }
-.hp .today .art {
-  border-bottom: 0;
+.hp .tcol::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  right: -1px;
+  width: 9px;
+  height: 58px;
+  background: var(--c);
+  border-radius: 3px 0 0 3px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.hp .tcol:hover,
+.hp .tcol:focus-within {
+  background: var(--surface);
+}
+.hp .tcol:hover::after,
+.hp .tcol:focus-within::after {
+  transform: scaleX(1);
+}
+.hp .tcol:hover .ico .acc.ft,
+.hp .tcol:focus-within .ico .acc.ft {
+  fill: color-mix(in srgb, var(--c) 72%, #fff);
+}
+.hp .tcol:hover .ico .acc.fl,
+.hp .tcol:focus-within .ico .acc.fl {
+  fill: var(--c);
+}
+.hp .tcol:hover .ico .acc.fr,
+.hp .tcol:focus-within .ico .acc.fr {
+  fill: color-mix(in srgb, var(--c) 72%, #000);
+}
+.hp .tcol:hover .ico .acc,
+.hp .tcol:focus-within .ico .acc {
+  stroke: #57524d;
+}
+.hp .tcol:hover .ico .glyph,
+.hp .tcol:focus-within .ico .glyph {
+  fill: #fff;
+}
+/* khối giấy trắng trong cột đang rê chuột (nền cột cũng chuyển trắng) đổi sang nền giấy để vẫn tách khỏi cột */
+.hp .tcol:hover .soon-card,
+.hp .tcol:focus-within .soon-card,
+.hp .tcol:hover .signin,
+.hp .tcol:focus-within .signin,
+.hp .tcol:hover .wod-word,
+.hp .tcol:focus-within .wod-word {
+  background: var(--paper);
+}
+/* cột đầu không có hình khối: thẻ "Từ của hôm nay" nhận màu cột */
+.hp .tcol .wod-k {
+  transition: color 0.35s;
+}
+.hp .tcol:hover .wod-k,
+.hp .tcol:focus-within .wod-k {
+  color: var(--c);
+}
+.hp .tcol .wod-word {
+  box-shadow: inset 3px 0 0 transparent;
+  transition:
+    background 0.2s,
+    box-shadow 0.35s;
+}
+.hp .tcol:hover .wod-word,
+.hp .tcol:focus-within .wod-word {
+  box-shadow: inset 3px 0 0 var(--c);
 }
 .hp .today .tag {
   white-space: nowrap;

@@ -171,7 +171,7 @@ export default async function IpaLessonPage({ params }: PageProps<"/english/ipa/
 
           { href: "/english/ipa/practice", label: "Phòng luyện tập IPA" },
 
-          { href: "/quiz?course=english", label: "Trắc nghiệm tiếng Anh khác" },
+          { href: "/quiz/english", label: "Trắc nghiệm tiếng Anh khác" },
 
           { href: "/review", label: "Ôn tập thẻ đến hạn" },
 

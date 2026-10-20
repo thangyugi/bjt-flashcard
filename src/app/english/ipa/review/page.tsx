@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Page, PageHeader } from "@/components/ui/page";
+import Link from "next/link";
+import { AsideNote, Page, PageHeader, WithAside } from "@/components/ui/page";
 import { ALL_PHONEMES } from "@/data/english/ipa";
 import { ReviewDeck } from "@/components/english/ReviewDeck";
 
@@ -19,9 +20,35 @@ export default function IpaReviewPage() {
         size="md"
         lead="Mỗi ngày vài phút. Nhìn ký hiệu → tự đọc to & nhớ từ khóa → lật thẻ kiểm tra → tự chấm. Lịch ôn tính bằng FSRS (thuật toán của Anki): nhớ càng chắc thì lần sau càng xa, quên thì ôn lại ngay trong phiên."
       />
-      <div className="w-full max-w-[760px]">
+      <WithAside
+        aside={
+          <>
+            <AsideNote title="Một lượt ôn">
+              <ol className="flex list-decimal flex-col gap-1.5 pl-5">
+                <li>Nhìn ký hiệu, tự đọc to.</li>
+                <li>Nhớ lại từ khóa và cách đặt lưỡi, môi.</li>
+                <li>Lật thẻ, nghe mẫu, so với giọng mình.</li>
+                <li>Tự chấm thật lòng: FSRS lo phần lịch.</li>
+              </ol>
+            </AsideNote>
+            <AsideNote title="Trong khóa IPA">
+              <p className="flex flex-col gap-1">
+                <Link href="/english/ipa" className="font-semibold text-ink hover:underline">
+                  Mục lục {ALL_PHONEMES.length} âm
+                </Link>
+                <Link href="/english/ipa/practice" className="font-semibold text-ink hover:underline">
+                  Phòng luyện tập
+                </Link>
+                <Link href="/quiz/english" className="font-semibold text-ink hover:underline">
+                  Trắc nghiệm tiếng Anh
+                </Link>
+              </p>
+            </AsideNote>
+          </>
+        }
+      >
         <ReviewDeck phonemes={lite} />
-      </div>
+      </WithAside>
     </Page>
   );
 }

@@ -2,16 +2,62 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Page, PageHeader } from "@/components/ui/page";
+import { Page } from "@/components/ui/page";
+import { IsoIcon, type IsoName } from "@/components/home/drawing/IsoIcon";
 
-/** Khung chung cho các trang đăng nhập / đăng ký */
+const BENEFITS: { icon: IsoName; title: string; text: string }[] = [
+  { icon: "plan", title: "Kế hoạch mỗi ngày", text: "Ba mục vừa sức, tự đánh dấu khi bạn học." },
+  { icon: "streak", title: "Lịch ôn và chuỗi ngày", text: "Thẻ quay lại đúng lúc sắp quên, theo trí nhớ của riêng bạn." },
+  { icon: "gift", title: "Tinh thể và vùng đất", text: "XP đổi thành Tinh thể để gieo cây ở Thảo nguyên Pha Lê." },
+];
+
+/** Cột phụ của trang tài khoản: vì sao nên có tài khoản (hình vẽ nét mảnh như trang chủ) */
+function AuthBenefits() {
+  return (
+    <div className="flex w-full max-w-[520px] flex-col gap-6">
+      <p className="eyebrow-label">Có tài khoản, bạn được</p>
+      <ul className="cells grid-cols-1">
+        {BENEFITS.map((b) => (
+          <li key={b.title} className="grid grid-cols-[84px_minmax(0,1fr)] items-center gap-4 px-4 py-4 sm:grid-cols-[112px_minmax(0,1fr)]">
+            <span className="block h-[64px] sm:h-[84px] [&_svg]:h-full [&_svg]:w-full" aria-hidden>
+              <IsoIcon name={b.icon} />
+            </span>
+            <span className="flex min-w-0 flex-col gap-1">
+              <b className="text-[15px] text-ink">{b.title}</b>
+              <span className="text-[13.5px] leading-relaxed text-ink-3">{b.text}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p className="text-[13.5px] leading-relaxed text-ink-3">
+        Mọi bài học vẫn mở miễn phí khi chưa đăng nhập. Tài khoản chỉ để lưu tiến độ và đồng bộ giữa điện thoại và máy tính.
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Khung chung cho các trang đăng nhập / đăng ký / quên mật khẩu: hai nửa cân nhau trên khung toàn bề ngang
+ * (biểu mẫu ở giữa nửa trái, lợi ích ở giữa nửa phải, ngăn bằng một vạch mảnh); màn hẹp xếp chồng, biểu mẫu trước.
+ */
 export function AuthShell({ title, sub, children, foot }: { title: string; sub?: string; children: React.ReactNode; foot?: React.ReactNode }) {
   return (
-    <Page>
-      <PageHeader eyebrow="Tài khoản" title={title} lead={sub} size="md" />
-      <div className="flex w-full max-w-[440px] flex-col gap-5">
-        <div className="flex flex-col gap-4 panel px-5 py-6 sm:px-7">{children}</div>
-        {foot && <div className="text-[14px] text-ink-2">{foot}</div>}
+    <Page className="!gap-0">
+      <div className="-mt-6 grid border-b border-line-strong sm:-mt-10 lg:min-h-[calc(100dvh-var(--header-h)-1px)] lg:grid-cols-2">
+        <section className="flex justify-center px-0 pt-8 pb-10 sm:pt-12 lg:items-center lg:px-8 lg:py-16">
+          <div className="flex w-full max-w-[440px] flex-col gap-6">
+            <header className="flex flex-col gap-3">
+              <p className="eyebrow-label">Tài khoản LeoEdu</p>
+              <h1 className="hx-title text-[clamp(32px,3.6vw,52px)]">{title}</h1>
+              {sub && <p className="text-[15.5px] leading-relaxed text-ink-2">{sub}</p>}
+            </header>
+            <div className="flex flex-col gap-4 panel bg-surface px-5 py-6 sm:px-7">{children}</div>
+            {foot && <div className="text-[14px] text-ink-2">{foot}</div>}
+          </div>
+        </section>
+        <aside className="flex justify-center border-t border-line-strong pt-8 pb-12 lg:items-center lg:border-t-0 lg:border-l lg:px-8 lg:py-16">
+          <AuthBenefits />
+        </aside>
       </div>
     </Page>
   );

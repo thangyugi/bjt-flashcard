@@ -14,9 +14,10 @@
   --o-text: #1f1b16;
   --o-text-2: #575049;
   --o-text-3: #857d73;
-  --o-accent: #c74634;
-  --o-accent-hover: #a83a2b;
-  --o-accent-soft: #fbebe7;
+  /* màu riêng của khóa OCI (giống cột OCI ở trang chủ) */
+  --o-accent: #0f766e;
+  --o-accent-hover: #0b5f58;
+  --o-accent-soft: #e3f1ef;
   --o-accent-ink: #ffffff;
   --o-blue: #2c5d8f;
   --o-blue-soft: #e8f0f8;
@@ -36,44 +37,13 @@
   --o-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   color-scheme: light;
-  min-height: 100vh;
-  min-height: 100dvh;
   background: var(--o-bg);
   color: var(--o-text);
   font-family: var(--o-font);
   -webkit-font-smoothing: antialiased;
 }
 
-@media (prefers-color-scheme: dark) {
-  .oci-root:not([data-theme="light"]) {
-    --o-bg: #131211;
-    --o-surface: #1b1a18;
-    --o-surface-2: #23211e;
-    --o-surface-3: #2d2a26;
-    --o-line: rgba(237, 234, 228, 0.09);
-    --o-line-strong: rgba(237, 234, 228, 0.17);
-    --o-text: #edeae4;
-    --o-text-2: #b8b1a7;
-    --o-text-3: #8a8379;
-    --o-accent: #f2806b;
-    --o-accent-hover: #f69a88;
-    --o-accent-soft: #3a221c;
-    --o-accent-ink: #1b0f0c;
-    --o-blue: #93b9e3;
-    --o-blue-soft: #1b2734;
-    --o-amber: #e6b25c;
-    --o-amber-soft: #32291a;
-    --o-good: #62cc95;
-    --o-good-soft: #15301f;
-    --o-bad: #f28b82;
-    --o-bad-soft: #3a1d1a;
-    --o-code-bg: #0e0d0c;
-    --o-code-text: #e6e1d9;
-    --o-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --o-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 30px -14px rgba(0, 0, 0, 0.7);
-    color-scheme: dark;
-  }
-}
+/* App chỉ có giao diện sáng; nền tối của bài đọc OCI chỉ bật khi người học tự chọn (nút ở chân ngăn bài học). */
 .oci-root[data-theme="dark"] {
   --o-bg: #131211;
   --o-surface: #1b1a18;
@@ -84,10 +54,10 @@
   --o-text: #edeae4;
   --o-text-2: #b8b1a7;
   --o-text-3: #8a8379;
-  --o-accent: #f2806b;
-  --o-accent-hover: #f69a88;
-  --o-accent-soft: #3a221c;
-  --o-accent-ink: #1b0f0c;
+  --o-accent: #5ec4b6;
+  --o-accent-hover: #7fd3c7;
+  --o-accent-soft: #10302c;
+  --o-accent-ink: #061a17;
   --o-blue: #93b9e3;
   --o-blue-soft: #1b2734;
   --o-amber: #e6b25c;
@@ -108,44 +78,37 @@
 .oci-root button { font: inherit; color: inherit; cursor: pointer; }
 .oci-root :focus-visible { outline: 2px solid var(--o-accent); outline-offset: 2px; border-radius: 6px; }
 
-/* ── Thanh trên cùng ─────────────────────────────────────── */
-.oci-top {
+/* ── Thanh phụ của khóa (màn hẹp), dính dưới thanh tiêu đề chung ── */
+.oci-subbar {
   position: sticky;
-  top: 0;
+  top: var(--header-h);
   z-index: 40;
-  height: var(--o-top-h);
+  height: 44px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 16px;
-  background: color-mix(in srgb, var(--o-bg) 86%, transparent);
-  backdrop-filter: saturate(1.4) blur(14px);
-  -webkit-backdrop-filter: saturate(1.4) blur(14px);
-  border-bottom: 1px solid var(--o-line);
+  padding: 0 max(var(--gutter, 16px), env(safe-area-inset-right, 0px)) 0 max(var(--gutter, 16px), env(safe-area-inset-left, 0px));
+  background: var(--o-bg);
+  border-bottom: 1px solid var(--o-line-strong);
+  font-size: 13.5px;
 }
-@media (min-width: 640px) { .oci-top { padding: 0 24px; } }
-
-.oci-brand { display: flex; align-items: center; gap: 11px; min-width: 0; overflow: hidden; }
-.oci-brand-mark {
+@media (min-width: 1024px) { .oci-subbar { display: none; } }
+.oci-subbar-btn {
   flex: none;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  background: var(--o-accent);
-  color: var(--o-accent-ink);
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--o-accent) 70%, transparent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin-left: -2px;
+  padding: 0 12px 0 10px;
+  border: 1px solid var(--o-line-strong);
+  background: transparent;
+  font-weight: 600;
 }
-.oci-brand-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
-.oci-brand-t1 { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.oci-brand-t2 { font-size: 11.5px; color: var(--o-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (max-width: 420px) { .oci-brand-t2 { display: none; } }
-
-.oci-top-spacer { flex: 1; }
+.oci-subbar-btn svg { width: 16px; height: 16px; }
+.oci-subbar-title { min-width: 0; flex: 1; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.oci-subbar-prog { flex: none; color: var(--o-text-3); font-variant-numeric: tabular-nums; }
+.oci-subbar-prog b { color: var(--o-text); }
 
 .oci-icon-btn {
   flex: none;
@@ -153,7 +116,7 @@
   height: 38px;
   display: inline-grid;
   place-items: center;
-  border-radius: 10px;
+  border-radius: 0;
   border: 1px solid transparent;
   background: transparent;
   color: var(--o-text-2);
@@ -161,15 +124,6 @@
 }
 .oci-icon-btn:hover { background: var(--o-surface-2); color: var(--o-text); }
 .oci-icon-btn svg { width: 19px; height: 19px; }
-.oci-menu-btn { margin-left: -6px; }
-@media (min-width: 1024px) { .oci-menu-btn { display: none; } }
-
-.oci-top-progress { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--o-text-2); }
-.oci-top-progress .bar { width: 64px; }
-@media (min-width: 768px) { .oci-top-progress .bar { width: 120px; } }
-.oci-top-progress .lbl { font-variant-numeric: tabular-nums; white-space: nowrap; }
-.oci-top-progress .lbl b { color: var(--o-text); font-weight: 700; }
-@media (max-width: 520px) { .oci-top-progress .lbl-long, .oci-top-progress .bar { display: none; } }
 
 .oci-bar { height: 6px; border-radius: 99px; background: var(--o-surface-3); overflow: hidden; }
 .oci-bar > i { display: block; height: 100%; border-radius: inherit; background: var(--o-accent); transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -181,7 +135,11 @@
 /* ── Khung chính ─────────────────────────────────────────── */
 .oci-shell { display: block; }
 @media (min-width: 1024px) {
-  .oci-shell { display: grid; grid-template-columns: var(--o-side-w) minmax(0, 1fr); }
+  .oci-shell {
+    display: grid;
+    grid-template-columns: var(--o-side-w) minmax(0, 1fr);
+    padding-left: max(var(--gutter, 24px), env(safe-area-inset-left, 0px));
+  }
 }
 
 .oci-side {
@@ -193,8 +151,8 @@
   width: min(86vw, 330px);
   display: flex;
   flex-direction: column;
-  background: var(--o-surface);
-  border-right: 1px solid var(--o-line);
+  background: var(--o-bg);
+  border-right: 1px solid var(--o-line-strong);
   transform: translateX(-102%);
   transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
   box-shadow: var(--o-shadow);
@@ -339,15 +297,57 @@
 .oci-side-foot .oci-side-link { font-weight: 500; font-size: 13.5px; }
 
 /* ── Vùng nội dung ───────────────────────────────────────── */
-.oci-main { min-width: 0; padding: 22px 16px 64px; }
-@media (min-width: 640px) { .oci-main { padding: 32px 32px 80px; } }
-@media (min-width: 1280px) { .oci-main { padding: 40px 48px 96px; } }
-
-.oci-lesson-grid { max-width: 1120px; margin: 0 auto; }
-@media (min-width: 1280px) {
-  .oci-lesson-grid { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 56px; }
+.oci-main {
+  min-width: 0;
+  padding: 22px max(var(--gutter, 16px), env(safe-area-inset-right, 0px)) 64px max(var(--gutter, 16px), env(safe-area-inset-left, 0px));
 }
-.oci-article { max-width: 760px; margin: 0 auto; width: 100%; }
+@media (min-width: 1024px) {
+  .oci-main { padding: 36px max(var(--gutter, 24px), env(safe-area-inset-right, 0px)) 88px clamp(28px, 2.6vw, 48px); }
+}
+
+.oci-lesson-grid { margin: 0; }
+/* Màn rộng: bài đọc giữ độ dài dòng dễ đọc ở cột trái; cột phải (mục lục, các bài cùng phần, luyện tập) lấp phần còn lại */
+@media (min-width: 1280px) {
+  .oci-lesson-grid { display: grid; grid-template-columns: minmax(0, 800px) minmax(260px, 1fr); gap: clamp(40px, 4vw, 72px); align-items: start; }
+}
+.oci-article { max-width: 800px; margin: 0 auto; width: 100%; }
+@media (min-width: 1024px) { .oci-article { margin: 0; } }
+.oci-aside { display: none; }
+@media (min-width: 1280px) {
+  .oci-aside {
+    display: grid;
+    gap: 28px;
+    position: sticky;
+    top: calc(var(--o-top-h) + 28px);
+    max-height: calc(100vh - var(--o-top-h) - 56px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-left: clamp(20px, 2vw, 32px);
+    border-left: 1px solid var(--o-line-strong);
+  }
+}
+@media (min-width: 1700px) {
+  .oci-aside { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; align-items: start; }
+  .oci-aside > .wide { grid-column: 1 / -1; }
+}
+.oci-aside-col { display: grid; gap: 28px; align-content: start; }
+.oci-aside-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--o-text-3); margin-bottom: 10px; }
+.oci-aside-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--o-line-strong); }
+.oci-aside-list a {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--o-line);
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--o-text-2);
+}
+.oci-aside-list a:hover { color: var(--o-text); }
+.oci-aside-list a[aria-current="page"] { color: var(--o-accent); font-weight: 650; }
+.oci-aside-list .c { flex: none; min-width: 30px; font-size: 12px; font-weight: 700; color: var(--o-text-3); font-variant-numeric: tabular-nums; padding-top: 1px; }
+.oci-aside-list a[aria-current="page"] .c { color: var(--o-accent); }
+.oci-aside-card { display: grid; gap: 10px; padding: 16px; border: 1px solid var(--o-line-strong); background: var(--o-bg); font-size: 13.5px; line-height: 1.55; color: var(--o-text-2); }
+.oci-aside-card b { color: var(--o-text); font-size: 14.5px; }
 
 .oci-crumb { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: var(--o-text-3); font-weight: 500; }
 .oci-crumb a:hover { color: var(--o-accent); }
@@ -384,7 +384,7 @@
 /* ── Mục lục bên phải ────────────────────────────────────── */
 .oci-toc { display: none; }
 @media (min-width: 1280px) {
-  .oci-toc { display: block; position: sticky; top: calc(var(--o-top-h) + 32px); align-self: start; max-height: calc(100vh - var(--o-top-h) - 64px); overflow-y: auto; }
+  .oci-toc { display: block; }
 }
 .oci-toc-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--o-text-3); margin-bottom: 10px; }
 .oci-toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--o-line); }
@@ -955,15 +955,7 @@
 
 /* ── Ngôn ngữ thiết kế chung của app (giấy, một vạch mảnh, tiêu đề in hoa sát chữ) ── */
 .oci-root { --o-top-h: var(--header-h, 60px); }
-.oci-top {
-  padding: 0 var(--gutter, 16px);
-  background: var(--o-bg);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom-color: var(--o-line-strong);
-}
-@media (min-width: 640px) { .oci-top { padding: 0 var(--gutter, 24px); } }
-.oci-brand-mark { width: 32px; height: 32px; border-radius: 9px; box-shadow: none; }
+@media (max-width: 1023px) { .oci-root { --o-top-h: calc(var(--header-h, 56px) + 44px); } }
 .oci-hero {
   padding: 8px 0 32px;
   border: 0;
@@ -1064,28 +1056,69 @@
 @media (min-width: 640px) { .oci-pager a + a { margin-top: 0; margin-left: -1px; } }
 .oci-pager a:hover { background: var(--o-surface); border-color: var(--o-line-strong); box-shadow: none; transform: none; }
 
-/* Thanh trên của khóa OCI nối với cả app: logo LeoEdu → trang chủ, đường dẫn Khóa học › OCI,
-   các mục điều hướng chính (màn rộng); trong ngăn bài học có cùng các lối đó cho mobile. */
-.oci-app-mark {
-  flex: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  display: grid;
-  place-items: center;
-  background: #b8202f;
-  color: #fff;
-  font: 700 18px/1 var(--font-shippori), serif;
+/* Ngăn bài học trong ngôn ngữ vạch mảnh: khối tên khóa + tiến độ, mục đang mở là một vạch màu khóa */
+.oci-side-course { display: grid; gap: 6px; padding: 18px 14px 14px; border-bottom: 1px solid var(--o-line-strong); }
+@media (min-width: 1024px) { .oci-side-course { padding: 22px 20px 16px 0; } }
+.oci-side-eyebrow { font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--o-text-3); }
+.oci-side-title { font-size: 20px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase; color: var(--o-text); }
+.oci-side-prog { display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 12.5px; color: var(--o-text-3); font-variant-numeric: tabular-nums; }
+.oci-side-prog .oci-bar { flex: 1; height: 4px; border-radius: 0; }
+.oci-side-prog .oci-bar > i { border-radius: 0; }
+.oci-side-prog b { color: var(--o-text); }
+@media (min-width: 1024px) {
+  .oci-side-head { padding: 12px 20px 10px 0; }
+  .oci-side-scroll { padding: 4px 16px 18px 0; }
+  .oci-side-foot { padding: 10px 16px 14px 0; }
+  .oci-side-sep { margin-left: 0; }
 }
-.oci-crumbs { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 13.5px; }
-.oci-crumb-up { color: var(--o-text-3); white-space: nowrap; }
-a.oci-crumb-up:hover { color: var(--o-text); }
-.oci-crumbs .oci-brand { min-width: 0; }
-@media (max-width: 480px) { .oci-crumb-up { display: none; } }
-.oci-appnav { display: none; align-items: center; gap: 22px; margin-left: 28px; font-size: 14px; font-weight: 500; }
-.oci-appnav a { color: var(--o-text-2); white-space: nowrap; }
-.oci-appnav a:hover { color: var(--o-text); }
-@media (min-width: 1100px) { .oci-appnav { display: flex; } }
-.oci-side-app { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; padding: 2px 10px; font-size: 13.5px; }
-.oci-side-app a { padding: 6px 2px; color: var(--o-text-2); }
-.oci-side-app a:hover { color: var(--o-text); }
+.oci-side-search { border-radius: 0; border-color: var(--o-line-strong); background: var(--o-bg); }
+.oci-side-link,
+.oci-group-btn,
+.oci-lesson-link { border-radius: 0; }
+.oci-side-link { width: 100%; border: 0; background: transparent; text-align: left; }
+.oci-side-link.active { background: var(--o-surface); color: var(--o-accent); box-shadow: inset 2px 0 0 var(--o-accent); }
+.oci-group-num { border-radius: 0; }
+.oci-lesson-link.active { background: var(--o-surface); }
+.oci-lesson-link.active::before { border-radius: 0; }
+.oci-side-foot { display: grid; gap: 2px; border-top-color: var(--o-line-strong); }
+
+/* Trang chủ khóa: đầu trang hai cột trên màn rộng (chữ | số liệu + học tiếp) */
+@media (min-width: 1100px) {
+  .oci-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 36%); column-gap: clamp(32px, 4vw, 72px); align-items: end; }
+  .oci-hero-side { padding-left: clamp(16px, 1.6vw, 24px); border-left: 1px solid var(--o-line-strong); display: grid; gap: 20px; }
+  .oci-hero-side .oci-stats { margin-top: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .oci-hero-side .oci-stat:nth-child(3) { padding-left: 0; border-left: 0; }
+  .oci-hero-side .oci-stat:nth-child(n + 3) { padding-top: 14px; }
+}
+.oci-hero-side { min-width: 0; }
+.oci-stats { max-width: none; }
+.oci-continue { border-radius: 0; }
+@media (min-width: 1280px) {
+  .oci-module-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Thuật ngữ, luyện tập: nhiều cột trên màn rộng */
+@media (min-width: 900px) { .oci-gloss-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1400px) { .oci-gloss-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .oci-lesson-practice-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1700px) { .oci-lesson-practice-list { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.oci-hub { max-width: none; }
+.oci-fc-wrap { max-width: 640px; }
+
+/* Khi làm bài: câu hỏi ở cột trái, thanh tiến độ + bảng câu ở cột phải */
+@media (min-width: 1200px) {
+  .oci-practice.run {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+    grid-template-areas: "head head" "q bar" "q dots" "act dots" "tips tips";
+    grid-template-rows: auto auto auto auto 1fr;
+    column-gap: clamp(32px, 3.4vw, 64px);
+    align-items: start;
+  }
+  .oci-practice.run > .oci-lesson-head { grid-area: head; }
+  .oci-practice.run > .oci-pr-bar { grid-area: bar; padding: 16px; margin: 0; border: 1px solid var(--o-line-strong); border-bottom: 0; }
+  .oci-practice.run > .oci-dots { grid-area: dots; padding: 16px; margin: 0; border: 1px solid var(--o-line-strong); }
+  .oci-practice.run > .oci-q { grid-area: q; }
+  .oci-practice.run > .oci-quiz-actions { grid-area: act; }
+  .oci-practice.run > .oci-prose { grid-area: tips; }
+}

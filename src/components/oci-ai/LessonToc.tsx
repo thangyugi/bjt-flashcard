@@ -7,10 +7,9 @@ export interface TocItem {
   text: string;
 }
 
-/** Mục lục "Trong bài này" (màn rộng) + thanh tiến độ đọc dưới thanh trên cùng. */
+/** Mục lục "Trong bài này" (cột phải trên màn rộng). */
 export function LessonToc({ items }: { items: TocItem[] }) {
   const [active, setActive] = useState(items[0]?.id);
-  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!items.length) return;
@@ -26,6 +25,29 @@ export function LessonToc({ items }: { items: TocItem[] }) {
     return () => obs.disconnect();
   }, [items]);
 
+  return (
+    <>
+      {items.length > 1 && (
+        <nav className="oci-toc" aria-label="Mục lục bài học">
+          <div className="oci-toc-title">Trong bài này</div>
+          <ol>
+            {items.map((i) => (
+              <li key={i.id}>
+                <a href={`#${i.id}`} className={i.id === active ? "active" : undefined}>
+                  {i.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+    </>
+  );
+}
+
+/** Thanh tiến độ đọc mảnh, nằm ngay dưới thanh tiêu đề (và thanh phụ của khóa trên màn hẹp). */
+export function ReadProgress() {
+  const barRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let raf = 0;
     const update = () => {
@@ -50,24 +72,8 @@ export function LessonToc({ items }: { items: TocItem[] }) {
   }, []);
 
   return (
-    <>
-      <div className="oci-read-progress-host" aria-hidden>
-        <div ref={barRef} className="oci-read-progress" style={{ transform: "scaleX(0)" }} />
-      </div>
-      {items.length > 1 && (
-        <nav className="oci-toc" aria-label="Mục lục bài học">
-          <div className="oci-toc-title">Trong bài này</div>
-          <ol>
-            {items.map((i) => (
-              <li key={i.id}>
-                <a href={`#${i.id}`} className={i.id === active ? "active" : undefined}>
-                  {i.text}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-      )}
-    </>
+    <div className="oci-read-progress-host" aria-hidden>
+      <div ref={barRef} className="oci-read-progress" style={{ transform: "scaleX(0)" }} />
+    </div>
   );
 }

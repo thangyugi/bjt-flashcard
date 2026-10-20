@@ -61,7 +61,8 @@ export function WordCard({
         <p className="max-w-[420px] text-[17px] font-bold text-brand-soft-ink">{raw.m}</p>
       </header>
 
-      <div className="flex flex-col gap-5 px-5 py-5 sm:px-6">
+      <div className="grid gap-5 px-5 py-5 sm:px-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] xl:gap-8">
+        <div className="flex min-w-0 flex-col gap-5">
         {raw.acc !== undefined && (
           <section className="flex flex-col gap-2.5">
             <Label icon={AudioLines}>Phát âm · cao – thấp</Label>
@@ -108,10 +109,12 @@ export function WordCard({
           </ol>
         </section>
 
+        </div>
+        <div className="flex min-w-0 flex-col gap-5">
         {fw.cmp && fw.cmp.length > 0 && (
           <section className="flex flex-col gap-2">
             <Label icon={GitCompareArrows}>So sánh</Label>
-            <div className="grid gap-2 md:grid-cols-2">
+            <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-1">
               {fw.cmp.map(([other, diff]) => (
                 <div key={other} className="rounded-2xl bg-surface-2 px-4 py-3">
                   <span className="text-[15px] leading-[2] font-bold text-ink">
@@ -126,7 +129,7 @@ export function WordCard({
           </section>
         )}
 
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-1">
           {chars.length > 0 && (
             <section className="flex flex-col gap-2 rounded-2xl border border-line px-4 py-3">
               <Label icon={PenLine}>Chữ Hán</Label>
@@ -166,6 +169,7 @@ export function WordCard({
               </p>
             </div>
           </section>
+        </div>
         </div>
       </div>
     </article>
