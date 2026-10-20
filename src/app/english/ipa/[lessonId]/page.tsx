@@ -57,7 +57,7 @@ export default async function IpaLessonPage({ params }: PageProps<"/english/ipa/
   const allQuestions = [...sections, { key: "tong-hop", title: "Câu hỏi tổng hợp", desc: "Kiến thức, quy luật và nghe hiểu của cả bài.", qs: lesson.quiz }];
 
   return (
-    <div className="mx-auto flex max-w-[1080px] flex-col gap-10 px-4 py-6 sm:px-8 sm:py-10">
+    <div className="page-x flex flex-col gap-10 pt-6 pb-12 sm:pt-10 sm:pb-16">
       <LessonNavigator
         title={`IPA Bài ${lesson.num} · ${lesson.mark}`}
         label={lesson.phonemes.length ? "Các âm" : "Mục lục"}

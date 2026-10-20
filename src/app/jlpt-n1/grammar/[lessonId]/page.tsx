@@ -68,7 +68,7 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
   }));
 
   return (
-    <div className="mx-auto flex max-w-[1180px] gap-10 px-4 py-6 sm:px-8 sm:py-10">
+    <div className="page-x flex gap-10 pt-6 pb-12 sm:pt-10 sm:pb-16">
       <LessonNavigator
         title={`Chương ${lesson.num} · ${lesson.patterns.length} mẫu ngữ pháp`}
         label="Mục lục"

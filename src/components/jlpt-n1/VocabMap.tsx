@@ -21,7 +21,7 @@ export function VocabMap({ lessons, totalWords }: { lessons: VocabLessonMeta[]; 
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 panel p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex items-baseline justify-between gap-4">
             <span className="text-sm font-semibold text-ink-2">Đã học xong</span>
