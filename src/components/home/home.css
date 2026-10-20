@@ -1358,6 +1358,15 @@
 .hp .tcol:focus-within .ico .glyph {
   fill: #fff;
 }
+/* khối giấy trắng trong cột đang rê chuột (nền cột cũng chuyển trắng) đổi sang nền giấy để vẫn tách khỏi cột */
+.hp .tcol:hover .soon-card,
+.hp .tcol:focus-within .soon-card,
+.hp .tcol:hover .signin,
+.hp .tcol:focus-within .signin,
+.hp .tcol:hover .wod-word,
+.hp .tcol:focus-within .wod-word {
+  background: var(--paper);
+}
 /* cột đầu không có hình khối: thẻ "Từ của hôm nay" nhận màu cột */
 .hp .tcol .wod-k {
   transition: color 0.35s;
