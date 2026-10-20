@@ -1288,6 +1288,15 @@
   .hp .c5 {
     grid-template-columns: minmax(0, 1fr);
   }
+  /* Điện thoại: các ô (Hôm nay, khóa học, tính năng) là thẻ riêng có viền riêng và khoảng cách, không chung vạch */
+  .hp .cols {
+    gap: 12px;
+    background: transparent;
+    border-block: 0;
+  }
+  .hp .cols > .col {
+    border: 1px solid var(--line-strong);
+  }
   .hp .c5 > .col:last-child {
     grid-column: auto;
   }
@@ -1374,16 +1383,6 @@
 .hp .tcol:hover .wod-k,
 .hp .tcol:focus-within .wod-k {
   color: var(--c);
-}
-.hp .tcol .wod-word {
-  box-shadow: inset 3px 0 0 transparent;
-  transition:
-    background 0.2s,
-    box-shadow 0.35s;
-}
-.hp .tcol:hover .wod-word,
-.hp .tcol:focus-within .wod-word {
-  box-shadow: inset 3px 0 0 var(--c);
 }
 .hp .today .tag {
   white-space: nowrap;

@@ -10,6 +10,7 @@ import { dailyPlan } from "@/lib/land/plan";
 import { cn } from "@/lib/utils";
 import { useViewer } from "./viewer";
 import { useWordOfDay } from "./vocab";
+import { bjtCardAnchor } from "@/components/flashcard/anchor";
 import { Arrow, Gem } from "./icons";
 import { ChestSoon, DayOffSoon, GiftSoon } from "./Soon";
 
@@ -26,6 +27,9 @@ function Pending({ lines = 3 }: { lines?: number }) {
     </div>
   );
 }
+
+/** Đường dẫn tới đúng thẻ của từ trong nhóm BJT (FlashCardDeck đọc #tu-<id> để mở thẻ đó) */
+const wordHref = (w: { item: { id: string }; group: { id: string } }) => `/bjt/${w.group.id}#${bjtCardAnchor(w.item.id)}`;
 
 type Week = { key: string; label: string; today: boolean; on: boolean }[];
 
@@ -192,7 +196,11 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
               </span>
             </p>
             {viewer !== "loading" && word ? (
-              <Link href={`/bjt/${word.group.id}`} className="wod-word" aria-label={`Từ của hôm nay: ${word.item.kanji}, ${word.item.meaningVn}. Học nhóm ${word.group.name}`}>
+              <Link
+                href={guest ? `/register?next=${encodeURIComponent(wordHref(word))}` : wordHref(word)}
+                className="wod-word"
+                aria-label={`Từ của hôm nay: ${word.item.kanji}, ${word.item.meaningVn}. Mở thẻ từ này trong nhóm ${word.group.name}`}
+              >
                 <span className="jp wod-r" lang="ja">
                   {word.item.hiragana || word.item.katakana}
                 </span>

@@ -303,6 +303,16 @@
     min-width: 0;
     background: var(--paper);
   }
+  /* Điện thoại: mỗi ô là một thẻ riêng (viền riêng, cách nhau), không dính chung vạch; màn rộng giữ lưới kẻ mảnh */
+  @media (max-width: 639.98px) {
+    .cells {
+      gap: 12px !important;
+      padding: 0;
+    }
+    .cells > * {
+      margin: 0;
+    }
+  }
   /* Vạch cột nền 12 cột (4 cột trên màn hẹp) như phần đầu trang chủ */
   .col-rules {
     background: linear-gradient(to right, var(--line) 0 1px, transparent 1px) 0 0 / calc(100% / 12) 100% repeat-x;
