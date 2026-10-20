@@ -44,7 +44,7 @@ export function VocabMap({ lessons, totalWords }: { lessons: VocabLessonMeta[]; 
         )}
       </div>
 
-      <ol className="grid gap-3 md:grid-cols-2">
+      <ol className="cells grid-cols-1 md:grid-cols-2">
         {lessons.map((l) => {
           const isDone = hydrated && !!done[l.id];
           return (
@@ -52,8 +52,8 @@ export function VocabMap({ lessons, totalWords }: { lessons: VocabLessonMeta[]; 
               <Link
                 href={`/jlpt-n1/vocab/${l.id}`}
                 className={cn(
-                  "group flex h-full flex-col gap-2 rounded-2xl border bg-surface p-4 transition-colors hover:border-brand sm:p-5",
-                  isDone ? "border-ok/40" : "border-line"
+                  "group flex h-full flex-col gap-2 p-4 transition-colors hover:bg-surface sm:p-5",
+                  isDone && "bg-ok-soft/30"
                 )}
               >
                 <div className="flex items-center gap-2 text-[12px] font-semibold text-ink-3">

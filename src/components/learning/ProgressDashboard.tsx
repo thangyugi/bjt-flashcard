@@ -77,7 +77,7 @@ export function ProgressDashboard() {
   return (
     <div className="flex flex-col gap-6">
       {enabled && !user && (
-        <div className="flex flex-wrap items-center gap-3 panel-2 px-4 py-3 text-[14px] text-ink-2">
+        <div className="flex flex-wrap items-center gap-3 border border-line-strong bg-surface-2 px-4 py-3 text-[14px] text-ink-2">
           Tiến độ đang lưu trên trình duyệt này.
           <Link href="/login?next=/progress" className="ml-auto rounded-lg bg-ink px-3 py-1.5 text-[13px] font-bold text-paper">
             Đăng nhập để đồng bộ
@@ -86,7 +86,7 @@ export function ProgressDashboard() {
       )}
 
       {/* Chỉ số chính */}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="cells grid-cols-2 lg:grid-cols-4">
         <Stat icon={Flame} label="Chuỗi ngày học" value={`${streak} ngày`} sub={`Dài nhất: ${longest} ngày`} accent={streak > 0} />
         <Stat icon={Timer} label="Hôm nay" value={fmtMin(t?.sec ?? 0)} sub={`7 ngày: ${fmtMin(weekSec)}`} />
         <Stat icon={Repeat2} label="Thẻ đến hạn" value={String(cardStats.due)} sub={`${list.length} thẻ trong bộ ôn`} href="/review" />
@@ -127,14 +127,14 @@ export function ProgressDashboard() {
         </Card>
 
         <Card title="Bộ ôn tập" note="Thẻ đã vững = khoảng cách ôn từ 21 ngày trở lên.">
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div className="cells grid-cols-2 sm:grid-cols-4">
             {[
               { label: "Mới", v: cardStats.fresh },
               { label: "Đang học", v: cardStats.learning },
               { label: "Đang ôn", v: cardStats.young },
               { label: "Đã vững", v: cardStats.mature },
             ].map((x) => (
-              <div key={x.label} className="flex flex-col rounded-2xl bg-surface-2 px-3 py-2.5">
+              <div key={x.label} className="flex flex-col px-3 py-2.5">
                 <span className="text-[12.5px] text-ink-3">{x.label}</span>
                 <span className="text-[22px] font-extrabold text-ink">{x.v}</span>
               </div>
@@ -201,9 +201,9 @@ function Stat({
       <span className="text-[12.5px] text-ink-3">{sub}</span>
     </>
   );
-  const cls = "flex flex-col gap-1 panel px-4 py-4";
+  const cls = "flex flex-col gap-1 px-4 py-4";
   return href ? (
-    <Link href={href} className={cn(cls, "hover:border-line-strong")}>
+    <Link href={href} className={cn(cls, "transition-colors hover:bg-surface")}>
       {body}
     </Link>
   ) : (

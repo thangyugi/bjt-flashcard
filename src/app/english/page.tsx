@@ -28,7 +28,7 @@ export default function EnglishHome() {
       />
 
       <Section title="Bước 1 · Phát âm" id="en-step1">
-        <Link href="/english/ipa" className="group panel flex flex-col gap-3 px-6 py-7 transition-colors hover:border-[#1d4ed8] sm:flex-row sm:items-center sm:gap-10 sm:px-9">
+        <Link href="/english/ipa" className="group panel flex flex-col gap-3 px-6 py-7 sm:flex-row sm:items-center sm:gap-10 sm:px-9">
           <span className="font-ipa text-[44px] leading-none font-semibold text-[#1d4ed8] sm:text-[56px]">/aɪ piː eɪ/</span>
           <span className="flex min-w-0 flex-1 flex-col gap-2">
             <span className="flex items-center gap-2 eyebrow-label">
@@ -49,9 +49,9 @@ export default function EnglishHome() {
       </Section>
 
       <Section title="Sắp có" id="en-soon">
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="cells grid-cols-1 sm:grid-cols-3">
           {SOON.map((c) => (
-            <div key={c.title} className="flex flex-col gap-2 rounded-[14px] bg-surface-2/60 px-5 py-5">
+            <div key={c.title} className="flex flex-col gap-2 px-5 py-5">
               <div className="flex items-center justify-between">
                 <c.icon className="h-6 w-6 text-ink-3" aria-hidden />
                 <SoonTag />

@@ -70,7 +70,7 @@ export default function JlptN1Home() {
       />
 
       <Section title="Kỹ năng" id="n1-skills">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="cells grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
           {skills.map((s) => {
             const body = (
               <>
@@ -86,11 +86,11 @@ export default function JlptN1Home() {
               </>
             );
             return s.ready ? (
-              <Link key={s.title} href={s.href} className="panel flex flex-col gap-2 p-5 transition-colors hover:border-brand">
+              <Link key={s.title} href={s.href} className="panel flex flex-col gap-2 p-5">
                 {body}
               </Link>
             ) : (
-              <div key={s.title} className="flex flex-col gap-2 rounded-[14px] bg-surface-2/60 p-5" aria-disabled>
+              <div key={s.title} className="flex flex-col gap-2 p-5" aria-disabled>
                 {body}
               </div>
             );

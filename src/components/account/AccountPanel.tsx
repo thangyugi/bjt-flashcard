@@ -127,7 +127,7 @@ export function AccountPanel() {
         {err && <Notice tone="error">{err}</Notice>}
       </section>
 
-      <section className="flex flex-col gap-3 rounded-3xl border border-brand/30 bg-brand-soft/40 px-5 py-5 sm:px-6">
+      <section className="flex flex-col gap-3 border border-brand/40 bg-brand-soft/40 px-5 py-5 sm:px-6">
         <h2 className="text-[16px] font-bold text-brand-soft-ink">Xóa tài khoản</h2>
         <p className="text-[13px] leading-relaxed text-ink-2">
           Xóa vĩnh viễn tài khoản và mọi dữ liệu học trên máy chủ (tiến độ, thẻ ôn, lịch sử, thống kê). Không thể hoàn tác. Tiến độ

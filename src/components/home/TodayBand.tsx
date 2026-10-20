@@ -181,6 +181,8 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
 
   return (
     <div className="cols c4 today" aria-busy={viewer === "loading"}>
+      <span className="edge-tab" aria-hidden />
+
       {/* ── Ngày của bạn ── */}
       <div className="col">
         <div className="art">
