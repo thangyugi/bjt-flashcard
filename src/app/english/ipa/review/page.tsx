@@ -16,9 +16,9 @@ export default function IpaReviewPage() {
         crumbs={[{ label: "Khóa học", href: "/courses" }, { label: "Tiếng Anh", href: "/english" }, { label: "IPA", href: "/english/ipa" }, { label: "Ôn tập" }]}
         accent="#1d4ed8"
         eyebrow="Phát âm IPA"
-        title="Ôn tập ngắt quãng"
+        title="Ôn âm IPA"
         size="md"
-        lead="Mỗi ngày vài phút. Nhìn ký hiệu → tự đọc to & nhớ từ khóa → lật thẻ kiểm tra → tự chấm. Lịch ôn tính bằng FSRS (thuật toán của Anki): nhớ càng chắc thì lần sau càng xa, quên thì ôn lại ngay trong phiên."
+        lead="Mỗi ngày vài phút. Nhìn ký hiệu → tự đọc to & nhớ từ khóa → lật thẻ kiểm tra → tự chấm. Lịch ôn thông minh: nhớ càng chắc thì lần sau càng xa, quên thì ôn lại ngay trong lượt ôn."
       />
       <WithAside
         aside={
@@ -28,7 +28,7 @@ export default function IpaReviewPage() {
                 <li>Nhìn ký hiệu, tự đọc to.</li>
                 <li>Nhớ lại từ khóa và cách đặt lưỡi, môi.</li>
                 <li>Lật thẻ, nghe mẫu, so với giọng mình.</li>
-                <li>Tự chấm thật lòng: FSRS lo phần lịch.</li>
+                <li>Tự chấm thật lòng: lịch ôn tự tính lần gặp lại.</li>
               </ol>
             </AsideNote>
             <AsideNote title="Trong khóa IPA">

@@ -4,7 +4,7 @@ import { HeroFigure } from "./HeroFigure";
 import { Arrow } from "./icons";
 
 const FEATURES = [
-  { t: "Ôn tập ngắt quãng FSRS", d: "Thẻ quay lại theo trí nhớ của riêng bạn, không theo lịch cố định." },
+  { t: "Lịch ôn thông minh", d: "Thẻ quay lại đúng lúc bạn sắp quên, theo trí nhớ của riêng bạn." },
   { t: "Giọng đọc tự nhiên", jp: "音声", d: "Nghe từng câu, từng âm. Tiếng Anh có giọng Anh và Mỹ, nam và nữ." },
   { t: "Học offline", d: "Bài đã mở vẫn học được khi mất mạng." },
   { t: "Đồng bộ mọi thiết bị", d: "Đăng nhập để tiến độ đi theo bạn từ điện thoại sang máy tính." },
@@ -29,7 +29,7 @@ export function Hero({ catalog }: { catalog: HomeCatalog }) {
             <span>bức tranh.</span>
           </h1>
           <p className="lead">
-            Ngữ pháp N1 kể thành truyện, phát âm IPA, chứng chỉ OCI AI và từ vựng BJT trong cùng một nơi. Lịch ôn FSRS đưa từng thẻ quay lại đúng lúc bạn sắp quên.
+            Ngữ pháp N1 kể thành truyện, phát âm IPA, chứng chỉ OCI AI và từ vựng BJT trong cùng một nơi. Lịch ôn thông minh đưa từng thẻ quay lại đúng lúc bạn sắp quên.
           </p>
           <div className="cta-row">
             <a className="btn btn-p" href="#khoahoc">

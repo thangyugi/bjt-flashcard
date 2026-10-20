@@ -113,7 +113,7 @@ export function IpaPracticeCards() {
             Ôn tập hôm nay {due > 0 && <span className="ml-1 rounded-full bg-brand px-2 py-0.5 text-[13px] text-white">{due}</span>}
           </span>
           <span className="text-[13.5px] text-ink-2">
-            {total ? `${total} âm trong bộ ôn tập — lặp lại ngắt quãng để nhớ lâu` : "Học xong bài nào, âm của bài đó tự vào bộ ôn tập"}
+            {total ? `${total} âm trong bộ ôn tập — quay lại đúng lúc sắp quên để nhớ lâu` : "Học xong bài nào, âm của bài đó tự vào bộ ôn tập"}
           </span>
         </span>
       </Link>

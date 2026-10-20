@@ -15,7 +15,7 @@ const COLS: { h: string; links: [string, string][] }[] = [
     links: [
       ["Học bài", "/study"],
       ["Trắc nghiệm", "/quiz"],
-      ["Ôn tập FSRS", "/review"],
+      ["Ôn tập", "/review"],
       ["Tiến độ học tập", "/progress"],
       ["Vùng đất của bạn", "/land"],
     ],

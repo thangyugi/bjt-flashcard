@@ -159,3 +159,24 @@ export function dueCards(cards: Record<string, StoredCard>, now = new Date(), fi
 
 export { Rating, State };
 export type { Grade };
+
+/**
+ * Ví dụ khoảng cách ôn cho phần giải thích trên trang Ôn tập (không ngẫu nhiên hóa):
+ * `first` — thẻ mới, lần chấm đầu tiên; `path` — nếu lần nào cũng chấm "Nhớ" đúng hạn thì các lần ôn sau cách nhau bao lâu.
+ */
+export function exampleIntervals(retention = 0.9) {
+  const f = fsrs(generatorParameters({ enable_fuzz: false, request_retention: retention }));
+  let now = new Date(2026, 0, 1, 9);
+  let card = createEmptyCard(now);
+  const preview = f.repeat(card, now);
+  const first = {} as Record<Grade, number>;
+  for (const g of [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy] as Grade[]) first[g] = preview[g].card.due.getTime() - now.getTime();
+  const path: number[] = [];
+  for (let i = 0; i < 6; i++) {
+    const next = f.next(card, now, Rating.Good).card;
+    path.push(next.due.getTime() - now.getTime());
+    card = next;
+    now = next.due;
+  }
+  return { first, path };
+}

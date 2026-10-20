@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     template: "%s — LeoEdu",
   },
   description:
-    "LeoEdu: ngữ pháp và từ vựng JLPT N1 kể thành truyện, phát âm tiếng Anh IPA, chứng chỉ OCI AI Foundations và từ vựng tiếng Nhật thương mại BJT — học bằng tiếng Việt, ôn tập FSRS.",
+    "LeoEdu: ngữ pháp và từ vựng JLPT N1 kể thành truyện, phát âm tiếng Anh IPA, chứng chỉ OCI AI Foundations và từ vựng tiếng Nhật thương mại BJT — học bằng tiếng Việt, lịch ôn thông minh.",
   keywords: ["LeoEdu", "JLPT N1", "tiếng Nhật", "IPA", "tiếng Anh", "OCI AI Foundations", "BJT", "flashcard", "FSRS"],
   applicationName: "LeoEdu",
   appleWebApp: { capable: true, title: "LeoEdu", statusBarStyle: "default" },

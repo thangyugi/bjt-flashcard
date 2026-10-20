@@ -56,7 +56,7 @@ const BUTTONS: { g: Grade; label: string; cls: string }[] = [
   { g: Rating.Easy, label: "Dễ", cls: "border-[#1d4ed8] bg-[#e8efff] text-[#1e3a8a]" },
 ];
 
-/** Bốn nút chấm FSRS, hiện khoảng cách đến lần ôn sau */
+/** Bốn nút chấm (Quên/Khó/Nhớ/Dễ), hiện khoảng cách đến lần ôn sau */
 export function GradeButtons({ card, onGrade }: { card: StoredCard; onGrade: (g: Grade) => void }) {
   const preview = previewIntervals(card);
   return (

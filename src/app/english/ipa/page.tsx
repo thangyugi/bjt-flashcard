@@ -16,7 +16,7 @@ const METHOD = [
   { icon: BookOpenCheck, title: "2. Neo bằng một từ khóa", body: "Mỗi ký hiệu gắn với MỘT từ quen (/iː/ = see). Nhớ từ là nhớ âm." },
   { icon: Ear, title: "3. Nghe – phân biệt", body: "Luyện cặp tối thiểu (ship/sheep) đến khi tai tách được hai âm, miệng mới nói đúng." },
   { icon: ScrollText, title: "4. Gặp lại trong truyện", body: "Câu chuyện của Linh ở London gom các âm vào ngữ cảnh — đọc to, nghe lại, bắt chước." },
-  { icon: Repeat2, title: "5. Ôn ngắt quãng", body: "Âm đã học tự vào bộ ôn tập: 1 → 2 → 4 → 8 → 16 ngày. 5 phút mỗi ngày là đủ." },
+  { icon: Repeat2, title: "5. Lịch ôn thông minh", body: "Âm đã học tự vào lịch ôn và quay lại đúng lúc bạn sắp quên; nhớ càng chắc, lần sau càng xa. 5 phút mỗi ngày là đủ." },
 ];
 
 export default function IpaHomePage() {
