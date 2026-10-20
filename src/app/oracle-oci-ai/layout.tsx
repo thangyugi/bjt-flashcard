@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./oci.css";
 import { getCourseMeta } from "@/data/oci-ai/course";
-import { OciShell, THEME_INIT_SCRIPT } from "@/components/oci-ai/OciShell";
+import { OciShell } from "@/components/oci-ai/OciShell";
+import { THEME_INIT_SCRIPT } from "@/components/oci-ai/theme-script";
 
 export const metadata: Metadata = {
   title: {

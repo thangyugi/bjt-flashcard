@@ -14,6 +14,7 @@ import { AddToReview } from "@/components/learning/AddToReview";
 import { itemKey } from "@/lib/learning/keys";
 import { Breadcrumbs } from "@/components/ui/page";
 import { LessonPager } from "@/components/ui/lesson-pager";
+import { LessonToc, LessonTocCompact } from "@/components/ui/lesson-toc";
 
 export const dynamicParams = false;
 
@@ -51,13 +52,15 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
   const { prev, next } = found;
   const lesson = withFurigana(found.lesson);
 
-  const toc = [
+  const toc: { id: string; label: string; sub?: boolean }[] = [
     { id: "truyen", label: "Câu chuyện" },
-    ...lesson.patterns.map((p, i) => ({ id: p.id, label: `${i + 1}. ${found.lesson.patterns[i].pattern}` })),
+    ...lesson.patterns.map((p, i) => ({ id: p.id, label: `${i + 1}. ${found.lesson.patterns[i].pattern}`, sub: true })),
     { id: "so-sanh", label: "Bảng so sánh" },
     { id: "lien-ket", label: "Liên kết kiến thức" },
     { id: "tong-on", label: "Trắc nghiệm tổng ôn" },
   ];
+
+  const tocItems = toc.map((t) => ({ id: t.id, text: t.label, sub: t.sub }));
 
   const CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩";
   const navItems = lesson.patterns.map((p, i) => ({
@@ -119,6 +122,8 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
             <AddToReview items={lesson.patterns.map((p) => itemKey.jaGrammar(p.id))} course="jlpt-n1" className="[&_a]:text-paper" />
           </div>
         </header>
+
+        <LessonTocCompact items={tocItems} className="xl:hidden" />
 
         {/* Câu chuyện */}
         <section className="flex flex-col gap-5">
@@ -214,13 +219,8 @@ export default async function N1LessonPage({ params }: PageProps<"/jlpt-n1/gramm
       </div>
 
       {/* Mục lục bên phải */}
-      <aside className="sticky top-24 hidden h-fit w-56 shrink-0 flex-col gap-1 xl:flex" aria-label="Mục lục chương">
-        <span className="mb-1 text-[12px] font-bold tracking-[0.08em] text-ink-3 uppercase">Trong chương này</span>
-        {toc.map((t) => (
-          <a key={t.id} href={`#${t.id}`} className="rounded-lg px-2.5 py-1.5 text-[13.5px] leading-snug text-ink-2 hover:bg-surface-2 hover:text-ink">
-            {t.label}
-          </a>
-        ))}
+      <aside className="sticky top-24 hidden h-fit max-h-[calc(100dvh-7rem)] w-60 shrink-0 overflow-y-auto border-l border-line-strong pl-5 xl:block" aria-label="Mục lục chương">
+        <LessonToc items={tocItems} title="Trong chương này" />
       </aside>
     </div>
   );

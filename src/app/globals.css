@@ -411,3 +411,91 @@ ruby rt {
   color: var(--brand);
   font-weight: 700;
 }
+
+/* ── Mục lục "Trong bài này" dùng chung (src/components/ui/lesson-toc.tsx) ── */
+@layer components {
+  .ltoc,
+  .ltoc-m {
+    --toc-ink: var(--ink-3);
+    --toc-hi: var(--ink);
+    --toc-accent: var(--brand);
+    --toc-line: var(--line-strong);
+    --toc-bg: var(--paper);
+  }
+  .ltoc-title {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--toc-ink);
+  }
+  .ltoc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--toc-line);
+  }
+  .ltoc a {
+    display: block;
+    margin-left: -1px;
+    padding: 5px 0 5px 14px;
+    border-left: 2px solid transparent;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--toc-ink);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .ltoc a.sub {
+    padding-left: 26px;
+    font-size: 13px;
+  }
+  .ltoc a:hover {
+    color: var(--toc-hi);
+  }
+  .ltoc a[aria-current="true"] {
+    color: var(--toc-accent);
+    border-left-color: var(--toc-accent);
+    font-weight: 600;
+  }
+  /* Bản gọn (màn hẹp): một dòng kẻ mảnh, bấm để mở */
+  .ltoc-m {
+    border: 1px solid var(--toc-line);
+    background: var(--toc-bg);
+  }
+  .ltoc-m > summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .ltoc-m > summary::-webkit-details-marker {
+    display: none;
+  }
+  .ltoc-m > summary .ltoc-title {
+    margin: 0;
+    color: var(--toc-hi);
+  }
+  .ltoc-m > summary .cnt {
+    font-size: 12.5px;
+    color: var(--toc-ink);
+  }
+  .ltoc-m > summary .chev {
+    margin-left: auto;
+    width: 18px;
+    height: 18px;
+    color: var(--toc-ink);
+    transition: transform 0.2s;
+  }
+  .ltoc-m[open] > summary .chev {
+    transform: rotate(180deg);
+  }
+  .ltoc-m > .ltoc {
+    padding: 2px 14px 14px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}

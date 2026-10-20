@@ -1,49 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-export interface TocItem {
-  id: string;
-  text: string;
-}
-
-/** Mục lục "Trong bài này" (cột phải trên màn rộng). */
-export function LessonToc({ items }: { items: TocItem[] }) {
-  const [active, setActive] = useState(items[0]?.id);
-
-  useEffect(() => {
-    if (!items.length) return;
-    const els = items.map((i) => document.getElementById(i.id)).filter(Boolean) as HTMLElement[];
-    const obs = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive(visible[0].target.id);
-      },
-      { rootMargin: "-72px 0px -65% 0px" }
-    );
-    els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, [items]);
-
-  return (
-    <>
-      {items.length > 1 && (
-        <nav className="oci-toc" aria-label="Mục lục bài học">
-          <div className="oci-toc-title">Trong bài này</div>
-          <ol>
-            {items.map((i) => (
-              <li key={i.id}>
-                <a href={`#${i.id}`} className={i.id === active ? "active" : undefined}>
-                  {i.text}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-      )}
-    </>
-  );
-}
+import { useEffect, useRef } from "react";
 
 /** Thanh tiến độ đọc mảnh, nằm ngay dưới thanh tiêu đề (và thanh phụ của khóa trên màn hẹp). */
 export function ReadProgress() {

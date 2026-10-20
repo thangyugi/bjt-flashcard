@@ -6,6 +6,7 @@ import type { LessonMeta, ModuleMeta } from "@/data/oci-ai/types";
 import { useOciAiStore } from "@/store/oci-ai-store";
 import { useHydrated } from "@/hooks/useHydrated";
 import { OCI_BASE } from "./OciShell";
+import { Breadcrumbs } from "@/components/ui/page";
 
 interface Props {
   modules: ModuleMeta[];
@@ -36,6 +37,7 @@ export function OciHome({ modules, lessons, stats }: Props) {
 
   return (
     <div className="oci-home">
+      <Breadcrumbs className="mb-5" items={[{ label: "Khóa học", href: "/courses" }, { label: "OCI AI Foundations" }]} />
       <section className="oci-hero">
         <div className="oci-hero-main">
         <div className="oci-eyebrow">

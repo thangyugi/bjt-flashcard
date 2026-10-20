@@ -3,10 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BookOpen, Clock, FileCheck2, ListChecks } from "lucide-react";
 import { practiceByLesson } from "@/data/oci-ai/practice";
-import { LESSONS, getCourseMeta, getLesson } from "@/data/oci-ai/course";
+import { LESSONS, getLesson } from "@/data/oci-ai/course";
 import { LessonQuiz } from "@/components/oci-ai/LessonQuiz";
 import { LessonControls } from "@/components/oci-ai/LessonControls";
-import { LessonToc, ReadProgress, type TocItem } from "@/components/oci-ai/LessonToc";
+import { ReadProgress } from "@/components/oci-ai/LessonToc";
+import { OciThemeToggle } from "@/components/oci-ai/OciTheme";
+import { LessonToc, LessonTocCompact, type TocItem } from "@/components/ui/lesson-toc";
+import { Breadcrumbs } from "@/components/ui/page";
 
 export const dynamicParams = false;
 
@@ -30,7 +33,6 @@ export default async function LessonPage({ params }: PageProps<"/oracle-oci-ai/[
   const { lesson, module, prev, next } = found;
   const { html, toc } = withHeadingIds(lesson.html);
 
-  const siblings = getCourseMeta().lessons.filter((l) => l.moduleId === module.id);
   const practice = practiceByLesson.get(lesson.id);
 
   const label = (l: NonNullable<typeof prev>) =>
@@ -40,15 +42,16 @@ export default async function LessonPage({ params }: PageProps<"/oracle-oci-ai/[
     <div className="oci-lesson-grid">
       <ReadProgress />
       <article className="oci-article">
-        <div className="oci-crumb">
-          <Link href="/courses">Khóa học</Link>
-          <span className="sep">/</span>
-          <Link href="/oracle-oci-ai">OCI AI</Link>
-          <span className="sep">/</span>
-          <span>
-            Phần {module.num} · {module.title}
-          </span>
-        </div>
+        <Breadcrumbs
+          className="oci-toolbar"
+          items={[
+            { label: "Khóa học", href: "/courses" },
+            { label: "OCI AI Foundations", href: "/oracle-oci-ai" },
+            { label: `Phần ${module.num} · ${module.title}` },
+          ]}
+        >
+          <OciThemeToggle />
+        </Breadcrumbs>
 
         <header className="oci-lesson-head">
           <div className="oci-lesson-code" style={{ marginTop: 18 }}>
@@ -73,6 +76,8 @@ export default async function LessonPage({ params }: PageProps<"/oracle-oci-ai/[
             )}
           </div>
         </header>
+
+        <LessonTocCompact items={toc} className="mb-6 xl:hidden" />
 
         <div className="oci-prose" dangerouslySetInnerHTML={{ __html: html }} />
 
@@ -119,21 +124,6 @@ export default async function LessonPage({ params }: PageProps<"/oracle-oci-ai/[
             </span>
           </div>
         </div>
-        <nav aria-label={`Các bài trong Phần ${module.num}`}>
-          <div className="oci-aside-title">
-            Phần {module.num} · {siblings.length} mục
-          </div>
-          <ol className="oci-aside-list">
-            {siblings.map((l) => (
-              <li key={l.id}>
-                <Link href={`/oracle-oci-ai/${l.id}`} aria-current={l.id === lesson.id ? "page" : undefined}>
-                  <span className="c">{l.kind === "summary" ? "★" : l.code}</span>
-                  <span>{l.kind === "summary" ? "Tổng kết & trắc nghiệm" : l.navTitle}</span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </nav>
       </aside>
     </div>
   );

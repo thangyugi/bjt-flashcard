@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/ui/page";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
@@ -17,6 +18,8 @@ import {
 } from "lucide-react";
 import type { PracticeQuestion } from "@/data/oci-ai/types";
 import { useOciAiStore } from "@/store/oci-ai-store";
+
+const OCI_HOME = "/oracle-oci-ai";
 
 const KEYS = ["A", "B", "C", "D", "E", "F"];
 
@@ -564,9 +567,12 @@ function ExamMode({
 function PracticeHeader({ title, subtitle, backHref, backLabel }: { title: string; subtitle?: string; backHref: string; backLabel: string }) {
   return (
     <header className="oci-lesson-head" style={{ marginTop: 0 }}>
-      <div className="oci-crumb">
-        <Link href={backHref}>{backLabel}</Link>
-      </div>
+      <Breadcrumbs
+        items={[
+          { label: "OCI AI Foundations", href: OCI_HOME },
+          ...(backHref !== OCI_HOME ? [{ label: backLabel.replace(/^←\s*/, ""), href: backHref }] : []),
+        ]}
+      />
       <h1 style={{ marginTop: 12 }}>{title}</h1>
       {subtitle && <p style={{ margin: "10px 0 0", color: "var(--o-text-2)", fontSize: 15, lineHeight: 1.6 }}>{subtitle}</p>}
     </header>
