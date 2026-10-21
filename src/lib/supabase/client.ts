@@ -27,18 +27,39 @@ let session: Session | null = null;
 let ready = false;
 const listeners = new Set<() => void>();
 let started = false;
+/** Lần lấy phiên gần nhất thất bại vì không tới được máy chủ */
+let unreachable = false;
 
 function start() {
   const sb = supabase();
   if (started || !sb) return;
   started = true;
-  sb.auth.getSession().then(({ data }) => {
-    session = data.session;
+  // Mất mạng mà token đã hết hạn: supabase-js thử làm mới phiên khá lâu (tới ~30 giây) trước khi trả lời.
+  // Sau 4 giây vẫn chưa xong mà máy còn phiên đã lưu → coi như không tới được máy chủ, cho vào học offline.
+  const timer = setTimeout(() => {
+    if (ready) return;
+    unreachable = hasStoredSession();
     ready = true;
     listeners.forEach((l) => l());
-  });
+  }, 4000);
+  sb.auth
+    .getSession()
+    .then(({ data, error }) => {
+      session = data.session;
+      // Không làm mới được phiên vì lỗi mạng (AuthRetryableFetchError): phiên đã lưu vẫn còn trên máy
+      unreachable = !data.session && !!error && (error.name === "AuthRetryableFetchError" || /fetch|network/i.test(error.message));
+    })
+    .catch(() => {
+      unreachable = true;
+    })
+    .finally(() => {
+      clearTimeout(timer);
+      ready = true;
+      listeners.forEach((l) => l());
+    });
   sb.auth.onAuthStateChange((_event, s) => {
     session = s;
+    if (s) unreachable = false;
     ready = true;
     listeners.forEach((l) => l());
   });
@@ -50,7 +71,39 @@ export function subscribeSession(cb: () => void) {
   return () => listeners.delete(cb);
 }
 export const getSession = () => session;
-export const sessionReady = () => ready || !supabaseEnabled;
+export const sessionReady = () =>
+  ready || !supabaseEnabled || (typeof navigator !== "undefined" && navigator.onLine === false && hasStoredSession());
+
+/** Khóa localStorage mặc định của supabase-js: sb-<phần đầu tên miền>-auth-token */
+function storageKey() {
+  try {
+    return `sb-${new globalThis.URL(URL!).hostname.split(".")[0]}-auth-token`;
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Máy này còn lưu phiên đăng nhập (có refresh token) dù chưa làm mới được — dùng khi offline:
+ * access token hết hạn mà không có mạng thì getSession() trả null, nhưng người dùng vẫn đã đăng nhập trên máy này.
+ */
+export function hasStoredSession(): boolean {
+  if (!supabaseEnabled || typeof window === "undefined") return false;
+  try {
+    const raw = localStorage.getItem(storageKey());
+    if (!raw) return false;
+    const v = JSON.parse(raw);
+    return Boolean(v?.refresh_token || v?.currentSession?.refresh_token);
+  } catch {
+    return false;
+  }
+}
+
+/** Đang offline (hoặc không tới được máy chủ) nhưng máy còn phiên đã lưu → coi như đã đăng nhập để học offline */
+export function offlineSignedIn(): boolean {
+  if (session || typeof navigator === "undefined") return false;
+  return (navigator.onLine === false || unreachable) && hasStoredSession();
+}
 
 /** Địa chỉ quay về sau khi bấm link trong email / đăng nhập Google */
 export const authRedirect = (next = "/account") =>

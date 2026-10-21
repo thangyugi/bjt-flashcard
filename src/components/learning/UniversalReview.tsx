@@ -9,6 +9,7 @@ import { COURSE_LABEL, ITEM_TYPE_LABEL, loadItemIndex, type ItemIndex, type Item
 import { SpeakButton } from "@/components/jlpt-n1/Speak";
 import { EnSpeakButton } from "@/components/english/EnSpeak";
 import { fmtDate, GradeButtons, useReviewQueue } from "./ReviewKit";
+import { ENROLL_WAYS } from "./ReviewExplainer";
 import { cn } from "@/lib/utils";
 
 const COURSES = ["all", "jlpt-n1", "bjt", "english", "oci-ai"] as const;
@@ -75,11 +76,18 @@ function Session({ idx, course }: { idx: ItemIndex; course: CourseFilter }) {
 
   if (!r.total)
     return (
-      <div className="flex flex-col gap-3 panel px-6 py-6">
+      <div className="flex flex-col gap-4 panel px-6 py-6">
+        <p className="text-[17px] font-extrabold text-ink">Lịch ôn của bạn đang trống</p>
         <p className="text-[15px] leading-relaxed text-ink-2">
-          Bộ ôn tập đang trống. Thêm mục học từ các bài: nút <b>“Thêm … vào ôn tập”</b> ở đầu mỗi bài từ vựng / ngữ pháp N1, học xong bài
-          IPA, hoặc đánh dấu từ BJT là “đang học”.
+          Thẻ chỉ xuất hiện ở đây sau khi bạn đưa mục học vào lịch ôn. Cách thêm thẻ ở từng khóa:
         </p>
+        <ul className="flex flex-col gap-2 text-[14.5px] leading-relaxed text-ink-2">
+          {ENROLL_WAYS.map((w) => (
+            <li key={w.course}>
+              <b className="text-ink">{w.course}:</b> {w.how}
+            </li>
+          ))}
+        </ul>
         <div className="flex flex-wrap gap-2">
           <Link href="/jlpt-n1/vocab" className="rounded-xl border border-line-strong px-4 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
             Từ vựng N1

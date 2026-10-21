@@ -7,6 +7,7 @@ import type { ModuleMeta } from "@/data/oci-ai/types";
 import { useOciAiStore } from "@/store/oci-ai-store";
 import { useHydrated } from "@/hooks/useHydrated";
 import { OCI_BASE } from "./OciShell";
+import { Breadcrumbs } from "@/components/ui/page";
 
 interface Props {
   modules: ModuleMeta[];
@@ -25,6 +26,14 @@ export function PracticeHub({ modules, lessons, exams, total }: Props) {
 
   return (
     <div className="oci-hub">
+      <Breadcrumbs
+        className="mb-5"
+        items={[
+          { label: "Khóa học", href: "/courses" },
+          { label: "OCI AI Foundations", href: OCI_BASE },
+          { label: "Luyện tập & thi thử" },
+        ]}
+      />
       <section className="oci-hero">
         <div className="oci-eyebrow">
           <FileCheck2 size={16} aria-hidden /> Luyện tập & thi thử

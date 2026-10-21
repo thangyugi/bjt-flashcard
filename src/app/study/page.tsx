@@ -17,7 +17,7 @@ export default function StudyPage() {
       <PageHeader
         eyebrow="Học bài"
         title={["Hôm nay", "học gì?"]}
-        lead="Chọn khóa và bài muốn học. Mỗi khóa ghi nhớ bài bạn mở gần nhất để học tiếp đúng chỗ; bài đã học được đưa vào lịch ôn FSRS."
+        lead="Chọn khóa và bài muốn học. Mỗi khóa ghi nhớ bài bạn mở gần nhất để học tiếp đúng chỗ; bài đã học được đưa vào lịch ôn để quay lại đúng lúc bạn sắp quên."
         actions={
           <>
             <Link href="/quiz" className={btn.ghost}>

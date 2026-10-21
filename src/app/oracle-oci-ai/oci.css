@@ -306,7 +306,7 @@
 }
 
 .oci-lesson-grid { margin: 0; }
-/* Màn rộng: bài đọc giữ độ dài dòng dễ đọc ở cột trái; cột phải (mục lục, các bài cùng phần, luyện tập) lấp phần còn lại */
+/* Màn rộng: bài đọc giữ độ dài dòng dễ đọc ở cột trái; cột phải chỉ chứa thông tin mới (mục lục trong bài, luyện tập) — danh sách bài đã có ở ngăn trái */
 @media (min-width: 1280px) {
   .oci-lesson-grid { display: grid; grid-template-columns: minmax(0, 800px) minmax(260px, 1fr); gap: clamp(40px, 4vw, 72px); align-items: start; }
 }
@@ -326,26 +326,7 @@
     border-left: 1px solid var(--o-line-strong);
   }
 }
-@media (min-width: 1700px) {
-  .oci-aside { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; align-items: start; }
-  .oci-aside > .wide { grid-column: 1 / -1; }
-}
-.oci-aside-col { display: grid; gap: 28px; align-content: start; }
-.oci-aside-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--o-text-3); margin-bottom: 10px; }
-.oci-aside-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--o-line-strong); }
-.oci-aside-list a {
-  display: flex;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--o-line);
-  font-size: 13.5px;
-  line-height: 1.4;
-  color: var(--o-text-2);
-}
-.oci-aside-list a:hover { color: var(--o-text); }
-.oci-aside-list a[aria-current="page"] { color: var(--o-accent); font-weight: 650; }
-.oci-aside-list .c { flex: none; min-width: 30px; font-size: 12px; font-weight: 700; color: var(--o-text-3); font-variant-numeric: tabular-nums; padding-top: 1px; }
-.oci-aside-list a[aria-current="page"] .c { color: var(--o-accent); }
+.oci-aside-col { display: grid; gap: 28px; align-content: start; max-width: 380px; }
 .oci-aside-card { display: grid; gap: 10px; padding: 16px; border: 1px solid var(--o-line-strong); background: var(--o-bg); font-size: 13.5px; line-height: 1.55; color: var(--o-text-2); }
 .oci-aside-card b { color: var(--o-text); font-size: 14.5px; }
 
@@ -382,15 +363,6 @@
 .oci-chip.accent { color: var(--o-accent); background: var(--o-accent-soft); border-color: transparent; }
 
 /* ── Mục lục bên phải ────────────────────────────────────── */
-.oci-toc { display: none; }
-@media (min-width: 1280px) {
-  .oci-toc { display: block; }
-}
-.oci-toc-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--o-text-3); margin-bottom: 10px; }
-.oci-toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--o-line); }
-.oci-toc a { display: block; margin-left: -1px; padding: 5px 0 5px 14px; border-left: 2px solid transparent; font-size: 13px; line-height: 1.45; color: var(--o-text-3); transition: color 0.15s, border-color 0.15s; }
-.oci-toc a:hover { color: var(--o-text); }
-.oci-toc a.active { color: var(--o-accent); border-left-color: var(--o-accent); font-weight: 600; }
 
 /* ── Nội dung bài học (HTML từ dữ liệu) ──────────────────── */
 .oci-prose { font-size: 16.5px; line-height: 1.78; color: var(--o-text); overflow-wrap: break-word; }
@@ -1122,3 +1094,43 @@
   .oci-practice.run > .oci-quiz-actions { grid-area: act; }
   .oci-practice.run > .oci-prose { grid-area: tips; }
 }
+
+/* Nút đổi nền bài đọc: hàng công cụ đầu bài, bên phải đường dẫn quay lại */
+.oci-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.oci-theme-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--o-line-strong);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--o-text-2);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.oci-theme-btn:hover { color: var(--o-text); border-color: var(--o-text-3); }
+.oci-theme-btn svg { width: 15px; height: 15px; }
+@media (max-width: 420px) { .oci-theme-btn span { display: none; } .oci-theme-btn { width: 32px; justify-content: center; padding: 0; } }
+
+/* Đường dẫn dùng chung (Breadcrumbs) và mục lục dùng chung theo màu của khóa OCI (cả nền tối) */
+.oci-root .crumbs nav { color: var(--o-text-3); }
+.oci-root .crumbs a:hover { color: var(--o-accent); }
+.oci-root .crumbs [aria-current="page"] { color: var(--o-text-2); }
+.oci-root .crumbs .crumbs-back { border-color: var(--o-line-strong); color: var(--o-text-2); }
+.oci-root .crumbs .crumbs-back:hover { color: var(--o-accent); border-color: var(--o-accent); }
+.oci-root .ltoc,
+.oci-root .ltoc-m {
+  --toc-ink: var(--o-text-3);
+  --toc-hi: var(--o-text);
+  --toc-accent: var(--o-accent);
+  --toc-line: var(--o-line-strong);
+  --toc-bg: var(--o-bg);
+}
+.oci-side-back { display: inline-flex; align-items: center; gap: 6px; width: fit-content; font-size: 12.5px; font-weight: 600; color: var(--o-text-3); margin-bottom: 4px; }
+.oci-side-back:hover { color: var(--o-accent); }
+.oci-side-back svg { width: 14px; height: 14px; }

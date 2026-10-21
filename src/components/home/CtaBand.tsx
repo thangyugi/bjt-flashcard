@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { InstallAppCard } from "@/components/layout/Pwa";
 import { GuestOnly } from "./viewer";
+import { StartLink } from "./StartLink";
 
 /** Dải kêu gọi cuối trang: mặt trời + nét torii */
 export function CtaBand() {
@@ -12,11 +13,9 @@ export function CtaBand() {
           <span>bắt đầu</span>
           <span>hôm nay</span>
         </h2>
-        <p className="lead">Chọn một khóa, học một bài. Lịch ôn lo phần còn lại.</p>
+        <p className="lead">Tạo tài khoản miễn phí, chọn một khóa, học một bài. Lịch ôn lo phần còn lại.</p>
         <div className="cta-row">
-          <a className="btn btn-p" href="#khoahoc">
-            Bắt đầu học miễn phí
-          </a>
+          <StartLink className="btn btn-p">Bắt đầu học miễn phí</StartLink>
           <GuestOnly>
             <Link className="btn btn-g" href="/login?next=/">
               Đăng nhập

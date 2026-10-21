@@ -10,6 +10,7 @@ import { dailyPlan } from "@/lib/land/plan";
 import { cn } from "@/lib/utils";
 import { useViewer } from "./viewer";
 import { useWordOfDay } from "./vocab";
+import { bjtCardAnchor } from "@/components/flashcard/anchor";
 import { Arrow, Gem } from "./icons";
 import { ChestSoon, DayOffSoon, GiftSoon } from "./Soon";
 
@@ -26,6 +27,9 @@ function Pending({ lines = 3 }: { lines?: number }) {
     </div>
   );
 }
+
+/** Đường dẫn tới đúng thẻ của từ trong nhóm BJT (FlashCardDeck đọc #tu-<id> để mở thẻ đó) */
+const wordHref = (w: { item: { id: string }; group: { id: string } }) => `/bjt/${w.group.id}#${bjtCardAnchor(w.item.id)}`;
 
 type Week = { key: string; label: string; today: boolean; on: boolean }[];
 
@@ -192,7 +196,11 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
               </span>
             </p>
             {viewer !== "loading" && word ? (
-              <Link href={`/bjt/${word.group.id}`} className="wod-word" aria-label={`Từ của hôm nay: ${word.item.kanji}, ${word.item.meaningVn}. Học nhóm ${word.group.name}`}>
+              <Link
+                href={guest ? `/register?next=${encodeURIComponent(wordHref(word))}` : wordHref(word)}
+                className="wod-word"
+                aria-label={`Từ của hôm nay: ${word.item.kanji}, ${word.item.meaningVn}. Mở thẻ từ này trong nhóm ${word.group.name}`}
+              >
                 <span className="jp wod-r" lang="ja">
                   {word.item.hiragana || word.item.katakana}
                 </span>
@@ -242,19 +250,23 @@ export function TodayBand({ icons }: { icons: { plan: ReactNode; gift: ReactNode
           )}
           {guest && (
             <div className="signin">
-              <p>Đăng nhập để có kế hoạch, phần thưởng và chuỗi ngày của riêng bạn</p>
+              <p>Tạo tài khoản miễn phí để bắt đầu học và có kế hoạch, phần thưởng, chuỗi ngày của riêng bạn</p>
               <p className="sub">Các cột bên cạnh đang hiện số liệu ví dụ.</p>
               <div className="cta-row">
-                <Link className="btn btn-p btn-s" href="/login?next=/">
-                  Đăng nhập
+                <Link className="btn btn-p btn-s" href="/register?next=/">
+                  Đăng ký miễn phí
                 </Link>
-                <Link className="btn btn-g btn-s" href="/register?next=/">
-                  Tạo tài khoản
+                <Link className="btn btn-g btn-s" href="/login?next=/">
+                  Đăng nhập
                 </Link>
               </div>
             </div>
           )}
-          <p className="note foot">Mọi bài học đều mở để xem miễn phí. Tài khoản giúp lưu tiến độ, chuỗi ngày và Tinh thể trên mọi thiết bị.</p>
+          <p className="note foot">
+            {user
+              ? "Tiến độ, lịch ôn, chuỗi ngày và Tinh thể được lưu vào tài khoản của bạn, dùng được trên mọi thiết bị."
+              : "Học trên LeoEdu cần một tài khoản miễn phí: tiến độ, lịch ôn, chuỗi ngày và Tinh thể được lưu vào tài khoản, dùng được trên mọi thiết bị."}
+          </p>
         </div>
       </div>
 

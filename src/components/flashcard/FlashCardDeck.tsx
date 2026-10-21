@@ -8,6 +8,7 @@ import { useFlashcardStore } from "@/store/flashcard-store";
 import type { FlashcardProgress, VocabularyGroup } from "@/types/vocabulary";
 import { GroupIcon } from "@/components/ui/group-icon";
 import { cn } from "@/lib/utils";
+import { BJT_ANCHOR_PREFIX, bjtCardAnchor } from "./anchor";
 
 interface FlashCardDeckProps {
   group: VocabularyGroup;
@@ -66,6 +67,7 @@ function WordGrid({
   onPick,
   className,
   cellClass,
+  withIds,
 }: {
   group: VocabularyGroup;
   progress: Progress;
@@ -73,6 +75,8 @@ function WordGrid({
   onPick: (i: number) => void;
   className?: string;
   cellClass?: string;
+  /** Gắn id neo (tu-<id>) cho từng ô — chỉ một lưới trong trang được gắn để id không trùng */
+  withIds?: boolean;
 }) {
   return (
     <div className={cn("grid gap-2", className)}>
@@ -82,6 +86,7 @@ function WordGrid({
         return (
           <button
             key={item.id}
+            id={withIds ? bjtCardAnchor(item.id) : undefined}
             type="button"
             onClick={() => onPick(idx)}
             title={item.kanji}
@@ -117,6 +122,8 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
     progress,
   } = useFlashcardStore();
   const [listOpen, setListOpen] = useState(false);
+  /** Thẻ vừa mở qua liên kết #tu-<id> (vd. "Từ của hôm nay"): viền nổi bật trong giây lát */
+  const [spot, setSpot] = useState<string | null>(null);
 
   const items = group.items;
   const total = items.length;
@@ -125,6 +132,30 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
   useEffect(() => {
     setCurrentGroup(group.id);
   }, [group.id, setCurrentGroup]);
+
+  // Liên kết tới đúng một từ: /bjt/<nhóm>#tu-<id> → mở thẻ đó (chạy sau khi đổi nhóm đưa vị trí về 0)
+  useEffect(() => {
+    const apply = () => {
+      const h = decodeURIComponent(window.location.hash.slice(1));
+      if (!h.startsWith(BJT_ANCHOR_PREFIX)) return;
+      const idx = group.items.findIndex((i) => bjtCardAnchor(i.id) === h);
+      if (idx < 0) return;
+      setCurrentCardIndex(idx);
+      setSpot(group.items[idx].id);
+      document.getElementById(h)?.scrollIntoView({ block: "nearest" });
+    };
+    const t = window.setTimeout(apply, 0);
+    window.addEventListener("hashchange", apply);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("hashchange", apply);
+    };
+  }, [group, setCurrentCardIndex]);
+  useEffect(() => {
+    if (!spot) return;
+    const t = window.setTimeout(() => setSpot(null), 2600);
+    return () => window.clearTimeout(t);
+  }, [spot]);
 
   const handleNext = useCallback(() => {
     if (currentCardIndex < total - 1) setCurrentCardIndex(currentCardIndex + 1);
@@ -232,7 +263,7 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
         <StatTiles {...counts} total={total} />
         <div className="h-px shrink-0 bg-line" />
         <div className="-mx-1.5 min-h-0 flex-1 overflow-y-auto px-1.5 pt-1 pb-2">
-          <WordGrid group={group} progress={progress} current={currentCardIndex} onPick={pick} className="grid-cols-6" />
+          <WordGrid group={group} progress={progress} current={currentCardIndex} onPick={pick} className="grid-cols-6" withIds />
         </div>
       </aside>
 
@@ -281,7 +312,10 @@ export function FlashCardDeck({ group }: FlashCardDeckProps) {
             updateProgress(current.id, status);
             handleNext();
           }}
-          className="min-h-0 max-w-[880px] flex-1 rounded-[20px] md:h-[580px] md:flex-none md:rounded-3xl lg:h-[560px] lg:shrink-0"
+          className={cn(
+            "min-h-0 max-w-[880px] flex-1 rounded-[20px] transition-shadow duration-500 md:h-[580px] md:flex-none md:rounded-3xl lg:h-[560px] lg:shrink-0",
+            spot === current.id && "shadow-[0_0_0_4px_var(--brand-soft),0_0_0_5px_var(--brand-muted)]"
+          )}
         />
 
         <div className="hidden w-full max-w-[880px] grid-cols-2 gap-3 md:grid lg:flex lg:items-center lg:justify-between">

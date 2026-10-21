@@ -12,9 +12,9 @@ export type Viewer = "loading" | "guest" | "user";
  */
 export function useViewer(): Viewer {
   const hydrated = useHydrated();
-  const { ready, user } = useAuth();
+  const { ready, signedIn } = useAuth();
   if (!hydrated || !ready) return "loading";
-  return user ? "user" : "guest";
+  return signedIn ? "user" : "guest";
 }
 
 /** Chỉ hiện cho khách (chưa đăng nhập) */

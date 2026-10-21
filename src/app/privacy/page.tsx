@@ -25,7 +25,7 @@ const SECTIONS: { h: string; p: string[] }[] = [
     h: "3. Nơi lưu trữ",
     p: [
       "Dữ liệu lưu trên máy chủ Supabase (PostgreSQL) và được bảo vệ bằng phân quyền theo từng dòng: mỗi người chỉ đọc được dữ liệu của mình.",
-      "Khi chưa đăng nhập, tiến độ chỉ nằm trong trình duyệt của bạn.",
+      "Học trên LeoEdu cần tài khoản. Trình duyệt cũng giữ một bản sao tiến độ và phiên đăng nhập để học được khi mất mạng; đăng xuất sẽ xóa bản sao này.",
     ],
   },
   {

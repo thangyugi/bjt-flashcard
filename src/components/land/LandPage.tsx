@@ -1,76 +1,23 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
-import { useAuth } from "@/hooks/useAuth";
-import { useHydrated } from "@/hooks/useHydrated";
 import { useActivityStore } from "@/store/activity-store";
 import { useLandStore } from "@/store/land-store";
 import { crystalBalance, crystalsEarned, totalXp, XP_PER_CRYSTAL } from "@/lib/land/economy";
-import { cn } from "@/lib/utils";
 import { CR, PLOT_COUNT, RAR, SP } from "./data";
 import type { LandEngine, LandEvents, LandPrompt, LandSelection, LandTime, LandView, PlantingMode, PlantingRecord } from "./engine";
 import { FieldGuide } from "./FieldGuide";
 import { LandScene, type SceneStatus } from "./LandScene";
 import { PlanStrip } from "./PlanStrip";
 import { HelpLine, Joystick, ModeToggle, PlantingHint, Prompt, SceneTitle, TimeControl, Toast } from "./SceneControls";
-import { GLASS } from "./ui";
 
-/** Chiều cao khung: trừ thanh tiêu đề (h-14 / md:h-16) và thanh tab dưới đáy trên mobile */
-const FULL_H = "h-[calc(100dvh-8.5rem)] min-h-[440px] md:h-[calc(100dvh-4rem)]";
-
-/** Trang /land: cần đăng nhập. Chưa đăng nhập thì xem trước vùng đất (không thao tác được) kèm lời mời đăng nhập. */
+/** Trang /land. Cổng đăng nhập chung (RequireAuth trong layout gốc) đã chặn khách nên ở đây luôn là người đã đăng nhập. */
 export function LandPage() {
-  const hydrated = useHydrated();
-  const { ready, user } = useAuth();
-  if (!hydrated || !ready) {
-    return (
-      <div className={cn(FULL_H, "relative grid place-items-center bg-[#072b2a]")}>
-        <p className={cn(GLASS, "px-4 py-2.5 text-[13px]")} role="status">
-          Đang mở vùng đất…
-        </p>
-      </div>
-    );
-  }
-  return user ? <LandApp /> : <LandPreview />;
+  return <LandApp />;
 }
 
 const toRecords = (list: { plot: number; species: string; plantedAt: string }[]): PlantingRecord[] =>
   list.map((p) => ({ plot: p.plot, species: p.species, plantedAt: Date.parse(p.plantedAt) || 0 }));
-
-/** Bản xem trước khi chưa đăng nhập */
-function LandPreview() {
-  const engineRef = useRef<LandEngine | null>(null);
-  const plantings = useLandStore((s) => s.plantings);
-  const records = useMemo(() => toRecords(plantings), [plantings]);
-  const events = useMemo(() => ({}), []);
-  return (
-    <LandScene interactive={false} plantings={records} events={events} engineRef={engineRef} className={FULL_H}>
-      <SceneTitle />
-      <div className="absolute inset-0 z-[5] grid place-items-center bg-[rgba(10,14,18,0.28)] px-4">
-        <div className="flex w-full max-w-[420px] flex-col gap-3 panel px-5 py-6 shadow-[0_8px_32px_rgba(0,0,0,0.25)] sm:px-7">
-          <span className="eyebrow-label">Vùng đất của bạn</span>
-          <h2 className="hx-title text-[26px]">Đăng nhập để mở vùng đất của bạn</h2>
-          <p className="text-[14px] leading-relaxed text-ink-2">
-            Mỗi {XP_PER_CRYSTAL} XP bạn học được thành 1 Tinh thể. Dùng Tinh thể gieo cây quý vào tám ô đất trên Thảo nguyên Pha Lê, đi dạo cùng Lữ khách và ngắm cây lớn lên.
-          </p>
-          <div className="mt-1 flex flex-wrap gap-2">
-            <Link href="/login?next=/land" className="flex h-11 flex-1 items-center justify-center rounded-[10px] bg-brand px-4 text-[14.5px] font-semibold whitespace-nowrap text-white hover:bg-brand-hover">
-              Đăng nhập
-            </Link>
-            <Link
-              href="/register?next=/land"
-              className="flex h-11 flex-1 items-center justify-center rounded-[10px] border border-line-strong px-4 text-[14.5px] font-semibold whitespace-nowrap text-ink hover:bg-surface-2"
-            >
-              Tạo tài khoản
-            </Link>
-          </div>
-          <p className="text-[12.5px] text-ink-3">Các bài học vẫn mở cho mọi người — chỉ vùng đất cần tài khoản.</p>
-        </div>
-      </div>
-    </LandScene>
-  );
-}
 
 const DEFAULT_SPECIES = "huyetrong";
 

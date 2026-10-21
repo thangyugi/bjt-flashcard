@@ -11,6 +11,7 @@ import { EnLessonActions, EnStory } from "@/components/english/EnLessonBits";
 import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
 import { Breadcrumbs } from "@/components/ui/page";
 import { LessonPager } from "@/components/ui/lesson-pager";
+import { LessonToc, LessonTocCompact, type TocItem } from "@/components/ui/lesson-toc";
 
 export const dynamicParams = false;
 
@@ -55,129 +56,140 @@ export default async function IpaLessonPage({ params }: PageProps<"/english/ipa/
     ? lesson.phonemes.map((p) => ({ id: p.id, no: `/${p.symbol}/`, jp: p.keyword.w, vi: p.name, search: p.symbol + " " + p.words.map((w) => w.w).join(" ") }))
     : (lesson.rules ?? []).map((r, i) => ({ id: `rule-${i + 1}`, no: String(i + 1), jp: r.title, vi: "", search: r.body }));
 
+  // Mục lục "Trong bài này": các phần lớn, các âm / quy luật và từng dạng luyện tập là mục con
+  const tocItems: TocItem[] = [
+    { id: "am", text: lesson.phonemes.length ? "Học kỹ từng âm" : "Kiến thức nền" },
+    ...(lesson.phonemes.length
+      ? lesson.phonemes.map((p) => ({ id: p.id, text: `/${p.symbol}/ ${p.keyword.w}`, sub: true }))
+      : (lesson.rules ?? []).map((r, i) => ({ id: `rule-${i + 1}`, text: `${i + 1}. ${r.title}`, sub: true }))),
+    ...(lesson.rules?.length && lesson.phonemes.length ? [{ id: "quy-luat", text: "Quy luật & mẹo" }] : []),
+    { id: "truyen", text: "Câu chuyện" },
+    { id: "luyen-tap", text: "Luyện tập" },
+  ];
+
   const allQuestions = [...sections, { key: "tong-hop", title: "Câu hỏi tổng hợp", desc: "Kiến thức, quy luật và nghe hiểu của cả bài.", qs: lesson.quiz }];
 
   return (
-    <div className="page-x flex flex-col gap-10 pt-6 pb-12 sm:pt-10 sm:pb-16">
-      <LessonNavigator
-        title={`IPA Bài ${lesson.num} · ${lesson.mark}`}
-        label={lesson.phonemes.length ? "Các âm" : "Mục lục"}
-        sections={toc}
-        items={navItems}
-      />
+    <div className="page-x flex gap-10 pt-6 pb-12 sm:pt-10 sm:pb-16">
+      <LessonNavigator title={`IPA Bài ${lesson.num} · ${lesson.mark}`} label={lesson.phonemes.length ? "Các âm" : "Mục lục"} sections={toc} items={navItems} />
 
-      <Breadcrumbs
-        items={[
-          { label: "Khóa học", href: "/courses" },
-          { label: "Tiếng Anh", href: "/english" },
-          { label: "IPA", href: "/english/ipa" },
-          { label: `Bài ${lesson.num}` },
-        ]}
-      />
+      <div className="flex min-w-0 flex-1 flex-col gap-10">
+        <Breadcrumbs
+          items={[
+            { label: "Khóa học", href: "/courses" },
+            { label: "Tiếng Anh", href: "/english" },
+            { label: "IPA", href: "/english/ipa" },
+            { label: `Bài ${lesson.num}` },
+          ]}
+        />
 
-      <header className="relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-[#0f1f47] px-6 py-8 text-white sm:px-10 sm:py-10">
-        <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-[#1d4ed8]/80 sm:h-72 sm:w-72" aria-hidden />
-        <div className="relative flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold tracking-[0.08em] text-[#b9c8f0] uppercase">
-          <span>IPA · Bài {lesson.num}</span>
-          <span>·</span>
-          <span>{lesson.group}</span>
-          <span>·</span>
-          <span>{lesson.level}</span>
-        </div>
-        <span className="relative font-ipa text-[44px] leading-tight font-semibold sm:text-[56px]">{lesson.mark}</span>
-        <h1 className="relative text-[24px] leading-snug font-extrabold sm:text-[30px]">{lesson.title}</h1>
-        <p className="relative max-w-[720px] font-ipa text-[15px] leading-relaxed text-[#dbe4fb]">{lesson.intro}</p>
-        <div className="relative flex flex-wrap gap-2 pt-1">
-          {lesson.phonemes.map((p) => (
-            <a key={p.id} href={`#${p.id}`} className="rounded-full border border-white/25 bg-white/10 px-3 py-1 font-ipa text-[15px] hover:bg-white/20">
-              /{p.symbol}/ {p.keyword.w}
-            </a>
-          ))}
-        </div>
-        <div className="relative pt-1">
-          <EnLessonActions lessonId={lesson.id} phonemeIds={phonemeIds} />
-        </div>
-      </header>
+        <header className="relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-[#0f1f47] px-6 py-8 text-white sm:px-10 sm:py-10">
+          <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-[#1d4ed8]/80 sm:h-72 sm:w-72" aria-hidden />
+          <div className="relative flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold tracking-[0.08em] text-[#b9c8f0] uppercase">
+            <span>IPA · Bài {lesson.num}</span>
+            <span>·</span>
+            <span>{lesson.group}</span>
+            <span>·</span>
+            <span>{lesson.level}</span>
+          </div>
+          <span className="relative font-ipa text-[44px] leading-tight font-semibold sm:text-[56px]">{lesson.mark}</span>
+          <h1 className="relative text-[24px] leading-snug font-extrabold sm:text-[30px]">{lesson.title}</h1>
+          <p className="relative max-w-[720px] font-ipa text-[15px] leading-relaxed text-[#dbe4fb]">{lesson.intro}</p>
+          <div className="relative flex flex-wrap gap-2 pt-1">
+            {lesson.phonemes.map((p) => (
+              <a key={p.id} href={`#${p.id}`} className="rounded-full border border-white/25 bg-white/10 px-3 py-1 font-ipa text-[15px] hover:bg-white/20">
+                /{p.symbol}/ {p.keyword.w}
+              </a>
+            ))}
+          </div>
+          <div className="relative pt-1">
+            <EnLessonActions lessonId={lesson.id} phonemeIds={phonemeIds} />
+          </div>
+        </header>
 
-      <EnVoiceSettings />
+        <LessonTocCompact items={tocItems} className="xl:hidden" />
 
-      {/* Các âm hoặc lý thuyết */}
-      <section className="flex flex-col gap-5">
-        <Heading id="am" icon={Mic} kicker={lesson.phonemes.length ? "Âm · Sound" : "Lý thuyết · Theory"} title={lesson.phonemes.length ? "Học kỹ từng âm" : "Kiến thức nền"} />
-        {lesson.phonemes.map((p) => (
-          <PhonemeCard key={p.id} p={p} />
-        ))}
-        {!lesson.phonemes.length && <Rules lesson={lesson} />}
-      </section>
+        <EnVoiceSettings />
 
-      {lesson.phonemes.length > 0 && lesson.rules && lesson.rules.length > 0 && (
+        {/* Các âm hoặc lý thuyết */}
         <section className="flex flex-col gap-5">
-          <Heading id="quy-luat" icon={Scale} kicker="Quy luật · Rules" title="Quy luật & mẹo nhìn chữ đoán âm" />
-          <Rules lesson={lesson} />
+          <Heading
+            id="am"
+            icon={Mic}
+            kicker={lesson.phonemes.length ? "Âm · Sound" : "Lý thuyết · Theory"}
+            title={lesson.phonemes.length ? "Học kỹ từng âm" : "Kiến thức nền"}
+          />
+          {lesson.phonemes.map((p) => (
+            <PhonemeCard key={p.id} p={p} />
+          ))}
+          {!lesson.phonemes.length && <Rules lesson={lesson} />}
         </section>
-      )}
 
-      <section className="flex flex-col gap-5">
-        <Heading id="truyen" icon={BookMarked} kicker="Câu chuyện · Story" title={lesson.story.title} />
-        <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8">
-          <EnStory paras={lesson.story.paras} />
-        </div>
-        {lesson.twister && (
-          <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-[#e7c46a]/60 bg-[#fdf6e3] px-5 py-4">
-            <Lightbulb className="h-5 w-5 shrink-0 text-[#b7791f]" aria-hidden />
-            <div className="flex min-w-0 flex-1 flex-col">
-              <span className="text-[12px] font-bold tracking-[0.06em] text-[#9a6b14] uppercase">Câu nói nhanh — luyện 3 tốc độ: chậm, vừa, nhanh</span>
-              <span className="text-[18px] font-semibold text-ink">{lesson.twister.en}</span>
-              <span className="text-[13.5px] text-ink-2">{lesson.twister.vi}</span>
-            </div>
-            <EnSpeakButton text={lesson.twister.en} label="Nghe chậm" slow showLabel />
-            <EnSpeakButton text={lesson.twister.en} label="Nghe" showLabel />
-          </div>
+        {lesson.phonemes.length > 0 && lesson.rules && lesson.rules.length > 0 && (
+          <section className="flex flex-col gap-5">
+            <Heading id="quy-luat" icon={Scale} kicker="Quy luật · Rules" title="Quy luật & mẹo nhìn chữ đoán âm" />
+            <Rules lesson={lesson} />
+          </section>
         )}
-      </section>
 
-      <section className="flex flex-col gap-8">
-        <Heading id="luyen-tap" icon={Trophy} kicker="Luyện tập · Practice" title="Luyện tập nhiều dạng" />
-        {allQuestions.map((s, i) => (
-          <div key={s.key} id={`quiz-${s.key}`} className="flex scroll-mt-24 flex-col gap-3">
-            <div className="flex flex-col gap-0.5">
-              <h3 className="text-lg font-extrabold text-ink">
-                {i + 1}. {s.title}
-              </h3>
-              <p className="text-[13.5px] text-ink-3">{s.desc}</p>
-            </div>
-            <EnQuiz
-              storeKey={`${lesson.id}/${s.key}`}
-              questions={s.qs}
-              finishLesson={i === allQuestions.length - 1 ? { id: lesson.id, phonemeIds } : undefined}
-            />
+        <section className="flex flex-col gap-5">
+          <Heading id="truyen" icon={BookMarked} kicker="Câu chuyện · Story" title={lesson.story.title} />
+          <div className="rounded-3xl border border-line bg-surface px-5 py-6 sm:px-8">
+            <EnStory paras={lesson.story.paras} />
           </div>
-        ))}
-      </section>
+          {lesson.twister && (
+            <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-[#e7c46a]/60 bg-[#fdf6e3] px-5 py-4">
+              <Lightbulb className="h-5 w-5 shrink-0 text-[#b7791f]" aria-hidden />
+              <div className="flex min-w-0 flex-1 flex-col">
+                <span className="text-[12px] font-bold tracking-[0.06em] text-[#9a6b14] uppercase">Câu nói nhanh — luyện 3 tốc độ: chậm, vừa, nhanh</span>
+                <span className="text-[18px] font-semibold text-ink">{lesson.twister.en}</span>
+                <span className="text-[13.5px] text-ink-2">{lesson.twister.vi}</span>
+              </div>
+              <EnSpeakButton text={lesson.twister.en} label="Nghe chậm" slow showLabel />
+              <EnSpeakButton text={lesson.twister.en} label="Nghe" showLabel />
+            </div>
+          )}
+        </section>
 
-      <LessonPager
+        <section className="flex flex-col gap-8">
+          <Heading id="luyen-tap" icon={Trophy} kicker="Luyện tập · Practice" title="Luyện tập nhiều dạng" />
+          {allQuestions.map((s, i) => (
+            <div key={s.key} id={`quiz-${s.key}`} className="flex scroll-mt-24 flex-col gap-3">
+              <div className="flex flex-col gap-0.5">
+                <h3 className="text-lg font-extrabold text-ink">
+                  {i + 1}. {s.title}
+                </h3>
+                <p className="text-[13.5px] text-ink-3">{s.desc}</p>
+              </div>
+              <EnQuiz
+                storeKey={`${lesson.id}/${s.key}`}
+                questions={s.qs}
+                finishLesson={i === allQuestions.length - 1 ? { id: lesson.id, phonemeIds } : undefined}
+              />
+            </div>
+          ))}
+        </section>
 
-        label="Chuyển bài"
+        <LessonPager
+          label="Chuyển bài"
+          prev={prev ? { href: `/english/ipa/${prev.id}`, kicker: `Bài ${prev.num}`, title: prev.title } : undefined}
+          next={next ? { href: `/english/ipa/${next.id}`, kicker: `Bài ${next.num}`, title: next.title } : undefined}
+          back={{ href: "/english/ipa", title: "Bảng IPA & mục lục" }}
+          links={[
+            { href: "/english", label: "Về khóa Tiếng Anh" },
+            { href: "/english/ipa/practice", label: "Phòng luyện tập IPA" },
+            { href: "/quiz/english", label: "Trắc nghiệm tiếng Anh khác" },
+            { href: "/review", label: "Ôn tập thẻ đến hạn" },
+          ]}
+        />
+      </div>
 
-        prev={prev ? { href: `/english/ipa/${prev.id}`, kicker: `Bài ${prev.num}`, title: prev.title } : undefined}
-
-        next={next ? { href: `/english/ipa/${next.id}`, kicker: `Bài ${next.num}`, title: next.title } : undefined}
-
-        back={{ href: "/english/ipa", title: "Bảng IPA & mục lục" }}
-
-        links={[
-
-          { href: "/english", label: "Về khóa Tiếng Anh" },
-
-          { href: "/english/ipa/practice", label: "Phòng luyện tập IPA" },
-
-          { href: "/quiz/english", label: "Trắc nghiệm tiếng Anh khác" },
-
-          { href: "/review", label: "Ôn tập thẻ đến hạn" },
-
-        ]}
-
-      />
+      <aside
+        className="sticky top-24 hidden h-fit max-h-[calc(100dvh-7rem)] w-60 shrink-0 overflow-y-auto border-l border-line-strong pl-5 xl:block"
+        aria-label="Mục lục bài"
+      >
+        <LessonToc items={tocItems} />
+      </aside>
     </div>
   );
 }

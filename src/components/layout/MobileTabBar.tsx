@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { BookOpen, ChartNoAxesColumnIncreasing, GraduationCap, Repeat2, Sprout, SquareCheckBig } from "lucide-react";
 import { NAV_ITEMS } from "@/components/layout/Header";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
+import { useHydrated } from "@/hooks/useHydrated";
 
 // Cùng thứ tự với NAV_ITEMS: Khóa học · Học bài · Trắc nghiệm · Ôn tập · Tiến độ · Vùng đất
 const ICONS = [GraduationCap, BookOpen, SquareCheckBig, Repeat2, ChartNoAxesColumnIncreasing, Sprout];
@@ -13,8 +15,10 @@ const ICONS = [GraduationCap, BookOpen, SquareCheckBig, Repeat2, ChartNoAxesColu
 /** Thanh điều hướng dưới đáy — chỉ hiện trên mobile, ẩn ở màn trắc nghiệm và học theo nhóm. */
 export function MobileTabBar() {
   const pathname = usePathname();
-  // Ẩn khi đang làm trắc nghiệm hoặc đang học một nhóm (chế độ tập trung)
-  if (pathname.startsWith("/quiz/play") || /^\/bjt\/[^/]+/.test(pathname)) return null;
+  const hydrated = useHydrated();
+  const { signedIn } = useAuth();
+  // Ẩn khi đang làm trắc nghiệm hoặc đang học một nhóm (chế độ tập trung); khách thấy màn mời đăng nhập nên vẫn giữ
+  if (hydrated && signedIn && (pathname.startsWith("/quiz/play") || /^\/bjt\/[^/]+/.test(pathname))) return null;
 
   return (
     <>

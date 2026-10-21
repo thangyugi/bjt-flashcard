@@ -20,7 +20,7 @@ export default function QuizPage() {
       <PageHeader
         eyebrow="Trắc nghiệm · Bước 1/2"
         title={["Bạn muốn", "kiểm tra khóa nào?"]}
-        lead="Chọn một khóa, trang sau chỉ còn vài dạng trắc nghiệm của khóa đó và một gợi ý nên làm trước. Câu sai được đưa vào ôn tập."
+        lead="Chọn một khóa, trang sau chỉ còn vài dạng trắc nghiệm của khóa đó và một gợi ý nên làm trước."
         actions={
           <Link href="/study" className={btn.ghost}>
             Học bài trước

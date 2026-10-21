@@ -1,5 +1,6 @@
 import type { CSSProperties, ElementType, ReactNode } from "react";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
@@ -33,25 +34,43 @@ export interface Crumb {
   href?: string;
 }
 
-/** Đường dẫn nhỏ phía trên tiêu đề */
-export function Breadcrumbs({ items, className }: { items: Crumb[]; className?: string }) {
+/**
+ * Đường dẫn nhỏ phía trên tiêu đề, luôn ở góc trên bên trái: nút mũi tên quay về cấp trên (mục cuối có liên kết)
+ * rồi cả đường dẫn. Quy tắc chung của app: lối quay lại luôn nằm trên cùng bên trái, phía trên tiêu đề trang.
+ * `children` (tùy chọn) nằm ở mép phải cùng hàng (vd. nút đổi nền bài đọc).
+ */
+export function Breadcrumbs({ items, className, children }: { items: Crumb[]; className?: string; children?: ReactNode }) {
+  const parent = [...items].reverse().find((c) => c.href);
   return (
-    <nav aria-label="Đường dẫn" className={cn("flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3", className)}>
-      {items.map((c, i) => (
-        <span key={`${c.label}-${i}`} className="flex items-center gap-1.5">
-          {i > 0 && <span aria-hidden>›</span>}
-          {c.href ? (
-            <Link href={c.href} className="hover:text-ink">
-              {c.label}
-            </Link>
-          ) : (
-            <span className="text-ink-2" aria-current="page">
-              {c.label}
-            </span>
-          )}
-        </span>
-      ))}
-    </nav>
+    <div className={cn("crumbs flex min-w-0 items-center justify-between gap-3", className)}>
+      <nav aria-label="Đường dẫn" className="flex min-w-0 flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
+        {parent?.href && (
+          <Link
+            href={parent.href}
+            aria-label={`Quay lại: ${parent.label}`}
+            title={`Quay lại: ${parent.label}`}
+            className="crumbs-back mr-1 grid h-7 w-7 shrink-0 place-items-center rounded-md border border-line-strong text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
+          </Link>
+        )}
+        {items.map((c, i) => (
+          <span key={`${c.label}-${i}`} className="flex min-w-0 items-center gap-1.5">
+            {i > 0 && <span aria-hidden>›</span>}
+            {c.href ? (
+              <Link href={c.href} className="hover:text-ink">
+                {c.label}
+              </Link>
+            ) : (
+              <span className="text-ink-2" aria-current="page">
+                {c.label}
+              </span>
+            )}
+          </span>
+        ))}
+      </nav>
+      {children}
+    </div>
   );
 }
 

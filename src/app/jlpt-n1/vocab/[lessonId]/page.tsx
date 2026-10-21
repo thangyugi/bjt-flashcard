@@ -16,6 +16,7 @@ import { itemKey } from "@/lib/learning/keys";
 import { LessonNavigator } from "@/components/jlpt-n1/LessonNavigator";
 import { Breadcrumbs } from "@/components/ui/page";
 import { LessonPager } from "@/components/ui/lesson-pager";
+import { LessonToc, LessonTocCompact } from "@/components/ui/lesson-toc";
 
 export const dynamicParams = false;
 
@@ -65,6 +66,7 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
     { id: "tu-vung", label: `Học từng từ (${raw.words.length})` },
     ...sections.map((s) => ({ id: `quiz-${s.key}`, label: s.title })),
   ];
+  const tocItems = toc.map((t) => ({ id: t.id, text: t.label }));
 
   const navItems = raw.words.map((w, i) => ({
     id: wordAnchor(source.prefix, w.no),
@@ -106,6 +108,8 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
             <AddToReview items={[...new Set(raw.words.map((w) => itemKey.jaWord(w.w, w.r)))]} course="jlpt-n1" className="[&_a]:text-paper" />
           </div>
         </header>
+
+        <LessonTocCompact items={tocItems} className="xl:hidden" />
 
         {/* Danh sách từ */}
         <section className="flex flex-col gap-4">
@@ -203,13 +207,8 @@ export default async function VocabLessonPage({ params }: PageProps<"/jlpt-n1/vo
         />
       </div>
 
-      <aside className="sticky top-24 hidden h-fit w-56 shrink-0 flex-col gap-1 xl:flex" aria-label="Mục lục bài">
-        <span className="mb-1 text-[12px] font-bold tracking-[0.08em] text-ink-3 uppercase">Trong bài này</span>
-        {toc.map((t) => (
-          <a key={t.id} href={`#${t.id}`} className="rounded-lg px-2.5 py-1.5 text-[13.5px] leading-snug text-ink-2 hover:bg-surface-2 hover:text-ink">
-            {t.label}
-          </a>
-        ))}
+      <aside className="sticky top-24 hidden h-fit w-60 shrink-0 flex-col gap-1 border-l border-line-strong pl-5 xl:flex" aria-label="Mục lục bài">
+        <LessonToc items={tocItems} />
         <span className="mt-4 mb-1 text-[12px] font-bold tracking-[0.08em] text-ink-3 uppercase">Từ trong bài</span>
         <div className="flex max-h-[50vh] flex-col overflow-y-auto">
           {raw.words.map((w) => (

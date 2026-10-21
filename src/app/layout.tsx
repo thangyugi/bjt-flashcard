@@ -8,6 +8,7 @@ import { NavProgress } from "@/components/layout/NavProgress";
 import { AppSplash } from "@/components/layout/AppSplash";
 import { ServiceWorkerRegister } from "@/components/layout/Pwa";
 import { LearningRuntime } from "@/components/learning/LearningRuntime";
+import { RequireAuth } from "@/components/account/RequireAuth";
 import { Suspense } from "react";
 
 // Chữ Việt / giao diện
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     template: "%s — LeoEdu",
   },
   description:
-    "LeoEdu: ngữ pháp và từ vựng JLPT N1 kể thành truyện, phát âm tiếng Anh IPA, chứng chỉ OCI AI Foundations và từ vựng tiếng Nhật thương mại BJT — học bằng tiếng Việt, ôn tập FSRS.",
+    "LeoEdu: ngữ pháp và từ vựng JLPT N1 kể thành truyện, phát âm tiếng Anh IPA, chứng chỉ OCI AI Foundations và từ vựng tiếng Nhật thương mại BJT — học bằng tiếng Việt, lịch ôn thông minh.",
   keywords: ["LeoEdu", "JLPT N1", "tiếng Nhật", "IPA", "tiếng Anh", "OCI AI Foundations", "BJT", "flashcard", "FSRS"],
   applicationName: "LeoEdu",
   appleWebApp: { capable: true, title: "LeoEdu", statusBarStyle: "default" },
@@ -85,7 +86,10 @@ export default function RootLayout({
           <LearningRuntime />
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              {/* Mọi trang học cần đăng nhập; trang công khai: xem PUBLIC_PATHS */}
+              <RequireAuth>{children}</RequireAuth>
+            </main>
             <MobileTabBar />
           </div>
         </QueryProvider>

@@ -22,7 +22,7 @@ export default function CoursesPage() {
           </>
         }
         title="Khóa học"
-        lead={`${totals.courses} khóa, ${totals.lessons.toLocaleString("vi-VN")} bài, ${totals.items.toLocaleString("vi-VN")} mục học. Nội dung mở để xem miễn phí; đăng nhập để lưu tiến độ trên mọi thiết bị.`}
+        lead={`${totals.courses} khóa, ${totals.lessons.toLocaleString("vi-VN")} bài, ${totals.items.toLocaleString("vi-VN")} mục học. Tiến độ của bạn được lưu vào tài khoản và đồng bộ trên mọi thiết bị.`}
       />
       <CourseBand catalog={catalog} />
     </div>

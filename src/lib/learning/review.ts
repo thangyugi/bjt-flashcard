@@ -37,5 +37,5 @@ export function formatInterval(ms: number) {
   if (d < 31) return `${d} ngày`;
   const mo = Math.round(d / 30);
   if (mo < 12) return `${mo} tháng`;
-  return `${(d / 365).toFixed(1)} năm`;
+  return `${(d / 365).toFixed(1).replace(".", ",")} năm`;
 }

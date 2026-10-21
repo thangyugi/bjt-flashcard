@@ -30,9 +30,11 @@ export const NAV_ITEMS = [
  */
 export function Header() {
   const pathname = usePathname();
+  const hydrated = useHydrated();
+  const { signedIn } = useAuth();
 
-  // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng
-  const hideOnMobile = /^\/bjt\/[^/]+/.test(pathname) || pathname.startsWith("/quiz/play");
+  // Trên mobile, trang học bài / trắc nghiệm có thanh trên cùng riêng (khách thấy màn mời đăng nhập nên vẫn giữ thanh tiêu đề)
+  const hideOnMobile = hydrated && signedIn && (/^\/bjt\/[^/]+/.test(pathname) || pathname.startsWith("/quiz/play"));
 
   return (
     <header className={cn("sticky top-0 z-50 border-b border-line-strong bg-paper", hideOnMobile && "hidden md:block")}>

@@ -199,7 +199,7 @@ export function QuizCourseChooser({ data }: { data: ChooserData }) {
         <Link href="/review" className="group flex w-full flex-col gap-4 bg-surface-2/60 p-5 transition-colors hover:bg-surface sm:p-6">
           <span className="eyebrow-label">Mọi khóa</span>
           <span className="hx-title text-[clamp(26px,2.2vw,34px)]">Ôn tập tổng hợp</span>
-          <span className="text-[14px] leading-relaxed text-ink-2">Thẻ đến hạn của mọi khóa (từ vựng, ngữ pháp, âm IPA) trộn chung theo lịch FSRS. Không cần chọn khóa.</span>
+          <span className="text-[14px] leading-relaxed text-ink-2">Thẻ đến hạn của mọi khóa (từ vựng, ngữ pháp, âm IPA) trộn chung theo lịch ôn. Không cần chọn khóa.</span>
           <span className="mt-auto flex flex-col gap-3 border-t border-dashed border-line-strong pt-4">
             <span className="flex items-center justify-between gap-3 text-[14.5px] font-semibold text-ink">
               {hydrated && due > 0 ? `Ôn ${due.toLocaleString("vi-VN")} thẻ đến hạn` : "Mở ôn tập"}
