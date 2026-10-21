@@ -9,6 +9,7 @@ import type { LandEngine, LandEvents, LandPrompt, LandSelection, LandTime, LandV
 import { FieldGuide } from "./FieldGuide";
 import { LandScene, type SceneStatus } from "./LandScene";
 import { PlanStrip } from "./PlanStrip";
+import { WorldBar } from "./WorldBar";
 import { HelpLine, Joystick, ModeToggle, PlantingHint, Prompt, SceneTitle, TimeControl, Toast } from "./SceneControls";
 
 /** Trang /land. Cổng đăng nhập chung (RequireAuth trong layout gốc) đã chặn khách nên ở đây luôn là người đã đăng nhập. */
@@ -166,6 +167,7 @@ function LandApp() {
   return (
     <div className="flex flex-col md:h-[calc(100dvh-4rem)]">
       <PlanStrip balance={balance} earned={earned} spent={spent} xpToNext={xpToNext} />
+      <WorldBar current="pha-le" />
       <div className="min-h-0 flex-1 md:grid md:grid-cols-[62fr_38fr] md:grid-rows-[minmax(0,1fr)]">
         <div ref={sceneBox} className="scroll-mt-14 md:min-h-0">
           <LandScene
