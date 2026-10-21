@@ -1,0 +1,660 @@
+/**
+ * Bố cục "Làng Sakura bên sông": sông chảy từ thác trên cao nguyên (góc trên phải) xuống hồ (dưới trái),
+ * ruộng bậc thang tròn, vườn đào/mận/táo, phố machiya, ga trên cầu cạn đá, đền trên đồi, suối nóng Ếch.
+ * Chỉ hàm thuần + canvas: chạy được trong worker vẽ nền.
+ */
+import { canvas, clamp, fbm, hex, lerp, makeRand, maskAt, maskFrom, mixc, polyline, segDist, smooth, vnoise, worldCtx, ctx2d, type P2, type Work } from "../core";
+import type { Quality } from "../types";
+
+export const SAKURA_SEED = 20261020;
+
+export function createSakuraLayout() {
+  const rand = makeRand(SAKURA_SEED);
+  const { R, rng } = rand;
+  const W = 48;
+  const ZR = -1; // đường ray (z)
+  const KN: P2[] = [
+    [-60, 31],
+    [-30, 25.2],
+    [-22, 22.6],
+    [-16, 19.6],
+    [-10, 14.2],
+    [-4, 7.4],
+    [2, 0.6],
+    [8, -6.2],
+    [13, -11.8],
+    [16.5, -16.2],
+    [20, -20.5],
+    [26, -26],
+  ];
+  function rx(z: number) {
+    let i = 0;
+    while (i < KN.length - 2 && z > KN[i + 1][0]) i++;
+    const p0 = KN[Math.max(0, i - 1)],
+      p1 = KN[i],
+      p2 = KN[i + 1],
+      p3 = KN[Math.min(KN.length - 1, i + 2)];
+    const t = clamp((z - p1[0]) / (p2[0] - p1[0]), 0, 1),
+      dt = p2[0] - p1[0];
+    const m1 = ((p2[1] - p0[1]) / (p2[0] - p0[0] || 1)) * dt,
+      m2 = ((p3[1] - p1[1]) / (p3[0] - p1[0] || 1)) * dt;
+    const t2 = t * t,
+      t3 = t2 * t;
+    return (2 * t3 - 3 * t2 + 1) * p1[1] + (t3 - 2 * t2 + t) * m1 + (-2 * t3 + 3 * t2) * p2[1] + (t3 - t2) * m2;
+  }
+  const rxd = (z: number) => (rx(z + 0.05) - rx(z - 0.05)) / 0.1;
+  const LK = { x: -23, z: 20.5, a: 8.6, b: 6.2 };
+  const lakeE = (x: number, z: number) => Math.sqrt(((x - LK.x) / LK.a) ** 2 + ((z - LK.z) / LK.b) ** 2) + 0.05 * (vnoise(x * 0.35, z * 0.35, 77) - 0.5);
+  const zc = (x: number) => -14.6 + 1.1 * Math.sin(x * 0.31) + 0.5 * Math.sin(x * 0.77 + 1) - 32 * (1 - smooth(5, 16.5, x));
+  const isHigh = (x: number, z: number) => z < zc(x);
+  let ZF = -15;
+  for (let i = 0; i < 12; i++) ZF = zc(rx(ZF));
+  const rw = (z: number) => (z < ZF ? 1.2 : 1.7 + 0.55 * smooth(4, 16, z) + 1.0 * Math.exp(-(((z - (ZF + 2.0)) / 1.8) ** 2)));
+  const riverD = (x: number, z: number) => Math.abs(x - rx(z)) / Math.sqrt(1 + rxd(z) ** 2);
+  const TC = { x: -28, z: -17.5, a: 15.5, b: 11.5 },
+    TL = 6.5;
+  function terr(x: number, z: number) {
+    const f = 1 - Math.sqrt(((x - TC.x) / TC.a) ** 2 + ((z - TC.z) / TC.b) ** 2) + 0.06 * (fbm(x * 0.13, z * 0.13, 2, 41) - 0.5);
+    if (f <= 0) return { f, lvl: -1, fr: 0, h: 0.0 };
+    const q = f * TL,
+      lvl = Math.min(6, Math.floor(q)),
+      fr = q - lvl;
+    const h = 0.95 * (lvl + (lvl < 6 ? smooth(0.82, 0.97, fr) : 0)) + 0.1 * smooth(0, 0.05, f);
+    return { f, lvl, fr, h };
+  }
+  const paddyAt = (x: number, z: number) => {
+    const t = terr(x, z);
+    return t.lvl >= 0 && t.lvl <= 5 && t.fr < 0.8 && t.f > 0.012;
+  };
+  const SH = { x: 28, z: 17.2, r: 3.4 };
+  const STREAM: P2[] = [
+    [-14.5, -7.5],
+    [-12, -5.6],
+    [-9.2, -3.2],
+    [-7.4, -0.6],
+    [-6.4, 2.2],
+    [-4.9, 4.4],
+    [-3.2, 5.6],
+  ];
+  const streamY = (t: number) => lerp(0.42, -0.1, t);
+  const SPAN0 = -12,
+    SPAN1 = 13.5;
+  const railY = (x: number) => 0.78 + 1.95 * smooth(SPAN0 - 4.5, SPAN0 + 0.2, x) * (1 - smooth(SPAN1 - 0.2, SPAN1 + 4.5, x));
+  function hLow(x: number, z: number) {
+    let h = 0.6 + 0.4 * (fbm(x * 0.11, z * 0.11, 2, 7) - 0.5);
+    const t = terr(x, z);
+    if (t.f > 0) h = 0.55 + t.h;
+    const ds = Math.hypot(x - SH.x, z - SH.z);
+    h += 1.7 * (1 - smooth(SH.r - 0.6, SH.r + 1.8, ds));
+    const band = 1 - smooth(1.3, 3.3, Math.abs(z - ZR)),
+      outSpan = 1 - smooth(SPAN0 - 0.5, SPAN0 + 1, x) * (1 - smooth(SPAN1 - 1, SPAN1 + 0.5, x));
+    if (band > 0 && outSpan > 0) {
+      const ry = railY(x) - 0.28;
+      h = lerp(h, ry, band * outSpan);
+    }
+    const d = riverD(x, z),
+      w = rw(z);
+    h -= 0.3 * (1 - smooth(w + 1, w + 7, d));
+    h = lerp(-0.75, h, smooth(w - 0.5, w + 0.9, d));
+    const e = lakeE(x, z);
+    h = lerp(-0.85, h, smooth(0.9, 1.06, e));
+    const [sd, st] = segDist(x, z, STREAM);
+    if (sd < 1.6) {
+      const wy = streamY(st);
+      h = lerp(Math.min(h, wy - 0.25), h, smooth(0.45, 1.3, sd));
+    }
+    return h;
+  }
+  function hHigh(x: number, z: number) {
+    let h = 5.4 + 0.6 * (fbm(x * 0.12, z * 0.12, 2, 9) - 0.5) + 0.6 * smooth(-18, -34, z);
+    const d = riverD(x, z),
+      w = rw(z);
+    h = lerp(4.5, h, smooth(w - 0.4, w + 0.8, d));
+    return h;
+  }
+  const gy = (x: number, z: number) => (isHigh(x, z) ? hHigh(x, z) : hLow(x, z));
+
+  type Rect = { x0: number; z0: number; x1: number; z1: number };
+  const PLOTS = (
+    [
+      [2.6, 13.8],
+      [7.8, 13.8],
+      [2.6, 18.0],
+      [7.8, 18.0],
+      [16.2, 14.0],
+      [20.2, 14.0],
+    ] as P2[]
+  ).map(([x, z]) => ({ x, z, w: 3.5, d: 3.0 }));
+  const TULIP: Rect = { x0: -7.6, z0: 12.6, x1: -1.6, z1: 18.4 };
+  const RAPE: Rect = { x0: -6.0, z0: 22.2, x1: 6.2, z1: 27.6 };
+  const AZB: Rect = { x0: 13.5, z0: 18.0, x1: 22.0, z1: 21.6 };
+  const inRect = (x: number, z: number, r: Rect, m = 0) => x > r.x0 - m && x < r.x1 + m && z > r.z0 - m && z < r.z1 + m;
+  const inPlot = (x: number, z: number, m = 0) => PLOTS.some((p) => Math.abs(x - p.x) < p.w / 2 + m && Math.abs(z - p.z) < p.d / 2 + m);
+  const PEACH: [number, number, string][] = [];
+  for (const x of [-10.5, -7.5, -4.5, -1.6]) for (const z of [-18.5, -15.3, -12.1, -8.9]) PEACH.push([x + R(-0.25, 0.25), z + R(-0.25, 0.25), x === -10.5 || x === -4.5 ? "plum" : "peach"]);
+  const APPLE: P2[] = [];
+  for (const x of [3.2, 6.2, 9.0]) for (const z of [-15.6, -12.4, -9.2, -6.2]) if (!(x === 9.0 && z < -14)) APPLE.push([x + R(-0.2, 0.2), z + R(-0.2, 0.2)]);
+  const ORCH1: Rect = { x0: -12.3, z0: -20.4, x1: 0.0, z1: -7.2 },
+    ORCH2: Rect = { x0: 1.8, z0: -17.4, x1: 10.4, z1: -4.6 };
+  const STREET = { x0: 10.5, x1: 34.5, z: 9.6, w: 2.5 };
+  const STATION = { x: 24, pz: ZR + 2.0 };
+  const MACHIYA: [number, "cat" | "bunny" | "bear", string][] = [
+    [12.0, "cat", "#2f4f7f"],
+    [15.6, "bunny", "#b8322c"],
+    [19.2, "bear", "#4a7a4a"],
+    [28.8, "cat", "#7a3b5a"],
+    [32.4, "bunny", "#2f4f7f"],
+  ];
+  const TEA = { x: 3.0, z: 6.9 };
+  const FROG = { x: -10.2, z: 24.6 },
+    POOL = { x: -14.0, z: 26.2 };
+  const PICNIC = { x: -21.5, z: 7.2 };
+  const BRIDGE_Z = 10.2;
+
+  const lanePts: P2[] = [];
+  for (let z = -13; z <= 17.5; z += 1.5) {
+    const s = rxd(z),
+      L = Math.sqrt(1 + s * s),
+      o = rw(z) + 2.3;
+    lanePts.push([rx(z) + o / L, z - (o * s) / L]);
+  }
+  const PATHS: { w: number; pts: P2[] }[] = [
+    { w: 1.9, pts: lanePts },
+    { w: 1.7, pts: [lanePts[lanePts.length - 1], [-13.6, 21.0], [-11.4, 22.6]] },
+    { w: 1.7, pts: [[10.8, 9.6], [6.5, 9.4], [3.0, 9.6], [-1.0, 10.6], [-5.0, 12.2]] },
+    { w: 2.0, pts: [[STATION.x, ZR + 3.0], [STATION.x, STREET.z]] },
+    { w: 1.6, pts: [[SH.x, STREET.z], [SH.x, 12.6]] },
+    { w: 1.4, pts: [[7.0, 9.8], [5.2, 12.0], [5.2, 20.4], [1.0, 20.8], [-4.5, 20.6], [-9.0, 21.8], [-10.4, 22.6]] },
+    { w: 1.3, pts: [[18.2, 9.8], [18.2, 12.2], [18.2, 16.0]] },
+    { w: 1.8, pts: [[-46, -4.7], [-30, -4.5], [-16, -4.9], [-8, -4.6], [1.0, -4.4], [6.0, -4.0]] },
+    { w: 1.3, pts: [[-6.0, -4.6], [-6.0, -20.0]] },
+    { w: 1.2, pts: [[1.0, -4.4], [0.9, -17.5]] },
+    { w: 1.3, pts: [[-16, -4.9], [-17.5, -8.0], [-21, -11.5], [-25, -15.0], [-27.5, -17.2]] },
+    { w: 1.5, pts: [[-11.4, 7.6], [-15.5, 6.6], [-19.5, 6.6], [-24, 8.6], [-27, 12.5]] },
+  ];
+
+  // mặt nạ đường đất + phố lát đá
+  const GT = 1024;
+  const pathC = canvas(GT, GT),
+    pctx = worldCtx(pathC, W, true);
+  pctx.fillStyle = "#000";
+  pctx.fillRect(-W, -W, 2 * W, 2 * W);
+  pctx.strokeStyle = "#fff";
+  pctx.fillStyle = "#fff";
+  pctx.lineCap = "round";
+  pctx.lineJoin = "round";
+  for (const p of PATHS) {
+    pctx.lineWidth = p.w;
+    polyline(pctx, p.pts);
+    pctx.stroke();
+  }
+  for (const [x, z, a, b, r] of [
+    [STATION.x, ZR + 3.6, 3.6, 1.6, 0],
+    [TEA.x, 9.6, 3.0, 1.0, 0],
+    [FROG.x - 1.6, FROG.z + 0.9, 3.2, 2.2, 0.3],
+    [PICNIC.x, PICNIC.z, 2.6, 1.8, 0],
+  ]) {
+    pctx.beginPath();
+    pctx.ellipse(x, z, a, b, r, 0, Math.PI * 2);
+    pctx.fill();
+  }
+  const streetC = canvas(GT, GT),
+    sctx = worldCtx(streetC, W, true);
+  sctx.fillStyle = "#000";
+  sctx.fillRect(-W, -W, 2 * W, 2 * W);
+  sctx.fillStyle = "#fff";
+  sctx.fillRect(STREET.x0, STREET.z - STREET.w / 2, STREET.x1 - STREET.x0, STREET.w);
+  sctx.beginPath();
+  sctx.arc(SH.x, SH.z, 2.6, 0, Math.PI * 2);
+  sctx.fill();
+  const pathM = maskFrom(pathC, W, 2),
+    streetM = maskFrom(streetC, W, 1);
+  const onPath = (x: number, z: number) => maskAt(pathM, x, z);
+  const onStreet = (x: number, z: number) => maskAt(streetM, x, z);
+  const nearRail = (_x: number, z: number) => Math.abs(z - ZR) < 2.2;
+  const wet = (x: number, z: number) => {
+    if (isHigh(x, z)) return riverD(x, z) < rw(z) + 0.9;
+    return gy(x, z) < 0.3 && (riverD(x, z) < rw(z) + 2 || lakeE(x, z) < 1.25 || segDist(x, z, STREAM)[0] < 1.3);
+  };
+
+  // cây được lên kế hoạch trước khi vẽ nền (cánh hoa rụng theo cây)
+  const OCC: { x: number; z: number; r: number }[] = [];
+  const occ = (x: number, z: number, r: number) => OCC.push({ x, z, r });
+  const free = (x: number, z: number, r: number) => {
+    for (const o of OCC) if ((x - o.x) ** 2 + (z - o.z) ** 2 < (r + o.r) ** 2) return false;
+    return true;
+  };
+  const TREES: { x: number; z: number; s: number; k: string }[] = [];
+  function okLand(x: number, z: number, r: number) {
+    if (onPath(x, z) > 0.1 || onStreet(x, z) > 0.1) return false;
+    if (!isHigh(x, z) && (riverD(x, z) < rw(z) + 1.5 || lakeE(x, z) < 1.12 || segDist(x, z, STREAM)[0] < 1.4)) return false;
+    if (isHigh(x, z) && riverD(x, z) < rw(z) + 1.2) return false;
+    if (Math.abs(z - zc(x)) < 1.6) return false;
+    if (paddyAt(x, z) || nearRail(x, z) || inPlot(x, z, 1.3) || inRect(x, z, TULIP, 1.8) || inRect(x, z, RAPE, 1.4) || inRect(x, z, AZB, 0.2)) return false;
+    return free(x, z, r);
+  }
+  const tree = (x: number, z: number, s: number, k: string) => {
+    TREES.push({ x, z, s, k });
+    occ(x, z, 0.9 * s);
+  };
+  occ(TEA.x, TEA.z, 3.6);
+  occ(FROG.x, FROG.z, 3.0);
+  occ(POOL.x, POOL.z, 2.0);
+  occ(STATION.x, ZR + 3.4, 3.2);
+  for (const [x] of MACHIYA) occ(x, 6.2, 2.0);
+  occ(SH.x, SH.z, 2.8);
+  occ(SH.x, 12.0, 1.8);
+  occ(PICNIC.x, PICNIC.z, 2.0);
+  occ(12.6, 17.6, 2.0);
+  for (const [x, z, k] of PEACH) tree(x, z, R(0.78, 0.9), k);
+  for (const [x, z] of APPLE) tree(x, z, R(0.78, 0.88), "apple");
+  for (let z = -12.5; z <= 16; z += 3.1) {
+    const s = rxd(z),
+      L = Math.sqrt(1 + s * s);
+    for (const side of [1, -1]) {
+      const o = rw(z) + (side > 0 ? 3.9 : 2.2) + R(-0.2, 0.3),
+        x = rx(z) + (side * o) / L,
+        zz = z - (side * o * s) / L;
+      if (Math.abs(zz - ZR) < 3 || (Math.abs(zz - BRIDGE_Z) < 1.6 && side < 0)) continue;
+      if (okLand(x, zz, 1.0)) tree(x, zz, R(1.0, 1.2), "sakura");
+    }
+  }
+  for (let i = 0; i < 9; i++) {
+    const a = (i / 9) * Math.PI * 2 + 0.35,
+      r = R(4.8, 5.6);
+    const x = SH.x + Math.cos(a) * r,
+      z = SH.z + Math.sin(a) * r;
+    if (Math.sin(a) > -0.2) continue;
+    if (okLand(x, z, 0.8)) tree(x, z, R(1.0, 1.25), "sakura");
+  }
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2,
+      r = R(3.8, 5.2);
+    const x = PICNIC.x + Math.cos(a) * r,
+      z = PICNIC.z + Math.sin(a) * r * 0.8;
+    if (okLand(x, z, 0.9)) tree(x, z, R(1.05, 1.35), "sakura");
+  }
+  for (let i = 0; i < 14; i++) {
+    const a = (i / 14) * Math.PI * 2 + 0.2,
+      e = 1.22;
+    const x = LK.x + Math.cos(a) * LK.a * e,
+      z = LK.z + Math.sin(a) * LK.b * e;
+    if (okLand(x, z, 0.9)) tree(x, z, R(0.95, 1.2), rng() < 0.75 ? "sakura" : "green");
+  }
+  for (const [x, z, k] of [
+    [10.2, 5.4, "sakura"],
+    [22.0, 5.6, "sakura"],
+    [26.5, 5.4, "sakura"],
+    [34.6, 5.0, "green"],
+    [8.6, 7.0, "sakura"],
+    [-0.8, 6.0, "sakura"],
+    [11.5, 13.0, "sakura"],
+    [23.5, 12.4, "maple"],
+    [14.0, 22.5, "green"],
+    [19.0, 23.6, "sakura"],
+    [24.0, 23.5, "green"],
+    [33.5, 19.5, "pine"],
+    [32.5, 13.2, "sakura"],
+    [0.5, 15.8, "sakura"],
+    [10.5, 21.0, "green"],
+    [-2.0, 21.4, "sakura"],
+  ] as [number, number, string][])
+    if (okLand(x, z, 0.8)) tree(x, z, R(0.95, 1.15), k);
+  tree(TC.x + 0.4, TC.z - 0.3, 1.3, "pine");
+  tree(TC.x - 2.0, TC.z + 0.6, 1.0, "sakura");
+  tree(TC.x + 2.2, TC.z + 0.9, 0.9, "sakura");
+  let fillN = 0;
+  for (let i = 0; i < 5000 && fillN < 170; i++) {
+    const x = R(-50, 50),
+      z = R(-46, 36),
+      hi = isHigh(x, z),
+      s = R(0.9, 1.35);
+    const edge = Math.abs(x) > 33 || z < -21 || z > 27.5 || hi;
+    if (!edge && rng() < 0.85) continue;
+    if (!okLand(x, z, 1.1 * s)) continue;
+    let k: string;
+    if (hi) k = rng() < 0.55 ? "pine" : rng() < 0.6 ? "green" : "summer";
+    else if (z < -21) k = rng() < 0.2 ? "sakura" : rng() < 0.55 ? "green" : rng() < 0.6 ? "summer" : "pine";
+    else k = rng() < 0.3 ? "sakura" : rng() < 0.6 ? "green" : "summer";
+    tree(x, z, s, k);
+    fillN++;
+  }
+  for (let i = 0, n = 0; i < 1500 && n < 20; i++) {
+    const x = R(-34, 34),
+      z = R(-20, 26);
+    if (!okLand(x, z, 1.4)) continue;
+    tree(x, z, R(0.9, 1.1), rng() < 0.5 ? "sakura" : "summer");
+    n++;
+  }
+
+  return {
+    W, ZR, KN, rx, rxd, LK, lakeE, zc, isHigh, ZF, rw, riverD, TC, terr, paddyAt, SH, STREAM, streamY, SPAN0, SPAN1, railY,
+    hLow, hHigh, gy, PLOTS, TULIP, RAPE, AZB, inRect, inPlot, ORCH1, ORCH2, STREET, STATION, MACHIYA, TEA, FROG, POOL, PICNIC,
+    BRIDGE_Z, lanePts, PATHS, onPath, onStreet, nearRail, wet, OCC, occ, free, TREES, okLand,
+  };
+}
+export type SakuraLayout = ReturnType<typeof createSakuraLayout>;
+
+/** Nền vẽ tay của làng Sakura (nặng: chạy trong worker nếu được) */
+export async function paintSakuraGround(q: Quality, w: Work) {
+  const L = createSakuraLayout();
+  const { W, isHigh, zc, terr, nearRail, ZR, hHigh, hLow, riverD, rw, lakeE, STREAM, paddyAt, onPath, onStreet, wet, inPlot, inRect, TULIP, RAPE, AZB, TREES, TC, PLOTS, STREET, SH, PATHS, PICNIC } = L;
+  const { R, rng, pick } = makeRand(SAKURA_SEED + 1);
+  const GT = q.groundBase,
+    GT2 = q.ground;
+  const base = canvas(GT, GT),
+    bctx = ctx2d(base);
+  const img = bctx.createImageData(GT, GT),
+    d = img.data;
+  const gDark = hex("#79b54c"),
+    gLight = hex("#a9d86c"),
+    gHi = hex("#d3eb94"),
+    gCool = hex("#5f9e50"),
+    gLip = hex("#5a963c");
+  const hiG = hex("#5f9f4e"),
+    hiG2 = hex("#86bd5a");
+  const dirt = hex("#ead6aa"),
+    dirt2 = hex("#dfc591"),
+    worn = hex("#b58b58");
+  const sand = hex("#dccb9f"),
+    sandWet = hex("#a9a07e");
+  const mirror = hex("#8fcfcf"),
+    mirror2 = hex("#b9e2da"),
+    mirrorSky = hex("#eef6f2"),
+    riser = hex("#4c8a38"),
+    riserDirt = hex("#8a6a40");
+  const pave = hex("#d8cdb6"),
+    ballast = hex("#a39886");
+  for (let j = 0; j < GT; j++) {
+    if ((j & 7) === 0) {
+      w.progress((0.6 * j) / GT);
+      await w.tick();
+    }
+    const z = -W + ((j + 0.5) / GT) * 2 * W;
+    for (let i = 0; i < GT; i++) {
+      const x = -W + ((i + 0.5) / GT) * 2 * W;
+      const n1 = fbm(x * 0.09, z * 0.09, 3, 1),
+        n2 = fbm(x * 0.45 + 11, z * 0.45, 2, 2),
+        n3 = vnoise(x * 1.9, z * 1.9, 3);
+      let c = mixc(gDark, gLight, smooth(0.3, 0.7, n1));
+      c = mixc(c, gHi, smooth(0.58, 0.74, n2) * 0.5);
+      if (n2 < 0.36) c = mixc(c, gCool, (0.36 - n2) * 1.6);
+      const hi = isHigh(x, z);
+      if (hi) {
+        c = mixc(mixc(hiG, hiG2, smooth(0.3, 0.7, n1)), c, 0.25);
+        const dl = zc(x) - z;
+        if (dl < 1.4) c = mixc(c, gLip, (1 - dl / 1.4) * 0.5);
+      } else {
+        const dl = z - zc(x);
+        if (dl < 3) c = mixc(c, [70, 112, 70], (1 - dl / 3) * 0.4);
+        const t = terr(x, z);
+        if (t.f > 0.012 && t.lvl <= 5) {
+          if (t.fr < 0.8) {
+            let m = mixc(mirror, mirror2, smooth(0.3, 0.7, n2));
+            m = mixc(m, mirrorSky, smooth(0.6, 0.8, fbm(x * 0.3, z * 1.2, 2, 13)) * 0.7);
+            m = mixc(m, [120, 188, 120], 0.12 + (0.3 * ((t.lvl * 37) % 3)) / 2);
+            m = mixc(m, [120, 150, 140], (1 - smooth(0.0, 0.08, t.fr)) * 0.35);
+            c = m;
+          } else c = mixc(mixc(riser, riserDirt, smooth(0.86, 0.97, t.fr) * 0.35), c, 0.15);
+        }
+        if (nearRail(x, z) && Math.abs(z - ZR) < 1.25) c = mixc(ballast, [140, 128, 110], n3 * 0.5);
+      }
+      const k = (j * GT + i) * 4;
+      const h = hi ? hHigh(x, z) : hLow(x, z);
+      const shoreBand = hi ? 1 - smooth(4.95, 5.15, h) : 1 - smooth(0.12, 0.32, h);
+      if (shoreBand > 0 && (hi ? riverD(x, z) < rw(z) + 1.2 : riverD(x, z) < rw(z) + 2.2 || lakeE(x, z) < 1.2 || segDist(x, z, STREAM)[0] < 1.4) && !paddyAt(x, z)) {
+        const sc = mixc(sand, sandWet, smooth(0.0, 0.6, 1 - shoreBand) * 0.3 + n3 * 0.4);
+        c = mixc(c, sc, smooth(0.2, 0.6, shoreBand + (n3 - 0.5) * 0.3));
+      }
+      const m = onPath(x, z) + (n3 - 0.5) * 0.24 + (n2 - 0.5) * 0.18;
+      if (m > 0.5) {
+        let dc = mixc(dirt, dirt2, n2);
+        dc = mixc(dc, worn, (1 - smooth(0.5, 0.6, m)) * 0.8);
+        c = dc;
+      } else if (m > 0.4) c = mixc(c, [91, 141, 58], ((m - 0.4) / 0.1) * 0.4);
+      if (onStreet(x, z) > 0.5) c = mixc(pave, [196, 186, 165], n3 * 0.6);
+      d[k] = c[0];
+      d[k + 1] = c[1];
+      d[k + 2] = c[2];
+      d[k + 3] = 255;
+    }
+  }
+  bctx.putImageData(img, 0, 0);
+  const out = canvas(GT2, GT2),
+    ctx = ctx2d(out);
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(base, 0, 0, GT2, GT2);
+  const s = GT2 / (2 * W);
+  ctx.setTransform(s, 0, 0, s, W * s, W * s);
+  const isGrass = (x: number, z: number) =>
+    onPath(x, z) < 0.25 &&
+    onStreet(x, z) < 0.3 &&
+    !wet(x, z) &&
+    Math.abs(z - zc(x)) > 0.5 &&
+    !paddyAt(x, z) &&
+    !(Math.abs(z - ZR) < 1.4) &&
+    !inPlot(x, z, 0.2) &&
+    !inRect(x, z, TULIP, 0.1) &&
+    !inRect(x, z, RAPE, 0.1) &&
+    !inRect(x, z, AZB);
+  for (let i = 0; i < 70000; i++) {
+    if ((i & 4095) === 0) {
+      w.progress(0.6 + (0.15 * i) / 70000);
+      await w.tick();
+    }
+    const x = R(-W, W),
+      z = R(-W, W);
+    if (!isGrass(x, z)) continue;
+    const light = rng() < 0.55;
+    ctx.fillStyle = light ? `rgba(206,236,150,${R(0.12, 0.3)})` : `rgba(62,118,48,${R(0.1, 0.22)})`;
+    ctx.beginPath();
+    ctx.ellipse(x, z, R(0.08, 0.2), R(0.03, 0.07), R(0, Math.PI), 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.lineCap = "round";
+  for (let i = 0; i < 22000; i++) {
+    if ((i & 2047) === 0) {
+      w.progress(0.75 + (0.1 * i) / 22000);
+      await w.tick();
+    }
+    const x = R(-W, W),
+      z = R(-W, W);
+    if (!isGrass(x, z)) continue;
+    const sz = R(0.14, 0.3),
+      brown = rng() < 0.25;
+    ctx.strokeStyle = brown ? `rgba(70,52,30,${R(0.4, 0.65)})` : `rgba(40,82,32,${R(0.5, 0.8)})`;
+    ctx.lineWidth = R(0.035, 0.055);
+    ctx.beginPath();
+    for (let b = -1; b <= 1; b++) {
+      ctx.moveTo(x + b * sz * 0.18, z);
+      ctx.quadraticCurveTo(x + b * sz * 0.35, z - sz * 0.5, x + b * sz * 0.55 + R(-0.03, 0.03), z - sz * (b === 0 ? 1.1 : 0.8));
+    }
+    ctx.stroke();
+  }
+  const petals = ["#fffdf6", "#fffaf0", "#f6b3c4", "#f19db1", "#f7d85e", "#f3c94a", "#c9b6f0", "#b9d7f4"];
+  for (let i = 0; i < 900; i++) {
+    const cx = R(-W, W),
+      cz = R(-W, W);
+    if (!isGrass(cx, cz)) continue;
+    const col = pick(petals),
+      n = 3 + Math.floor(rng() * 6);
+    for (let f = 0; f < n; f++) {
+      const x = cx + R(-0.6, 0.6),
+        z = cz + R(-0.4, 0.4),
+        r = R(0.06, 0.11);
+      ctx.fillStyle = col;
+      ctx.strokeStyle = "rgba(90,60,40,0.5)";
+      ctx.lineWidth = 0.022;
+      ctx.beginPath();
+      ctx.arc(x, z, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
+  await w.tick();
+  for (const t of TREES) {
+    if (!["sakura", "peach", "plum"].includes(t.k)) continue;
+    const col = t.k === "peach" ? ["#f2a0b8", "#ec8aa8", "#f8c4d3"] : t.k === "plum" ? ["#fff4f6", "#fbe0e8", "#ffffff"] : ["#f9cdd9", "#f5b6c8", "#fde4ea", "#ffffff"];
+    const n = Math.floor(160 * t.s);
+    for (let i = 0; i < n; i++) {
+      const a = R(0, 6.283),
+        r = 2.4 * t.s * Math.sqrt(rng()),
+        x = t.x + Math.cos(a) * r + 0.5,
+        z = t.z + Math.sin(a) * r * 0.85 + 0.6;
+      if (wet(x, z) || paddyAt(x, z)) continue;
+      ctx.fillStyle = pick(col);
+      ctx.globalAlpha = R(0.6, 0.95);
+      ctx.beginPath();
+      ctx.ellipse(x, z, R(0.05, 0.09), R(0.03, 0.05), R(0, 3), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  w.progress(0.9);
+  await w.tick();
+  for (let a = 0; a < Math.PI * 2; a += 0.85 + R(0, 0.3)) {
+    ctx.strokeStyle = "rgba(86,136,60,0.9)";
+    ctx.lineWidth = 0.16;
+    ctx.beginPath();
+    let started = false;
+    for (let f = 0.02; f < 0.93; f += 0.02) {
+      const x = TC.x + Math.cos(a) * TC.a * (1 - f),
+        z = TC.z + Math.sin(a) * TC.b * (1 - f);
+      if (!started) {
+        ctx.moveTo(x, z);
+        started = true;
+      } else ctx.lineTo(x, z);
+    }
+    ctx.stroke();
+  }
+  for (let z = TC.z - TC.b - 1; z < TC.z + TC.b + 1; z += 0.42)
+    for (let x = TC.x - TC.a - 1; x < TC.x + TC.a + 1; x += 0.36) {
+      const xx = x + R(-0.03, 0.03),
+        zz = z + R(-0.03, 0.03);
+      if (!paddyAt(xx, zz)) continue;
+      const t = terr(xx, zz);
+      if (t.fr > 0.74) continue;
+      ctx.strokeStyle = `rgba(${t.lvl % 2 ? "52,120,44" : "70,136,50"},0.95)`;
+      ctx.lineWidth = 0.06;
+      ctx.beginPath();
+      ctx.moveTo(xx - 0.06, zz);
+      ctx.lineTo(xx, zz - 0.12);
+      ctx.lineTo(xx + 0.06, zz);
+      ctx.stroke();
+    }
+  for (let i = 0; i < 700; i++) {
+    const x = R(TC.x - TC.a, TC.x + TC.a),
+      z = R(TC.z - TC.b, TC.z + TC.b);
+    if (!paddyAt(x, z)) continue;
+    ctx.strokeStyle = `rgba(255,255,255,${R(0.35, 0.7)})`;
+    ctx.lineWidth = R(0.05, 0.1);
+    ctx.beginPath();
+    ctx.moveTo(x, z);
+    ctx.lineTo(x + R(0.4, 1.1), z + R(-0.04, 0.04));
+    ctx.stroke();
+  }
+  for (const p of PLOTS) {
+    ctx.fillStyle = "#8a5f3e";
+    ctx.fillRect(p.x - p.w / 2, p.z - p.d / 2, p.w, p.d);
+    for (let zz = p.z - p.d / 2 + 0.25; zz < p.z + p.d / 2; zz += 0.36) {
+      ctx.fillStyle = "rgba(160,112,72,0.9)";
+      ctx.fillRect(p.x - p.w / 2 + 0.12, zz - 0.09, p.w - 0.24, 0.16);
+      ctx.strokeStyle = "rgba(60,38,22,0.75)";
+      ctx.lineWidth = 0.05;
+      ctx.beginPath();
+      ctx.moveTo(p.x - p.w / 2 + 0.12, zz + 0.1);
+      ctx.lineTo(p.x + p.w / 2 - 0.12, zz + 0.1);
+      ctx.stroke();
+    }
+    for (let i = 0; i < 60; i++) {
+      ctx.fillStyle = `rgba(${rng() < 0.5 ? "70,45,28" : "190,150,110"},0.5)`;
+      ctx.beginPath();
+      ctx.arc(p.x + R(-p.w / 2, p.w / 2) * 0.95, p.z + R(-p.d / 2, p.d / 2) * 0.95, R(0.02, 0.05), 0, 7);
+      ctx.fill();
+    }
+  }
+  {
+    const r = TULIP,
+      cols = ["#e8414f", "#f6c445", "#f59ab8", "#fdf7ee", "#e8414f", "#b783e0", "#f6c445", "#f59ab8"];
+    ctx.fillStyle = "#7a5638";
+    ctx.fillRect(r.x0, r.z0, r.x1 - r.x0, r.z1 - r.z0);
+    let k = 0;
+    for (let z = r.z0 + 0.35; z < r.z1 - 0.2; z += 0.72, k++) {
+      ctx.fillStyle = "#4f8a3a";
+      ctx.fillRect(r.x0 + 0.15, z - 0.2, r.x1 - r.x0 - 0.3, 0.4);
+      ctx.fillStyle = cols[k % cols.length];
+      for (let x = r.x0 + 0.3; x < r.x1 - 0.2; x += 0.2) {
+        ctx.beginPath();
+        ctx.arc(x + R(-0.04, 0.04), z + R(-0.08, 0.08), 0.1, 0, 7);
+        ctx.fill();
+      }
+    }
+  }
+  {
+    const r = RAPE;
+    ctx.fillStyle = "#6f9a3a";
+    ctx.fillRect(r.x0, r.z0, r.x1 - r.x0, r.z1 - r.z0);
+    for (let i = 0; i < 9000; i++) {
+      ctx.fillStyle = pick(["#f7dc3e", "#f3cf2a", "#fbe96a", "#e9c21f"]);
+      ctx.beginPath();
+      ctx.arc(R(r.x0, r.x1), R(r.z0, r.z1), R(0.05, 0.12), 0, 7);
+      ctx.fill();
+    }
+  }
+  {
+    const r = AZB;
+    ctx.fillStyle = "#7a5638";
+    ctx.fillRect(r.x0, r.z0, r.x1 - r.x0, r.z1 - r.z0);
+  }
+  {
+    const stones = ["#ddd1b8", "#d0c3a6", "#e5dcc6", "#c6b797", "#d8c9aa"];
+    for (let x = STREET.x0 + 0.3; x < STREET.x1; x += 0.62)
+      for (let z = STREET.z - 1.0; z <= STREET.z + 1.01; z += 0.5) {
+        const xx = x + (Math.round((z - STREET.z) / 0.5) % 2 ? 0.31 : 0);
+        ctx.fillStyle = pick(stones);
+        ctx.strokeStyle = "rgba(96,72,50,0.85)";
+        ctx.lineWidth = 0.035;
+        ctx.beginPath();
+        ctx.roundRect(xx - 0.28, z - 0.21, 0.56, 0.42, 0.08);
+        ctx.fill();
+        ctx.stroke();
+      }
+    for (let i = 0; i < 1600; i++) {
+      const a = R(0, 6.28),
+        r = 2.5 * Math.sqrt(rng());
+      ctx.fillStyle = pick(["#f1ece0", "#ddd6c6", "#c9c1b0"]);
+      ctx.beginPath();
+      ctx.arc(SH.x + Math.cos(a) * r, SH.z + Math.sin(a) * r, R(0.03, 0.07), 0, 7);
+      ctx.fill();
+    }
+  }
+  for (const p of PATHS)
+    for (let k = 0; k < p.pts.length - 1; k++) {
+      const [ax, az] = p.pts[k],
+        [bx, bz] = p.pts[k + 1],
+        Ln = Math.hypot(bx - ax, bz - az);
+      for (let t = 0; t < Ln; t += 0.4) {
+        const u = t / Ln,
+          x = lerp(ax, bx, u) + R(-p.w * 0.35, p.w * 0.35),
+          z = lerp(az, bz, u) + R(-p.w * 0.35, p.w * 0.35);
+        ctx.fillStyle = pick(["rgba(190,160,115,0.8)", "rgba(170,140,100,0.7)", "rgba(215,195,160,0.9)"]);
+        ctx.strokeStyle = "rgba(80,58,38,0.55)";
+        ctx.lineWidth = 0.022;
+        ctx.beginPath();
+        ctx.ellipse(x, z, R(0.05, 0.11), R(0.04, 0.08), R(0, 3), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
+  ctx.save();
+  ctx.translate(PICNIC.x, PICNIC.z);
+  ctx.rotate(0.12);
+  ctx.fillStyle = "#c8322f";
+  ctx.fillRect(-1.3, -0.9, 2.6, 1.8);
+  ctx.strokeStyle = "#f4e2c4";
+  ctx.lineWidth = 0.08;
+  ctx.strokeRect(-1.15, -0.75, 2.3, 1.5);
+  ctx.restore();
+  w.progress(1);
+  return out;
+}

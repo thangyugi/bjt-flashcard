@@ -18,6 +18,9 @@ interface LandStore {
   plantings: Planting[];
   /** Tổng Tinh thể đã tiêu (số dư = đã nhận − đã tiêu, xem src/lib/land/economy.ts) */
   spent: number;
+  /** Vùng đất chọn gần nhất ở thanh chuyển vùng (id trong src/components/land/worlds.ts) */
+  lastWorld: string;
+  setLastWorld: (id: string) => void;
   /**
    * Gieo một cây: chỉ nhận khi ô còn trống và đủ Tinh thể (balance = số dư hiện tại).
    * Trả về true nếu đã gieo.
@@ -31,6 +34,8 @@ export const useLandStore = create<LandStore>()(
     (set, get) => ({
       plantings: [],
       spent: 0,
+      lastWorld: "pha-le",
+      setLastWorld: (id) => set({ lastWorld: id }),
       plant: ({ plot, species, cost, balance }, now = new Date()) => {
         const s = get();
         if (cost < 0 || cost > balance || s.plantings.some((x) => x.plot === plot)) return false;
