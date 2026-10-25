@@ -743,12 +743,42 @@
   transform-origin: right;
   transition: transform 0.25s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
+.hp .course > .hit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  outline-offset: -4px;
+}
+.hp .course .resume {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  margin: -4px -2px -4px 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--paper);
+}
+.hp .course .resume:hover,
+.hp .course .resume:focus-visible {
+  border-color: var(--c, var(--ink-3));
+  color: var(--c, var(--ink));
+}
+.hp .course .resume svg {
+  width: 15px;
+  height: 15px;
+}
 .hp .course:hover::after,
-.hp .course:focus-visible::after {
+.hp .course:has(> .hit:focus-visible)::after {
   transform: scaleX(1);
 }
 .hp .course:hover,
-.hp .course:focus-visible {
+.hp .course:has(> .hit:focus-visible) {
   background: var(--surface);
 }
 .hp .ico path,
@@ -763,23 +793,23 @@
     stroke 0.35s ease;
 }
 .hp .course:hover .ico .acc.ft,
-.hp .course:focus-visible .ico .acc.ft {
+.hp .course:has(> .hit:focus-visible) .ico .acc.ft {
   fill: color-mix(in srgb, var(--c) 72%, #fff);
 }
 .hp .course:hover .ico .acc.fl,
-.hp .course:focus-visible .ico .acc.fl {
+.hp .course:has(> .hit:focus-visible) .ico .acc.fl {
   fill: var(--c);
 }
 .hp .course:hover .ico .acc.fr,
-.hp .course:focus-visible .ico .acc.fr {
+.hp .course:has(> .hit:focus-visible) .ico .acc.fr {
   fill: color-mix(in srgb, var(--c) 72%, #000);
 }
 .hp .course:hover .ico .acc,
-.hp .course:focus-visible .ico .acc {
+.hp .course:has(> .hit:focus-visible) .ico .acc {
   stroke: #57524d;
 }
 .hp .course:hover .ico .glyph,
-.hp .course:focus-visible .ico .glyph {
+.hp .course:has(> .hit:focus-visible) .ico .glyph {
   fill: #fff;
 }
 .hp .ico .glyph {

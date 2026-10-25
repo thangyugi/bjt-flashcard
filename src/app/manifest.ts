@@ -23,7 +23,7 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icons/maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
-      { name: "Học bài", url: "/study", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
+      { name: "Khóa học", url: "/courses", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
       { name: "Ôn tập", url: "/review", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
       { name: "Trắc nghiệm", url: "/quiz", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
     ],

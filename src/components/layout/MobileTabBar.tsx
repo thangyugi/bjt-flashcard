@@ -3,14 +3,14 @@
 import Link, { useLinkStatus } from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { BookOpen, ChartNoAxesColumnIncreasing, GraduationCap, Repeat2, Sprout, SquareCheckBig } from "lucide-react";
+import { ChartNoAxesColumnIncreasing, GraduationCap, Repeat2, Sprout, SquareCheckBig } from "lucide-react";
 import { NAV_ITEMS } from "@/components/layout/Header";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useHydrated } from "@/hooks/useHydrated";
 
-// Cùng thứ tự với NAV_ITEMS: Khóa học · Học bài · Trắc nghiệm · Ôn tập · Tiến độ · Vùng đất
-const ICONS = [GraduationCap, BookOpen, SquareCheckBig, Repeat2, ChartNoAxesColumnIncreasing, Sprout];
+// Cùng thứ tự với NAV_ITEMS: Khóa học · Trắc nghiệm · Ôn tập · Tiến độ · Vùng đất
+const ICONS = [GraduationCap, SquareCheckBig, Repeat2, ChartNoAxesColumnIncreasing, Sprout];
 
 /** Thanh điều hướng dưới đáy — chỉ hiện trên mobile, ẩn ở màn trắc nghiệm và học theo nhóm. */
 export function MobileTabBar() {
@@ -26,7 +26,7 @@ export function MobileTabBar() {
       <div className="h-20 md:hidden" aria-hidden />
       <nav
         aria-label="Điều hướng chính"
-        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-6 border-t border-line-strong bg-paper px-1 pt-2 pb-[max(env(safe-area-inset-bottom),14px)] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-line-strong bg-paper px-1 pt-2 pb-[max(env(safe-area-inset-bottom),14px)] md:hidden"
       >
         {NAV_ITEMS.map((item, i) => {
           const Icon = ICONS[i];

@@ -24,7 +24,7 @@ const AREAS: [string, string][] = [
   ["/oracle-oci-ai", "Khóa OCI AI Foundations"],
   ["/bjt", "Từ vựng BJT"],
   ["/courses", "Danh sách khóa học"],
-  ["/study", "Học bài"],
+  ["/portfolio", "Portfolio"],
   ["/quiz", "Trắc nghiệm"],
   ["/review", "Ôn tập"],
   ["/progress", "Tiến độ học tập"],

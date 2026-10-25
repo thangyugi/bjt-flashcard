@@ -46,7 +46,7 @@ export default function ReviewPage() {
                 </a>
               </p>
               <p className="flex flex-wrap gap-x-4 gap-y-1">
-                <Link href="/study" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
+                <Link href="/courses" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
                   Học bài mới
                 </Link>
                 <Link href="/quiz" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">

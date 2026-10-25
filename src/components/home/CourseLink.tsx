@@ -26,7 +26,8 @@ function useContinueHref(id: string): string | undefined {
 
 /**
  * Một cột khóa học: cả cột là liên kết. Phần tĩnh (hình, tên, số liệu) render phía server qua `art`/`body`;
- * khi đã đăng nhập, cột thêm thanh tiến độ thật và "Học tiếp" trỏ tới bài học gần nhất.
+ * cả cột dẫn tới trang danh sách bài của khóa; khi đã đăng nhập, cột thêm thanh tiến độ thật và liên kết nhỏ
+ * "Học tiếp" trỏ tới bài học gần nhất (nếu có).
  */
 export function CourseLink({
   id,
@@ -51,13 +52,13 @@ export function CourseLink({
   const user = viewer === "user";
   const p = user ? courseProgress(lessons, doneKeys, { known: bjtKnown, total: bjtTotal }) : null;
 
+  // Khách: đăng ký trước, xong quay về đúng trang khóa học (mọi nội dung học cần tài khoản)
+  const main = viewer === "guest" ? `/register?next=${encodeURIComponent(href)}` : href;
+
   return (
-    <Link
-      className="col course"
-      // Khách: đăng ký trước, xong quay về đúng khóa học (mọi nội dung học cần tài khoản)
-      href={user ? cont || href : viewer === "guest" ? `/register?next=${encodeURIComponent(href)}` : href}
-      style={{ "--c": color } as CSSProperties}
-    >
+    <div className="col course" style={{ "--c": color } as CSSProperties}>
+      {/* Cả cột bấm được (lớp phủ) → trang danh sách bài của khóa; "Học tiếp" là liên kết nhỏ riêng, nằm trên lớp phủ */}
+      <Link className="hit" href={main} aria-label={`${lessons.title}: ${user ? "xem danh sách bài" : viewer === "guest" ? "đăng ký để học" : "mở khóa học"}`} />
       <div className="art">{art}</div>
       <div className="cbody">
         {body}
@@ -75,10 +76,17 @@ export function CourseLink({
           </div>
         )}
         <div className="go foot">
-          <span>{user ? "Học tiếp" : viewer === "guest" ? "Đăng ký để học" : " "}</span>
-          <ArrowLong />
+          <span>{user ? "Danh sách bài" : viewer === "guest" ? "Đăng ký để học" : "\u00a0"}</span>
+          {user && cont ? (
+            <Link className="resume" href={cont} aria-label={`Học tiếp ${lessons.title}: bài gần nhất`}>
+              Học tiếp
+              <ArrowLong />
+            </Link>
+          ) : (
+            <ArrowLong />
+          )}
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

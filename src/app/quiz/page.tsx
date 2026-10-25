@@ -22,7 +22,7 @@ export default function QuizPage() {
         title={["Bạn muốn", "kiểm tra khóa nào?"]}
         lead="Chọn một khóa, trang sau chỉ còn vài dạng trắc nghiệm của khóa đó và một gợi ý nên làm trước."
         actions={
-          <Link href="/study" className={btn.ghost}>
+          <Link href="/courses" className={btn.ghost}>
             Học bài trước
           </Link>
         }

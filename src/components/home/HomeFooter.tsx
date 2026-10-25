@@ -13,7 +13,7 @@ const COLS: { h: string; links: [string, string][] }[] = [
   {
     h: "Nền tảng",
     links: [
-      ["Học bài", "/study"],
+      ["Khóa học", "/courses"],
       ["Trắc nghiệm", "/quiz"],
       ["Ôn tập", "/review"],
       ["Tiến độ học tập", "/progress"],

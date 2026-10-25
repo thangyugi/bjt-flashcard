@@ -13,15 +13,15 @@ import { HeaderSettings } from "@/components/layout/HeaderSettings";
 import { Gem } from "@/components/home/icons";
 
 const COURSE_PATHS = ["/courses", "/jlpt-n1", "/english", "/oracle-oci-ai", "/bjt"];
+const under = (p: string, base: string) => p === base || p.startsWith(`${base}/`);
 
 /** Điều hướng chính (thanh tiêu đề và thanh dưới đáy trên mobile dùng chung); logo dẫn về trang chủ */
 export const NAV_ITEMS = [
-  { href: "/courses", label: "Khóa học", match: (p: string) => COURSE_PATHS.some((c) => p === c || p.startsWith(`${c}/`)) },
-  { href: "/study", label: "Học bài", match: (p: string) => p === "/study" || p.startsWith("/study/") },
-  { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => p === "/quiz" || p.startsWith("/quiz/") },
-  { href: "/review", label: "Ôn tập", match: (p: string) => p.startsWith("/review") },
-  { href: "/progress", label: "Tiến độ", match: (p: string) => p.startsWith("/progress") },
-  { href: "/land", label: "Vùng đất", match: (p: string) => p.startsWith("/land") },
+  { href: "/courses", label: "Khóa học", match: (p: string) => COURSE_PATHS.some((c) => under(p, c)) },
+  { href: "/quiz", label: "Trắc nghiệm", match: (p: string) => under(p, "/quiz") },
+  { href: "/review", label: "Ôn tập", match: (p: string) => under(p, "/review") },
+  { href: "/progress", label: "Tiến độ", match: (p: string) => under(p, "/progress") },
+  { href: "/land", label: "Vùng đất", match: (p: string) => under(p, "/land") },
 ];
 
 /**
