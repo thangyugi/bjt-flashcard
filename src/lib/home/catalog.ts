@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { ItemIndex } from "@/lib/learning/items";
 import type { CourseLessons } from "@/lib/learning/progress";
+import { BANK as CCAR_BANK } from "@/data/ccar-p/course";
 
 /**
  * Số liệu thật cho trang chủ, đọc lúc build từ public/data/learning-items.json
@@ -16,6 +17,7 @@ export interface HomeCatalog {
   english: { lessons: number; phonemes: number };
   oci: { modules: number; lessons: number; terms: number };
   bjt: { cards: number; topics: number };
+  ccar: { domains: number; lessons: number; questions: number };
 }
 
 let cached: HomeCatalog | null = null;
@@ -55,6 +57,12 @@ export function homeCatalog(): HomeCatalog {
       terms: inCourse("oci-ai", "term"),
     },
     bjt: { cards: Object.keys(idx.aliases).length, topics: lessonsOf("bjt").length },
+    ccar: {
+      // ccar-p.task.3-1 → domain 3
+      domains: new Set(lessonsOf("ccar-p").map((l) => l.slice("ccar-p.task.".length).split("-")[0])).size,
+      lessons: lessonsOf("ccar-p").length,
+      questions: CCAR_BANK.length,
+    },
   };
   return cached;
 }

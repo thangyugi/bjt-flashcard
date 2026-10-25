@@ -6,6 +6,7 @@ import { useHydrated } from "@/hooks/useHydrated";
 import { useN1Store } from "@/store/n1-store";
 import { useEnStore } from "@/store/en-store";
 import { useOciAiStore } from "@/store/oci-ai-store";
+import { useCcarStore } from "@/store/ccar-p-store";
 import { useFlashcardStore } from "@/store/flashcard-store";
 import { cn } from "@/lib/utils";
 import { useDue } from "@/hooks/useDue";
@@ -14,7 +15,7 @@ import type { ChooserData, CourseId } from "@/lib/choosers";
 import { useLastLessons } from "./StudyChooser";
 
 /** Đường dẫn trang trắc nghiệm của từng khóa: /quiz/[slug] */
-export const QUIZ_SLUG: Record<CourseId, string> = { "jlpt-n1": "jlpt-n1", english: "english", "oci-ai": "oci", bjt: "bjt" };
+export const QUIZ_SLUG: Record<CourseId, string> = { "jlpt-n1": "jlpt-n1", english: "english", "oci-ai": "oci", bjt: "bjt", "ccar-p": "ccar-p" };
 
 export interface QuizItem {
   id: string;
@@ -49,6 +50,7 @@ export function useQuizItems(data: ChooserData): { items: QuizItem[]; recommende
   const n1Quiz = useN1Store((s) => s.quiz);
   const enQuiz = useEnStore((s) => s.quiz);
   const ociPractice = useOciAiStore((s) => s.practice);
+  const ccarPractice = useCcarStore((s) => s.practice);
   const reviewIds = useFlashcardStore((s) => s.reviewIds);
   const { labels, first, counts } = data;
 
@@ -142,6 +144,33 @@ export function useQuizItems(data: ChooserData): { items: QuizItem[]; recommende
       primary: { label: data.exams[0]?.title.split("—")[0].trim() ?? "Đề 1", href: `/oracle-oci-ai/exam/${data.exams[0]?.id}` },
       more: data.exams.slice(1).map((e) => ({ label: e.title.split("—")[0].trim(), href: `/oracle-oci-ai/exam/${e.id}` })),
     },
+    {
+      id: "ccar-practice",
+      course: "ccar-p",
+      group: "Luyện tập",
+      title: "Luyện tập CCAR-P",
+      desc: "Theo domain hoặc task statement, bộ đề v2 hay trộn ngẫu nhiên. Đề tiếng Việt kèm bản gốc tiếng Anh, giải thích từng ô.",
+      meta: `${counts.ccarQuestions} câu · 7 domain · bộ v2 ${counts.ccarV2} câu`,
+      result: score(latest(ccarPractice, (k) => !k.startsWith("exam:"))?.[1]),
+      primary: last.ccar
+        ? { label: `Tiếp: ${labels.ccar[last.ccar]}`, href: `/claude-ccar-p/practice/task-${last.ccar}` }
+        : { label: "Chọn bộ để luyện", href: "/claude-ccar-p/practice" },
+      more: [
+        { label: "Bộ đề v2", href: "/claude-ccar-p/practice/v2" },
+        { label: "Trộn ngẫu nhiên 20 câu", href: "/claude-ccar-p/practice/mix?n=20" },
+      ],
+    },
+    {
+      id: "ccar-exam",
+      course: "ccar-p",
+      group: "Thi thử",
+      title: "Thi thử CCAR-P",
+      desc: "63 câu lấy theo tỉ trọng chính thức của 7 domain, 120 phút, chấm theo ngưỡng 72% (theo tệp nguồn) và kết quả theo domain.",
+      meta: data.ccarExams.length ? `${data.ccarExams.length} đề · ${data.ccarExams[0].count} câu · ${data.ccarExams[0].minutes} phút · đạt ${data.ccarExams[0].passPct}%` : "",
+      result: score(latest(ccarPractice, (k) => k.startsWith("exam:"))?.[1]),
+      primary: { label: data.ccarExams[0]?.title ?? "Đề 1", href: `/claude-ccar-p/exam/${data.ccarExams[0]?.id}` },
+      more: data.ccarExams.slice(1).map((e) => ({ label: e.title, href: `/claude-ccar-p/exam/${e.id}` })),
+    },
   ];
 
   const recommended: Record<CourseId, string> = {
@@ -149,6 +178,7 @@ export function useQuizItems(data: ChooserData): { items: QuizItem[]; recommende
     english: "ipa-lesson",
     "oci-ai": "oci-practice",
     bjt: "bjt-vocab",
+    "ccar-p": "ccar-practice",
   };
   return { items, recommended };
 }
@@ -159,7 +189,7 @@ export function QuizCourseChooser({ data }: { data: ChooserData }) {
   const { due } = useDue();
   const hydrated = useHydrated();
   return (
-    <ol className="cells grid-cols-1 md:grid-cols-2 xl:grid-cols-5">
+    <ol className="cells grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
       {data.courses.map((c, i) => {
         const mine = items.filter((q) => q.course === c.id);
         const result = mine.find((q) => q.result)?.result;
@@ -195,7 +225,7 @@ export function QuizCourseChooser({ data }: { data: ChooserData }) {
           </li>
         );
       })}
-      <li className="flex md:col-span-2 xl:col-span-1">
+      <li className="flex">
         <Link href="/review" className="group flex w-full flex-col gap-4 bg-surface-2/60 p-5 transition-colors hover:bg-surface sm:p-6">
           <span className="eyebrow-label">Mọi khóa</span>
           <span className="hx-title text-[clamp(26px,2.2vw,34px)]">Ôn tập tổng hợp</span>

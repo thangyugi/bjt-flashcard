@@ -6,12 +6,13 @@ import { CourseQuiz } from "@/components/choosers/QuizChooser";
 import { AsideNote, Page, PageHeader, WithAside, btn } from "@/components/ui/page";
 
 /** /quiz/[khóa] — bước 2 của "Trắc nghiệm". BJT có trang thiết lập riêng ở /quiz/bjt (thư mục tĩnh, ưu tiên hơn). */
-const SLUGS: Record<string, CourseId> = { "jlpt-n1": "jlpt-n1", english: "english", oci: "oci-ai" };
+const SLUGS: Record<string, CourseId> = { "jlpt-n1": "jlpt-n1", english: "english", oci: "oci-ai", "ccar-p": "ccar-p" };
 
 const LEAD: Record<string, string> = {
   "jlpt-n1": "Trắc nghiệm nằm cuối mỗi chương ngữ pháp và mỗi bài từ vựng. Làm tiếp bài gần nhất, hoặc chọn chương / bài khác.",
   english: "Luyện theo bài để chắc các âm vừa học, rồi vào phòng luyện tập để trộn cả 44 âm ở 3 cấp độ.",
   "oci-ai": "Luyện ngân hàng câu hỏi theo từng bài trước, khi đã vững thì làm đề thi thử có tính giờ như đề thật.",
+  "ccar-p": "Luyện theo domain hoặc task statement (thứ tự học 3 → 4 → 1 → 5 → 6 → 2 → 7), rồi làm đề thi thử 63 câu có đồng hồ như đề thật.",
 };
 
 export const dynamicParams = false;

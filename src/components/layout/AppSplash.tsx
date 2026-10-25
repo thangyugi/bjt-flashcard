@@ -13,8 +13,8 @@ export function AppSplash() {
   const { isFetched } = useVocabularyStats();
   const [removed, setRemoved] = useState(false);
   const pathname = usePathname();
-  // Màn khởi động của LeoEdu (không hiện ở trang OCI AI Foundations, khóa đó có khung riêng)
-  if (removed || pathname.startsWith("/oracle-oci-ai")) return null;
+  // Màn khởi động của LeoEdu (không hiện ở trang OCI AI Foundations và CCAR-P, hai khóa đó có khung riêng)
+  if (removed || pathname.startsWith("/oracle-oci-ai") || pathname.startsWith("/claude-ccar-p")) return null;
 
   return (
     <div

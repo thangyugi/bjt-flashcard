@@ -259,6 +259,22 @@ const ICONS = {
     ]);
     I.line([7, 2.2, 3.8], [12, 2.2, 3.8]);
   },
+  /** CCAR-P: mặt tiền kiến trúc — bệ, ba cột, xà và mái */
+  ccar(I: Api) {
+    I.box(0, 0, 0, 11, 0.8, 8);
+    for (const x of [1.2, 4.7, 8.2]) I.box(x, 0.8, 3, 1.6, 6, 1.6, { noHid: true });
+    I.box(0.4, 6.8, 2.4, 10.2, 1, 2.8, { acc: "tlr", noHid: true });
+    I.poly(
+      [
+        [0.4, 7.8, 5.2],
+        [10.6, 7.8, 5.2],
+        [5.5, 10.4, 5.2],
+      ],
+      { close: true, fill: PAPER }
+    );
+    I.line([5.5, 10.4, 5.2], [5.5, 10.4, 2.4]);
+    I.line([5.5, 10.4, 2.4], [10.6, 7.8, 2.4], { hid: true });
+  },
   soon(I: Api) {
     I.box(0, 0, 0, 9, 0.6, 9);
     I.box(0.5, 0.6, 0.5, 8, 8, 8, { wire: true });

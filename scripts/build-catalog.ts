@@ -16,6 +16,7 @@ import { VOCAB_SOURCES, wordAnchor } from "../src/data/jlpt-n1/vocab";
 import { IPA_LESSONS } from "../src/data/english/ipa";
 import { MODULES as OCI_MODULES } from "../src/data/oci-ai/course";
 import { GLOSSARY } from "../src/data/oci-ai/glossary";
+import { DOMAINS as CCAR_DOMAINS } from "../src/data/ccar-p/course";
 import { itemKey, lessonKey, type CourseKey } from "../src/lib/learning/keys";
 import { toSpeech } from "../src/lib/audio-key";
 
@@ -26,7 +27,7 @@ const PUSH = process.argv.includes("--push");
 type ItemType = "word" | "grammar_pattern" | "phoneme" | "term";
 interface Item {
   key: string;
-  subject: "ja" | "en" | "oci";
+  subject: "ja" | "en" | "oci" | "ai";
   type: ItemType;
   headword: string;
   attributes: Record<string, unknown>;
@@ -39,7 +40,7 @@ interface Item {
 interface Course {
   key: CourseKey;
   slug: string;
-  subject: "ja" | "en" | "oci";
+  subject: "ja" | "en" | "oci" | "ai";
   title: string;
   summary: string;
   framework?: string;
@@ -72,6 +73,7 @@ const courses: Course[] = [
   { key: "english", slug: "english", subject: "en", title: "Tiếng Anh", summary: "Phát âm IPA", framework: "CEFR", position: 2 },
   { key: "oci-ai", slug: "oracle-oci-ai", subject: "oci", title: "OCI AI Foundations", summary: "Chứng chỉ 1Z0-1122", framework: "OCI", position: 3 },
   { key: "bjt", slug: "bjt", subject: "ja", title: "Từ vựng BJT", summary: "Từ vựng tiếng Nhật thương mại", framework: "BJT", position: 4 },
+  { key: "ccar-p", slug: "claude-ccar-p", subject: "ai", title: "Claude Certified Architect – Professional", summary: "Chứng chỉ CCAR-P", framework: "Anthropic", level: "Professional", position: 5 },
 ];
 const modules: Module[] = [];
 const lessons: Lesson[] = [];
@@ -241,6 +243,25 @@ lessons.push({
   items: termKeys,
 });
 
+// ── Claude Certified Architect – Professional (CCAR-P): 7 domain · 38 task statement ──
+for (const d of CCAR_DOMAINS) {
+  modules.push({ key: `ccar-p.d${d.num}`, course: "ccar-p", title: `Domain ${d.num}: ${d.title}`, position: d.num });
+  d.tasks.forEach((t, i) =>
+    lessons.push({
+      key: lessonKey.ccar(t.id),
+      slug: t.id,
+      course: "ccar-p",
+      module: `ccar-p.d${d.num}`,
+      type: "concept",
+      title: `${t.code} ${t.title}`,
+      href: `/claude-ccar-p/${t.id}`,
+      version: hash(t),
+      position: d.num * 100 + i,
+      items: [],
+    })
+  );
+}
+
 // ── BJT: flashcard theo chủ đề ──
 interface BjtGroup {
   id: string;
@@ -319,6 +340,8 @@ const clean = (o: Record<string, unknown>) => Object.fromEntries(Object.entries(
 const sql: string[] = [
   "-- Sinh tự động bởi scripts/build-catalog.ts — KHÔNG sửa tay. Chạy lại an toàn (upsert theo mã).",
   "begin;",
+  // Môn "ai" (khóa CCAR-P) — có thể chưa có trong migration gốc
+  `insert into catalog.subjects (key, name, target_locale) values ('ai', '{"vi":"AI & Claude","en":"AI & Claude"}', null) on conflict (key) do nothing;`,
 ];
 for (const c of courses) {
   sql.push(`insert into catalog.courses (key, slug, subject_id, title, summary, level_framework, level, position, published_at)
