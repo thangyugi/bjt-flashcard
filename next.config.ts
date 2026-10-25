@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
   // Đường dẫn cũ (lịch sử, dấu trang, liên kết đã chia sẻ) vẫn dùng được sau khi tách Học bài / Trắc nghiệm theo khóa
   async redirects() {
     return [
+      // "Học bài" đã gộp vào "Khóa học": mỗi khóa có trang danh sách bài riêng
+      { source: "/study", destination: "/courses", permanent: true },
       // Nhóm flashcard BJT: /study/<nhóm> → /bjt/<nhóm>
       { source: "/study/:groupId", destination: "/bjt/:groupId", permanent: true },
       // Thiết lập trắc nghiệm BJT cũ: /quiz?groupId=… hoặc /quiz?scope=… → /quiz/bjt (giữ nguyên tham số)

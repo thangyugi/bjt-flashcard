@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { ChartNoAxesColumnIncreasing, CircleUserRound, LogOut, Settings, UserRound } from "lucide-react";
+import { BriefcaseBusiness, ChartNoAxesColumnIncreasing, CircleUserRound, LogOut, UserRound } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useHydrated } from "@/hooks/useHydrated";
 import { signOutAndClear } from "@/lib/learning/sync";
@@ -103,6 +103,8 @@ function AccountMenu({ email, name }: { email: string; name: string }) {
         title={`Tài khoản: ${display}`}
         className={cn(
           "flex h-9 w-9 items-center justify-center rounded-full border border-line-strong bg-surface-2 text-[13.5px] font-bold text-ink-2 uppercase transition-colors hover:border-ink-3 hover:text-ink",
+          // Trang của tài khoản (Portfolio, Tài khoản) không thuộc mục điều hướng nào → nút tài khoản là mục đang chọn
+          !open && /^\/(portfolio|account)(\/|$)/.test(pathname) && "border-brand text-brand",
           open && "border-ink bg-ink text-paper hover:text-paper"
         )}
       >
@@ -142,8 +144,8 @@ function AccountMenu({ email, name }: { email: string; name: string }) {
             <Link role="menuitem" href="/account" className={item}>
               <UserRound className="h-[18px] w-[18px]" aria-hidden /> Xem tài khoản
             </Link>
-            <Link role="menuitem" href="/account#thiet-lap" className={item}>
-              <Settings className="h-[18px] w-[18px]" aria-hidden /> Thiết lập
+            <Link role="menuitem" href="/portfolio" aria-current={pathname === "/portfolio" ? "page" : undefined} className={item}>
+              <BriefcaseBusiness className="h-[18px] w-[18px]" aria-hidden /> Portfolio
             </Link>
             <Link role="menuitem" href="/progress" className={item}>
               <ChartNoAxesColumnIncreasing className="h-[18px] w-[18px]" aria-hidden /> Tiến độ

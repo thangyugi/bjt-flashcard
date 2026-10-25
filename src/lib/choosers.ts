@@ -9,7 +9,7 @@ import { homeCatalog } from "@/lib/home/catalog";
 import type { CourseLessons } from "@/lib/learning/progress";
 
 /**
- * Dữ liệu tĩnh (đọc lúc build) cho hai trang chọn: /study (Học bài) và /quiz (Trắc nghiệm).
+ * Dữ liệu tĩnh (đọc lúc build) cho trang chọn /quiz (Trắc nghiệm) và gợi ý học tiếp.
  * Phần phụ thuộc người học (bài gần nhất, điểm, tiến độ) được ghép phía client từ các store.
  */
 export type CourseId = "jlpt-n1" | "english" | "oci-ai" | "bjt";

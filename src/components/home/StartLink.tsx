@@ -11,7 +11,7 @@ import { useViewer } from "./viewer";
 export function StartLink({ className, children }: { className?: string; children: ReactNode }) {
   const user = useViewer() === "user";
   return (
-    <Link className={className} href={user ? "#khoahoc" : `/register?next=${encodeURIComponent("/study")}`}>
+    <Link className={className} href={user ? "#khoahoc" : `/register?next=${encodeURIComponent("/courses")}`}>
       {children}
     </Link>
   );
