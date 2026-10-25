@@ -13,6 +13,7 @@ import { useFlashcardStore } from "@/store/flashcard-store";
 import { useSrsStore, stateFromName, stateName, type CardKind, type StoredCard } from "@/store/srs-store";
 import { useActivityStore } from "@/store/activity-store";
 import { useLandStore } from "@/store/land-store";
+import { flushPortfolio, usePortfolioStore } from "@/lib/portfolio/store";
 import { useTtsStore } from "@/store/tts-store";
 import { assessmentKey, lessonKey, n1LessonKey } from "./keys";
 import { uuidFrom, useOutbox, type LearningEvent } from "./events";
@@ -280,6 +281,7 @@ async function mergePull(d: PullResult) {
  */
 export async function signOutAndClear() {
   await syncNow().catch(() => {});
+  await flushPortfolio().catch(() => {});
   const sb = supabase();
   await withoutTracking(() => {
     useN1Store.getState().reset();
@@ -291,6 +293,8 @@ export async function signOutAndClear() {
     useActivityStore.setState({ days: {}, active: {} });
     // Vùng đất (cây đã gieo, Tinh thể đã tiêu) cũng là dữ liệu của người vừa đăng xuất
     useLandStore.getState().reset();
+    // Portfolio (bản lưu trên máy) của người vừa đăng xuất
+    usePortfolioStore.getState().reset();
     useOutbox.setState({ events: [], pulledAt: {}, imported: [], lastSyncAt: null, lastError: null });
   });
   await sb?.auth.signOut();
