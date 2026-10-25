@@ -435,7 +435,7 @@ function PracticeMode(props: RunnerProps & { qs: BankQuestion[]; onRestart: (ids
         {wrong.length > 0 && (
           <>
             <h2 className="oci-pr-h2">Xem lại các câu sai</h2>
-            <div style={{ display: "grid", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: 14 }}>
               {wrong.map((x) => (
                 <QuestionCard key={x.id} q={x} index={qs.indexOf(x)} total={qs.length} lang={lang} resp={resp[x.id]} reveal />
               ))}
@@ -636,7 +636,7 @@ function ExamMode(props: RunnerProps & { qs: BankQuestion[]; onRestart: () => vo
           <LangToggle lang={lang} setLang={setLang} />
         </div>
         <h2 className="oci-pr-h2">Xem lại toàn bộ đề</h2>
-        <div style={{ display: "grid", gap: 14 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: 14 }}>
           {qs.map((x, i) => (
             <QuestionCard key={x.id} q={x} index={i} total={qs.length} lang={lang} resp={resp[x.id]} reveal />
           ))}

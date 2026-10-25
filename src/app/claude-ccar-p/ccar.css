@@ -41,7 +41,7 @@
 @media (max-width: 640px) { .ccar-order a { flex: 1 1 40%; } .ccar-order .arr { display: none; } }
 
 /* Thẻ domain + danh sách task statement */
-.ccar-domains { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.ccar-domains { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 @media (min-width: 900px) { .ccar-domains { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .ccar-domain { display: grid; gap: 10px; padding: 18px 20px; border-radius: 18px; background: var(--o-surface); border: 1px solid var(--o-line); min-width: 0; }
 .ccar-domain .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
@@ -132,3 +132,7 @@
 .oci-prose .ccar-supp-item > h3 { margin: 6px 0 0.5em; }
 .oci-prose .ccar-supp-layer { display: inline-block; font-size: 12px; font-weight: 750; letter-spacing: 0.02em; color: var(--o-accent-hover); }
 .oci-prose .ccar-ref + .ccar-ref { margin-top: 2em; }
+@media (pointer: coarse) {
+  .ccar-domain .foot a, .ccar-authored-card > .top { display: inline-flex; align-items: center; min-height: 40px; }
+  .ccar-domain li a { padding-top: 10px; padding-bottom: 10px; }
+}
