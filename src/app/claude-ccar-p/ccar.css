@@ -1,0 +1,99 @@
+/* ══════════════════════════════════════════════════════════
+   Claude Certified Architect – Professional — /claude-ccar-p
+   Dựa trên giao diện .oci-* (oci.css), chỉ đổi màu nhấn sang tím
+   và thêm phần riêng: thứ tự học, câu hỏi bảng, lời giải.
+══════════════════════════════════════════════════════════ */
+
+.oci-root.ccar-root {
+  --o-accent: #6d28d9;
+  --o-accent-hover: #5b21b6;
+  --o-accent-soft: #f1ebfd;
+  --o-accent-ink: #ffffff;
+}
+
+/* Thứ tự học 3 → 4 → 1 → … */
+.ccar-order { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.ccar-order a {
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+  padding: 10px 12px; border-radius: 12px; background: var(--o-surface); border: 1px solid var(--o-line);
+  transition: border-color 0.15s;
+}
+.ccar-order a:hover { border-color: color-mix(in srgb, var(--o-accent) 45%, var(--o-line)); }
+.ccar-order .n { font-size: 12px; font-weight: 750; color: var(--o-accent); letter-spacing: 0.04em; }
+.ccar-order .t { font-size: 13.5px; font-weight: 650; line-height: 1.3; }
+.ccar-order .w { font-size: 12px; color: var(--o-text-3); font-variant-numeric: tabular-nums; }
+.ccar-order .arr { align-self: center; color: var(--o-text-3); font-size: 14px; }
+@media (max-width: 640px) { .ccar-order a { flex: 1 1 40%; } .ccar-order .arr { display: none; } }
+
+/* Thẻ domain + danh sách task statement */
+.ccar-domains { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 900px) { .ccar-domains { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ccar-domain { display: grid; gap: 10px; padding: 18px 20px; border-radius: 18px; background: var(--o-surface); border: 1px solid var(--o-line); min-width: 0; }
+.ccar-domain .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.ccar-domain .mn { font-size: 12px; font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; color: var(--o-accent); }
+.ccar-domain .wt { font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ccar-domain h3 { margin: 0; font-size: 18px; font-weight: 750; line-height: 1.3; letter-spacing: -0.01em; }
+.ccar-domain .tp { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--o-text-2); }
+.ccar-domain .intro { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--o-text-3); }
+.ccar-domain ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 2px; }
+.ccar-domain li a { display: flex; gap: 10px; align-items: baseline; padding: 6px 8px; margin: 0 -8px; border-radius: 8px; font-size: 14px; line-height: 1.4; }
+.ccar-domain li a:hover { background: var(--o-surface-2); }
+.ccar-domain li .c { flex: none; min-width: 26px; font-size: 12.5px; font-weight: 700; color: var(--o-accent); font-variant-numeric: tabular-nums; }
+.ccar-domain li .t { flex: 1; min-width: 0; }
+.ccar-domain li .st { flex: none; width: 15px; height: 15px; color: var(--o-text-3); align-self: center; }
+.ccar-domain li a.done .st { color: var(--o-good); }
+.ccar-domain .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--o-text-3); }
+.ccar-domain .foot a { font-weight: 650; color: var(--o-accent); }
+.ccar-wbar { height: 6px; border-radius: 99px; background: var(--o-surface-3); overflow: hidden; }
+.ccar-wbar > i { display: block; height: 100%; border-radius: inherit; background: var(--o-accent); }
+
+/* Khối bài đọc dài trên trang chủ khóa (đăng ký thi, số liệu) */
+.ccar-guide { padding: 6px 0 0; }
+.ccar-guide details { border-top: 1px solid var(--o-line-strong); padding: 6px 0; }
+.ccar-guide summary { cursor: pointer; padding: 12px 2px; font-size: 18px; font-weight: 750; letter-spacing: -0.01em; list-style-position: outside; }
+.ccar-guide summary span { font-size: 13px; font-weight: 500; color: var(--o-text-3); margin-left: 8px; }
+
+/* Ngôn ngữ đề */
+.ccar-lang { display: inline-flex; padding: 3px; gap: 2px; border-radius: 10px; background: var(--o-surface-2); border: 1px solid var(--o-line); }
+.ccar-lang button { height: 28px; padding: 0 10px; border: 0; border-radius: 7px; background: transparent; font-size: 12.5px; font-weight: 700; color: var(--o-text-3); }
+.ccar-lang button[aria-pressed="true"] { background: var(--o-surface); color: var(--o-text); box-shadow: var(--o-shadow-sm); }
+
+.ccar-need { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 12px; padding: 4px 10px; border-radius: 99px; background: var(--o-accent-soft); color: var(--o-accent); font-size: 12.5px; font-weight: 750; }
+.ccar-tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 99px; background: var(--o-surface-2); font-size: 11.5px; font-weight: 650; color: var(--o-text-3); }
+.oci-q-text.ccar-stem { white-space: pre-line; }
+.oci-opt.ccar-check .oci-opt-key { border-radius: 6px; }
+
+/* Câu hỏi dạng bảng (Yes/No từng dòng, chọn trong danh sách) */
+.ccar-grid { display: grid; gap: 8px; }
+.ccar-row { display: grid; gap: 10px; padding: 12px 14px; border-radius: 12px; background: var(--o-surface); border: 1px solid var(--o-line-strong); }
+@media (min-width: 720px) { .ccar-row { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+.ccar-row .txt { font-size: 14.5px; line-height: 1.55; }
+.ccar-row .txt b { color: var(--o-text-3); font-weight: 700; margin-right: 6px; }
+.ccar-row .pick { display: flex; flex-wrap: wrap; gap: 6px; }
+.ccar-row .pick button { height: 34px; padding: 0 14px; border-radius: 9px; border: 1px solid var(--o-line-strong); background: var(--o-surface); font-size: 13.5px; font-weight: 650; }
+.ccar-row .pick button[aria-pressed="true"] { border-color: var(--o-accent); background: var(--o-accent-soft); color: var(--o-accent); }
+.ccar-row .pick button:disabled { cursor: default; }
+.ccar-row select { height: 36px; max-width: 100%; padding: 0 10px; border-radius: 9px; border: 1px solid var(--o-line-strong); background: var(--o-surface); color: var(--o-text); font: inherit; font-size: 13.5px; }
+.ccar-row.ok { border-color: color-mix(in srgb, var(--o-good) 55%, transparent); background: var(--o-good-soft); }
+.ccar-row.bad { border-color: color-mix(in srgb, var(--o-bad) 55%, transparent); background: var(--o-bad-soft); }
+.ccar-row .why { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.6; color: var(--o-text-2); }
+.ccar-row .why b { color: var(--o-text); }
+
+/* Kết quả + lời giải */
+.ccar-verdict { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 14px; border-radius: 12px; font-weight: 750; font-size: 15px; }
+.ccar-verdict svg { width: 18px; height: 18px; flex: none; }
+.ccar-verdict.ok { background: var(--o-good-soft); color: var(--o-good); }
+.ccar-verdict.bad { background: var(--o-bad-soft); color: var(--o-bad); }
+.ccar-verdict span { font-weight: 500; color: var(--o-text-2); font-size: 14px; }
+.ccar-explain { display: grid; gap: 12px; margin-top: 12px; padding: 16px 18px; border-radius: 14px; background: var(--o-surface); border: 1px solid var(--o-line); font-size: 14.5px; line-height: 1.65; }
+.ccar-explain h4 { margin: 0 0 4px; font-size: 14.5px; font-weight: 750; }
+.ccar-explain p { margin: 0; }
+.ccar-explain ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ccar-explain li { display: flex; gap: 8px; }
+.ccar-explain li .k { flex: none; width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: var(--o-bad-soft); color: var(--o-bad); font-size: 12px; font-weight: 800; margin-top: 1px; }
+.ccar-explain code, .ccar-row code, .oci-opt-text code { font-family: var(--o-mono); font-size: 0.9em; padding: 1px 5px; border-radius: 5px; background: var(--o-surface-2); }
+.ccar-explain .remember { padding: 12px 14px; border-radius: 12px; background: var(--o-accent-soft); }
+.ccar-notice { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 12.5px; line-height: 1.5; color: var(--o-text-3); padding-top: 10px; border-top: 1px dashed var(--o-line-strong); }
+.ccar-conf { padding: 1px 8px; border-radius: 99px; font-weight: 700; background: var(--o-amber-soft); color: var(--o-amber); }
+.ccar-conf.low { background: var(--o-bad-soft); color: var(--o-bad); }
+@media (min-width: 820px) { .ccar-span2 { grid-column: span 2; } }
