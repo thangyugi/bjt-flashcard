@@ -10,12 +10,13 @@ import { useSrsStore, State } from "@/store/srs-store";
 import { useN1Store } from "@/store/n1-store";
 import { useEnStore } from "@/store/en-store";
 import { useOciAiStore } from "@/store/oci-ai-store";
+import { useCcarStore } from "@/store/ccar-p-store";
 import { useLearningProgress } from "@/hooks/useLearningProgress";
 import { courseProgress } from "@/lib/learning/progress";
 import { COURSE_LABEL, loadItemIndex, type ItemIndex } from "@/lib/learning/items";
 import { cn } from "@/lib/utils";
 
-const COURSE_HREF: Record<string, string> = { "jlpt-n1": "/jlpt-n1", english: "/english", "oci-ai": "/oracle-oci-ai", bjt: "/bjt" };
+const COURSE_HREF: Record<string, string> = { "jlpt-n1": "/jlpt-n1", english: "/english", "oci-ai": "/oracle-oci-ai", "ccar-p": "/claude-ccar-p", bjt: "/bjt" };
 const WEEKDAYS = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
 
 const dayOffset = (n: number) => {
@@ -35,6 +36,7 @@ export function ProgressDashboard() {
   const n1 = useN1Store();
   const en = useEnStore();
   const oci = useOciAiStore();
+  const ccarPractice = useCcarStore((s) => s.practice);
   const [idx, setIdx] = useState<ItemIndex | null>(null);
   useEffect(() => {
     loadItemIndex().then(setIdx, () => {});
@@ -70,6 +72,7 @@ export function ProgressDashboard() {
     ...Object.entries(en.quiz).map(([k, q]) => ({ course: "english", k, score: q.last, total: q.total, at: q.at })),
     ...Object.entries(oci.quiz).map(([k, q]) => ({ course: "oci-ai", k, score: q.score, total: q.total, at: q.at })),
     ...Object.entries(oci.practice ?? {}).map(([k, q]) => ({ course: "oci-ai", k, score: q.last, total: q.total, at: q.at })),
+    ...Object.entries(ccarPractice ?? {}).map(([k, q]) => ({ course: "ccar-p", k, score: q.last, total: q.total, at: q.at })),
   ]
     .sort((a, b) => b.at.localeCompare(a.at))
     .slice(0, 6);

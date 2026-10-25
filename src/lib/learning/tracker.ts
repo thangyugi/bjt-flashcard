@@ -6,6 +6,7 @@
 import { useEnStore } from "@/store/en-store";
 import { useN1Store } from "@/store/n1-store";
 import { useOciAiStore } from "@/store/oci-ai-store";
+import { useCcarStore } from "@/store/ccar-p-store";
 import { useFlashcardStore } from "@/store/flashcard-store";
 import { useSrsStore, type StoredCard } from "@/store/srs-store";
 import { State } from "ts-fsrs";
@@ -28,6 +29,12 @@ const ociPractice = (k: string) => ({
   assessment: assessmentKey.ociPractice(k),
   lesson: k.startsWith("lesson:") ? lessonKey.oci(k.slice(7)) : undefined,
   course: "oci-ai",
+});
+
+const ccarPractice = (k: string) => ({
+  assessment: assessmentKey.ccarPractice(k),
+  lesson: k.startsWith("task:") ? lessonKey.ccar(k.slice(5)) : undefined,
+  course: "ccar-p",
 });
 
 function diffDone(prev: Record<string, string>, next: Record<string, string>, key: (id: string) => string, course: string) {
@@ -85,6 +92,7 @@ const LEARNING_PATHS: [RegExp, string | null][] = [
   [/^\/jlpt-n1/, "jlpt-n1"],
   [/^\/english/, "english"],
   [/^\/oracle-oci-ai/, "oci-ai"],
+  [/^\/claude-ccar-p/, "ccar-p"],
   [/^\/(bjt|quiz\/(bjt|play))/, "bjt"],
   [/^\/review/, null],
 ];
@@ -174,6 +182,16 @@ export function startTracker(): () => void {
         diffQuiz(p.quiz, n.quiz, ociQuiz);
         diffQuiz(p.practice, n.practice, ociPractice);
         if (n.lastLessonId && n.lastLessonId !== p.lastLessonId) track("lesson.opened", lessonKey.oci(n.lastLessonId), { course: "oci-ai" });
+      })
+    );
+  });
+
+  whenHydrated(useCcarStore, () => {
+    stops.push(
+      useCcarStore.subscribe((n, p) => {
+        diffDone(p.done, n.done, lessonKey.ccar, "ccar-p");
+        diffQuiz(p.practice, n.practice, ccarPractice);
+        if (n.lastLessonId && n.lastLessonId !== p.lastLessonId) track("lesson.opened", lessonKey.ccar(n.lastLessonId), { course: "ccar-p" });
       })
     );
   });

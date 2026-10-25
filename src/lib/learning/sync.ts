@@ -9,6 +9,7 @@ import { getSession, supabase } from "@/lib/supabase/client";
 import { useEnStore } from "@/store/en-store";
 import { useN1Store } from "@/store/n1-store";
 import { useOciAiStore } from "@/store/oci-ai-store";
+import { useCcarStore } from "@/store/ccar-p-store";
 import { useFlashcardStore } from "@/store/flashcard-store";
 import { useSrsStore, stateFromName, stateName, type CardKind, type StoredCard } from "@/store/srs-store";
 import { useActivityStore } from "@/store/activity-store";
@@ -115,6 +116,16 @@ async function snapshotEvents(userId: string): Promise<LearningEvent[]> {
   for (const [k, q] of Object.entries(oci.practice ?? {}))
     await add("quiz.submitted", assessmentKey.ociPractice(k), q.at, { course: "oci-ai", score: q.best, total: q.total });
 
+  const ccar = useCcarStore.getState();
+  for (const [id, at] of Object.entries(ccar.done)) await add("lesson.completed", lessonKey.ccar(id), at, { course: "ccar-p" });
+  for (const [k, q] of Object.entries(ccar.practice ?? {}))
+    await add("quiz.submitted", assessmentKey.ccarPractice(k), q.at, {
+      course: "ccar-p",
+      ...(k.startsWith("task:") ? { lesson: lessonKey.ccar(k.slice(5)) } : {}),
+      score: q.best,
+      total: q.total,
+    });
+
   const fc = useFlashcardStore.getState().progress;
   if (Object.keys(fc).length) {
     const idx = await loadItemIndex().catch(() => null);
@@ -193,6 +204,7 @@ function lessonTarget(key: string): [DoneStore, string] | null {
     ["jlpt-n1.vocab.", useN1Store],
     ["english.ipa.", useEnStore],
     ["oci-ai.lesson.", useOciAiStore],
+    ["ccar-p.task.", useCcarStore],
   ] as const)
     if (key.startsWith(prefix)) return [store as unknown as DoneStore, key.slice(prefix.length)];
   return null;
@@ -224,6 +236,9 @@ async function mergePull(d: PullResult) {
       } else if (k.startsWith("oci-ai.practice.")) {
         const id = k.slice(16);
         useOciAiStore.setState((s) => ({ practice: { ...s.practice, [id]: merge(s.practice?.[id]) } }));
+      } else if (k.startsWith("ccar-p.practice.")) {
+        const id = k.slice(16);
+        useCcarStore.setState((s) => ({ practice: { ...s.practice, [id]: merge(s.practice?.[id]) } }));
       } else if (k.startsWith("oci-ai.quiz.")) {
         const id = k.slice(12);
         useOciAiStore.setState((s) =>
@@ -287,6 +302,7 @@ export async function signOutAndClear() {
     useN1Store.getState().reset();
     useEnStore.getState().reset();
     useOciAiStore.getState().reset();
+    useCcarStore.getState().reset();
     useFlashcardStore.getState().resetProgress();
     useFlashcardStore.setState({ reviewIds: [], quizSeen: {} });
     useSrsStore.setState({ cards: {}, migratedLeitner: true });

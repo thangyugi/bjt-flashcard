@@ -22,6 +22,7 @@ const AREAS: [string, string][] = [
   ["/jlpt-n1", "Khóa JLPT N1"],
   ["/english", "Khóa Phát âm IPA"],
   ["/oracle-oci-ai", "Khóa OCI AI Foundations"],
+  ["/claude-ccar-p", "Khóa Claude Certified Architect – Professional"],
   ["/bjt", "Từ vựng BJT"],
   ["/courses", "Danh sách khóa học"],
   ["/portfolio", "Portfolio"],

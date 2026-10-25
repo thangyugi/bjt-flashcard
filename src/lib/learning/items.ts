@@ -53,5 +53,6 @@ export const COURSE_LABEL: Record<string, string> = {
   "jlpt-n1": "JLPT N1",
   english: "Tiếng Anh",
   "oci-ai": "OCI AI",
+  "ccar-p": "CCAR-P",
   bjt: "BJT",
 };

@@ -5,6 +5,8 @@ import { IPA_LESSONS } from "@/data/english/ipa";
 import { getCourseMeta } from "@/data/oci-ai/course";
 import { PRACTICE } from "@/data/oci-ai/practice";
 import { EXAMS } from "@/data/oci-ai/practice/exams";
+import { BANK as CCAR_BANK, getCourseMeta as getCcarMeta, mockExams as ccarExams } from "@/data/ccar-p/course";
+import { STUDY_ORDER } from "@/data/ccar-p/meta";
 import { homeCatalog } from "@/lib/home/catalog";
 import type { CourseLessons } from "@/lib/learning/progress";
 
@@ -12,7 +14,7 @@ import type { CourseLessons } from "@/lib/learning/progress";
  * Dữ liệu tĩnh (đọc lúc build) cho trang chọn /quiz (Trắc nghiệm) và gợi ý học tiếp.
  * Phần phụ thuộc người học (bài gần nhất, điểm, tiến độ) được ghép phía client từ các store.
  */
-export type CourseId = "jlpt-n1" | "english" | "oci-ai" | "bjt";
+export type CourseId = "jlpt-n1" | "english" | "oci-ai" | "bjt" | "ccar-p";
 
 export interface ChooserCourse {
   id: CourseId;
@@ -34,8 +36,9 @@ export interface ChooserData {
     n1Vocab: Record<string, string>;
     ipa: Record<string, string>;
     oci: Record<string, string>;
+    ccar: Record<string, string>;
   };
-  first: { n1: string; n1Vocab: string; ipa: string; oci: string };
+  first: { n1: string; n1Vocab: string; ipa: string; oci: string; ccar: string };
   counts: {
     n1Questions: number;
     n1Chapters: number;
@@ -46,10 +49,14 @@ export interface ChooserData {
     ociPracticeLessons: number;
     bjtCards: number;
     bjtTopics: number;
+    ccarQuestions: number;
+    ccarV2: number;
+    ccarLessons: number;
   };
   /** Bài OCI có ngân hàng câu hỏi luyện tập */
   ociPracticeIds: string[];
   exams: { id: string; title: string; count: number; minutes: number; passPct: number }[];
+  ccarExams: { id: string; title: string; count: number; minutes: number; passPct: number }[];
 }
 
 export const COURSE_META: Record<CourseId, Omit<ChooserCourse, "lessons">> = {
@@ -85,6 +92,14 @@ export const COURSE_META: Record<CourseId, Omit<ChooserCourse, "lessons">> = {
     href: "/bjt",
     desc: "Flashcard từ vựng công sở theo chủ đề, câu ví dụ có furigana.",
   },
+  "ccar-p": {
+    id: "ccar-p",
+    title: "Claude Architect · CCAR-P",
+    kicker: "Chứng chỉ · Anthropic CCAR-P",
+    color: "#6d28d9",
+    href: "/claude-ccar-p",
+    desc: "7 domain, 38 task statement, ngân hàng câu hỏi có giải thích và đề thi thử 63 câu.",
+  },
 };
 
 export function chooserData(): ChooserData {
@@ -93,7 +108,8 @@ export function chooserData(): ChooserData {
   const vocab = vocabStats();
   const oci = getCourseMeta();
   const practiceIds = new Set(PRACTICE.map((p) => p.lessonId));
-  const order: CourseId[] = ["jlpt-n1", "english", "oci-ai", "bjt"];
+  const ccar = getCcarMeta();
+  const order: CourseId[] = ["jlpt-n1", "english", "oci-ai", "bjt", "ccar-p"];
 
   return {
     courses: order.map((id) => ({ ...COURSE_META[id], lessons: catalog.courses.find((c) => c.key === id) ?? null })),
@@ -103,12 +119,15 @@ export function chooserData(): ChooserData {
       n1Vocab: Object.fromEntries(VOCAB_LESSONS.map((l) => [l.id, `Bài ${l.num} · ${l.title}`])),
       ipa: Object.fromEntries(IPA_LESSONS.map((l) => [l.id, `Bài ${l.num} · ${l.title}`])),
       oci: Object.fromEntries(oci.lessons.map((l) => [l.id, `${l.code} · ${l.navTitle}`])),
+      ccar: Object.fromEntries(ccar.lessons.map((l) => [l.id, `${l.code} · ${l.title}`])),
     },
     first: {
       n1: N1_LESSONS[0].id,
       n1Vocab: VOCAB_LESSONS[0].id,
       ipa: IPA_LESSONS[0].id,
       oci: oci.lessons[0].id,
+      // theo thứ tự học đề xuất: bắt đầu từ Domain 3
+      ccar: ccar.domains.find((d) => d.num === STUDY_ORDER[0])!.lessonIds[0],
     },
     counts: {
       n1Questions: n1.questions,
@@ -120,8 +139,12 @@ export function chooserData(): ChooserData {
       ociPracticeLessons: PRACTICE.length,
       bjtCards: catalog.bjt.cards,
       bjtTopics: catalog.bjt.topics,
+      ccarQuestions: CCAR_BANK.length,
+      ccarV2: CCAR_BANK.filter((q) => q.v2).length,
+      ccarLessons: ccar.lessons.length,
     },
     ociPracticeIds: oci.lessons.filter((l) => practiceIds.has(l.id)).map((l) => l.id),
     exams: EXAMS.map((e) => ({ id: e.id, title: e.title, count: e.qs.length, minutes: e.minutes, passPct: e.passPct })),
+    ccarExams: ccarExams().map((e) => ({ id: e.id, title: e.title, count: e.ids.length, minutes: e.minutes, passPct: e.passPct })),
   };
 }

@@ -7,6 +7,7 @@ const COLS: { h: string; links: [string, string][] }[] = [
       ["JLPT N1", "/jlpt-n1"],
       ["Phát âm IPA", "/english"],
       ["OCI AI Foundations", "/oracle-oci-ai"],
+      ["Claude Architect (CCAR-P)", "/claude-ccar-p"],
       ["Từ vựng BJT", "/bjt"],
     ],
   },

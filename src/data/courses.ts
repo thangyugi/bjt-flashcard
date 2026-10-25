@@ -9,7 +9,7 @@ export interface CourseCard {
   desc: string;
   tags: string[];
   /** Màu nền ảnh bìa */
-  tone: "red" | "ink" | "amber" | "blue";
+  tone: "red" | "ink" | "amber" | "blue" | "violet";
 }
 
 export const COURSES: CourseCard[] = [
@@ -42,6 +42,16 @@ export const COURSES: CourseCard[] = [
     desc: "AI, Machine Learning, Generative AI và dịch vụ AI trên Oracle Cloud bằng tiếng Việt — có sơ đồ, câu hỏi luyện tập và đề thi thử.",
     tags: ["Chứng chỉ 1Z0-1122", "Luyện đề", "Tiếng Việt"],
     tone: "ink",
+  },
+  {
+    id: "ccar-p",
+    href: "/claude-ccar-p",
+    mark: "CA",
+    kicker: "Anthropic · Claude",
+    title: "Claude Certified Architect – Professional",
+    desc: "Ôn thi CCAR-P bằng tiếng Việt: 7 domain, 38 task statement, mỗi bài ba lớp Hiểu nhanh · Cách chọn khi làm đề · Cần thuộc, ngân hàng câu hỏi có giải thích và đề thi thử 63 câu.",
+    tags: ["Chứng chỉ CCAR-P", "Luyện đề", "Tiếng Việt"],
+    tone: "violet",
   },
   {
     id: "bjt",

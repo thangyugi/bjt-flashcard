@@ -8,7 +8,7 @@ const fmt = (n: number) => n.toLocaleString("vi-VN");
 
 interface CourseCol {
   /** id trong src/data/courses.ts (cũng là khóa trong catalog) */
-  id: "jlpt-n1" | "english" | "oci-ai" | "bjt";
+  id: "jlpt-n1" | "english" | "oci-ai" | "bjt" | "ccar-p";
   color: string;
   icon: IsoName;
   meta: [string, ReactNode];
@@ -16,9 +16,9 @@ interface CourseCol {
   facts: ReactNode[];
 }
 
-/** Dải khóa học: 4 khóa thật + cột "Sắp ra mắt". Hình được tô màu khóa khi rê chuột / focus. */
+/** Dải khóa học: 5 khóa. Hình được tô màu khóa khi rê chuột / focus. */
 export function CourseBand({ catalog }: { catalog: HomeCatalog }) {
-  const { n1, english, oci, bjt } = catalog;
+  const { n1, english, oci, bjt, ccar } = catalog;
   const cols: CourseCol[] = [
     {
       id: "jlpt-n1",
@@ -88,6 +88,21 @@ export function CourseBand({ catalog }: { catalog: HomeCatalog }) {
         </>,
       ],
     },
+    {
+      id: "ccar-p",
+      color: "#6d28d9",
+      icon: "ccar",
+      meta: ["Chứng chỉ Anthropic", <span key="m">CCAR-P</span>],
+      title: ["Claude", "Architect"],
+      facts: [
+        <>
+          <b>{ccar.domains}</b> domain, <b>{ccar.lessons}</b> task statement
+        </>,
+        <>
+          <b>{ccar.questions}</b> câu luyện, 3 đề thi thử 63 câu
+        </>,
+      ],
+    },
   ];
 
   return (
@@ -124,21 +139,6 @@ export function CourseBand({ catalog }: { catalog: HomeCatalog }) {
           />
         );
       })}
-      <div className="col soon">
-        <div className="art">
-          <IsoIcon name="soon" />
-        </div>
-        <div className="cbody">
-          <div className="meta">
-            <span>Đang biên soạn</span>
-          </div>
-          <h3 className="hx ch3">
-            <span>Sắp</span>
-            <span>ra mắt</span>
-          </h3>
-          <p className="note">Khóa học tiếp theo đang được chuẩn bị. Khi sẵn sàng, nó sẽ xuất hiện ở cột này.</p>
-        </div>
-      </div>
     </div>
   );
 }

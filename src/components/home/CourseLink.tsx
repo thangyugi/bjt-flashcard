@@ -7,6 +7,7 @@ import { courseProgress, type CourseLessons } from "@/lib/learning/progress";
 import { useN1Store } from "@/store/n1-store";
 import { useEnStore } from "@/store/en-store";
 import { useOciAiStore } from "@/store/oci-ai-store";
+import { useCcarStore } from "@/store/ccar-p-store";
 import { useViewer } from "./viewer";
 import { useContinueGroup } from "./vocab";
 import { ArrowLong } from "./icons";
@@ -16,10 +17,12 @@ function useContinueHref(id: string): string | undefined {
   const n1 = useN1Store((s) => s.lastLessonId);
   const ipa = useEnStore((s) => s.lastIpaLesson);
   const oci = useOciAiStore((s) => s.lastLessonId);
+  const ccar = useCcarStore((s) => s.lastLessonId);
   const group = useContinueGroup();
   if (id === "jlpt-n1" && n1) return `/jlpt-n1/grammar/${n1}`;
   if (id === "english" && ipa) return `/english/ipa/${ipa}`;
   if (id === "oci-ai" && oci) return `/oracle-oci-ai/${oci}`;
+  if (id === "ccar-p" && ccar) return `/claude-ccar-p/${ccar}`;
   if (id === "bjt" && group) return `/bjt/${group.id}`;
   return undefined;
 }

@@ -9,6 +9,7 @@ import { courseProgress } from "@/lib/learning/progress";
 import { useN1Store } from "@/store/n1-store";
 import { useEnStore } from "@/store/en-store";
 import { useOciAiStore } from "@/store/oci-ai-store";
+import { useCcarStore } from "@/store/ccar-p-store";
 import { useContinueGroup } from "@/components/home/vocab";
 import { cn } from "@/lib/utils";
 import { btn } from "@/components/ui/page";
@@ -27,14 +28,16 @@ export function useLastLessons(data: ChooserData) {
   const n1Vocab = useN1Store((s) => s.lastVocabId);
   const ipa = useEnStore((s) => s.lastIpaLesson);
   const oci = useOciAiStore((s) => s.lastLessonId);
+  const ccar = useCcarStore((s) => s.lastLessonId);
   const group = useContinueGroup();
-  if (!hydrated) return { n1: null, n1Vocab: null, ipa: null, oci: null, group: undefined };
+  if (!hydrated) return { n1: null, n1Vocab: null, ipa: null, oci: null, ccar: null, group: undefined };
   const known = (map: Record<string, string>, id: string | null) => (id && map[id] ? id : null);
   return {
     n1: known(data.labels.n1, n1),
     n1Vocab: known(data.labels.n1Vocab, n1Vocab),
     ipa: known(data.labels.ipa, ipa),
     oci: known(data.labels.oci, oci),
+    ccar: known(data.labels.ccar, ccar),
     group,
   };
 }
@@ -85,6 +88,15 @@ export function StudyChooser({ data }: { data: ChooserData }) {
         { label: "Luyện tập & thi thử", href: "/oracle-oci-ai/practice" },
       ],
     },
+    "ccar-p": {
+      cont: last.ccar ? { label: labels.ccar[last.ccar], href: `/claude-ccar-p/${last.ccar}` } : null,
+      start: { label: labels.ccar[first.ccar], href: `/claude-ccar-p/${first.ccar}` },
+      entries: [
+        { label: "7 domain · thứ tự học", href: "/claude-ccar-p", note: `${counts.ccarLessons} task statement` },
+        { label: "Luyện tập & thi thử", href: "/claude-ccar-p/practice", note: `${counts.ccarQuestions} câu · 3 đề` },
+        { label: "Lộ trình ôn & quy chế", href: "/claude-ccar-p/on-thi" },
+      ],
+    },
     bjt: {
       cont: last.group ? { label: `Nhóm ${last.group.name}`, href: `/bjt/${last.group.id}` } : null,
       start: { label: "Chọn một nhóm chủ đề", href: "/bjt" },
@@ -96,7 +108,7 @@ export function StudyChooser({ data }: { data: ChooserData }) {
   };
 
   return (
-    <div className="cells grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+    <div className="cells grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
       {data.courses.map((c) => {
         const p = plan[c.id];
         const prog = hydrated && c.lessons ? courseProgress(c.lessons, doneKeys, { known: bjtKnown, total: data.bjtTotal }) : null;
@@ -171,6 +183,7 @@ export function ContinueStrip({ data }: { data: ChooserData }) {
     items.push({ course: "Từ vựng N1", label: data.labels.n1Vocab[last.n1Vocab], href: `/jlpt-n1/vocab/${last.n1Vocab}`, color: m["jlpt-n1"].color });
   if (last.ipa) items.push({ course: "IPA", label: data.labels.ipa[last.ipa], href: `/english/ipa/${last.ipa}`, color: m.english.color });
   if (last.oci) items.push({ course: "OCI AI", label: data.labels.oci[last.oci], href: `/oracle-oci-ai/${last.oci}`, color: m["oci-ai"].color });
+  if (last.ccar) items.push({ course: "CCAR-P", label: data.labels.ccar[last.ccar], href: `/claude-ccar-p/${last.ccar}`, color: m["ccar-p"].color });
   if (last.group) items.push({ course: "BJT", label: `Nhóm ${last.group.name}`, href: `/bjt/${last.group.id}`, color: m.bjt.color });
 
   if (!items.length)

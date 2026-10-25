@@ -5,13 +5,15 @@
  * đổi mã = tiến độ cũ không khớp nữa.
  */
 
-export type CourseKey = "jlpt-n1" | "english" | "oci-ai" | "bjt";
+export type CourseKey = "jlpt-n1" | "english" | "oci-ai" | "bjt" | "ccar-p";
 
 export const lessonKey = {
   n1Grammar: (id: string) => `jlpt-n1.grammar.${id}`,
   n1Vocab: (id: string) => `jlpt-n1.vocab.${id}`,
   ipa: (id: string) => `english.ipa.${id}`,
   oci: (id: string) => `oci-ai.lesson.${id}`,
+  /** CCAR-P: task statement "3-1" */
+  ccar: (id: string) => `ccar-p.task.${id}`,
   bjtGroup: (id: string) => `bjt.group.${id}`,
 };
 
@@ -30,6 +32,8 @@ export const assessmentKey = {
   english: (storeKey: string) => `english.quiz.${storeKey}`,
   ociQuiz: (lessonId: string) => `oci-ai.quiz.${lessonId}`,
   ociPractice: (storeKey: string) => `oci-ai.practice.${storeKey}`,
+  /** CCAR-P: "domain:3", "task:3-1", "v2", "mix", "exam:exam-1" */
+  ccarPractice: (storeKey: string) => `ccar-p.practice.${storeKey}`,
 };
 
 export function slug(s: string) {

@@ -12,7 +12,7 @@ import { AccountButton } from "@/components/account/AccountButton";
 import { HeaderSettings } from "@/components/layout/HeaderSettings";
 import { Gem } from "@/components/home/icons";
 
-const COURSE_PATHS = ["/courses", "/jlpt-n1", "/english", "/oracle-oci-ai", "/bjt"];
+const COURSE_PATHS = ["/courses", "/jlpt-n1", "/english", "/oracle-oci-ai", "/claude-ccar-p", "/bjt"];
 const under = (p: string, base: string) => p === base || p.startsWith(`${base}/`);
 
 /** Điều hướng chính (thanh tiêu đề và thanh dưới đáy trên mobile dùng chung); logo dẫn về trang chủ */

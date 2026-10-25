@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/ui/page";
 
 export const metadata: Metadata = {
   title: "Khóa học",
-  description: "Các khóa học: JLPT N1 (ngữ pháp kể thành truyện), phát âm IPA, OCI AI Foundations, từ vựng BJT.",
+  description: "Các khóa học: JLPT N1 (ngữ pháp kể thành truyện), phát âm IPA, OCI AI Foundations, từ vựng BJT, Claude Certified Architect – Professional (CCAR-P).",
 };
 
 /** Danh sách khóa học: cùng các cột khóa học như trang chủ (hình nét, số liệu thật, tiến độ khi đăng nhập). */
