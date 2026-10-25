@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpenCheck, Circle, CircleCheck, FileCheck2, GraduationCap, Play, RotateCcw } from "lucide-react";
+import { ArrowRight, BookOpenCheck, Circle, CircleCheck, FileCheck2, GraduationCap, Library, Play, RotateCcw } from "lucide-react";
 import type { DomainMeta, LessonMeta } from "@/data/ccar-p/types";
-import { CCAR_BASE, STUDY_ORDER, setId } from "@/data/ccar-p/meta";
+import { CCAR_BASE, REFERENCE_PATH, STUDY_ORDER, setId } from "@/data/ccar-p/meta";
 import { useCcarStore } from "@/store/ccar-p-store";
 import { useHydrated } from "@/hooks/useHydrated";
 import { Breadcrumbs } from "@/components/ui/page";
@@ -54,6 +54,9 @@ export function CcarHome({ domains, lessons, stats, html }: Props) {
             </Link>
             <Link href={`${CCAR_BASE}/on-thi`} className="oci-btn ghost">
               <BookOpenCheck aria-hidden /> Lộ trình ôn & quy chế
+            </Link>
+            <Link href={REFERENCE_PATH} className="oci-btn ghost">
+              <Library aria-hidden /> Kiến thức nền về Claude
             </Link>
           </div>
         </div>

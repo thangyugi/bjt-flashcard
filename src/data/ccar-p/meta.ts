@@ -35,4 +35,11 @@ export const setId = {
   domain: (d: number) => `domain-${d}`,
   task: (t: string) => `task-${t}`,
   v2: "v2",
+  /** Bộ đề Claude biên soạn: cả bộ, hoặc lọc theo domain */
+  authored: (d?: number) => (d ? `claude-d${d}` : "claude"),
 };
+
+/** Nhãn của câu hỏi / lớp bổ sung do Claude biên soạn */
+export const AUTHORED_LABEL = "Claude biên soạn";
+export const AUTHORED_SET_TITLE = "Bộ đề Claude biên soạn";
+export const REFERENCE_PATH = "/claude-ccar-p/kien-thuc-nen";

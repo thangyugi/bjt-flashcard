@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, BookOpenCheck, ChevronRight, Circle, CircleCheck, FileCheck2, House, ListChecks, Menu, Search, X } from "lucide-react";
+import { ArrowLeft, BookOpenCheck, Library, ChevronRight, Circle, CircleCheck, FileCheck2, House, ListChecks, Menu, Search, X } from "lucide-react";
 import type { DomainMeta, LessonMeta } from "@/data/ccar-p/types";
-import { CCAR_BASE, CCAR_SHORT } from "@/data/ccar-p/meta";
+import { CCAR_BASE, CCAR_SHORT, REFERENCE_PATH } from "@/data/ccar-p/meta";
 import { useCcarStore } from "@/store/ccar-p-store";
 import { useHydrated } from "@/hooks/useHydrated";
 
@@ -125,6 +125,7 @@ export function CcarShell({ domains, lessons, children }: Props) {
               <>
                 {link(CCAR_BASE, pathname === CCAR_BASE, <House aria-hidden />, "Trang chủ khóa học")}
                 {link(`${CCAR_BASE}/on-thi`, pathname === `${CCAR_BASE}/on-thi`, <BookOpenCheck aria-hidden />, "Lộ trình ôn & quy chế thi")}
+                {link(REFERENCE_PATH, pathname === REFERENCE_PATH, <Library aria-hidden />, "Kiến thức nền về Claude")}
                 {link(
                   `${CCAR_BASE}/practice`,
                   pathname.startsWith(`${CCAR_BASE}/practice`) || pathname.startsWith(`${CCAR_BASE}/exam`),

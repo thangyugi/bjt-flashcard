@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FileCheck2, Layers, ListChecks } from "lucide-react";
-import { BANK, TASKS, getLesson, renderBlocks } from "@/data/ccar-p/course";
-import { CCAR_BASE, setId } from "@/data/ccar-p/meta";
+import { BANK, SUPPLEMENT, TASKS, getLesson, renderBlocks } from "@/data/ccar-p/course";
+import { CCAR_BASE, REFERENCE_PATH, setId } from "@/data/ccar-p/meta";
 import { CcarLessonControls } from "@/components/ccar-p/CcarLessonControls";
 import { ReadProgress } from "@/components/oci-ai/LessonToc";
 import { LessonToc, LessonTocCompact, type TocItem } from "@/components/ui/lesson-toc";
@@ -27,7 +27,7 @@ export default async function CcarLessonPage({ params }: PageProps<"/claude-ccar
   const found = getLesson(lessonId);
   if (!found) notFound();
   const { task, domain, prev, next } = found;
-  const { html, toc } = withHeadingIds(renderBlocks(task.blocks));
+  const { html, toc } = withHeadingIds(renderBlocks(task.blocks) + renderSupplement(task.id));
   const count = BANK.filter((q) => q.task === task.id).length;
   const practiceHref = `${CCAR_BASE}/practice/${setId.task(task.id)}`;
   const label = (t: NonNullable<typeof prev>) => `${t.code} ${t.title}`;
@@ -105,6 +105,25 @@ export default async function CcarLessonPage({ params }: PageProps<"/claude-ccar
       </aside>
     </div>
   );
+}
+
+const SUPP_LAYER: Record<string, string> = { "can-thuoc": "📚 Cần thuộc", "cach-chon": "🎯 Cách chọn khi làm đề", bay: "⚠️ Bẫy" };
+const escAttr = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/** Lớp bổ sung do Claude biên soạn: đặt sau các lớp của tài liệu ôn, có nhãn riêng */
+function renderSupplement(taskId: string): string {
+  const items = SUPPLEMENT.tasks[taskId];
+  if (!items?.length) return "";
+  return [
+    `<section class="ccar-supp" aria-label="${escAttr(SUPPLEMENT.label)}">`,
+    `<h2>${escAttr(SUPPLEMENT.label)}</h2>`,
+    `<p class="ccar-supp-note">${escAttr(SUPPLEMENT.note)} Xem thêm <a href="${REFERENCE_PATH}">${escAttr(SUPPLEMENT.referenceTitle)}</a>.</p>`,
+    ...items.map(
+      (it) =>
+        `<div class="ccar-supp-item"><span class="ccar-supp-layer">${SUPP_LAYER[it.layer] ?? it.layer}</span><h3>${escAttr(it.title)}</h3>${it.html}</div>`
+    ),
+    `</section>`,
+  ].join("\n");
 }
 
 /** Gắn id cho các tiêu đề h2 để làm mục lục và liên kết neo. */

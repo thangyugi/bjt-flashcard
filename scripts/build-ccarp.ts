@@ -4,11 +4,15 @@
  *   npm run ccarp:build                     → đọc nguồn trong docs/claude/ rồi ghi src/data/ccar-p/{guide,bank}.json
  *   npm run ccarp:build -- --answers <dir>  → trước đó gộp <dir>/answers*.json vào docs/claude/ccar-p/answers.json
  *   npm run ccarp:build -- --questions <f>  → thay docs/claude/ccar-p/questions.json bằng bản trích sạch <f>
+ *   npm run ccarp:build -- --supplement <f> → chép <f> vào docs/claude/ccar-p/supplement.json (lớp bổ sung + thẻ kiến thức nền)
+ *   npm run ccarp:build -- --authored <dir> → chép <dir>/authored*.json vào docs/claude/ccar-p/ (câu do Claude biên soạn)
  *
  * Nguồn:
  *   - docs/claude/claude_cert_ccar-p_info.txt  — tài liệu ôn của chủ khóa (38 task statement, 3 lớp, bảng, bẫy)
  *   - docs/claude/ccar-p/questions.json         — 200 câu hỏi duy nhất (EN + VI), trích từ claude_cert_ccar-p.txt
  *   - docs/claude/ccar-p/answers.json           — đáp án + giải thích tiếng Việt (do Claude soạn, chưa đối chiếu đáp án chính thức)
+ *   - docs/claude/ccar-p/supplement.json        — lớp bổ sung cho từng task + thẻ "Kiến thức nền" (Claude biên soạn, Markdown)
+ *   - docs/claude/ccar-p/authored*.json         — câu hỏi mới do Claude biên soạn (id "c-<domain>-<nn>")
  * Câu chưa có đáp án bị bỏ qua.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -19,6 +23,7 @@ const SRC = join(ROOT, "docs", "claude");
 const OUT = join(ROOT, "src", "data", "ccar-p");
 const QUESTIONS = join(SRC, "ccar-p", "questions.json");
 const ANSWERS = join(SRC, "ccar-p", "answers.json");
+const SUPPLEMENT = join(SRC, "ccar-p", "supplement.json");
 
 const arg = (name: string) => {
   const i = process.argv.indexOf(name);
@@ -285,6 +290,37 @@ function markLetters(s: string, keys: string[]) {
 }
 
 const issues: string[] = [];
+const authoredMeta = new Map<number, { ref: string; source: string }>();
+// Câu hỏi do Claude biên soạn (docs/claude/ccar-p/authored*.json): id "c-<domain>-<nn>" → id số 900000 + domain·1000 + nn
+interface RawAuthored extends Omit<RawQ, "id" | "question_no" | "in_v2">, Omit<RawA, "id" | "rows"> {
+  id: string;
+  rows: { no: number; text: string }[] | null;
+  rows_expl: Record<string, string> | null;
+  source?: string;
+}
+const authDir = arg("--authored");
+if (authDir) {
+  const files = readdirSync(authDir).filter((f) => /^authored\d*\.json$/.test(f)).sort();
+  for (const f of files) writeFileSync(join(SRC, "ccar-p", f), JSON.stringify(JSON.parse(readFileSync(join(authDir, f), "utf8")), null, 1) + "\n");
+  console.log(`Chép ${files.length} tệp câu Claude biên soạn (${files.join(", ")})`);
+}
+const authoredFiles = readdirSync(join(SRC, "ccar-p")).filter((f) => /^authored\d*\.json$/.test(f)).sort();
+const seenAuthored = new Set<string>();
+for (const f of authoredFiles) {
+  for (const raw of JSON.parse(readFileSync(join(SRC, "ccar-p", f), "utf8")) as RawAuthored[]) {
+    const idm = /^c-(\d)-(\d+)$/.exec(raw.id);
+    if (!idm || seenAuthored.has(raw.id)) {
+      issues.push(`${f}: id lạ/trùng "${raw.id}"`);
+      continue;
+    }
+    seenAuthored.add(raw.id);
+    const num = 900000 + Number(idm[1]) * 1000 + Number(idm[2]);
+    questions.push({ ...raw, id: num, question_no: Number(idm[2]), in_v2: false });
+    answers.set(num, { ...raw, id: num, rows: raw.rows_expl ?? null });
+    authoredMeta.set(num, { ref: raw.id, source: raw.source ?? "" });
+    if (idm[1] !== /^Subdomain (\d)/.exec(raw.topic)?.[1]) issues.push(`${raw.id}: domain trong id khác topic "${raw.topic}"`);
+  }
+}
 const bank = [];
 for (const q of questions) {
   const a = answers.get(q.id);
@@ -335,6 +371,7 @@ for (const q of questions) {
     confidence: a.confidence,
     remember: ml(a.remember ?? ""),
     why: ml(a.why ?? ""),
+    ...(authoredMeta.has(q.id) ? { authored: authoredMeta.get(q.id)!.ref, source: authoredMeta.get(q.id)!.source } : {}),
   });
 }
 
@@ -344,5 +381,123 @@ writeFileSync(join(OUT, "bank.json"), JSON.stringify(bank) + "\n");
 
 const conf = bank.reduce<Record<string, number>>((s, q) => ((s[q.confidence] = (s[q.confidence] ?? 0) + 1), s), {});
 console.log(`CCAR-P: ${guide.domains.length} domain · ${taskCount} task statement · ${guide.front.length + guide.back.length} mục phụ`);
-console.log(`Ngân hàng: ${bank.length}/${questions.length} câu có đáp án (${bank.filter((q) => q.v2).length} thuộc bộ v2) · độ tin cậy ${JSON.stringify(conf)}`);
+console.log(`Ngân hàng: ${bank.length}/${questions.length} câu có đáp án (${bank.filter((q) => q.v2).length} thuộc bộ v2 · ${bank.filter((q) => "authored" in q).length} do Claude biên soạn) · độ tin cậy ${JSON.stringify(conf)}`);
+
+// ═════════════════════════ 3) Bổ sung do Claude biên soạn → supplement.json ═════════════════════════
+
+const escHtml = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/** Markdown nội dòng: `mã`, **đậm**, *nghiêng*, [chữ](url), <url> */
+function mdInline(src: string): string {
+  const keep: string[] = [];
+  const stash = (html: string) => `\u0000${keep.push(html) - 1}\u0000`;
+  let t = src.replace(/`([^`]+)`/g, (_, c: string) => stash(`<code>${escHtml(c)}</code>`));
+  t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, (_, label: string, url: string) => stash(`<a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer">${escHtml(label)}</a>`));
+  t = t.replace(/<(https?:\/\/[^>\s]+)>/g, (_, url: string) => stash(`<a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer">${escHtml(url.replace(/^https?:\/\//, ""))}</a>`));
+  t = escHtml(t)
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^\w*])\*([^*\n]+?)\*(?!\w)/g, "$1<em>$2</em>");
+  return t.replace(/\u0000(\d+)\u0000/g, (_, i: string) => keep[Number(i)]);
+}
+
+/** Markdown khối (GFM rút gọn): đoạn, bảng, danh sách, trích dẫn — bảng nằm trong khung cuộn ngang */
+function mdToHtml(src: string): string {
+  const lines = src.replace(/\r/g, "").split("\n");
+  const out: string[] = [];
+  let i = 0;
+  const cells = (l: string) => l.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!line.trim()) {
+      i++;
+      continue;
+    }
+    if (/^\s*\|/.test(line)) {
+      const rows: string[][] = [];
+      while (i < lines.length && /^\s*\|/.test(lines[i])) rows.push(cells(lines[i++]));
+      const sep = rows.length > 1 && rows[1].every((c) => /^:?-+:?$/.test(c));
+      const head = sep ? rows[0] : null;
+      const body = sep ? rows.slice(2) : rows;
+      out.push(
+        `<div class="tbl-wrap"><table>${head ? `<thead><tr>${head.map((c) => `<th>${mdInline(c)}</th>`).join("")}</tr></thead>` : ""}<tbody>${body
+          .map((r) => `<tr>${r.map((c) => `<td>${mdInline(c)}</td>`).join("")}</tr>`)
+          .join("")}</tbody></table></div>`
+      );
+      continue;
+    }
+    if (/^\s*>/.test(line)) {
+      const buf: string[] = [];
+      while (i < lines.length && /^\s*>/.test(lines[i])) buf.push(lines[i++].replace(/^\s*>\s?/, ""));
+      out.push(`<blockquote>${mdToHtml(buf.join("\n"))}</blockquote>`);
+      continue;
+    }
+    const li = /^\s*(?:([-*+])|(\d+)[.)])\s+/;
+    if (li.test(line)) {
+      const ordered = !li.exec(line)![1];
+      const items: string[] = [];
+      while (i < lines.length && lines[i].trim()) {
+        const m = li.exec(lines[i]);
+        if (m && !m[1] === ordered) items.push(lines[i].replace(li, ""));
+        else if (!m && items.length && !/^\s*[|>]/.test(lines[i])) items[items.length - 1] += " " + lines[i].trim();
+        else break;
+        i++;
+      }
+      const tag = ordered ? "ol" : "ul";
+      out.push(`<${tag}>${items.map((x) => `<li>${mdInline(x)}</li>`).join("")}</${tag}>`);
+      continue;
+    }
+    const h = /^(#{1,4})\s+(.+)$/.exec(line);
+    if (h) {
+      const lv = Math.min(6, h[1].length + 2);
+      out.push(`<h${lv}>${mdInline(h[2])}</h${lv}>`);
+      i++;
+      continue;
+    }
+    const buf: string[] = [];
+    while (i < lines.length && lines[i].trim() && !/^\s*[|>]/.test(lines[i]) && !li.test(lines[i]) && !/^#{1,4}\s/.test(lines[i])) buf.push(lines[i++].trim());
+    out.push(`<p>${mdInline(buf.join(" "))}</p>`);
+  }
+  return out.join("\n");
+}
+
+const supSrc = arg("--supplement");
+if (supSrc) writeFileSync(SUPPLEMENT, JSON.stringify(JSON.parse(readFileSync(supSrc, "utf8")), null, 1) + "\n");
+
+interface RawSupplement {
+  label: string;
+  note: string;
+  updated: string;
+  reference_title: string;
+  tasks: Record<string, { add: { layer: string; title: string; body_md: string }[] }>;
+  reference: { id: string; title: string; body_md: string }[];
+}
+const LAYERS = new Set(["can-thuoc", "cach-chon", "bay"]);
+let supplement: object = { label: "", note: "", updated: "", referenceTitle: "", tasks: {}, reference: [] };
+if (existsSync(SUPPLEMENT)) {
+  const raw = JSON.parse(readFileSync(SUPPLEMENT, "utf8")) as RawSupplement;
+  const known = new Set(guide.domains.flatMap((d) => d.tasks.map((t) => t.code)));
+  const tasks: Record<string, { layer: string; title: string; html: string }[]> = {};
+  for (const [code, v] of Object.entries(raw.tasks)) {
+    if (!known.has(code)) {
+      issues.push(`supplement: task lạ ${code}`);
+      continue;
+    }
+    tasks[code.replace(".", "-")] = v.add.map((a) => {
+      if (!LAYERS.has(a.layer)) issues.push(`supplement ${code}: lớp lạ ${a.layer}`);
+      return { layer: a.layer, title: a.title, html: mdToHtml(a.body_md) };
+    });
+  }
+  supplement = {
+    label: raw.label,
+    note: raw.note,
+    updated: raw.updated,
+    referenceTitle: raw.reference_title,
+    tasks,
+    reference: raw.reference.map((r) => ({ id: r.id, title: r.title, html: mdToHtml(r.body_md) })),
+  };
+  const n = Object.values(tasks).reduce((s, x) => s + x.length, 0);
+  console.log(`Bổ sung: ${n} mục cho ${Object.keys(tasks).length} task · ${raw.reference.length} thẻ kiến thức nền`);
+}
+writeFileSync(join(OUT, "supplement.json"), JSON.stringify(supplement) + "\n");
+
 if (issues.length) console.warn(`Cảnh báo (${issues.length}):\n  ${issues.join("\n  ")}`);

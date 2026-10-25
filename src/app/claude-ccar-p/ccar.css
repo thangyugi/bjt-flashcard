@@ -112,3 +112,23 @@
 .ccar-conf { padding: 1px 8px; border-radius: 99px; font-weight: 700; background: var(--o-amber-soft); color: var(--o-amber); }
 .ccar-conf.low { background: var(--o-bad-soft); color: var(--o-bad); }
 @media (min-width: 820px) { .ccar-span2 { grid-column: span 2; } }
+
+/* ── Nội dung do Claude biên soạn: nhãn câu hỏi, bộ đề, lớp bổ sung, thẻ kiến thức nền ── */
+.ccar-tag.authored { background: var(--o-accent-soft); color: var(--o-accent-hover); vertical-align: 1px; white-space: nowrap; }
+.ccar-authored-card .top { color: inherit; }
+.ccar-dfilter { display: flex; flex-wrap: wrap; gap: 6px; }
+.ccar-dfilter a {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0 12px; border-radius: 10px;
+  border: 1px solid var(--o-line-strong); background: var(--o-surface); font-size: 13.5px; font-weight: 650;
+}
+.ccar-dfilter a:hover { border-color: var(--o-accent); color: var(--o-accent); }
+.ccar-dfilter small { font-size: 12px; font-weight: 600; color: var(--o-text-3); }
+.ccar-supp-note { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--o-text-2); }
+.oci-prose .ccar-supp { margin-top: 2.4em; padding-top: 4px; border-top: 2px solid var(--o-accent-mark); }
+.oci-prose .ccar-supp > h2::before { content: "✦ "; color: var(--o-accent-mark); }
+.oci-prose .ccar-supp-note { font-size: 0.92em; padding: 10px 14px; border-radius: 12px; background: var(--o-accent-soft); }
+.oci-prose .ccar-supp-note a { color: var(--o-accent-hover); text-decoration: underline; text-underline-offset: 2px; }
+.oci-prose .ccar-supp-item { margin: 1.4em 0 0; padding: 14px 16px 4px; border-radius: 14px; background: var(--o-surface); border: 1px solid var(--o-line); min-width: 0; }
+.oci-prose .ccar-supp-item > h3 { margin: 6px 0 0.5em; }
+.oci-prose .ccar-supp-layer { display: inline-block; font-size: 12px; font-weight: 750; letter-spacing: 0.02em; color: var(--o-accent-hover); }
+.oci-prose .ccar-ref + .ccar-ref { margin-top: 2em; }

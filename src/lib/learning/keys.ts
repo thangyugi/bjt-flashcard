@@ -32,7 +32,7 @@ export const assessmentKey = {
   english: (storeKey: string) => `english.quiz.${storeKey}`,
   ociQuiz: (lessonId: string) => `oci-ai.quiz.${lessonId}`,
   ociPractice: (storeKey: string) => `oci-ai.practice.${storeKey}`,
-  /** CCAR-P: "domain:3", "task:3-1", "v2", "mix", "exam:exam-1" */
+  /** CCAR-P: "domain:3", "task:3-1", "v2", "claude", "claude:d3", "mix", "exam:exam-1" */
   ccarPractice: (storeKey: string) => `ccar-p.practice.${storeKey}`,
 };
 

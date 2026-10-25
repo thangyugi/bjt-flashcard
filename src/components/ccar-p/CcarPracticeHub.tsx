@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Clock, FileCheck2, Layers, Shuffle } from "lucide-react";
-import { CCAR_BASE, setId } from "@/data/ccar-p/meta";
+import { Clock, FileCheck2, Layers, Shuffle, Sparkles } from "lucide-react";
+import { AUTHORED_SET_TITLE, CCAR_BASE, setId } from "@/data/ccar-p/meta";
 import { useCcarStore } from "@/store/ccar-p-store";
 import { useHydrated } from "@/hooks/useHydrated";
 import { Breadcrumbs } from "@/components/ui/page";
@@ -12,11 +12,13 @@ interface Props {
   domains: { num: number; title: string; weight: number; count: number }[];
   tasks: { id: string; code: string; title: string; domain: number; count: number }[];
   v2: number;
+  /** Câu do Claude biên soạn: tổng + số câu mỗi domain */
+  authored: { total: number; byDomain: Record<number, number> };
   total: number;
   exams: { id: string; title: string; desc: string; count: number; minutes: number; passPct: number }[];
 }
 
-export function CcarPracticeHub({ domains, tasks, v2, total, exams }: Props) {
+export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: Props) {
   const hydrated = useHydrated();
   const results = useCcarStore((s) => s.practice);
   const [parts, setParts] = useState<number[]>([]);
@@ -43,6 +45,12 @@ export function CcarPracticeHub({ domains, tasks, v2, total, exams }: Props) {
           Đề tiếng Việt, bấm <strong>English</strong> để xem đề gốc. Có câu một đáp án, nhiều đáp án (ghi rõ <strong>“Chọn N”</strong>), câu Yes/No
           từng dòng và câu chọn trong danh sách. Sau mỗi câu: <strong>✅ Kiến thức cần nhớ</strong>, <strong>💡 vì sao chọn</strong> và{" "}
           <strong>❌ các ô kia sai ở đâu</strong>. Đáp án và giải thích do Claude soạn, chưa đối chiếu đáp án chính thức.
+          {authored.total > 0 && (
+            <>
+              {" "}
+              Trong đó {authored.total} câu mới do Claude biên soạn (gắn nhãn <strong>“Claude biên soạn”</strong>).
+            </>
+          )}
         </p>
       </section>
 
@@ -89,6 +97,31 @@ export function CcarPracticeHub({ domains, tasks, v2, total, exams }: Props) {
             <span>{best("v2") ?? "Chưa làm"}</span>
           </div>
         </Link>
+        {authored.total > 0 && (
+          <div className="oci-module-card ccar-authored-card">
+            <Link href={`${CCAR_BASE}/practice/${setId.authored()}`} className="top">
+              <span className="mn">
+                <Sparkles size={13} style={{ display: "inline", verticalAlign: -2 }} aria-hidden /> {AUTHORED_SET_TITLE}
+              </span>
+              <span className="orig">{authored.total} câu</span>
+            </Link>
+            <p>Câu mới viết theo tài liệu công khai của Anthropic, tập trung vào phần ngân hàng gốc còn mỏng. Luyện cả bộ hoặc lọc theo domain:</p>
+            <div className="ccar-dfilter" role="group" aria-label="Lọc bộ đề Claude biên soạn theo domain">
+              <Link href={`${CCAR_BASE}/practice/${setId.authored()}`}>Tất cả</Link>
+              {domains
+                .filter((d) => authored.byDomain[d.num])
+                .map((d) => (
+                  <Link key={d.num} href={`${CCAR_BASE}/practice/${setId.authored(d.num)}`} title={`${d.title}: ${authored.byDomain[d.num]} câu`}>
+                    D{d.num} <small>{authored.byDomain[d.num]}</small>
+                  </Link>
+                ))}
+            </div>
+            <div className="meta">
+              <span>Luyện tập · có giải thích</span>
+              <span>{best("claude") ?? "Chưa làm"}</span>
+            </div>
+          </div>
+        )}
         <div className="oci-mix ccar-span2">
           <div className="row">
             <span className="lbl">Domain:</span>

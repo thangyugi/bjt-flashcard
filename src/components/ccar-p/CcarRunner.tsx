@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, CircleCheck, CircleX, Clock, Flag, RotateCcw, Send, Trophy, X } from "lucide-react";
 import type { BankQuestion } from "@/data/ccar-p/types";
-import { CCAR_BASE, DOMAIN_SHORT } from "@/data/ccar-p/meta";
+import { AUTHORED_LABEL, CCAR_BASE, DOMAIN_SHORT } from "@/data/ccar-p/meta";
 import { optionOrder, seededShuffle } from "@/data/ccar-p/shuffle";
 import { useCcarStore } from "@/store/ccar-p-store";
 import { Breadcrumbs } from "@/components/ui/page";
@@ -134,6 +134,14 @@ function QuestionCard({
       <div className="oci-pq-top">
         <span className="oci-q-num">
           Câu {index + 1}/{total} · {q.task.replace("-", ".")} · {DOMAIN_SHORT[q.domain]}
+          {q.authored && (
+            <>
+              {" "}
+              <span className="ccar-tag authored" title={`Câu mới do Claude biên soạn (${q.authored}), không thuộc ngân hàng đề gốc`}>
+                {AUTHORED_LABEL}
+              </span>
+            </>
+          )}
         </span>
         {onFlag && (
           <button className={`oci-flag${flagged ? " on" : ""}`} onClick={onFlag} aria-pressed={flagged}>
@@ -272,7 +280,11 @@ function Explain({ q, letter, order }: { q: BankQuestion; letter: (k: string) =>
         </div>
       )}
       <p className="ccar-notice">
-        <span>Đáp án và giải thích do Claude soạn, chưa đối chiếu đáp án chính thức.</span>
+        <span>
+          {q.authored
+            ? `Câu hỏi, đáp án và giải thích do Claude biên soạn${q.source ? ` · nguồn: ${q.source}` : ""}.`
+            : "Đáp án và giải thích do Claude soạn, chưa đối chiếu đáp án chính thức."}
+        </span>
         {q.confidence !== "high" && <span className={`ccar-conf${q.confidence === "low" ? " low" : ""}`}>Độ tin cậy: {CONF_VI[q.confidence]}</span>}
       </p>
     </div>

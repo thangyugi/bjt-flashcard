@@ -60,6 +60,10 @@ interface BankBase {
   remember: string;
   /** 💡 Vì sao chọn ô này */
   why: string;
+  /** Câu do Claude biên soạn (không thuộc ngân hàng gốc): mã "c-<domain>-<nn>" */
+  authored?: string;
+  /** Nguồn tài liệu của câu Claude biên soạn */
+  source?: string;
 }
 
 export interface BankMcq extends BankBase {
@@ -85,6 +89,23 @@ export interface LessonMeta {
   code: string;
   title: string;
   domain: number;
+}
+
+/** Lớp bổ sung do Claude biên soạn (HTML dựng sẵn từ Markdown) */
+export interface SupplementItem {
+  layer: "can-thuoc" | "cach-chon" | "bay";
+  title: string;
+  html: string;
+}
+
+export interface Supplement {
+  label: string;
+  note: string;
+  updated: string;
+  referenceTitle: string;
+  /** task "3-1" → các mục bổ sung */
+  tasks: Record<string, SupplementItem[]>;
+  reference: { id: string; title: string; html: string }[];
 }
 
 export interface DomainMeta {
