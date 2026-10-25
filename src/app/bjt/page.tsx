@@ -49,7 +49,7 @@ export default function BjtGroupsPage() {
             Từ vựng BJT <span className="font-mincho tracking-[0.12em] normal-case">ビジネス日本語</span>
           </>
         }
-        accent="#a14f06"
+        accent="#8f5a00"
         title="Chọn nhóm để học"
         lead="Học tập trung theo từng nhóm chủ đề công sở. Thẻ đã thuộc được tính vào tiến độ bên cạnh."
         actions={

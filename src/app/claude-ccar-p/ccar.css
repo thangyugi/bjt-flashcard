@@ -1,14 +1,29 @@
 /* ══════════════════════════════════════════════════════════
    Claude Certified Architect – Professional — /claude-ccar-p
-   Dựa trên giao diện .oci-* (oci.css), chỉ đổi màu nhấn sang tím
-   và thêm phần riêng: thứ tự học, câu hỏi bảng, lời giải.
+   Dựa trên giao diện .oci-* (oci.css), đổi sang bảng màu thương hiệu
+   Anthropic/Claude (đất nung trên nền ngà) và thêm phần riêng:
+   thứ tự học, câu hỏi bảng, lời giải.
 ══════════════════════════════════════════════════════════ */
 
 .oci-root.ccar-root {
-  --o-accent: #6d28d9;
-  --o-accent-hover: #5b21b6;
-  --o-accent-soft: #f1ebfd;
+  /* Màu khóa (main/deep/soft): đất nung Claude làm đậm để chữ đạt WCAG AA.
+     main #A9502F: chữ trắng 5.4:1, trên nền ngà 4.7:1 · deep #8C3F22: chữ trắng 7.4:1
+     mark #D97757 (coral Claude) chỉ dùng cho mảng tô, vạch, hình vẽ — không dùng làm màu chữ. */
+  --o-accent: #a9502f;
+  --o-accent-hover: #8c3f22;
+  --o-accent-soft: #faede6;
   --o-accent-ink: #ffffff;
+  --o-accent-mark: #d97757;
+  /* Bề mặt kiểu Anthropic (ngà / giấy / slate) — chỉ trong khóa này */
+  --o-bg: #f0eee6;
+  --o-surface: #faf9f5;
+  --o-surface-2: #e8e6dc;
+  --o-surface-3: #dedbd0;
+  --o-line: rgba(25, 25, 25, 0.1);
+  --o-line-strong: rgba(25, 25, 25, 0.18);
+  --o-text: #191919;
+  --o-text-2: #4f4a43;
+  --o-text-3: #6b645b;
 }
 
 /* Thứ tự học 3 → 4 → 1 → … */
@@ -45,7 +60,7 @@
 .ccar-domain .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--o-text-3); }
 .ccar-domain .foot a { font-weight: 650; color: var(--o-accent); }
 .ccar-wbar { height: 6px; border-radius: 99px; background: var(--o-surface-3); overflow: hidden; }
-.ccar-wbar > i { display: block; height: 100%; border-radius: inherit; background: var(--o-accent); }
+.ccar-wbar > i { display: block; height: 100%; border-radius: inherit; background: var(--o-accent-mark); }
 
 /* Khối bài đọc dài trên trang chủ khóa (đăng ký thi, số liệu) */
 .ccar-guide { padding: 6px 0 0; }

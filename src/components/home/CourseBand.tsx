@@ -10,6 +10,8 @@ interface CourseCol {
   /** id trong src/data/courses.ts (cũng là khóa trong catalog) */
   id: "jlpt-n1" | "english" | "oci-ai" | "bjt" | "ccar-p";
   color: string;
+  /** Màu mảng tô / vạch (mặc định = color) */
+  mark?: string;
   icon: IsoName;
   meta: [string, ReactNode];
   title: [string, string];
@@ -70,7 +72,7 @@ export function CourseBand({ catalog }: { catalog: HomeCatalog }) {
     },
     {
       id: "bjt",
-      color: "#a14f06",
+      color: "#8f5a00",
       icon: "bjt",
       meta: [
         "Tiếng Nhật thương mại",
@@ -90,7 +92,8 @@ export function CourseBand({ catalog }: { catalog: HomeCatalog }) {
     },
     {
       id: "ccar-p",
-      color: "#6d28d9",
+      color: "#a9502f",
+      mark: "#d97757",
       icon: "ccar",
       meta: ["Chứng chỉ Anthropic", <span key="m">CCAR-P</span>],
       title: ["Claude", "Architect"],
@@ -116,6 +119,7 @@ export function CourseBand({ catalog }: { catalog: HomeCatalog }) {
             id={c.id}
             href={course.href}
             color={c.color}
+            mark={c.mark}
             lessons={lessons}
             bjtTotal={bjt.cards}
             art={<IsoIcon name={c.icon} />}

@@ -3,8 +3,9 @@
 export const CCAR_BASE = "/claude-ccar-p";
 export const CCAR_TITLE = "Claude Certified Architect – Professional";
 export const CCAR_SHORT = "CCAR-P";
-/** Màu riêng của khóa (tím) */
-export const CCAR_COLOR = "#6d28d9";
+/** Màu riêng của khóa: đất nung Claude làm đậm (chữ trắng 5.4:1); CCAR_MARK là coral gốc cho mảng tô / hình vẽ */
+export const CCAR_COLOR = "#a9502f";
+export const CCAR_MARK = "#d97757";
 
 /** Thứ tự học đáng tiền nhất theo tài liệu ôn: 3 → 4 → 1 → 5 → 6 → 2 → 7 */
 export const STUDY_ORDER = [3, 4, 1, 5, 6, 2, 7];

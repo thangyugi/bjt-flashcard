@@ -179,7 +179,7 @@ export function QuizHub() {
     <PageHeader
       crumbs={[{ label: "Trắc nghiệm", href: "/quiz" }, { label: "Từ vựng BJT" }]}
       eyebrow="Trắc nghiệm · Bước 2/2 · Từ vựng BJT"
-      accent="#a14f06"
+      accent="#8f5a00"
       title="Trắc nghiệm từ vựng BJT"
       lead="Chọn phạm vi ôn tập, số câu và dạng câu hỏi rồi bắt đầu. Mặc định đã sẵn sàng: bấm Bắt đầu là làm ngay."
       actions={

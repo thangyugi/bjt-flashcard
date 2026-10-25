@@ -9,7 +9,7 @@ export interface CourseCard {
   desc: string;
   tags: string[];
   /** Màu nền ảnh bìa */
-  tone: "red" | "ink" | "amber" | "blue" | "violet";
+  tone: "red" | "ink" | "amber" | "blue" | "clay";
 }
 
 export const COURSES: CourseCard[] = [
@@ -51,7 +51,7 @@ export const COURSES: CourseCard[] = [
     title: "Claude Certified Architect – Professional",
     desc: "Ôn thi CCAR-P bằng tiếng Việt: 7 domain, 38 task statement, mỗi bài ba lớp Hiểu nhanh · Cách chọn khi làm đề · Cần thuộc, ngân hàng câu hỏi có giải thích và đề thi thử 63 câu.",
     tags: ["Chứng chỉ CCAR-P", "Luyện đề", "Tiếng Việt"],
-    tone: "violet",
+    tone: "clay",
   },
   {
     id: "bjt",

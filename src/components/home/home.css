@@ -737,7 +737,7 @@
   right: -1px;
   width: 9px;
   height: 58px;
-  background: var(--c, var(--ink-3));
+  background: var(--cm, var(--c, var(--ink-3)));
   border-radius: 3px 0 0 3px;
   transform: scaleX(0);
   transform-origin: right;
@@ -794,15 +794,15 @@
 }
 .hp .course:hover .ico .acc.ft,
 .hp .course:has(> .hit:focus-visible) .ico .acc.ft {
-  fill: color-mix(in srgb, var(--c) 72%, #fff);
+  fill: color-mix(in srgb, var(--cm, var(--c)) 72%, #fff);
 }
 .hp .course:hover .ico .acc.fl,
 .hp .course:has(> .hit:focus-visible) .ico .acc.fl {
-  fill: var(--c);
+  fill: var(--cm, var(--c));
 }
 .hp .course:hover .ico .acc.fr,
 .hp .course:has(> .hit:focus-visible) .ico .acc.fr {
-  fill: color-mix(in srgb, var(--c) 72%, #000);
+  fill: color-mix(in srgb, var(--cm, var(--c)) 72%, #000);
 }
 .hp .course:hover .ico .acc,
 .hp .course:has(> .hit:focus-visible) .ico .acc {
