@@ -1,0 +1,3115 @@
+{
+ "front": [
+  {
+   "id": "s1",
+   "title": "Đăng ký thi — làm theo từng bước",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Đây là đường đi thật của người đã thi CCAR-P. Ghi danh ở Anthropic Partner Academy, đặt lịch bên Pearson VUE — hai chỗ khác nhau, làm đúng thứ tự thì không phải quay lại."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Chặng A · Tạo tài khoản ＋ thanh toán",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "ol",
+     "items": [
+      "Mở trang khoá học trên Anthropic Partner Academy.",
+      "Tạo tài khoản rồi ghi danh. Đang đi làm thì dùng email công ty, sau này xin hoàn phí mới khớp hồ sơ."
+     ]
+    },
+    {
+     "t": "p",
+     "text": "⚠️ Điền họ tên đúng như trên giấy tờ tuỳ thân — hôm thi giám thị soi từng chữ.",
+     "tone": "warn"
+    },
+    {
+     "t": "ol",
+     "items": [
+      "Có tài khoản chưa phải là đã đăng ký thi. Từ Home → Course trên thanh trên → chọn khoá Claude Certified Architect – Professional.",
+      "Bấm Register for the exam — $175 USD rồi thanh toán. Là đối tác của Anthropic thì số hiện ra lúc trả tiền đã trừ phần giảm theo hạng.",
+      "Xong sẽ có ba thư về hộp thư: hoá đơn, tài khoản, mật khẩu — kỳ thi do Pearson VUE tổ chức chứ không chạy trên nền tảng của Anthropic."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Chặng B · Đặt lịch bên Pearson VUE",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "ol",
+     "items": [
+      "Theo liên kết trong thư, đăng nhập Pearson VUE rồi chọn ngày giờ thi.",
+      "Chọn thi tại trung tâm khảo thí hay giám sát trực tuyến ở nhà.",
+      "Đổi hoặc huỷ lịch: quy chế ghi trước 24 tiếng, nhưng người đã thi khuyên chốt trước 48 tiếng cho chắc. Trong 24 tiếng cuối là mất lệ phí.",
+      "Sai tên trên hồ sơ thì viết cho certifications-support@anthropic.com trước khi đặt lịch. Việc còn lại — ghi danh, lịch thi, hỗ trợ đặc biệt, kết quả — hỏi Pearson VUE ở pearsonvue.com/us/en/anthropic.html."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Trước ngày thi ＋ hôm thi",
+   "level": 2,
+   "blocks": []
+  },
+  {
+   "id": "s5",
+   "title": "Chặng C · Trước ngày thi",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "ol",
+     "items": [
+      "Khoảng 3 ngày trước, Pearson VUE gửi thư kèm liên kết check-in và quy chế phòng thi.",
+      "Trong thư có mục test system: tải phần mềm thi rồi chạy thử webcam, micro, đường mạng ngay hôm ấy — đừng để sát giờ."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Chặng D · Hôm thi",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "ol",
+     "items": [
+      "Liên kết check-in chỉ mở trước giờ thi 30 phút. Bấm vào để vào luồng thi; màn hình hiện mã QR cho bạn quét bằng điện thoại.",
+      "Chụp ảnh chỗ ngồi đủ bốn phía, nộp qua điện thoại, rồi chờ người kiểm."
+     ]
+    },
+    {
+     "t": "p",
+     "text": "🚫 Nộp xong là cất điện thoại, tới hết giờ thi không đụng vào nữa.",
+     "tone": "ban"
+    },
+    {
+     "t": "ol",
+     "items": [
+      "Trong lúc thi có ô chat: đầu kia là giám thị người thật, không phải máy. Rớt mạng hay trục trặc thì họ nhắn trước; cần giúp thì cứ gõ vào đó."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Số liệu kỳ thi",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Số chốt của kỳ thi này, đọc thẳng từ Exam Guide chính chủ — tải ở trang chứng chỉ chính chủ."
+    },
+    {
+     "t": "table",
+     "head": [
+      "Mục",
+      "Claude Certified Architect – Professional"
+     ],
+     "rows": [
+      [
+       "Mã thi",
+       "CCAR-P"
+      ],
+      [
+       "Số đề mục",
+       "63"
+      ],
+      [
+       "Thời gian",
+       "120 phút"
+      ],
+      [
+       "Dạng đề mục",
+       "Trắc nghiệm một đáp án và nhiều đáp án; mỗi đề mục đều ghi rõ phải chọn mấy ý"
+      ],
+      [
+       "Điều kiện dự thi",
+       "Không có — không bắt buộc khoá học hay chứng chỉ nào trước đó"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s8",
+   "title": "CCAR-P · Claude Certified Architect – Professional",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "✅ Bài này bám Exam Guide chính chủ của Anthropic, bản Version 1.0, hiệu lực tháng 7/2026, mã kỳ thi CCAR-P. Tên domain, tỉ trọng, số câu, điểm đạt và chính sách dưới đây lấy đúng từ guide. Phần giảng giải, bảng quyết định và bẫy là do mình viết, không phải chữ của hãng.",
+     "tone": "ok"
+    },
+    {
+     "t": "p",
+     "text": "Mỗi mục có ba lớp, đọc theo nhu cầu:"
+    },
+    {
+     "t": "table",
+     "head": [
+      "Lớp",
+      "Dùng khi"
+     ],
+     "rows": [
+      [
+       "💡 Hiểu nhanh",
+       "học lần đầu — 2–3 câu, đủ để có mô hình trong đầu"
+      ],
+      [
+       "🎯 Cách chọn khi làm đề",
+       "luyện đề — quy tắc quyết định, không phải định nghĩa"
+      ],
+      [
+       "📚 Cần thuộc",
+       "trước ngày thi — danh sách tên riêng phải nhớ mặt"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "text": "Tên domain và tên task statement giữ nguyên tiếng Anh, vì trên đề và trên bảng điểm bạn sẽ gặp đúng những chữ ấy."
+    }
+   ]
+  },
+  {
+   "id": "s9",
+   "title": "Mục lục ＋ tỉ trọng CHÍNH CHỦ",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "table",
+     "head": [
+      "Domain",
+      "Tỉ trọng hãng",
+      "Số task statement",
+      "Học cái gì"
+     ],
+     "rows": [
+      [
+       "1 · Solution Design & Architecture",
+       "17%",
+       "6",
+       "dịch nhu cầu → kiến trúc · mẫu · multi-agent · phân rã · trụ giá trị"
+      ],
+      [
+       "2 · Claude Models, Prompting & Context Engineering",
+       "13%",
+       "5",
+       "đánh đổi model · system prompt · prompt engineering · context window · tái dùng prompt"
+      ],
+      [
+       "3 · Integration",
+       "19%",
+       "8",
+       "tool bloat · authz · độ trễ · observability · RAG · retrieval · MCP · khám phá dần"
+      ],
+      [
+       "4 · Evaluation, Testing & Optimization",
+       "16%",
+       "6",
+       "metric · tập eval · A/B · chẩn đoán · tối ưu · giám sát"
+      ],
+      [
+       "5 · Governance, Safety & Risk Management",
+       "14%",
+       "5",
+       "guardrail · failure mode · HITL · tuân thủ · đạo đức"
+      ],
+      [
+       "6 · Stakeholder Communication & Lifecycle Management",
+       "14%",
+       "5",
+       "khảo sát · trình bày · vòng phản hồi ＋ SLA · tài liệu · vòng đời"
+      ],
+      [
+       "7 · Developer Productivity & Operational Enablement",
+       "7%",
+       "3",
+       "cấu hình cho đội · luồng việc · gỡ lỗi vận hành"
+      ],
+      [
+       "Tổng",
+       "100%",
+       "38"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "text": "⭐ Domain 3 ＋ 4 ＋ 1 ＝ 52%, quá nửa bài. Domain 7 chỉ 7% — nhỏ nhất, đừng dồn thời gian vào đó. Thứ tự học đáng tiền nhất: 3 → 4 → 1 → 5 → 6 → 2 → 7.",
+     "tone": "star"
+    }
+   ]
+  },
+  {
+   "id": "s10",
+   "title": "Tỉ trọng hãng so với tỉ trọng ngân hàng đề trong app",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Trước khi có guide, bảng tỉ trọng ở đây là đếm từ 313 câu trong app. Giờ đối chiếu được rồi, và chỗ lệch là thông tin đáng giữ: nó cho biết đề luyện trong app nặng lệch chỗ nào so với đề thật."
+    },
+    {
+     "t": "table",
+     "head": [
+      "Domain",
+      "Hãng",
+      "Đếm từ ngân hàng đề",
+      "Nghĩa là"
+     ],
+     "rows": [
+      [
+       "1 · Solution Design & Architecture",
+       "17%",
+       "~14%",
+       "app thiếu — luyện thêm"
+      ],
+      [
+       "2 · Models, Prompting & Context",
+       "13%",
+       "~11%",
+       "app thiếu nhẹ"
+      ],
+      [
+       "3 · Integration",
+       "19%",
+       "~18%",
+       "khớp — và là domain nặng nhất ở cả hai bên"
+      ],
+      [
+       "4 · Evaluation, Testing & Optimization",
+       "16%",
+       "~15%",
+       "khớp"
+      ],
+      [
+       "5 · Governance, Safety & Risk",
+       "14%",
+       "~16%",
+       "app thừa nhẹ"
+      ],
+      [
+       "6 · Stakeholder & Lifecycle",
+       "14%",
+       "~14%",
+       "khớp"
+      ],
+      [
+       "7 · Developer Productivity",
+       "7%",
+       "~12%",
+       "app thừa nhiều — đừng lấy tỉ lệ đề trong app làm thước đo"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "text": "⚠️ Chỗ lệch to nhất là Domain 7: trong app nó chiếm gần gấp đôi tỉ trọng thật. Làm đề ở đây xong đừng tưởng Claude Code chiếm nhiều điểm — đề thật chỉ dành 7%, tức khoảng 4 câu trên 63. Ngược lại Domain 1 bị thiếu, nên đó là chỗ nên đọc kỹ tài liệu thay vì chỉ cày câu hỏi.",
+     "tone": "warn"
+    },
+    {
+     "t": "p",
+     "text": "📋 Thủ tục thi tách riêng, không chép lại ở đây: đăng ký từng bước ＋ số liệu kỳ thi nằm ở đầu trang, quy chế (chấm điểm, giấy tờ, thi lại, phòng thi, gia hạn) nằm ở cuối trang. Mỗi con số chỉ nói một lần, đúng chỗ cần dùng tới nó.",
+     "tone": "note"
+    },
+    {
+     "t": "p",
+     "text": "⭐⭐ Có multiple-response nghĩa là có câu chọn nhiều đáp án, và đề nói rõ phải chọn mấy cái. Đọc kỹ dòng đó trước khi bấm — chọn thiếu một ý thường bị tính sai cả câu.",
+     "tone": "star"
+    }
+   ]
+  },
+  {
+   "id": "s11",
+   "title": "Đề hỏi kiểu gì",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Guide có mấy câu mẫu. Không chép vào đây — nhưng bài học rút ra thì chép được, và đây là mấy bài học đắt nhất:"
+    },
+    {
+     "t": "table",
+     "head": [
+      "Bài học",
+      "Diễn giải"
+     ],
+     "rows": [
+      [
+       "Least privilege là GỠ BỎ, không phải canh chừng",
+       "tool mà vai trò đó không cần thì bỏ khỏi cấu hình; thêm log hay thêm bước xác nhận chỉ là biện pháp bù, không phải bỏ quyền"
+      ],
+      [
+       "Thứ tự nội dung quyết định cache",
+       "phần tĩnh lên trước, phần thay đổi xuống sau, rồi bật caching — một đòn chữa cả chi phí lẫn độ trễ"
+      ],
+      [
+       "Triệu chứng nào thì soi tầng nào",
+       "trả lời sai mà tự tin, ngay sau khi làm mới tài liệu, model và độ trễ không đổi ⇒ lỗi nằm ở retrieval/index, không phải ở model"
+      ],
+      [
+       "Cắt bớt ngữ cảnh không phải là tối ưu",
+       "cắt tài liệu chính sách cho ngắn là mất thông tin bắt buộc, đề gài ô này rất nhiều"
+      ],
+      [
+       "Đổi model to hơn không chữa lỗi phân quyền",
+       "quyền là chuyện hệ thống, model nào cũng vậy"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "text": "🎯 Nhìn vào các câu mẫu thấy rõ một khuôn: đề tả một tình huống production có triệu chứng cụ thể, bốn ô đều nghe hợp lý, và ô đúng là ô chạm đúng nguyên nhân gốc chứ không phải ô làm dịu triệu chứng.",
+     "tone": "choose"
+    }
+   ]
+  },
+  {
+   "id": "s12",
+   "title": "Ai nên thi ＋ không thi",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Guide vẽ chân dung minimally qualified candidate (MQC) khá rõ. Đọc để tự soi xem mình đang hổng chỗ nào:"
+    },
+    {
+     "t": "table",
+     "head": [
+      "Hãng khuyến nghị",
+      "Cụ thể"
+     ],
+     "rows": [
+      [
+       "Nền tảng kỹ thuật phần mềm",
+       "thiết kế module, tách mối quan tâm, khả năng mở rộng"
+      ],
+      [
+       "Kinh nghiệm kiến trúc hệ thống",
+       "3＋ năm systems architecture hoặc platform engineering"
+      ],
+      [
+       "Kinh nghiệm với Claude / LLM",
+       "6＋ tháng làm hệ LLM chạy production"
+      ],
+      [
+       "Đã đi hết một vòng đời",
+       "từ discovery tới triển khai và vận hành"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "text": "Guide nói thẳng kỳ thi không dành cho: lập trình viên mới vào nghề · người chỉ dùng app có Claude · người chỉ viết prompt mà không chịu trách nhiệm thiết kế hệ thống · vai trò thuần phi kỹ thuật. Nếu bạn nằm trong nhóm này thì bản Foundations hợp hơn."
+    },
+    {
+     "t": "p",
+     "text": "ℹ️ Guide phiên bản 1.0 không có mục In-Scope / Out-of-Scope Topics riêng. Cái gần nhất với \"ngoài phạm vi\" chính là hai đoạn trên: đối tượng không nhắm tới, và những việc không thuộc vai trò kiến trúc sư. Ngoài ra guide nói rõ không có khoá học bắt buộc, và Anthropic không bảo đảm tài liệu nào giúp chắc chắn đỗ.",
+     "tone": "info"
+    }
+   ]
+  }
+ ],
+ "domains": [
+  {
+   "num": 1,
+   "title": "Solution Design & Architecture",
+   "weight": 17,
+   "intro": [
+    {
+     "t": "p",
+     "text": "6 task statement. Học xong phải: nghe một nhu cầu kinh doanh mơ hồ và vẽ ra được kiến trúc đủ đơn giản để chạy được, đồng thời biết lúc nào KHÔNG cần agent."
+    }
+   ],
+   "tasks": [
+    {
+     "id": "1-1",
+     "code": "1.1",
+     "title": "Translate business problems into Claude-based AI solutions",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Bước đầu không phải chọn model, mà là chuyển một câu than phiền thành một bài toán đo được. \"Support quá tải\" là than phiền; \"giảm thời gian xử lý ticket hạng 1 từ 8 phút xuống 3 phút, không tăng tỉ lệ escalate\" mới là bài toán. Mọi quyết định kiến trúc sau đó phải quy chiếu về con số ấy.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề. Đề mô tả một nhu cầu rồi đưa bốn kiến trúc. Ô đúng gần như luôn là ô rẻ nhất mà vẫn chạm tới chỉ số kinh doanh đề nêu. Gạch ngay ô nào thêm năng lực mà đề không hề yêu cầu.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Câu than phiền",
+        "Bài toán đo được tương ứng"
+       ],
+       "rows": [
+        [
+         "\"Nhân viên mất quá nhiều thời gian\"",
+         "phút trên mỗi ca xử lý, đo trước ＋ sau"
+        ],
+        [
+         "\"Chất lượng trả lời không đều\"",
+         "tỉ lệ đạt rubric trên tập mẫu"
+        ],
+        [
+         "\"Chi phí vận hành cao\"",
+         "chi phí trên mỗi việc hoàn thành"
+        ],
+        [
+         "\"Khách phàn nàn\"",
+         "CSAT ＋ tỉ lệ escalate lên người"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Phân biệt chỉ số model (accuracy, độ trễ p95, tỉ lệ gọi tool sai) với chỉ số kinh doanh (chi phí mỗi ticket, tỉ lệ tự phục vụ, CSAT). Đề gài rất nhiều ô \"cải thiện accuracy\" cho câu hỏi thật ra đang hỏi về giá trị kinh doanh.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "1-2",
+     "code": "1.2",
+     "title": "Design end-to-end architectures (input → processing → output → feedback loops)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Chữ feedback loop nằm ngay trong tên task statement, và đó là phần người ta hay quên. Một hệ Claude chạy thật gần như luôn có năm tầng: cổng vào (auth, rate limit) → dựng ngữ cảnh (prompt ＋ retrieval) → gọi model → thực thi tool → quan sát ＋ vòng phản hồi.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề. Đề vẽ một kiến trúc thiếu một tầng rồi hỏi \"thiếu gì\". Tầng hay bị bỏ nhất là vòng phản hồi: không có chỗ thu lỗi về, không có chỗ biến lỗi thành ca eval, không có nhịp xem lại.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Tầng",
+        "Thiếu nó thì hỏng kiểu gì"
+       ],
+       "rows": [
+        [
+         "Input",
+         "không kiểm đầu vào ⇒ prompt injection ＋ rác vào thẳng model"
+        ],
+        [
+         "Context building",
+         "retrieval trượt ⇒ model bịa mà vẫn tự tin"
+        ],
+        [
+         "Model call",
+         "sai model/tham số ⇒ đắt hoặc chậm hoặc cụt output"
+        ],
+        [
+         "Tool execution",
+         "thiếu chốt quyền ⇒ hành động phá huỷ"
+        ],
+        [
+         "Output ＋ feedback",
+         "không đo ⇒ chất lượng trôi mà không ai biết"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Vòng phản hồi phải đóng lại thành dữ liệu: mỗi lời than của người dùng nên thành một dòng trong tập eval, không phải một lần sửa prompt theo cảm giác.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "1-3",
+     "code": "1.3",
+     "title": "Select appropriate architectural patterns (workflow, agentic, augmented LLM)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Ba mẫu trong ngoặc của hãng xếp theo bậc thang tự do: augmented LLM (một lượt gọi, có thêm retrieval/tool) → workflow (nhiều bước, code cầm thứ tự) → agentic (model tự chọn bước). Lên bậc nào cũng phải trả giá bằng chi phí ＋ độ trễ ＋ khó đoán.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — bảng đáng chép vào sổ:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Đề mô tả",
+        "Mẫu đúng"
+       ],
+       "rows": [
+        [
+         "Một việc, đầu vào rõ, đầu ra rõ",
+         "augmented LLM — một lần gọi, đừng agent hoá"
+        ],
+        [
+         "Nhiều bước, thứ tự biết trước",
+         "workflow do code điều khiển"
+        ],
+        [
+         "Nhiều bước, không biết trước bước nào",
+         "agentic — model tự chọn tool"
+        ],
+        [
+         "Cần định tuyến câu dễ ↔ câu khó",
+         "router sang model rẻ ↔ model mạnh"
+        ],
+        [
+         "Đầu ra phải hợp một schema cố định",
+         "structured outputs, không phải parse chuỗi"
+        ],
+        [
+         "Việc chậm, không cần tức thì",
+         "batch — rẻ hơn đáng kể"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Bẫy kinh điển của cả kỳ thi: ô đáp án nào cũng dựng agent. Anthropic nói thẳng là bắt đầu từ tầng đơn giản nhất; chỉ lên agentic khi bốn điều kiện cùng đúng: việc phức tạp khó đặc tả trước · giá trị đủ lớn để bù chi phí và độ trễ · Claude thật sự làm được loại việc đó · sai thì phát hiện và sửa được (có test, có review, có rollback). Thiếu một trong bốn ⇒ lùi về workflow.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Bốn cách dựng agent, khác nhau ở ai cấp harness và ai cấp hạ tầng:",
+       "tone": "learn"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Cách",
+        "Vòng lặp",
+        "Hạ tầng",
+        "Chọn khi"
+       ],
+       "rows": [
+        [
+         "Vòng lặp tay",
+         "bạn viết",
+         "bạn chạy",
+         "cần kiểm soát tuyệt đối"
+        ],
+        [
+         "Tool Runner (SDK)",
+         "SDK lo",
+         "bạn chạy",
+         "agent tool tự định nghĩa, khỏi viết loop"
+        ],
+        [
+         "Managed Agents",
+         "Anthropic lo",
+         "Anthropic lo",
+         "phiên dài, có workspace, có lịch chạy"
+        ],
+        [
+         "Claude Agent SDK",
+         "Claude Code đóng gói",
+         "bạn chạy",
+         "agent lập trình/thao tác tệp sẵn tool"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "id": "1-4",
+     "code": "1.4",
+     "title": "Design multi-agent systems and orchestration strategies",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Multi-agent không phải để thông minh hơn, mà để chia ngữ cảnh. Lý do chính đáng duy nhất: một vòng lặp sẽ đọc đầy context window (nghiên cứu nhiều nguồn, duyệt N tệp, N bản ghi). Khi ấy tách phần đọc nặng sang worker rẻ, giữ phần tổng hợp cho orchestrator.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Kiểu điều phối",
+        "Dùng khi",
+        "Coi chừng"
+       ],
+       "rows": [
+        [
+         "Orchestrator ＋ worker",
+         "việc chia được thành N nhánh đọc độc lập",
+         "worker trả bản tóm, đừng trả nguyên văn"
+        ],
+        [
+         "Router",
+         "traffic pha trộn dễ ↔ khó",
+         "router sai thì câu khó rơi vào model yếu"
+        ],
+        [
+         "Chuỗi tuần tự",
+         "bước sau cần kết quả bước trước",
+         "đây là workflow, không cần multi-agent"
+        ],
+        [
+         "Evaluator ＋ generator",
+         "đầu ra cần được chấm rồi sửa lại",
+         "tốn gấp đôi token, phải đáng"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Multi-agent đắt hơn một vòng lặp: mỗi agent có prompt riêng, ngữ cảnh riêng, và cache không dùng chung được. Đề than chi phí mà ô đáp án thêm agent thì gần như luôn sai.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Khi chạy parallel tool calls, mọi tool_result phải trả về trong MỘT message user — tách ra nhiều message sẽ ngầm dạy model thôi gọi song song. Tool lỗi vẫn phải trả tool_result với is_error: true, đừng bỏ trống.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "1-5",
+     "code": "1.5",
+     "title": "Apply decomposition techniques for complex problem solving",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Phân rã là chia việc cho vừa một lượt gọi. Một prompt bắt model vừa đọc, vừa phân loại, vừa viết, vừa kiểm thì lượt nào cũng có chỗ hỏng và không biết hỏng ở đâu.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Triệu chứng đề nêu",
+        "Cách phân rã đúng"
+       ],
+       "rows": [
+        [
+         "Ngữ cảnh phình vì đọc nhiều tài liệu",
+         "worker fan-out, mỗi worker trả bản tóm"
+        ],
+        [
+         "Một prompt phải làm quá nhiều việc trái dấu",
+         "prompt chaining — tách thành chuỗi bước"
+        ],
+        [
+         "Bước sau phụ thuộc bước trước, thứ tự cố định",
+         "workflow, KHÔNG phải multi-agent"
+        ],
+        [
+         "Cần vừa nhanh vừa chính xác",
+         "router: model rẻ lọc, model mạnh quyết"
+        ],
+        [
+         "Việc lặp trên N phần tử độc lập",
+         "parallel tool calls trong một lượt"
+        ],
+        [
+         "Đầu ra dài quá max_tokens",
+         "chia đầu ra thành phần, ghép ở tầng code"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Phân rã xong phải đo được từng mảnh. Lợi ích lớn nhất của chuỗi bước không phải chất lượng, mà là khoanh được lỗi ở bước nào.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "1-6",
+     "code": "1.6",
+     "title": "Align solutions to business value pillars",
+     "subtitle": "efficiency · transformation · productivity · cost · performance SLAs",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Hãng liệt kê năm trụ giá trị, và performance SLA nằm trong danh sách — tức là cam kết độ trễ, độ sẵn sàng, thông lượng là một phần của giá trị kinh doanh, không phải chi tiết kỹ thuật phụ.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Trụ giá trị",
+        "Biểu hiện trong kiến trúc"
+       ],
+       "rows": [
+        [
+         "Efficiency",
+         "bớt bước thủ công · tự động hoá phần lặp"
+        ],
+        [
+         "Transformation",
+         "làm được việc trước đây không làm nổi, không chỉ nhanh hơn"
+        ],
+        [
+         "Productivity",
+         "cùng người làm được nhiều hơn · giảm thời gian chờ"
+        ],
+        [
+         "Cost",
+         "model nhỏ hơn · caching · batch · cắt ngữ cảnh thừa"
+        ],
+        [
+         "Performance SLA",
+         "độ trễ p95 · tỉ lệ sẵn sàng · thông lượng giờ cao điểm"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Đề hay tả một SLA cứng (\"p95 phải dưới 2 giây\") rồi đưa ô \"dùng model mạnh nhất\". Ô đó vi phạm chính ràng buộc đề vừa nêu. Ràng buộc SLA thắng ham muốn chất lượng.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Mỗi quyết định kiến trúc nên nói được trụ nào được lợi và trụ nào bị hy sinh. Câu trả lời \"cái gì cũng tốt lên\" là câu trả lời sai.",
+       "tone": "learn"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "num": 2,
+   "title": "Claude Models, Prompting & Context Engineering",
+   "weight": 13,
+   "intro": [
+    {
+     "t": "p",
+     "text": "5 task statement. Học xong phải: chọn model theo ràng buộc, và biết cái gì trong request ăn context window."
+    }
+   ],
+   "tasks": [
+    {
+     "id": "2-1",
+     "code": "2.1",
+     "title": "Select appropriate Claude models based on trade-offs",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Các tầng model đọc theo trục thông minh ↔ giá ↔ độ trễ: Opus cho việc khó và agentic dài hơi · Sonnet cho khối lượng lớn cần phán đoán · Haiku cho phân loại, trích xuất, worker rẻ. Ngoài ra còn tầng Fable cho suy luận khó nhất, giá cao hơn Opus.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề. Trước khi đổi model, thử nấc rẻ hơn trên CÙNG model: giảm effort. Đây là bẫy đề hay gài — ô \"đổi sang model nhỏ hơn\" trông hợp lý nhưng hạ effort thường giữ chất lượng tốt hơn, lại không mất cache (cache gắn theo model, đổi model là mất sạch).",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Ràng buộc đề nêu",
+        "Nước đi đúng"
+       ],
+       "rows": [
+        [
+         "Hoá đơn cao, chất lượng đang thừa",
+         "hạ effort trước, rồi mới hạ model"
+        ],
+        [
+         "Độ trễ p95 quá cao",
+         "model nhỏ hơn · streaming · cắt ngữ cảnh"
+        ],
+        [
+         "Việc agentic dài, nhiều bước",
+         "model mạnh, effort cao, thinking adaptive"
+        ],
+        [
+         "Worker đọc nhiều, phán đoán ít",
+         "model nhỏ nhất đạt yêu cầu"
+        ],
+        [
+         "Cần trả JSON đúng schema",
+         "structured outputs, không phải model to hơn"
+        ],
+        [
+         "Ràng buộc tuân thủ về lưu dữ liệu",
+         "kiểm model có hợp chế độ đó không trước khi chọn"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Thinking adaptive — model tự quyết nghĩ bao nhiêu, thay cho lối đặt ngân sách token cố định kiểu cũ. effort có các nấc low · medium · high · xhigh · max, nằm trong output_config, không phải tham số top-level. Đánh giá theo chi phí trên mỗi việc HOÀN THÀNH, không phải trên mỗi request: một request rẻ mà phải chạy lại ba lần thì không rẻ.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "2-2",
+     "code": "2.2",
+     "title": "Design system prompts, templates, and guardrails",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. System prompt là chỗ đặt vai trò · phạm vi · định dạng · điều cấm. Dữ liệu của người dùng không bao giờ được trộn vào đó — trộn vào là mở cửa cho prompt injection. Phần bất biến để trên cùng, phần thay đổi để dưới cùng.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Nhu cầu",
+        "Đặt ở đâu"
+       ],
+       "rows": [
+        [
+         "Vai trò ＋ giọng ＋ phạm vi",
+         "system prompt, phần trên cùng, cache được"
+        ],
+        [
+         "Chính sách dài, ít đổi",
+         "khối tĩnh ngay sau system, đánh dấu cache"
+        ],
+        [
+         "Dữ liệu người dùng",
+         "trong messages, có thẻ bao quanh, không vào system"
+        ],
+        [
+         "Ràng buộc định dạng cứng",
+         "structured outputs, không phải câu dặn dò"
+        ],
+        [
+         "Cấm tuyệt đối một hành động",
+         "bỏ tool đó đi, không chỉ viết \"đừng làm\""
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Template là tài sản có phiên bản. Prompt nằm rải rác trong code mỗi người một bản là một lỗi kiến trúc: không ai biết bản nào đang chạy, và eval chấm bản nào cũng không rõ.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Guardrail trong prompt là lớp mỏng nhất trong các lớp bảo vệ. Nó chặn được tai nạn vô ý, không chặn được kẻ cố tình. Chốt thật nằm ở tầng quyền và tầng dữ liệu.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "2-3",
+     "code": "2.3",
+     "title": "Apply prompt engineering techniques (zero-shot, few-shot, chain-of-thought)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Ba kỹ thuật hãng gọi tên: zero-shot (chỉ mô tả việc) · few-shot (đưa vài ví dụ mẫu) · chain-of-thought (bắt/để model trình bày lập luận trước khi kết luận). Chọn cái rẻ nhất mà đủ.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Vấn đề",
+        "Đòn đúng"
+       ],
+       "rows": [
+        [
+         "Việc phổ thông, model làm được ngay",
+         "zero-shot — đừng tốn token ví dụ"
+        ],
+        [
+         "Định dạng hoặc giọng rất riêng",
+         "few-shot, 3–5 ví dụ đại diện là đủ"
+        ],
+        [
+         "Việc cần suy luận nhiều bước",
+         "chain-of-thought / bật thinking"
+        ],
+        [
+         "Model không biết dữ liệu nội bộ",
+         "RAG, không phải prompt dài hơn"
+        ],
+        [
+         "Định dạng đầu ra trôi nổi",
+         "structured outputs hoặc strict: true"
+        ],
+        [
+         "Model làm việc ngoài phạm vi",
+         "siết system prompt ＋ bớt tool"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Trước khi prompt engineering, phải có sẵn ba thứ: tiêu chí thành công rõ ràng · cách đo được bằng thực nghiệm · một bản prompt nháp để cải. Ô nào nhảy thẳng vào \"viết prompt hay hơn\" mà chưa có eval thì sai. Và có những vấn đề prompt không chữa được — độ trễ và chi phí thường sửa bằng chọn model, không phải bằng câu chữ.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Với model đời mới, prompt viết cho model cũ thường quá chi tiết và làm giảm chất lượng — \"cruft\" là chữ tài liệu dùng. Few-shot có hại khi ví dụ lệch phân bố so với traffic thật: model sẽ bắt chước cả cái lệch.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "2-4",
+     "code": "2.4",
+     "title": "Optimize context windows and manage token usage",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Context window là bộ nhớ làm việc, gồm tất cả: system prompt, mọi message, tool result, ảnh, tài liệu, định nghĩa tool, và cả phần model sinh ra (kể cả thinking). Nhiều hơn không tự động tốt hơn — token càng nhiều thì độ chính xác và khả năng nhớ càng rơi, hiện tượng gọi là context rot.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — bốn kỹ thuật hay bị xếp lẫn:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Kỹ thuật",
+        "Làm gì",
+        "Dùng khi"
+       ],
+       "rows": [
+        [
+         "Prompt caching",
+         "đổi giá của tiền tố, không đổi chỗ nó chiếm",
+         "tiền tố lặp lại nhiều lượt"
+        ],
+        [
+         "Context editing",
+         "XOÁ tool result / thinking cũ",
+         "vòng lặp agent dài, kết quả cũ vô dụng"
+        ],
+        [
+         "Compaction",
+         "TÓM TẮT phần đầu hội thoại phía server",
+         "hội thoại vượt quá cửa sổ"
+        ],
+        [
+         "Memory / state file",
+         "đẩy trạng thái ra ngoài cửa sổ",
+         "việc kéo dài nhiều phiên"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Bẫy số một của domain này: caching không giải phóng context window. Tiền tố đã cache vẫn chiếm đúng số token ấy — nó chỉ rẻ hơn. Ô nào trả lời \"bật caching\" cho câu hỏi \"làm sao không tràn cửa sổ\" thì sai.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc.",
+       "tone": "learn"
+      },
+      {
+       "t": "ul",
+       "items": [
+        "Ước lượng trước khi gửi bằng API đếm token, đừng dùng tokenizer của hãng khác.",
+        "Tràn cửa sổ: nếu riêng đầu vào đã vượt thì API trả lỗi 400.",
+        "Định nghĩa tool cũng ăn token trong mọi request — bớt tool là bớt tiền.",
+        "Ảnh và tài liệu đều quy ra token; một PDF dài có thể nuốt gọn cửa sổ."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "2-5",
+     "code": "2.5",
+     "title": "Implement prompt reuse strategies (caching, modular prompts, Skills)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Ba cách tái dùng, ba mục đích khác nhau: caching tái dùng chi phí · modular prompt tái dùng câu chữ · Skills tái dùng cả một quy trình đóng gói được và phát cho cả đội.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Nhu cầu",
+        "Cơ chế đúng"
+       ],
+       "rows": [
+        [
+         "Cùng một tiền tố dài lặp lại nhiều lượt",
+         "prompt caching"
+        ],
+        [
+         "Nhiều tính năng chia nhau một khối chính sách",
+         "modular prompt — một nguồn sự thật, ghép lại"
+        ],
+        [
+         "Quy trình lặp lại mà nhiều người cùng làm",
+         "Skill — đóng gói ＋ commit vào kho mã"
+        ],
+        [
+         "Mỗi người một bản prompt khác nhau",
+         "đưa prompt vào git, đánh phiên bản"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc.",
+       "tone": "learn"
+      },
+      {
+       "t": "ul",
+       "items": [
+        "Thứ tự dựng request: tools → system → messages. Cache khớp theo tiền tố, nên đổi một byte ở đầu là hỏng toàn bộ phần sau.",
+        "Kẻ phá cache thầm lặng: dấu thời gian trong system prompt · JSON không sắp thứ tự khoá · danh sách tool thay đổi. Kiểm bằng cache_read_input_tokens — nếu nó luôn bằng 0 qua nhiều lượt thì có kẻ phá.",
+        "Đổi model là mất cache, vì cache gắn theo model."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "num": 3,
+   "title": "Integration",
+   "weight": 19,
+   "intro": [
+    {
+     "t": "p",
+     "text": "8 task statement — domain NẶNG NHẤT. Học xong phải biết cắt bớt tool, chặn quyền đúng tầng, và chọn cách lấy dữ liệu khớp hình dạng dữ liệu."
+    }
+   ],
+   "tasks": [
+    {
+     "id": "3-1",
+     "code": "3.1",
+     "title": "Evaluate tool/agent configuration for capability bloat",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Mỗi tool bạn khai báo đều tốn token trong MỌI request — tên, mô tả, schema, cộng thêm system prompt nội bộ bật tool use. Thêm tool không chỉ tốn tiền, nó còn làm model chọn sai: càng nhiều tool gần giống nhau thì tỉ lệ gọi nhầm càng cao.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Triệu chứng",
+        "Nước đi đúng"
+       ],
+       "rows": [
+        [
+         "Vai trò không bao giờ cần một tool",
+         "gỡ tool đó khỏi cấu hình — least privilege"
+        ],
+        [
+         "Hàng chục–hàng nghìn tool",
+         "tool search tool ＋ defer_loading: true"
+        ],
+        [
+         "Model gọi nhầm giữa hai tool giống nhau",
+         "gộp lại một tool, sửa mô tả"
+        ],
+        [
+         "Tool có thể xoá/chi tiền",
+         "always_ask / HITL, không để auto"
+        ],
+        [
+         "Tham số tool sai schema",
+         "strict: true ＋ additionalProperties: false"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Đề rất hay gài ô \"thêm log cho tool nguy hiểm\" hoặc \"thêm bước xác nhận\" khi câu hỏi là giảm rủi ro theo least privilege. Hai ô đó là biện pháp bù; đáp án đúng là bỏ hẳn năng lực không cần đến.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Với tool search, không được defer TẤT CẢ: chính tool tìm kiếm phải luôn nạp, và phải còn ít nhất một tool không defer — không thì API trả 400.",
+       "tone": "warn"
+      }
+     ]
+    },
+    {
+     "id": "3-2",
+     "code": "3.2",
+     "title": "Analyze authentication and authorization requirements to identify security gaps",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Câu hỏi luôn là ai đang hành động và hệ nào cưỡng chế điều đó. Agent chạy bằng một service account chung là chỗ thủng phổ biến nhất: mọi người dùng đột nhiên có quyền của người mạnh nhất.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — chỗ hay thủng bảo mật:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Lỗ hổng",
+        "Chặn ở đâu"
+       ],
+       "rows": [
+        [
+         "Agent hành động thay danh nghĩa người khác",
+         "truyền danh tính người dùng xuống tầng tool, đừng dùng một service account chung"
+        ],
+        [
+         "Secret lọt vào sandbox",
+         "vault credential — thay ở cửa ra, không vào ngữ cảnh"
+        ],
+        [
+         "Tool đọc được dữ liệu ngoài phạm vi",
+         "phân quyền ở tầng dữ liệu, không ở prompt"
+        ],
+        [
+         "Prompt injection lệnh model gọi tool",
+         "prompt không phải chốt bảo mật — chặn ở tầng quyền"
+        ],
+        [
+         "Token sống quá lâu",
+         "thời hạn ngắn ＋ phạm vi hẹp, cấp theo phiên"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Nhắc đi nhắc lại: *không bao giờ dùng câu chữ trong prompt làm hàng rào phân quyền.* Prompt là gợi ý; quyền phải do hệ thống cưỡng chế.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Phân biệt authentication (anh là ai) với authorization (anh được làm gì). Đề tả một hệ có đăng nhập tử tế nhưng agent vẫn đọc được dữ liệu phòng ban khác ⇒ đó là lỗ authorization, không phải authentication.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "3-3",
+     "code": "3.3",
+     "title": "Evaluate accuracy-latency trade-offs and justify configuration decisions",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Mỗi đòn tăng độ chính xác đều mua bằng thời gian: thinking sâu hơn, thêm lượt retrieval, thêm bước kiểm — tất cả đều cộng vào p95. Chữ justify trong tên task statement nghĩa là đề sẽ hỏi bạn giải thích vì sao chọn, không chỉ chọn.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Đề đang than",
+        "Đòn đúng"
+       ],
+       "rows": [
+        [
+         "Chậm nhưng cảm giác chậm là chính",
+         "streaming — chữ hiện ngay, tổng thời gian không đổi"
+        ],
+        [
+         "Chậm thật, chất lượng thừa",
+         "hạ effort · model nhỏ hơn"
+        ],
+        [
+         "Sai nhưng phải giữ tốc độ",
+         "router: chỉ câu khó mới lên model mạnh"
+        ],
+        [
+         "Chậm vì ngữ cảnh phình",
+         "context editing · compaction"
+        ],
+        [
+         "Chậm vì nhiều lượt tool tuần tự",
+         "parallel tool calls"
+        ],
+        [
+         "Có SLA cứng, chất lượng thương lượng được",
+         "chốt SLA trước, tối ưu chất lượng trong khuôn đó"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Biện minh tốt luôn có ba phần: ràng buộc (SLA, ngân sách) · số đo trước và sau · cái đã hy sinh. Ô đáp án nào chỉ nói \"nhanh hơn\" mà không nói mất gì thì đáng nghi.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "3-4",
+     "code": "3.4",
+     "title": "Analyze observability challenges and select monitoring strategies at scale",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Quan sát agent khác quan sát API thường. Log một dòng \"status 200\" là vô dụng, vì một request bị từ chối cũng trả 200.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — cái phải ghi cho mỗi lượt:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Ghi gì",
+        "Vì sao"
+       ],
+       "rows": [
+        [
+         "usage đầy đủ (input · output · cache_read · cache_creation)",
+         "tính tiền ＋ bắt cache hỏng"
+        ],
+        [
+         "stop_reason ＋ stop_details",
+         "phân biệt xong việc ↔ cụt ↔ bị từ chối"
+        ],
+        [
+         "Tên tool · tham số · kết quả · lỗi",
+         "chẩn đoán vòng lặp"
+        ],
+        [
+         "ID phiên ＋ ID lượt",
+         "nối lại cả quỹ đạo"
+        ],
+        [
+         "Độ trễ từng bước, không chỉ tổng",
+         "tìm đúng bước thắt cổ chai"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ stop_details chỉ có giá trị khi stop_reason == \"refusal\"; mọi trường hợp khác nó là null — phải kiểm tra trước khi đọc, không thì nổ ở production.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc — chữ \"at scale\" có nghĩa riêng. Ở quy mô lớn, ghi toàn bộ payload của mọi lượt là bất khả thi và còn vi phạm quyền riêng tư. Lối đúng: metric đầy đủ cho mọi lượt ＋ lấy mẫu quỹ đạo chi tiết ＋ giữ full trace cho lượt lỗi. Và đừng log nội dung nhạy cảm — log cũng là nơi rò dữ liệu.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "3-5",
+     "code": "3.5",
+     "title": "Design a RAG pipeline with appropriate chunking and indexing strategies",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. RAG hỏng ở chunking nhiều hơn ở model. Chunk cắt giữa câu, cắt mất tiêu đề, cắt rời bảng — thì embedding có tốt mấy cũng lấy về rác.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Triệu chứng",
+        "Nguyên nhân ở pipeline"
+       ],
+       "rows": [
+        [
+         "Trả lời tự tin nhưng sai, ngay sau khi làm mới tài liệu",
+         "index hỏng / embedding lệch phiên bản — soi retrieval trước"
+        ],
+        [
+         "Lấy về đoạn đúng chủ đề nhưng thiếu đầu đuôi",
+         "chunk cắt sai ranh giới, thiếu chồng lấn"
+        ],
+        [
+         "Lấy về đoạn của tài liệu người dùng không được xem",
+         "thiếu lọc quyền ở tầng index"
+        ],
+        [
+         "Lấy về đủ thứ, model chọn nhầm",
+         "thiếu rerank"
+        ],
+        [
+         "Tài liệu cũ vẫn được trả về",
+         "thiếu vòng làm mới ＋ xoá bản cũ trong index"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Chunk theo ranh giới ngữ nghĩa (mục, đoạn), giữ chồng lấn vừa phải, đính kèm metadata (tiêu đề, nguồn, ngày, quyền truy cập) để lọc trước khi tìm. Quyền truy cập phải lọc ở tầng index, không phải bảo model \"đừng nhắc tới tài liệu bí mật\". Mỗi lần đổi model embedding là phải index lại toàn bộ, không trộn hai phiên bản.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "3-6",
+     "code": "3.6",
+     "title": "Apply retrieval strategies matched to data shape and query pattern",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Không có cách lấy dữ liệu nào tốt nhất — chỉ có cách khớp với hình dạng dữ liệu và kiểu truy vấn. Đây là task statement bị làm sai nhiều nhất trong ngân hàng đề.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — bảng đáng chép vào sổ:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Hình dạng dữ liệu ＋ kiểu truy vấn",
+        "Cách lấy đúng"
+       ],
+       "rows": [
+        [
+         "Văn xuôi dài, hỏi theo ý nghĩa",
+         "vector search trên chunk theo ngữ nghĩa"
+        ],
+        [
+         "Hỏi theo mã số, tên riêng, mã lỗi",
+         "từ khoá / BM25 — vector hay trượt số hiệu"
+        ],
+        [
+         "Vừa ý nghĩa vừa từ khoá",
+         "hybrid ＋ rerank"
+        ],
+        [
+         "Dữ liệu có cấu trúc, có bảng",
+         "truy vấn SQL qua tool, đừng nhét vào vector"
+        ],
+        [
+         "Quan hệ nhiều tầng (ai báo cáo ai)",
+         "graph hoặc tool duyệt quan hệ"
+        ],
+        [
+         "Tài liệu ít và ngắn",
+         "nhét thẳng vào ngữ cảnh — đừng dựng RAG"
+        ],
+        [
+         "Cần trích dẫn nguồn",
+         "bật citations trên khối document"
+        ],
+        [
+         "Dữ liệu đổi theo giây (giá, tồn kho)",
+         "gọi API trực tiếp, index sẽ luôn cũ"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Hai bẫy hay gặp: (1) đề mô tả dữ liệu bảng mà ô đáp án dựng vector store — sai; (2) đề mô tả vài chục trang tài liệu tĩnh mà ô đáp án dựng cả pipeline RAG — thừa, nhét vào ngữ cảnh ＋ cache là xong.",
+       "tone": "warn"
+      }
+     ]
+    },
+    {
+     "id": "3-7",
+     "code": "3.7",
+     "title": "Evaluate connection protocols and select the appropriate integration mechanism",
+     "subtitle": "MCP · API/CLI · agent-to-agent",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. MCP là chuẩn mở để nối model với hệ thống ngoài; dùng nó khi cần nhiều client dùng chung một cổng nối hoặc khi tích hợp do bên thứ ba cung cấp. Tool tự định nghĩa trực tiếp trong request thì đơn giản và rẻ hơn khi chỉ một ứng dụng dùng.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Tình huống",
+        "Cơ chế đúng"
+       ],
+       "rows": [
+        [
+         "Một app, vài tool nội bộ",
+         "tool tự định nghĩa trong tools"
+        ],
+        [
+         "Nhiều app dùng chung một tích hợp",
+         "MCP server"
+        ],
+        [
+         "Nối tới MCP server từ xa, không muốn tự viết client",
+         "MCP connector"
+        ],
+        [
+         "Cần Anthropic chạy luôn tool (tìm web, fetch, chạy code)",
+         "server tool"
+        ],
+        [
+         "Tool chạy trên máy người dùng",
+         "client tool — code của bạn thực thi"
+        ],
+        [
+         "Hai hệ agent của hai đội phải nói chuyện với nhau",
+         "agent-to-agent — hợp đồng rõ ràng, không chia ngữ cảnh"
+        ],
+        [
+         "Việc theo lô, chạy trong CI",
+         "CLI / API gọi thẳng, không cần giao thức"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ MCP connector cần cả hai nửa: khai báo server và khai báo toolset trỏ đúng tên server — thiếu một nửa là lỗi validation.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. MCP đổi lấy tính chuẩn hoá bằng một tầng gián tiếp nữa: thêm chỗ hỏng, thêm độ trễ, thêm chỗ phải phân quyền. Một app một tool thì MCP là thừa.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "3-8",
+     "code": "3.8",
+     "title": "Evaluate progressive discovery vs. monolithic context strategy",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Nhồi toàn bộ tài liệu, toàn bộ schema, toàn bộ tool vào một prompt khổng lồ thì vừa đắt, vừa dính context rot, vừa hỏng cache. Lối đúng là để sẵn một bản mục lục nhỏ, rồi cho model tự lấy chi tiết khi cần — đó chính là tinh thần của tool search, của RAG, và của memory.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Điều kiện",
+        "Chiến lược đúng"
+       ],
+       "rows": [
+        [
+         "Tài liệu nhỏ, ổn định, cache được",
+         "monolithic — nhét hết, bật cache, xong"
+        ],
+        [
+         "Kho tài liệu lớn hoặc đổi thường xuyên",
+         "progressive discovery"
+        ],
+        [
+         "Hàng trăm tool",
+         "progressive — tool search ＋ defer loading"
+        ],
+        [
+         "Cần độ trễ thấp nhất cho một việc cố định",
+         "monolithic ＋ cache (ít lượt hơn)"
+        ],
+        [
+         "Cần truy vết \"model đã xem gì\"",
+         "progressive — ghi lại từng lượt lấy"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Progressive discovery không miễn phí: mỗi lần lấy thêm là một lượt gọi nữa, cộng vào độ trễ. Đề có SLA cứng mà dữ liệu thì nhỏ ⇒ monolithic ＋ cache mới là ô đúng.",
+       "tone": "warn"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "num": 4,
+   "title": "Evaluation, Testing & Optimization",
+   "weight": 16,
+   "intro": [
+    {
+     "t": "p",
+     "text": "6 task statement. Học xong phải: biết đo trước khi sửa, và đọc được một hoá đơn để chỉ ra chỗ rò tiền."
+    }
+   ],
+   "tasks": [
+    {
+     "id": "4-1",
+     "code": "4.1",
+     "title": "Define evaluation metrics (accuracy, latency, cost, safety, security)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Hãng kể tên năm nhóm metric, và hai nhóm cuối — safety và security — là hai nhóm người ta hay quên đo. Không có eval thì mọi cải tiến chỉ là cảm giác.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Nhóm metric",
+        "Đo bằng gì"
+       ],
+       "rows": [
+        [
+         "Accuracy",
+         "precision · recall · F1 · tỉ lệ đạt rubric"
+        ],
+        [
+         "Latency",
+         "p50 ＋ p95, tách theo từng bước"
+        ],
+        [
+         "Cost",
+         "chi phí trên mỗi việc hoàn thành, không phải mỗi request"
+        ],
+        [
+         "Safety",
+         "tỉ lệ đầu ra có hại · tỉ lệ bịa · tỉ lệ từ chối đúng chỗ"
+        ],
+        [
+         "Security",
+         "tỉ lệ chặn được prompt injection · rò dữ liệu nhạy cảm"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Mỗi metric phải có ngưỡng đạt và người chịu trách nhiệm. Metric không có ngưỡng chỉ là số trên dashboard, không ai hành động vì nó.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "4-2",
+     "code": "4.2",
+     "title": "Design evaluation datasets and test frameworks using mixed methodologies",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. \"Mixed methodologies\" nghĩa là một cách chấm không đủ: trộn chấm tự động, LLM-as-a-judge và người chấm, mỗi cái cho một loại đầu ra.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — chọn cách chấm theo kiểu đầu ra:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Đầu ra",
+        "Cách chấm"
+       ],
+       "rows": [
+        [
+         "Nhãn / trích xuất có đáp án đúng",
+         "khớp chính xác, tính precision · recall · F1"
+        ],
+        [
+         "JSON theo schema",
+         "kiểm hợp lệ schema — đúng/sai rạch ròi"
+        ],
+        [
+         "Code",
+         "chạy test, đừng chấm bằng mắt"
+        ],
+        [
+         "Văn xuôi tự do",
+         "LLM-as-a-judge ＋ rubric cụ thể"
+        ],
+        [
+         "Việc hệ trọng, không sửa được",
+         "người chấm — chuẩn vàng, đắt nhất"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Tập eval phải tách train ↔ validation ↔ test. Chỉnh prompt cho tới khi đẹp trên chính tập mình nhìn thì đó là học vẹt, không phải cải tiến. Con số đem đi báo cáo phải là con số trên tập test chưa từng dùng để chỉnh.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Eval phải phủ cả ca biên và ca xấu: đầu vào rỗng, tài liệu sai định dạng, câu hỏi ngoài phạm vi, và prompt injection. Eval chỉ toàn ca đẹp sẽ xanh rực trong khi production cháy.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "4-3",
+     "code": "4.3",
+     "title": "Conduct A/B testing and iterative improvements",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Đổi một thứ mỗi lần, đo trên cùng tập, giữ lại nếu tốt hơn quá mức nhiễu. Đổi ba thứ cùng lúc rồi thấy tốt hơn thì không biết nhờ cái nào.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Tình huống",
+        "Nước đi đúng"
+       ],
+       "rows": [
+        [
+         "Hai prompt, không biết cái nào hơn",
+         "chạy cùng tập test, so số, không so cảm giác"
+        ],
+        [
+         "Chênh lệch nhỏ",
+         "chưa đủ kết luận — tăng cỡ mẫu trước khi chốt"
+        ],
+        [
+         "Muốn thử trên traffic thật",
+         "chia nhỏ phần trăm, có cờ tắt, theo dõi metric an toàn"
+        ],
+        [
+         "Đổi model mới ra",
+         "chạy lại eval trước, đừng đổi thẳng"
+        ],
+        [
+         "Cải tiến xong, không ai nhớ vì sao",
+         "ghi bản ghi quyết định kèm số đo"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Cải tiến lặp là vòng khép kín: lỗi thật ngoài production → thành ca eval → sửa → đo lại → triển khai. Thiếu bước \"thành ca eval\" thì cùng một lỗi sẽ quay lại sau ba tháng.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "4-4",
+     "code": "4.4",
+     "title": "Diagnose system issues (prompt failure, hallucinations, model mismatch)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Chẩn đoán đi theo thứ tự tầng: dữ liệu vào → ngữ cảnh dựng ra → prompt → model ＋ tham số → tool → hậu xử lý. Phần lớn lỗi nằm ở hai tầng đầu, nhưng người ta lại sửa tầng thứ ba trước.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — bảng chẩn đoán đáng chép vào sổ:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Triệu chứng",
+        "Nguyên nhân thật"
+       ],
+       "rows": [
+        [
+         "Đầu ra cụt giữa chừng",
+         "chạm max_tokens — không phải model dốt"
+        ],
+        [
+         "Model bịa dữ liệu nội bộ",
+         "retrieval trượt, hoặc không có grounding"
+        ],
+        [
+         "Tự tin nhưng sai ngay sau khi làm mới tài liệu",
+         "index/embedding hỏng, model và độ trễ không liên quan"
+        ],
+        [
+         "Model gọi nhầm tool",
+         "mô tả tool mơ hồ / hai tool trùng chức năng"
+        ],
+        [
+         "Model không gọi tool dù nên gọi",
+         "mô tả tool không khớp cách người dùng hỏi"
+        ],
+        [
+         "Hoá đơn tăng mà traffic không tăng",
+         "cache trượt — kiểm cache_read_input_tokens"
+        ],
+        [
+         "Đúng ở bản demo, sai ở production",
+         "ngữ cảnh production dài hơn — context rot"
+        ],
+        [
+         "Hệ thống im lặng không trả gì",
+         "kiểm stop_reason — có thể là refusal"
+        ],
+        [
+         "Việc dễ mà model cũng làm chậm và đắt",
+         "model mismatch — dùng model quá to"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Đọc stop_reason TRƯỚC khi đọc content. Một request bị từ chối vẫn trả HTTP 200. Code nào nhảy thẳng vào content[0].text sẽ hiểu nhầm thành \"model trả lời kém\" trong khi thật ra nó không trả lời.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Khi một thứ vừa đổi mà hệ hỏng ngay sau đó, nghi cái vừa đổi trước. Đề rất hay nêu rõ \"model không đổi, độ trễ không đổi, vừa làm mới tài liệu\" — đó là lời mách nước, không phải chi tiết thừa.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "4-5",
+     "code": "4.5",
+     "title": "Optimize token usage, latency, and cost-performance trade-offs",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Giảm chi phí đi theo thứ tự cố định: những đòn MIỄN PHÍ trước, rồi mới tới những đòn đánh đổi chất lượng.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — thứ tự này chính là đáp án:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Bậc",
+        "Đòn",
+        "Mất gì"
+       ],
+       "rows": [
+        [
+         "1",
+         "Prompt caching",
+         "không mất gì"
+        ],
+        [
+         "2",
+         "Vệ sinh đầu vào — bỏ tài liệu thừa, bỏ tool không dùng",
+         "không mất gì"
+        ],
+        [
+         "3",
+         "Vệ sinh vòng lặp — bớt lượt thừa, context editing",
+         "không mất gì"
+        ],
+        [
+         "4",
+         "Batch API cho việc không gấp",
+         "mất tính tức thì"
+        ],
+        [
+         "5",
+         "Hạ effort",
+         "có thể mất chất lượng — phải đo"
+        ],
+        [
+         "6",
+         "Đổi model nhỏ hơn",
+         "mất chất lượng ＋ mất cache"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Ô đáp án \"đổi ngay sang model rẻ nhất\" gần như luôn sai khi đề chưa nói gì tới caching — vì bậc 1 chưa làm mà đã nhảy xuống bậc 6. Ô \"cắt bớt tài liệu chính sách cho ngắn\" cũng sai khi tài liệu đó là thông tin bắt buộc.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Đặt phần tĩnh lên trước, phần động xuống sau rồi bật caching là đòn duy nhất chữa cả chi phí lẫn độ trễ cùng lúc, vì nó giảm cả tiền lẫn thời gian tới token đầu tiên.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "4-6",
+     "code": "4.6",
+     "title": "Monitor system performance using logging and observability tools",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Eval là trước khi ra, monitoring là sau khi ra. Hai thứ khác nhau và cần cả hai: eval bắt lỗi hồi quy, monitoring bắt trôi dạt và ca lạ mà tập eval không có.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Muốn biết",
+        "Theo dõi cái gì"
+       ],
+       "rows": [
+        [
+         "Cache còn ăn không",
+         "tỉ lệ cache_read_input_tokens trên tổng input"
+        ],
+        [
+         "Chất lượng có trôi không",
+         "chấm mẫu định kỳ trên traffic thật"
+        ],
+        [
+         "Chi phí rò ở đâu",
+         "usage tách bốn thành phần, gộp theo tính năng"
+        ],
+        [
+         "Người dùng có bỏ cuộc không",
+         "tỉ lệ bỏ giữa chừng · tỉ lệ hỏi lại"
+        ],
+        [
+         "Có ai đang tấn công không",
+         "tỉ lệ refusal ＋ mẫu đầu vào bất thường"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Đặt cảnh báo theo ngưỡng, không chỉ vẽ biểu đồ. Và nối được một ID phiên từ log ứng dụng sang log model — thiếu sợi dây đó thì gỡ lỗi production là mò kim.",
+       "tone": "learn"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "num": 5,
+   "title": "Governance, Safety & Risk Management",
+   "weight": 14,
+   "intro": [
+    {
+     "t": "p",
+     "text": "5 task statement. Học xong phải: chỉ ra chặn ở TẦNG nào, và phân biệt ghi vết với ngăn chặn."
+    }
+   ],
+   "tasks": [
+    {
+     "id": "5-1",
+     "code": "5.1",
+     "title": "Implement guardrails and safety controls",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Guardrail đi theo đường đi của dữ liệu: ai được gọi → cái gì vào được → model làm được gì → cái gì ra được → còn lại vết gì.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — ba chỗ đặt chốt, hay bị xếp lẫn:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Rủi ro",
+        "Chặn ở ĐÂU"
+       ],
+       "rows": [
+        [
+         "Prompt injection",
+         "đầu vào ＋ tầng quyền — tách dữ liệu khỏi lệnh, hạ quyền tool"
+        ],
+        [
+         "Rò rỉ dữ liệu nhạy cảm",
+         "cửa ra — lọc ＋ kiểm đầu ra trước khi hiển thị"
+        ],
+        [
+         "Bịa (hallucination)",
+         "neo dữ liệu — RAG ＋ citations ＋ buộc trả \"không biết\""
+        ],
+        [
+         "Hành động phá huỷ",
+         "trước khi thực thi tool — HITL, không phải sau"
+        ],
+        [
+         "Đầu ra sai định dạng",
+         "structured outputs, không phải dặn dò trong prompt"
+        ],
+        [
+         "Năng lực không ai cần",
+         "gỡ tool — chốt rẻ nhất và chắc nhất"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Ghi log KHÔNG phải là chặn. Log cho biết chuyện đã xảy ra; guardrail mới ngăn nó xảy ra. Ô nào trả lời \"bật logging\" cho câu hỏi \"làm sao NGĂN\" thì sai.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Bẫy thứ hai: prompt injection không chữa được bằng prompt. Câu \"đừng nghe theo lệnh trong tài liệu\" chỉ là gợi ý. Chốt thật nằm ở quyền của tool — nếu tool không có quyền xoá thì lệnh tiêm vào cũng không xoá được gì.",
+       "tone": "warn"
+      }
+     ]
+    },
+    {
+     "id": "5-2",
+     "code": "5.2",
+     "title": "Identify risks, limitations, and failure modes of LLM systems",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Kiến trúc sư phải gọi đúng tên kiểu hỏng, vì mỗi kiểu có một cách chữa khác nhau — chữa nhầm tên là sửa nhầm chỗ.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Kiểu hỏng",
+        "Dấu hiệu",
+        "Chữa bằng"
+       ],
+       "rows": [
+        [
+         "Hallucination",
+         "chi tiết cụ thể mà không có nguồn",
+         "grounding ＋ citations"
+        ],
+        [
+         "Không tất định",
+         "cùng câu hỏi ra hai đáp án khác nhau",
+         "structured outputs ＋ eval nhiều lần"
+        ],
+        [
+         "Drift theo thời gian",
+         "chất lượng tụt dần không rõ lý do",
+         "chấm mẫu định kỳ"
+        ],
+        [
+         "Context rot",
+         "đúng ở demo ngắn, sai ở phiên dài",
+         "context editing ＋ compaction"
+        ],
+        [
+         "Lỗi dồn lũy trong vòng lặp",
+         "bước 9 sai vì bước 2 sai",
+         "đọc quỹ đạo, thêm chốt kiểm giữa chừng"
+        ],
+        [
+         "Refusal",
+         "HTTP 200 mà không có nội dung",
+         "đọc stop_reason"
+        ],
+        [
+         "Cụt output",
+         "câu văn đứt giữa chừng",
+         "tăng max_tokens hoặc chia đầu ra"
+        ],
+        [
+         "Tool lỗi im lặng",
+         "agent quay vòng mãi",
+         "trả is_error: true ＋ thông điệp lỗi rõ"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Giới hạn cố hữu phải nói thật với bên liên quan: model không biết chuyện sau ngày cắt dữ liệu, không tự biết mình sai, và không đảm bảo lặp lại y hệt. Mọi cam kết \"100% chính xác\" đều là rủi ro kiến trúc.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "5-3",
+     "code": "5.3",
+     "title": "Apply human-in-the-loop validation strategies",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Con người không đứng chắn mọi chỗ — đứng ở chỗ sai thì không gỡ lại được. Câu hỏi luôn là: *hành động này đảo ngược được không, và ai chịu hậu quả?*",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Loại hành động",
+        "Mức kiểm"
+       ],
+       "rows": [
+        [
+         "Đọc, tìm kiếm, tóm tắt",
+         "tự chạy"
+        ],
+        [
+         "Ghi có thể hoàn tác (nháp, PR chưa merge)",
+         "tự chạy ＋ review sau"
+        ],
+        [
+         "Chi tiền, gửi ra ngoài, xoá dữ liệu",
+         "duyệt trước từng lần"
+        ],
+        [
+         "Ảnh hưởng quyền lợi con người (tín dụng, tuyển dụng, y tế)",
+         "người quyết cuối, model chỉ gợi ý"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Ba mức chính sách quyền của tool: always_allow · always_ask · auto. Ở mức auto, hệ có ba kết cục — chạy · chặn vì rủi ro cao · dừng hỏi người khi không chắc. Thiết kế HITL phải tính cả mệt mỏi vì duyệt: bắt người bấm đồng ý 200 lần một ngày thì tới lần thứ 201 họ bấm mà không đọc.",
+       "tone": "learn"
+      },
+      {
+       "t": "p",
+       "text": "⚠️ HITL là biện pháp bù, không phải least privilege. Nếu vai trò đó không bao giờ cần năng lực ấy thì gỡ tool vẫn đúng hơn là bắt người duyệt.",
+       "tone": "warn"
+      }
+     ]
+    },
+    {
+     "id": "5-4",
+     "code": "5.4",
+     "title": "Ensure compliance with regulations (e.g., GDPR, HIPAA, FedRAMP)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Tuân thủ là luật ＋ nhịp xem lại ＋ vết để lại, không phải một tính năng bật lên là xong. Kiến trúc sư phải trả lời được: dữ liệu chạy qua đâu, ai chạm được, giữ bao lâu, và chứng minh bằng gì.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Yêu cầu đề nêu",
+        "Nước đi kiến trúc"
+       ],
+       "rows": [
+        [
+         "Dữ liệu không được rời vùng lãnh thổ",
+         "ghim vùng suy luận ＋ chọn nền tảng phù hợp"
+        ],
+        [
+         "Không được lưu dữ liệu",
+         "cấu hình zero data retention, kiểm model có hỗ trợ không"
+        ],
+        [
+         "Phải giải thích được quyết định",
+         "lưu ngữ cảnh ＋ nguồn trích dẫn, không chỉ lưu câu trả lời"
+        ],
+        [
+         "Phải kiểm toán được",
+         "log bất biến: ai hỏi, hệ lấy gì, trả gì, lúc nào"
+        ],
+        [
+         "Người dùng phải biết đang nói với AI",
+         "nói rõ, ＋ có đường thoát sang người"
+        ],
+        [
+         "Người dùng đòi xoá dữ liệu của mình",
+         "xoá được cả trong index RAG ＋ log, không chỉ trong DB chính"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Bẫy: một số model yêu cầu chế độ lưu dữ liệu nhất định và sẽ từ chối request từ tổ chức cấu hình không khớp. \"Chọn model mạnh nhất\" có thể vi phạm ràng buộc tuân thủ của chính đề bài.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc — ba chữ viết tắt hãng nêu tên: GDPR (dữ liệu cá nhân ở EU, quyền xoá, cơ sở pháp lý) · HIPAA (dữ liệu sức khoẻ ở Mỹ, cần thoả thuận với nhà cung cấp) · FedRAMP (chuẩn cho cơ quan liên bang Mỹ, giới hạn nền tảng được dùng). Đề nêu ngành nào thì ràng buộc đi theo ngành đó.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "5-5",
+     "code": "5.5",
+     "title": "Address ethical AI considerations (bias, fairness, transparency)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Ba chữ hãng nêu — bias · fairness · transparency — dịch thành ba câu hỏi rất cụ thể khi làm đề: *ai chịu thiệt · có đều giữa các nhóm không · người ta có biết đây là AI không.*",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Vấn đề",
+        "Nước đi đúng"
+       ],
+       "rows": [
+        [
+         "Bias trong dữ liệu hoặc đầu ra",
+         "đo tách theo nhóm, không chỉ đo trung bình"
+        ],
+        [
+         "Fairness giữa các nhóm người dùng",
+         "đặt ngưỡng cho nhóm yếu nhất, không cho trung bình"
+        ],
+        [
+         "Transparency",
+         "nói rõ đang dùng AI ＋ nêu giới hạn ＋ cho xem nguồn"
+        ],
+        [
+         "Có người bị từ chối vì quyết định của model",
+         "phải có đường khiếu nại tới người thật"
+        ],
+        [
+         "Dữ liệu huấn luyện/truy hồi",
+         "kiểm quyền sử dụng trước khi đưa vào"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Độ chính xác trung bình 95% vẫn có thể tệ với một nhóm nhỏ. Ô đúng gần như luôn đứng về phía người chịu ảnh hưởng, và gần như luôn đòi đo tách theo nhóm thay vì một con số gộp.",
+       "tone": "learn"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "num": 6,
+   "title": "Stakeholder Communication & Lifecycle Management",
+   "weight": 14,
+   "intro": [
+    {
+     "t": "p",
+     "text": "5 task statement. Học xong phải: khảo sát ra đúng nhu cầu, và trình bày đánh đổi cho người không biết kỹ thuật mà không nói dối."
+    }
+   ],
+   "tasks": [
+    {
+     "id": "6-1",
+     "code": "6.1",
+     "title": "Conduct structured discovery and requirement gathering",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Khách hàng mô tả giải pháp họ tưởng tượng (\"tôi cần một chatbot\"), không mô tả bài toán. Việc của kiến trúc sư là lùi lại một bước tới chỗ đau thật.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề. Ô đúng gần như luôn là ô hỏi thêm trước khi dựng. Bộ câu hỏi khảo sát bắt buộc:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Hỏi gì",
+        "Vì sao nó quyết kiến trúc"
+       ],
+       "rows": [
+        [
+         "Hôm nay việc này làm thế nào, mất bao lâu",
+         "có baseline để so"
+        ],
+        [
+         "Thành công đo bằng con số nào",
+         "không có thì không có eval"
+        ],
+        [
+         "Dữ liệu ở đâu, hình dạng gì, ai được xem",
+         "quyết cách retrieval ＋ phân quyền"
+        ],
+        [
+         "Sai thì hậu quả ra sao, gỡ lại được không",
+         "quyết mức HITL"
+        ],
+        [
+         "Ràng buộc quy định, vùng lưu trú, ngân sách, độ trễ",
+         "loại bớt phương án"
+        ],
+        [
+         "Bao nhiêu request một ngày, giờ cao điểm",
+         "quyết batch ↔ realtime"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Thiếu câu \"thành công đo bằng gì\" là hỏng cả dự án — không đo được thì không biết đã xong hay chưa, và mọi cải tiến về sau chỉ là cảm tính.",
+       "tone": "warn"
+      }
+     ]
+    },
+    {
+     "id": "6-2",
+     "code": "6.2",
+     "title": "Communicate architectural decisions and trade-offs",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Trình bày kiến trúc không phải là khoe phương án đã chọn, mà là cho thấy đã cân nhắc những gì và bỏ cái nào vì lý do gì. Bên liên quan tin một phương án hơn khi thấy hai phương án bị loại.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề — nói đúng ngôn ngữ của từng người:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Người nghe",
+        "Quan tâm",
+        "Nói bằng"
+       ],
+       "rows": [
+        [
+         "Lãnh đạo",
+         "tiền, rủi ro, thời hạn",
+         "chi phí mỗi việc · ngày ra mắt · rủi ro đã chặn"
+        ],
+        [
+         "Kỹ thuật",
+         "cơ chế, vận hành",
+         "sơ đồ, giới hạn, cách gỡ lỗi"
+        ],
+        [
+         "Pháp chế / tuân thủ",
+         "dữ liệu đi đâu",
+         "luồng dữ liệu · lưu trữ · vết kiểm toán"
+        ],
+        [
+         "Bảo mật",
+         "ai được làm gì",
+         "mô hình quyền · chỗ đặt chốt · kịch bản tấn công"
+        ],
+        [
+         "Người dùng cuối",
+         "công việc hằng ngày",
+         "thay đổi gì · làm gì khi AI sai"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Bẫy: hứa \"AI sẽ chính xác 100%\". Ô đúng luôn nói thẳng giới hạn và kèm theo cơ chế xử lý khi sai. Cam kết quá mức là rủi ro kiến trúc, không chỉ là rủi ro giao tiếp.",
+       "tone": "warn"
+      }
+     ]
+    },
+    {
+     "id": "6-3",
+     "code": "6.3",
+     "title": "Manage stakeholder feedback loops and expectation alignment (including SLAs)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Hãng ghi rõ SLA nằm trong task statement này. Nghĩa là \"thống nhất kỳ vọng\" không dừng ở lời hứa miệng — nó phải thành con số cam kết mà cả hai bên đọc chung một kiểu.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Kỳ vọng mơ hồ",
+        "Viết lại thành cam kết đo được"
+       ],
+       "rows": [
+        [
+         "\"Phải nhanh\"",
+         "p95 dưới N giây trong giờ cao điểm"
+        ],
+        [
+         "\"Phải chính xác\"",
+         "≥ X% trên tập test đã chốt, đo hằng tuần"
+        ],
+        [
+         "\"Phải luôn sẵn sàng\"",
+         "uptime ≥ X%, có kế hoạch khi model nhà cung cấp lỗi"
+        ],
+        [
+         "\"Phải an toàn\"",
+         "0 ca rò dữ liệu nhạy cảm; tỉ lệ chặn injection ≥ X%"
+        ],
+        [
+         "\"Sửa nhanh khi lỗi\"",
+         "thời gian phản hồi sự cố theo mức nghiêm trọng"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Vòng phản hồi phải có nhịp và có số: demo sớm trên dữ liệu thật, thu phản hồi có cấu trúc, quy phản hồi về ca eval thay vì sửa prompt theo cảm giác. Mỗi lời than của người dùng nên trở thành một dòng trong tập test.",
+       "tone": "learn"
+      },
+      {
+       "t": "p",
+       "text": "⚠️ SLA cho hệ LLM phải nói rõ đo trên cái gì: độ trễ của model, hay của cả pipeline gồm retrieval và tool? Không nói rõ là cãi nhau về sau.",
+       "tone": "warn"
+      }
+     ]
+    },
+    {
+     "id": "6-4",
+     "code": "6.4",
+     "title": "Document architectures and provide implementation guidance",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Tài liệu tốt trả lời được câu \"vì sao\", không chỉ \"cái gì\". Sáu tháng sau, người kế nhiệm cần biết vì sao không chọn RAG chứ không cần biết tên biến.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề. Bộ tài liệu tối thiểu cho một hệ Claude:",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Tài liệu",
+        "Nội dung cốt lõi"
+       ],
+       "rows": [
+        [
+         "Sơ đồ luồng dữ liệu",
+         "dữ liệu vào từ đâu, qua tầng nào, ra đâu"
+        ],
+        [
+         "Bản ghi quyết định",
+         "chọn gì, loại gì, vì lý do gì"
+        ],
+        [
+         "Hợp đồng prompt ＋ tool",
+         "phiên bản, schema, ai được đổi"
+        ],
+        [
+         "Sổ tay vận hành",
+         "triệu chứng → cách xử lý → cách rollback"
+        ],
+        [
+         "Kế hoạch eval",
+         "tập test, ngưỡng đạt, ai chạy, chạy khi nào"
+        ],
+        [
+         "Mô hình quyền",
+         "vai trò nào gọi được tool nào, trên dữ liệu nào"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. \"Implementation guidance\" là phần cho đội khác làm theo: mẫu code, chỗ đặt cấu hình, checklist trước khi ra mắt. Tài liệu chỉ mô tả kiến trúc mà không nói bắt đầu từ đâu thì đội tiếp nhận vẫn tắc.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "6-5",
+     "code": "6.5",
+     "title": "Support lifecycle phases (discovery, design, handoff, monitoring, iteration)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Hãng kể năm giai đoạn, và handoff là giai đoạn dân kỹ thuật hay coi nhẹ nhất — bàn giao hụt thì hệ chạy tốt vẫn chết trong sáu tháng.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Giai đoạn",
+        "Việc chính",
+        "Ra khỏi giai đoạn khi"
+       ],
+       "rows": [
+        [
+         "Discovery",
+         "tìm bài toán thật ＋ chốt số đo thành công",
+         "có metric ＋ có ràng buộc"
+        ],
+        [
+         "Design",
+         "chọn mẫu kiến trúc, chốt đánh đổi",
+         "có bản ghi quyết định ＋ kế hoạch eval"
+        ],
+        [
+         "Handoff",
+         "chuyển cho đội vận hành",
+         "có sổ tay, có quyền, có người trực"
+        ],
+        [
+         "Monitoring",
+         "theo dõi chi phí ＋ độ trễ ＋ chất lượng",
+         "có cảnh báo, có nhịp xem lại"
+        ],
+        [
+         "Iteration",
+         "biến lỗi thật thành ca eval, cải tiến",
+         "mỗi vòng đều có số trước/sau"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Nâng model không phải là đổi một chuỗi ký tự. Prompt viết cho model cũ thường quá chi tiết với model mới, tham số cũ có thể bị từ chối, và chi phí có thể lệch. Luôn chạy lại eval sau khi đổi model.",
+       "tone": "warn"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "num": 7,
+   "title": "Developer Productivity & Operational Enablement",
+   "weight": 7,
+   "intro": [
+    {
+     "t": "p",
+     "text": "3 task statement — domain NHẸ NHẤT, khoảng 4 câu trên 63. Đừng dồn thời gian ôn vào đây, dù ngân hàng đề trong app có nhiều câu hơn tỉ lệ thật."
+    }
+   ],
+   "tasks": [
+    {
+     "id": "7-1",
+     "code": "7.1",
+     "title": "Configure Claude tools and environments for teams (e.g., Claude Code)",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Cái khiến một đội dùng Claude hiệu quả không phải là model, mà là ngữ cảnh dùng chung được cam kết vào kho mã: quy ước dự án, skill, lệnh tắt, cấu hình MCP, hook. Cá nhân hoá để ở cấu hình người dùng; cái cả đội cần thì để trong dự án.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Nhu cầu",
+        "Đặt ở đâu"
+       ],
+       "rows": [
+        [
+         "Quy ước dự án mọi người phải theo",
+         "tệp ngữ cảnh trong kho mã, commit vào git"
+        ],
+        [
+         "Quy trình lặp lại (deploy, review)",
+         "skill / lệnh tắt dùng chung"
+        ],
+        [
+         "Hành vi tự động (\"mỗi lần X thì Y\")",
+         "hook — không phải ghi vào tài liệu và hy vọng"
+        ],
+        [
+         "Nối tới hệ thống nội bộ",
+         "MCP server khai trong cấu hình dự án"
+        ],
+        [
+         "Sở thích cá nhân (phím tắt, giao diện)",
+         "cấu hình người dùng, đừng nhét vào dự án"
+        ],
+        [
+         "Gói nhiều thứ trên lại phát cho cả đội",
+         "plugin"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "⚠️ Một yêu cầu kiểu \"từ nay mỗi lần commit thì chạy lint\" không thể giải bằng cách viết vào tài liệu hướng dẫn — nó phải là hook, do harness cưỡng chế.",
+       "tone": "warn"
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Phân biệt bốn thứ hay bị gọi lẫn: Claude Code CLI (làm việc tương tác ở terminal) · Agent SDK (đóng gói chính harness đó thành thư viện, bạn tự vận hành) · Client SDK ＋ Tool Runner (gọi API, bạn tự lo hạ tầng) · Managed Agents (Anthropic chạy cả vòng lặp lẫn sandbox).",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "7-2",
+     "code": "7.2",
+     "title": "Improve developer workflows using AI-assisted tooling",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Chỗ AI giúp nhiều nhất trong luồng làm việc là những việc lặp lại, có thể kiểm chứng: viết test, rà diff, dựng khung code, dịch tài liệu. Việc không kiểm chứng được thì lợi ích mỏng mà rủi ro dày.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Việc",
+        "AI hợp không"
+       ],
+       "rows": [
+        [
+         "Viết test cho code đã có",
+         "rất hợp — có test chạy để kiểm"
+        ],
+        [
+         "Rà diff tìm lỗi rõ ràng",
+         "hợp — người vẫn quyết cuối"
+        ],
+        [
+         "Dựng khung dự án theo mẫu",
+         "hợp"
+        ],
+        [
+         "Quyết định kiến trúc hệ trọng",
+         "không — người quyết, AI chỉ liệt kê đánh đổi"
+        ],
+        [
+         "Sửa thẳng vào production",
+         "không — phải qua review ＋ có đường lùi"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Đo lợi ích bằng thời gian tới lúc merge và tỉ lệ lỗi lọt ra production, không đếm số dòng code AI sinh ra. Số dòng nhiều mà review lâu hơn thì đó là lỗ, không phải lãi.",
+       "tone": "learn"
+      }
+     ]
+    },
+    {
+     "id": "7-3",
+     "code": "7.3",
+     "title": "Support debugging and operational issue resolution",
+     "blocks": [
+      {
+       "t": "p",
+       "text": "💡 Hiểu nhanh. Gỡ lỗi hệ agent là đọc quỹ đạo, không phải đọc câu trả lời cuối. Câu trả lời sai ở bước 9 thường bắt nguồn từ một tool result lỗi ở bước 2 mà không ai nhìn.",
+       "tone": "quick"
+      },
+      {
+       "t": "p",
+       "text": "🎯 Cách chọn khi làm đề.",
+       "tone": "choose"
+      },
+      {
+       "t": "table",
+       "head": [
+        "Tình huống",
+        "Nước đi đúng"
+       ],
+       "rows": [
+        [
+         "Agent làm chậm dần theo thời gian",
+         "ngữ cảnh phình — compaction / context editing"
+        ],
+        [
+         "Agent lặp đi lặp lại một bước",
+         "tool trả lỗi không rõ — sửa thông điệp lỗi"
+        ],
+        [
+         "Agent bỏ qua tool đúng",
+         "mô tả tool không khớp cách người dùng diễn đạt"
+        ],
+        [
+         "Nhiều người sửa prompt, không ai biết bản nào chạy",
+         "đưa prompt vào git, đánh phiên bản"
+        ],
+        [
+         "Sửa xong không biết tốt lên hay xấu đi",
+         "chạy eval, đừng tin cảm giác"
+        ],
+        [
+         "Lỗi chỉ xảy ra ở production",
+         "so ngữ cảnh thật với ngữ cảnh lúc test"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "text": "📚 Cần thuộc. Bắt lỗi API theo chuỗi từ cụ thể tới chung: không tìm thấy → vượt hạn mức → lỗi trạng thái khác → lỗi kết nối. Bắt tất bằng một except chung sẽ đánh mất phân biệt giữa lỗi nên thử lại (429, 5xx, đứt mạng) và lỗi không nên thử lại (400, 404) — thử lại lỗi 400 là đốt tiền vô ích.",
+       "tone": "learn"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "back": [
+  {
+   "id": "s1",
+   "title": "Lộ trình ôn ＋ tự kiểm",
+   "level": 2,
+   "blocks": []
+  },
+  {
+   "id": "s2",
+   "title": "Hãng khuyên ôn thế nào — dịch thành việc làm được",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Mục How to Prepare của guide nói không có khoá học bắt buộc và không tài liệu nào bảo đảm đỗ. Năm việc hãng gợi ý, viết lại thành việc cụ thể:"
+    },
+    {
+     "t": "table",
+     "head": [
+      "Hãng gợi ý",
+      "Làm cụ thể là làm gì"
+     ],
+     "rows": [
+      [
+       "Tự soi theo blueprint",
+       "in 38 task statement ra, tự chấm mỗi dòng: làm được · mơ hồ · chưa biết; ôn theo cột \"chưa biết\""
+      ],
+      [
+       "Đọc tài liệu chính chủ",
+       "Claude API · models · prompt engineering · MCP · Skills — năm mảng hãng nêu đích danh"
+      ],
+      [
+       "Dựng ＋ vận hành một hệ đầu-cuối",
+       "phải có đủ RAG ＋ eval ＋ observability, không chỉ demo một prompt"
+      ],
+      [
+       "Luyện quyết định kiến trúc",
+       "chọn model · chọn giao thức tích hợp · đánh đổi bảo mật — ba loại quyết định hãng nêu"
+      ],
+      [
+       "Làm câu mẫu trong guide",
+       "để quen văn phong và mức độ suy luận của đề, không phải để học tủ"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Sáu bài tập tay",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Bốn bài đầu phủ gần hết Domain 2, 3, 4:"
+    },
+    {
+     "t": "table",
+     "head": [
+      "#",
+      "Bài tập",
+      "Phủ mục"
+     ],
+     "rows": [
+      [
+       "1",
+       "Dựng một agent có 2 tool, cố tình thêm tool thứ ba trùng chức năng rồi xem model gọi nhầm ra sao",
+       "3.1"
+      ],
+      [
+       "2",
+       "Bật prompt caching, đặt phần tĩnh lên trước, xem cache_read_input_tokens nhảy; rồi chèn một dấu thời gian vào system prompt và xem cache chết",
+       "2.4 · 2.5"
+      ],
+      [
+       "3",
+       "Cố tình để tràn context window và đọc kỹ lỗi 400 trả về; sau đó chữa bằng compaction",
+       "2.4"
+      ],
+      [
+       "4",
+       "Viết một eval 20 câu có cả ca xấu, chạy trên hai model, so số — rồi đổi một dòng prompt và chạy lại",
+       "4.2 · 4.3"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "text": "Thêm hai bài cho Domain 3 và 5, vì đó là chỗ đề đánh nặng:"
+    },
+    {
+     "t": "table",
+     "head": [
+      "#",
+      "Bài tập",
+      "Phủ mục"
+     ],
+     "rows": [
+      [
+       "5",
+       "Lấy một kho tài liệu thật, chunk hai kiểu khác nhau, đo tỉ lệ lấy đúng của từng kiểu",
+       "3.5 · 3.6"
+      ],
+      [
+       "6",
+       "Viết một ca prompt injection vào tài liệu nguồn, xem agent có làm theo không, rồi chặn bằng hạ quyền tool chứ không bằng câu chữ",
+       "5.1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Bốn bước ôn",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "ol",
+     "items": [
+      "Bám blueprint, không bám cảm giác. 38 task statement ở trên là phạm vi thi; cái gì không nằm trong đó thì không phải trọng tâm.",
+      "Nắm Domain 3 ＋ 4 ＋ 1 trước — cộng lại 52%, quá nửa bài.",
+      "Chạm tay thật theo sáu bài tập bên trên, đừng chỉ đọc.",
+      "Làm bộ đề ở đây theo chế độ luyện tập, và mỗi câu sai thì hỏi lại: \"câu này thật ra đang hỏi task statement nào?\" — nhận diện đúng mục là nửa phần đáp án. Nhớ rằng tỉ lệ câu trong app lệch so với đề thật, nhất là Domain 7."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Tự kiểm trước ngày thi — trả lời được hết thì đi thi được",
+   "level": 3,
+   "blocks": [
+    {
+     "t": "table",
+     "head": [
+      "#",
+      "Câu tự hỏi",
+      "Mục"
+     ],
+     "rows": [
+      [
+       "1",
+       "Bốn điều kiện nào phải cùng đúng thì mới nên dựng agentic thay vì workflow?",
+       "1.3"
+      ],
+      [
+       "2",
+       "Năm trụ giá trị kinh doanh hãng nêu là gì, và SLA thuộc trụ nào?",
+       "1.6"
+      ],
+      [
+       "3",
+       "Caching · context editing · compaction · memory khác nhau chỗ nào? Cái nào không giải phóng context window?",
+       "2.4"
+      ],
+      [
+       "4",
+       "Least privilege với một agent thừa tool: đáp án là gỡ, hay thêm log, hay thêm xác nhận?",
+       "3.1"
+      ],
+      [
+       "5",
+       "Dữ liệu dạng bảng, hỏi theo mã số ⇒ dùng cách lấy nào? Vì sao không phải vector?",
+       "3.6"
+      ],
+      [
+       "6",
+       "Khi nào monolithic context thắng progressive discovery?",
+       "3.8"
+      ],
+      [
+       "7",
+       "Trả lời tự tin nhưng sai ngay sau khi làm mới tài liệu ⇒ soi tầng nào đầu tiên?",
+       "4.4"
+      ],
+      [
+       "8",
+       "Kể thứ tự 6 bậc tối ưu chi phí — bậc nào miễn phí, bậc nào đánh đổi?",
+       "4.5"
+      ],
+      [
+       "9",
+       "Prompt injection chặn ở đâu? Rò rỉ chặn ở đâu? Bịa chặn bằng gì?",
+       "5.1"
+      ],
+      [
+       "10",
+       "Độ chính xác trung bình 95% vẫn có thể sai ở đâu, và đo lại thế nào?",
+       "5.5"
+      ],
+      [
+       "11",
+       "Một kỳ vọng \"phải nhanh\" viết lại thành SLA đo được ra sao?",
+       "6.3"
+      ],
+      [
+       "12",
+       "Yêu cầu \"mỗi lần X thì tự động Y\" giải bằng gì, và không giải bằng gì?",
+       "7.1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Bẫy hay gặp",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "table",
+     "head": [
+      "Bẫy",
+      "Cách nhận ra"
+     ],
+     "rows": [
+      [
+       "Agent hoá mọi thứ",
+       "đề tả việc nhiều bước nhưng thứ tự biết trước ⇒ workflow"
+      ],
+      [
+       "Chữa thừa quyền bằng log hoặc xác nhận",
+       "least privilege là gỡ tool, hai cái kia chỉ là bù"
+      ],
+      [
+       "Tưởng caching giải phóng ngữ cảnh",
+       "nó đổi giá, không đổi chỗ chiếm"
+      ],
+      [
+       "Nhảy thẳng sang model rẻ nhất",
+       "bậc 1 (caching) chưa làm mà đã xuống bậc 6"
+      ],
+      [
+       "Cắt bớt tài liệu bắt buộc cho rẻ",
+       "mất thông tin cần thiết, không phải tối ưu"
+      ],
+      [
+       "Chặn prompt injection bằng prompt",
+       "chốt thật nằm ở quyền của tool"
+      ],
+      [
+       "Lẫn ghi log với ngăn chặn",
+       "log là vết; guardrail mới là hàng rào"
+      ],
+      [
+       "Dựng RAG cho vài chục trang tĩnh",
+       "nhét vào ngữ cảnh ＋ cache là đủ"
+      ],
+      [
+       "Vector search cho mã số, mã lỗi",
+       "dữ liệu dạng ấy phải dùng từ khoá / BM25"
+      ],
+      [
+       "Đổ lỗi cho model khi vừa làm mới tài liệu",
+       "model không đổi ⇒ soi retrieval/index"
+      ],
+      [
+       "Đọc content mà không đọc stop_reason",
+       "refusal và cụt output đều trả 200"
+      ],
+      [
+       "Thêm tool để chữa lỗi gọi nhầm tool",
+       "thêm tool làm model chọn sai nhiều hơn"
+      ],
+      [
+       "Đổi model rồi không chạy lại eval",
+       "prompt cũ thường quá chi tiết với model mới"
+      ],
+      [
+       "Khoe model mạnh nhất khi đề nêu ràng buộc tuân thủ hoặc SLA",
+       "model mạnh có thể phá chính ràng buộc đề nêu"
+      ],
+      [
+       "Bắt người duyệt mọi hành động",
+       "mệt mỏi vì duyệt ⇒ duyệt mà không đọc"
+      ],
+      [
+       "Đo trung bình khi đề hỏi về công bằng",
+       "phải tách theo nhóm"
+      ],
+      [
+       "Ôn nặng Domain 7 vì app nhiều câu",
+       "đề thật chỉ 7%"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Nguồn chính gốc",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "ul",
+     "items": [
+      "Exam Guide chính chủ CCAR-P (Version 1.0, hiệu lực 7/2026) — nguồn của blueprint, tỉ trọng, số câu, điểm đạt và chính sách trong bài này: <https://anthropic-partners.skilljar.com/claude-certified-architect-professional-certification>",
+      "Context window · token · context rot · compaction: <https://platform.claude.com/docs/en/build-with-claude/context-windows>",
+      "Tool use (client tool ↔ server tool · tool search · giá theo token): <https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview>",
+      "Prompt engineering (bắt đầu từ tiêu chí thành công ＋ eval): <https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview>",
+      "Prompt caching (thứ tự tiền tố · kẻ phá cache): <https://platform.claude.com/docs/en/build-with-claude/prompt-caching>",
+      "MCP — chuẩn nối model với hệ ngoài: <https://modelcontextprotocol.io/>",
+      "Managed Agents (Anthropic chạy vòng lặp ＋ sandbox): <https://platform.claude.com/docs/en/managed-agents/overview>",
+      "Claude Agent SDK (harness của Claude Code dạng thư viện): <https://code.claude.com/docs/en/agent-sdk/overview>",
+      "Claude Code cho đội (skill · hook · plugin · MCP): <https://code.claude.com/docs/en/overview>"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s8",
+   "title": "Cách chấm điểm",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Đo theo chuẩn cố định, không xếp hạng với thí sinh khác — cả phòng cùng giỏi thì cả phòng cùng đạt. Mốc đạt 720 do một hội đồng chuyên gia đặt qua nghiên cứu chuẩn hoá."
+    },
+    {
+     "t": "p",
+     "text": "Điểm báo trên thang 100–1000, kèm tỉ lệ đúng theo từng domain. 720 không phải phần trăm câu đúng — đó là điểm quy đổi. Tỉ lệ theo domain chỉ để bạn biết mình yếu chỗ nào, không dùng để tính đạt hay trượt."
+    },
+    {
+     "t": "p",
+     "text": "Khiếu nại: 14 ngày kể từ khi được báo, hoặc kể từ ngày thi nếu thắc mắc về kết quả; gửi qua hỗ trợ của Pearson VUE. Kết quả nghiên cứu chuẩn hoá và nội dung từng đề mục thì không khiếu nại được."
+    }
+   ]
+  },
+  {
+   "id": "s9",
+   "title": "Giấy tờ ＋ hỗ trợ đặc biệt",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Hôm thi phải trình giấy tờ tuỳ thân có ảnh, do nhà nước cấp, còn hạn, tên khớp từng chữ với tên đã ghi danh. Người Việt và người Nhật hay vấp đúng chỗ này: thứ tự họ – tên, dấu, cách viết Latinh trên hộ chiếu. Lệch thì sửa qua certifications-support@anthropic.com trước khi đặt lịch."
+    },
+    {
+     "t": "p",
+     "text": "Có khuyết tật hoặc nhu cầu đặc biệt kèm giấy tờ chứng minh thì được hỗ trợ hợp lý. Phải xin Pearson VUE duyệt trước rồi mới đặt lịch — đặt trước là làm lại từ đầu. Nộp ở pearsonvue.com/us/en/test-takers/accommodations."
+    }
+   ]
+  },
+  {
+   "id": "s10",
+   "title": "Thi lại · vắng mặt",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Trượt thì chờ 14 ngày sau lần một, 30 ngày sau lần hai, 90 ngày sau lần ba. Tối đa 4 lần trong 12 tháng cho một kỳ thi, tính lùi từ hôm nay chứ không theo năm dương lịch. Hạn mức riêng từng kỳ thi: trượt kỳ này không cấm bạn ghi danh kỳ khác."
+    },
+    {
+     "t": "p",
+     "text": "Mỗi lần thi đều trả lệ phí đầy đủ. Vắng mặt, hoặc đến muộn quá khung cho phép, cũng mất tiền và phải ghi danh lại từ đầu."
+    }
+   ]
+  },
+  {
+   "id": "s11",
+   "title": "Trong phòng thi ＋ NDA",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Thi ở trung tâm hay ở nhà đều là môi trường có giám sát. Trong lúc thi:"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "Luôn ở trong tầm webcam, nếu thi trực tuyến",
+      "Bàn trống: không giấy tờ, sách vở, điện thoại, màn hình phụ",
+      "Không nói chuyện với ai",
+      "Không chụp, chép, quay hay tái tạo nội dung đề"
+     ]
+    },
+    {
+     "t": "p",
+     "text": "Đồ cấm: điện thoại, đồng hồ thông minh, tai nghe, tài liệu ôn, thiết bị ghi. Thứ được phép — giấy nháp do giám thị phát chẳng hạn — là do Pearson VUE quy định."
+    },
+    {
+     "t": "p",
+     "text": "Trước khi đề mở ra bạn phải bấm đồng ý NDA: nội dung đề là tài sản riêng của Anthropic, không được tiết lộ hay sao chép. Không đồng ý là kết thúc buổi thi, không hoàn tiền. Gian lận hoặc làm lộ đề thì huỷ kết quả, thu hồi chứng chỉ, cấm thi về sau."
+    }
+   ]
+  },
+  {
+   "id": "s12",
+   "title": "Duy trì ＋ gia hạn",
+   "level": 2,
+   "blocks": [
+    {
+     "t": "p",
+     "text": "Chứng chỉ Claude Certified Architect – Professional có hiệu lực 12 tháng kể từ ngày cấp — nền công nghệ dưới nó đổi nhanh, nên hạn ngắn là cố ý."
+    },
+    {
+     "t": "p",
+     "text": "Gia hạn đúng hạn: xem lại phần đã thay đổi rồi làm một bài đánh giá miễn phí, không giám sát trên Partner Academy. Để quá hạn: thi lại toàn bộ và trả lệ phí đầy đủ. Nếu nội dung đề đổi nhiều, Anthropic có thể buộc thi lại toàn bộ thay vì làm bài gia hạn."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,3317 @@
+[
+ {
+  "id": 11265,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Đặc quyền tối thiểu là phép trừ có đáy → cắt tới mức vừa đủ làm xong việc đã định, và chặn quyền ở tầng điều phối.",
+  "why": "Ô B khớp một-một với đúng hai quyền đề giao, không thừa một tool nào. Vế cuối mới là chỗ đắt: quyền bị chặn **trước khi** lời gọi tool chạy, ở tầng ta kiểm soát, chứ không trông cậy mô hình tự giữ mình. Cắt quá tay thì thành hệ thống không làm được việc — cũng không phải an toàn.",
+  "wrong": {
+   "A": "`read permissions globally`: quyền đọc cũng là quyền, mở đọc toàn cục thì trợ lý với được cả kho khác dù ghi đã siết — đề đã nói `and nothing else`.",
+   "C": "`rely on the model to decline tools`: prompt/mô hình không phải chốt bảo mật; mọi tool vẫn nằm trong tầm gọi, một prompt injection là đủ thủng.",
+   "D": "`Disable all tools entirely`: bề mặt quyền bằng 0 nhưng hệ thống mất luôn lý do tồn tại — under-reach, không phải least privilege."
+  },
+  "rows": null
+ },
+ {
+  "id": 11266,
+  "answer": [
+   "A",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Thiết kế thí nghiệm = giả thuyết + metric chính + cỡ mẫu, chốt TRƯỚC khi chạy; phân tích, quyết định, ghi chép đều là việc SAU.",
+  "why": "Trước khi random assignment phải biết mình đang kiểm cái gì và đo bằng gì (`hypothesis and the primary success metric`), và phải tính `minimum detectable effect` cùng cỡ mẫu đủ power — không thì chạy xong cũng không kết luận được. Chốt trước còn chặn được việc chọn metric sau khi thấy số liệu (p-hacking).",
+  "wrong": {
+   "B": "`Decide whether to promote, reject, or iterate`: quyết định dựa trên `the analysis` — chỉ làm được sau khi có kết quả.",
+   "D": "`Analyze the results`: chính là bước sau khi chạy; metric và ngưỡng được `predefined` ở bước trước.",
+   "E": "`Document the recommendation`: ghi lại khuyến nghị là bước cuối chu trình, không phải bước thiết kế."
+  },
+  "rows": null
+ },
+ {
+  "id": 11267,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bash không giới hạn cho cả doanh nghiệp là bề mặt tấn công rộng nhất → thu hẹp bằng allow-pattern đúng lệnh cần, cộng deny rule cho thao tác nhạy cảm.",
+  "why": "Ô C áp đúng least privilege cho Claude Code: chỉ cho `narrowly scoped tool patterns` mà workflow thực sự cần, rồi khoá cứng bằng `explicit deny rules` cho thao tác nguy hiểm (deny luôn thắng allow). Cấu hình phức tạp hơn một chút là cái giá đáng trả khi rollout cho mọi dev, mọi project.",
+  "wrong": {
+   "A": "`expanding the attack surface further in the name of consistency`: nhất quán theo hướng hở hơn — làm vấn đề tệ thêm.",
+   "B": "`Approve ... as written`: viện cớ `configuration complexity` để chấp nhận toàn bộ bề mặt tấn công — bỏ qua chính lỗ hổng cần review.",
+   "D": "`Disable all permission rules`: gỡ luôn mọi lớp kiểm soát, còn tệ hơn hiện trạng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11268,
+  "answer": [
+   "A",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Căn chỉnh kỳ vọng = đưa số đo thật so với SLA đã thống nhất, rồi cùng stakeholder sửa SLA nếu không khả thi — không né, không hoảng.",
+  "why": "Ô A thay cảm giác “chậm” bằng dữ liệu `p50 and p95 latency baselines against the agreed SLA`, đặt cuộc trao đổi lên nền chung. Ô E xử lý khoảng cách còn lại một cách minh bạch: `Revise the SLA definition collaboratively` khi mục tiêu không đạt được trong ràng buộc production. Cả hai đều là hành động về kỳ vọng, đúng thứ đề hỏi.",
+  "wrong": {
+   "B": "`Pause all development`: phản ứng quá đà, chưa có dữ liệu đã dồn hết nguồn lực — không phải alignment.",
+   "C": "`outside the architecture team's control`: đẩy trách nhiệm, bỏ qua các đòn kiến trúc (caching, streaming, model tier) và làm mất lòng tin.",
+   "D": "`without evaluation`: đổi model mà không đánh giá là rủi ro chất lượng, và không trả lời câu hỏi kỳ vọng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11269,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Quá nhiều tool definition ăn context → Tool Search: hoãn nạp, tìm khi cần; giữ nguyên năng lực mà context lúc đầu gọn.",
+  "why": "60+ MCP tool nạp sẵn là nguyên nhân trực tiếp đốt context trước khi phiên bắt đầu. Tool Search khiến định nghĩa tool được `deferred and discovered on demand`, nên giảm overhead mà không mất tool nào — khớp vế `without removing capability`.",
+  "wrong": {
+   "B": "`Disable every MCP server`: giải phóng context bằng cách bỏ toàn bộ năng lực — trái điều kiện đề.",
+   "C": "`Increase the prompt's verbosity`: thêm token chứ không bớt, không đụng tới nguyên nhân.",
+   "D": "`Add additional MCP servers`: thêm tool definition, làm tình hình tệ hơn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11270,
+  "answer": [
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Lỗ hổng thật: secret nằm trong ngữ cảnh, và phân quyền đặt SAU khi model đã đọc dữ liệu. Chặn quyền phải ở tầng dữ liệu, trước model.",
+  "why": "Ô B: `credentials are placed in the prompt context` — secret có thể rò ra log, trace, thậm chí vào đầu ra; secret phải nằm ở vault phía server. Ô C: RBAC `only at the response-rendering layer after the model accesses restricted data` nghĩa là dữ liệu cấm đã vào ngữ cảnh, lọc ở khâu hiển thị là quá muộn. A, D, E đều là thực hành tốt, không phải lỗ hổng.",
+  "wrong": {
+   "A": "`least-privilege service principal scoped to the requested action`: đây là kiểm soát đúng, không phải gap.",
+   "D": "`Per-user OAuth tokens ... scope-restricted`: danh tính theo người dùng, quyền hẹp — thực hành tốt.",
+   "E": "`encrypted in transit using transport-layer security`: TLS giữa các dịch vụ là chuẩn mực cơ bản, không phải lỗ hổng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11271,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Lỗi chỉ lần đầu + có hộp thoại quyền hệ điều hành → nguyên nhân là cấp quyền một lần; ghi vào onboarding, đừng đập đi làm lại.",
+  "why": "Triệu chứng chỉ ra rõ nguyên nhân: lần đầu hệ điều hành hỏi quyền, server fail; sau khi cấp thì các lần sau chạy được. Ô A nhận diện đúng `first-run permission grant`, xác nhận lần sau thành công và ghi vào hướng dẫn để người sau khỏi hoang mang — chẩn đoán có kiểm chứng, can thiệp tối thiểu.",
+  "wrong": {
+   "B": "`Reinstall the operating system`: can thiệp cực đoan mà `without first confirming` nguyên nhân.",
+   "C": "`Disable operating-system permission dialogs entirely`: hy sinh bảo mật cho một lỗi vốn tự hết sau lần đầu.",
+   "D": "`Treat the first-run failure as a permanent fault`: ngược bằng chứng (lần sau chạy được) và `do not verify`."
+  },
+  "rows": null
+ },
+ {
+  "id": 11272,
+  "answer": [
+   "C",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Lỗi “đặc thù LLM” nằm ở hành vi model: bịa (hallucination) và từ chối quá tay; còn TLS, DB, load balancer là lỗi phần mềm/hạ tầng thường.",
+  "why": "Ô E là hallucination điển hình: câu trả lời nghe hợp lý nhưng `unsupported by any retrieved document`. Ô C là over-refusal: `surface features trigger an overly broad safety pattern`. Cả hai sinh ra từ bản chất xác suất của model, không có ở phần mềm truyền thống.",
+  "wrong": {
+   "A": "`expired TLS certificate`: lỗi vận hành hạ tầng, hệ nào cũng gặp.",
+   "B": "`database connection timeout`: lỗi tầng dữ liệu chung, không do LLM.",
+   "D": "`misconfigured load balancer`: lỗi cấu hình hạ tầng, không đặc thù LLM."
+  },
+  "rows": null
+ },
+ {
+  "id": 11273,
+  "answer": [
+   "C",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Threat modeling đi theo thứ tự: tài sản → mối đe doạ/đường tấn công → đánh giá likelihood × impact → giảm thiểu → ghi chép.",
+  "why": "Muốn ước lượng likelihood và impact của mối đe doạ lên tài sản thì phải có hai danh mục đầu vào: `Identify the assets ... along with the sensitivity` và `Enumerate the threat actors and attack vectors`. Ba ô còn lại là đầu ra của bước đánh giá, đến sau.",
+  "wrong": {
+   "A": "`Document the assessment outcome`: ghi kết quả là bước cuối cùng.",
+   "B": "`Recommend mitigations ... after analysis`: chính đề nói là sau phân tích.",
+   "D": "`Recommend mitigations and residual-risk acceptance`: cũng là bước sau đánh giá, trùng ý với B."
+  },
+  "rows": null
+ },
+ {
+  "id": 11274,
+  "answer": [
+   "C",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Guardrail tốt là nhiều lớp và cưỡng chế được: prompt + kiểm tra runtime + validate schema trước hành động; không một lớp đơn lẻ nào đủ.",
+  "why": "Ô C chặn đầu ra sai cấu trúc **trước khi** `downstream actions` chạy — kiểm soát xác định, không trông cậy model. Ô D là defense-in-depth: `Layer prompt-level guardrails with runtime content checks rather than relying on either alone`. Hai ô kia hoặc tự mở lỗ (override phrase) hoặc dồn hết vào một lớp.",
+  "wrong": {
+   "A": "`approved override phrases`: tạo sẵn cửa sau cho jailbreak — ai đoán được câu là vượt rào.",
+   "B": "`Lower sampling temperature`: giảm độ ngẫu nhiên, không phải guardrail; model vẫn làm điều sai một cách ổn định.",
+   "E": "`Rely on a single hardened system prompt`: một lớp duy nhất, lại là prompt — không cưỡng chế được."
+  },
+  "rows": null
+ },
+ {
+  "id": 11275,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Context bị ăn trước khi gõ chữ nào → nghi ngay tool definition từ nhiều MCP server nạp sẵn khi Tool Search chưa bật.",
+  "why": "Thứ duy nhất có thể nạp hàng chục nghìn token trước tin nhắn đầu tiên là phần cấu hình: system prompt, CLAUDE.md và nhất là định nghĩa tool. Ô B nêu đúng cơ chế: `Many MCP servers ... Tool Search is not enabled, so all definitions load upfront`.",
+  "wrong": {
+   "A": "`keyboard layout`: không liên quan gì tới token gửi lên model.",
+   "C": "`internal personal preferences`: model không có “sở thích” tự tiêu context; đổ cho model là né chẩn đoán.",
+   "D": "`font rendering or display-scaling`: thiết lập hiển thị không biến thành token."
+  },
+  "rows": null
+ },
+ {
+  "id": 11276,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cấu hình chung cho một repo → commit file project-scope (`.mcp.json`, `.claude/settings.json`) vào repo; git tự đồng bộ.",
+  "why": "Ô C đặt định nghĩa MCP vào chính repo, nên ai clone/pull đều nhận cùng một bản, `without manual synchronization`, và thay đổi đi qua review như code. Phạm vi cũng khớp đúng: cấp repository, không rộng hơn.",
+  "wrong": {
+   "A": "`managed configuration pushed ... by the administrator`: dành cho chính sách toàn tổ chức, quá rộng và phụ thuộc admin cho một nhu cầu của một repo.",
+   "B": "`environment variables ... on each workstation`: phải đặt tay từng máy — đúng thứ đề muốn tránh.",
+   "D": "`personal ~/.claude/settings.json`: mỗi người giữ một bản, chắc chắn lệch nhau."
+  },
+  "rows": null
+ },
+ {
+  "id": 11277,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bị từ chối quyền → tìm đúng rule nào đang chặn, qua mọi scope (managed → CLI → local → project → user), rồi quyết sửa hay giữ.",
+  "why": "Ô C là chẩn đoán đúng: quyền trong Claude Code được hợp nhất từ nhiều scope, và một deny ở scope cao hơn (vd managed) có thể thắng allow của user. Phải tìm ra rule cụ thể và xác nhận nó `should be amended or remain denied` — có khi denial là chủ ý.",
+  "wrong": {
+   "A": "`retry ... repeatedly`: rule là xác định, thử lại không đổi kết quả và không chẩn đoán gì.",
+   "B": "`Disable the permission system entirely`: tháo toàn bộ kiểm soát để sửa một rule.",
+   "D": "`unrestricted Bash access`: mở toang quyền thay vì sửa đúng `the rule in question`."
+  },
+  "rows": null
+ },
+ {
+  "id": 11278,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "AI review là bổ trợ: Claude bình luận, con người vẫn giữ quyền approve qua branch protection.",
+  "why": "Đề đặt hai điều kiện: có review bằng AI và `without removing human approval`. Ô A thoả cả hai: Claude `posts a structured analysis as a comment`, còn người review `retains the approval decision under the existing branch-protection rules`.",
+  "wrong": {
+   "B": "`merges every pull request automatically`: bỏ qua đúng cái cổng người duyệt mà đề yêu cầu giữ.",
+   "C": "`disables all existing branch-protection rules`: phá luôn cơ chế kiểm soát.",
+   "D": "`silently deletes pull requests`: hành động phá huỷ, không minh bạch, không có người trong vòng lặp."
+  },
+  "rows": null
+ },
+ {
+  "id": 11279,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Ràng buộc bảo mật cứng là điều kiện loại: không qua được network boundary thì mọi lợi ích khác đều vô nghĩa.",
+  "why": "CFO muốn giải phóng năng lực kỹ sư, nhưng security officer đặt yêu cầu bắt buộc: dữ liệu tài chính khách hàng phải `remain within an approved network boundary`. Một ràng buộc cứng như vậy là gate go/no-go, nên phải nặng ký nhất — ô D.",
+  "wrong": {
+   "A": "`map cleanly to the patterns`: câu hỏi khả thi kỹ thuật, có thể điều chỉnh; không vượt được ràng buộc bảo mật.",
+   "B": "`reduce per-invoice token costs`: token cost phụ thuộc model, không phải hạ tầng; mục tiêu là năng lực kỹ sư.",
+   "C": "`support the current bus topology`: bus topology chính là thứ đang gây gánh nặng; giữ nguyên nó không phải tiêu chí chính."
+  },
+  "rows": null
+ },
+ {
+  "id": 11280,
+  "answer": [
+   "A",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Trước khi viết: biết viết cho ai (audience + câu hỏi họ cần trả lời) và có dàn ý. Kiểm chứng, dịch, versioning đến sau.",
+  "why": "Mỗi mục của guide phải trả lời câu hỏi của một đối tượng cụ thể, nên phải `Identify the audience` trước. Có audience rồi mới `Outline the guide sections` (overview, components, contracts, flows, runbooks, limitations) để từng mục có khung mà viết.",
+  "wrong": {
+   "B": "`Translate the guide`: dịch cái chưa viết — rõ ràng là bước sau.",
+   "C": "`Validate the guide with the implementation team`: kiểm chứng nội dung cần có bản nháp trước.",
+   "D": "`version control with a defined review cadence`: là quản trị tài liệu sau khi có nội dung, không phải bước lập kế hoạch nội dung trước từng mục."
+  },
+  "rows": null
+ },
+ {
+  "id": 11281,
+  "answer": [],
+  "rows_answer": {
+   "1": "A",
+   "2": "A",
+   "3": "A",
+   "4": "B",
+   "5": "B"
+  },
+  "confidence": "high",
+  "remember": "Khớp cách lấy với hình dạng dữ liệu: dense cho ý nghĩa, sparse cho mã số/từ hiếm, SQL cho lọc-gộp, hybrid để có cả hai.",
+  "why": "Ba nhận định đầu đều mô tả đúng điểm mạnh của từng chiến lược. Hybrid ghép dense + sparse nên recall khác (thường cao hơn) dense-only, và lấy mẫu ngẫu nhiên thì không phải truy xuất.",
+  "wrong": null,
+  "rows": {
+   "1": "Yes — dense vector bắt được `paraphrased intent` dù không trùng từ.",
+   "2": "Yes — sparse/BM25 khớp chính xác `identifiers and rare tokens`, chỗ embedding hay trượt.",
+   "3": "Yes — `filter-and-aggregate` trên bảng có schema thì truy vấn có cấu trúc (SQL) là đúng.",
+   "4": "No — hybrid kết hợp thêm sparse nên không `identical to dense-only`, recall khác.",
+   "5": "No — `Random sampling` không dựa vào câu hỏi, không phải chiến lược truy xuất."
+  }
+ },
+ {
+  "id": 11282,
+  "answer": [
+   "C",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Retrieval không đổi mà đầu ra lệch nguồn → soi hai thứ còn lại: phiên bản model và chỉ dẫn grounding trong system prompt.",
+  "why": "Đề đã loại trừ pipeline retrieval (`no change to the retrieval pipeline`), nên nguyên nhân nằm ở model hoặc prompt. Ô C kiểm `reproduces on the previous model version` để tách model mismatch; ô E kiểm `citation constraints remain intact` trong grounding instructions. Cả hai là bước chẩn đoán, không phải đoán mò sửa.",
+  "wrong": {
+   "A": "`Increase the context-window size`: là thay đổi, không phải chẩn đoán; thêm chunk không giải thích vì sao model mâu thuẫn chunk đã có.",
+   "B": "`denser embedding model`: sửa retrieval trong khi đề nói retrieval không đổi — đổi embedding còn bắt phải index lại.",
+   "D": "`Reduce the temperature`: giảm phương sai không xác định nguyên nhân, model vẫn có thể sai một cách ổn định."
+  },
+  "rows": null
+ },
+ {
+  "id": 11283,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Productivity = cùng người làm nhiều hơn; Efficiency = bỏ bước thủ công; Cost = tiền; Performance SLA = cam kết độ trễ/sẵn sàng.",
+  "why": "Câu (1) `3x more purchase orders per analyst per day` là sản lượng trên mỗi người → Productivity. Câu (2) bỏ hẳn khâu nhập liệu thủ công → Efficiency (tự động hoá phần lặp). Câu (3) chi phí API vượt ngân sách → Solution Cost; câu (4) 11 giây so với cam kết 5 giây → Performance SLA. Chỉ ô B khớp cả bốn.",
+  "wrong": {
+   "A": "Gán câu (1) là Efficiency và câu (2) là Transformation: `per analyst per day` là thước đo productivity; bỏ khâu nhập liệu là tự động hoá, chưa phải làm được việc mới.",
+   "C": "Gán câu (4) là Efficiency: `committed 5-second SLA` rõ ràng là Performance SLA.",
+   "D": "Đảo câu (3) và (4): `per-transaction budget` là Cost, `latency ... SLA` là Performance SLA."
+  },
+  "rows": null
+ },
+ {
+  "id": 11284,
+  "answer": [],
+  "rows_answer": {
+   "1": "A",
+   "2": "B",
+   "3": "A",
+   "4": "B",
+   "5": "A"
+  },
+  "confidence": "high",
+  "remember": "Claude mạnh ở hiểu ngôn ngữ, suy luận, ngữ cảnh dài; không phải ở độ trễ dưới 50ms hay thay hạ tầng tìm kiếm quy mô lớn.",
+  "why": "Ba việc 1, 3, 5 đều là xử lý văn bản bán cấu trúc/dài cần suy luận và giải thích — đất của Claude. Chấm điểm gian lận dưới 50ms và thay vector index cho hàng triệu tài liệu là bài toán ML truyền thống/hạ tầng, gọi LLM không đáp ứng.",
+  "wrong": null,
+  "rows": {
+   "1": "Yes — nháp báo cáo từ log bán cấu trúc, có analyst review: đúng sở trường, có HITL.",
+   "2": "No — `sub-50-millisecond latency` trên streaming vượt xa độ trễ của LLM; dùng model ML chuyên dụng.",
+   "3": "Yes — `long-context contract review` + trích xuất có cấu trúc là use case kinh điển.",
+   "4": "No — Claude không thay được `vector index` cho `multi-million-document corpus`; nó dùng kết quả retrieval chứ không là retrieval.",
+   "5": "Yes — phân loại 30 nhãn kèm `reasoning` là việc LLM làm tốt."
+  }
+ },
+ {
+  "id": 11285,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Pha iteration = vòng lặp đo → chọn thay đổi tác động lớn nhất → đánh giá lại bằng eval framework; không dừng đo, không đập đi xây lại.",
+  "why": "Ô D mô tả đúng vòng cải tiến liên tục: lấy tín hiệu từ `production telemetry, sampled output evaluations, and stakeholder feedback`, chọn `highest-impact change`, rồi kế hoạch hoá thay đổi đối chiếu evaluation framework để biết nó có thật sự tốt hơn.",
+  "wrong": {
+   "A": "`Rebuild the entire system ... every iteration`: lãng phí và bỏ qua dữ liệu chỉ ra cái gì cần đổi.",
+   "B": "`Stop measuring production outcomes`: không đo thì không phát hiện được drift, không có iteration.",
+   "C": "`Discard the evaluation framework`: mất nền để so sánh tác động của thay đổi."
+  },
+  "rows": null
+ },
+ {
+  "id": 11286,
+  "answer": [],
+  "rows_answer": {
+   "1": "C",
+   "2": "C",
+   "3": "B",
+   "4": "A",
+   "5": "B",
+   "6": "A"
+  },
+  "confidence": "high",
+  "remember": "Chunk theo cấu trúc tự nhiên của dữ liệu: code theo hàm/cây, tài liệu dài theo mục/đoạn, bản ghi ngắn thì mỗi bản ghi một chunk.",
+  "why": "Chunking tốt giữ ranh giới ngữ nghĩa của từng loại corpus. Code và spec có cây phân cấp; tài liệu dài có mục, đoạn, điều khoản; bản ghi ngắn đã là đơn vị tự nhiên hoặc dài tương đương nên cắt cố định là đủ.",
+  "wrong": null,
+  "rows": {
+   "1": "Code/Hierarchical Specs — `function-level ... for code modules` nêu thẳng code.",
+   "2": "Code/Hierarchical Specs — `follows code or specification hierarchy`.",
+   "3": "Heterogeneous Short Records — `each record is one chunk`.",
+   "4": "Long Structured Documents — `clause or paragraph boundaries` là cấu trúc của văn bản dài (hợp đồng, chính sách).",
+   "5": "Heterogeneous Short Records — `for short records of similar length`.",
+   "6": "Long Structured Documents — `mirrors document section structure`."
+  }
+ },
+ {
+  "id": 11287,
+  "answer": [],
+  "rows_answer": {
+   "1": "A",
+   "2": "A",
+   "3": "B",
+   "4": "A",
+   "5": "B"
+  },
+  "confidence": "high",
+  "remember": "Bắt đầu đơn giản (zero-shot), thêm ví dụ để neo định dạng, CoT chỉ khi việc cần suy luận, và phải kiểm lại prompt mỗi khi đổi model.",
+  "why": "Hai nhận định đầu là thực hành chuẩn của prompt engineering. CoT tốn token và độ trễ nên không là mặc định cho mọi việc. Hỏi dẫn dắt được khắc phục bằng yêu cầu so sánh cân bằng có tiêu chí. Hành vi đổi theo phiên bản model nên prompt phải được eval lại.",
+  "wrong": null,
+  "rows": {
+   "1": "Yes — có sẵn danh mục và mô tả thì zero-shot là điểm khởi đầu hợp lý.",
+   "2": "Yes — few-shot với `exact field names` neo định dạng đầu ra rất hiệu quả.",
+   "3": "No — `regardless of complexity`: CoT tốn token/độ trễ, chỉ đáng dùng cho việc cần suy luận.",
+   "4": "Yes — `even-handed comparison with stated criteria` gỡ thiên lệch do câu hỏi dẫn dắt.",
+   "5": "No — `can be ignored`: mỗi phiên bản model hành xử khác, phải chạy lại eval."
+  }
+ },
+ {
+  "id": 11288,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bắt drift qua nâng cấp model → một bộ eval cố định, chấm theo phiên bản, chạy TRƯỚC khi promote.",
+  "why": "Drift chỉ đo được khi so trên cùng một thước. Ô D giữ `the same set` và `version-attributed scoring` để mỗi bản nâng cấp được so với bản trước `before promotion` — bắt lỗi trước khi phục vụ production.",
+  "wrong": {
+   "A": "`Disable adversarial evaluation`: chấp nhận drift không bị phát hiện — ngược mục tiêu.",
+   "B": "`Rotate adversarial inputs randomly`: mỗi lần một bộ khác thì không so sánh được giữa các phiên bản.",
+   "C": "`rely on user-submitted complaints`: phát hiện sau khi đã gây hại ở production."
+  },
+  "rows": null
+ },
+ {
+  "id": 11289,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Chống giả danh quyền admin bằng nhiều lớp cưỡng chế: coi input là dữ liệu, classifier runtime, quyền không thể nâng bằng lời, và audit log.",
+  "why": "Lời tự xưng admin trong nội dung người dùng không bao giờ là bằng chứng quyền. Ô B xếp lớp phòng thủ: prompt coi `user content as untrusted data`, classifier phát hiện override, `scoped tool permissions that cannot be elevated by user content` (chốt thật nằm ở tầng quyền), và audit log để truy vết.",
+  "wrong": {
+   "A": "`Trusting that the model will intrinsically recognize`: một lớp duy nhất là thiện chí của model.",
+   "C": "`Removing all safety restrictions`: xoá mục tiêu tấn công bằng cách tự phá mình.",
+   "D": "`Granting users any privilege level they assert`: chính là lỗ hổng mà kẻ tấn công khai thác."
+  },
+  "rows": null
+ },
+ {
+  "id": 11290,
+  "answer": [
+   "B",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Lỗi xuất hiện sau bảo trì → diff cấu hình với bản tốt gần nhất và replay request cũ, xem raw output trước khi parse.",
+  "why": "Ô B tìm cái gì đã đổi trong maintenance window bằng cách so `system prompt and output schema configuration against the last known good version`. Ô E tách lớp: replay request trước bảo trì và `inspect the raw model output before downstream parsing` để biết lỗi do model trả sai hay do tầng parse phía sau. Hai bước này khoanh vùng nguyên nhân thay vì đoán sửa.",
+  "wrong": {
+   "A": "`Clear the prompt cache`: cache chỉ tái dùng tiền tố đầu vào, không làm hỏng định dạng đầu ra; lại là hành động chứ không chẩn đoán.",
+   "C": "`Switch to a different Claude model tier`: thêm một biến mới, làm vẩn đục chẩn đoán.",
+   "D": "`Increase the max_tokens limit`: chỉ kiểm một giả thuyết hẹp (truncation) mà không gắn với thay đổi trong bảo trì; xem raw output ở E đã lộ ra nếu bị cắt."
+  },
+  "rows": null
+ },
+ {
+  "id": 11291,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Quản trị Skills ở quy mô lớn = federated: đội tự viết (gần nghiệp vụ, không nghẽn), cổng review trung tâm (giữ tin cậy).",
+  "why": "Đề đặt hai yêu cầu đối nghịch: `remain trustworthy` và `without bottlenecking on a single central team`. Ô D cân cả hai: 14 đội tự sở hữu Skill của mình, còn `central review and publication gate` đảm bảo chất lượng và an toàn trước khi phát hành.",
+  "wrong": {
+   "A": "`Per-developer authorship ... no team-level coordination`: 280 nguồn rời rạc, không có kiểm soát — mất tin cậy.",
+   "B": "`single platform team`: đúng cái nút cổ chai đề muốn tránh.",
+   "C": "`no review before publication`: không có cổng chất lượng — Skill không đáng tin."
+  },
+  "rows": null
+ },
+ {
+  "id": 11292,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bàn giao sạch = gói đầy đủ, viết thành văn: tổng quan, ADR, contract, eval + reference set, runbook, playbook on-call, giới hạn đã biết.",
+  "why": "Đội triển khai cần biết cái gì đã quyết và vì sao (ADR), các thành phần nói chuyện với nhau ra sao (contracts), đo thế nào là đúng (eval framework + reference set), và vận hành ra sao (runbooks, on-call playbook, known limitations). Chỉ ô C cung cấp đủ.",
+  "wrong": {
+   "A": "`design presentation slides` không có diagram, contract, eval hay runbook — thiếu nền để làm.",
+   "B": "`verbal walkthrough`: không có gì thành văn, kiến thức biến mất sau buổi họp.",
+   "D": "`Source code alone`: code không nói lý do thiết kế, cách đo hay cách vận hành."
+  },
+  "rows": null
+ },
+ {
+  "id": 11293,
+  "answer": [
+   "D",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Sửa đúng phát hiện: key chung → danh tính riêng từng người (OAuth, scope hẹp); log thiếu người khởi tạo → thêm actor attribution.",
+  "why": "Phát hiện (1) `all end users share a single API key` được chữa trực tiếp bằng ô E: `per-user OAuth tokens carrying scope-restricted permissions`. Phát hiện (2) thiếu ghi người khởi tạo được chữa bằng ô D: `actor attribution ... records the initiating user identity`. Các ô khác là biện pháp tốt nhưng chữa vấn đề khác.",
+  "wrong": {
+   "A": "`Validate structured outputs against a schema`: chữa lỗi định dạng đầu ra, không chạm tới danh tính hay log.",
+   "B": "`Enforce RBAC at the retrieval layer`: tốt, nhưng đề không phát hiện lỗi phân quyền truy xuất.",
+   "C": "`Move credentials out of the prompt context`: chữa rò secret qua prompt — không phải phát hiện nào trong hai."
+  },
+  "rows": null
+ },
+ {
+  "id": 11294,
+  "answer": [
+   "C",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Không train trên dữ liệu công ty ≠ không thiên lệch: thiên lệch từ pretraining vẫn có → phải đo chênh lệch kết quả giữa các nhóm trước khi triển khai.",
+  "why": "Ô C bác trực tiếp tiền đề sai: thiên lệch có thể đến từ `pretraining` và lộ ra trong kết quả sàng lọc dù không fine-tune. Ô D nêu việc phải làm: đánh giá `outcome-disparity metrics across protected groups before deployment` — tuyển dụng là quyết định rủi ro cao.",
+  "wrong": {
+   "A": "`satisfied by disclosing that an AI system is in use`: minh bạch không thay cho đánh giá công bằng.",
+   "B": "`only when the training dataset is known to contain protected-class labels`: thiên lệch xuất hiện qua biến đại diện (proxy) dù không có nhãn.",
+   "E": "`provider has published a responsible-use policy`: chính sách của nhà cung cấp không chứng minh công bằng trong use case cụ thể của bạn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11295,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Functional = hệ thống LÀM gì; non-functional = làm TỐT tới mức nào (độ trễ, tải, sẵn sàng, bảo mật).",
+  "why": "Ô D là thuộc tính chất lượng có đo lường: `p95 latency under 800 milliseconds at the expected request volume` — điển hình cho yêu cầu hiệu năng (non-functional). Ba ô kia đều mô tả một chức năng cụ thể hệ thống phải thực hiện.",
+  "wrong": {
+   "A": "`extract a defined set of specific fields`: một chức năng — functional.",
+   "B": "`produce a draft response that a human reviewer can edit`: mô tả hành vi/luồng việc — functional.",
+   "C": "`classify inbound tickets`: chức năng phân loại — functional."
+  },
+  "rows": null
+ },
+ {
+  "id": 11296,
+  "answer": [],
+  "rows_answer": {
+   "1": "B",
+   "2": "C",
+   "3": "C",
+   "4": "B",
+   "5": "A",
+   "6": "A"
+  },
+  "confidence": "high",
+  "remember": "Pre-processing chuẩn bị đầu vào (OCR, redact PII), Model Stage là việc Claude làm, Post-processing kiểm và lưu đầu ra.",
+  "why": "Thứ tự tự nhiên: OCR → redact PII → Claude phân loại/trích xuất → validate schema → lưu vào system of record. Mọi thứ trước lời gọi model là pre, mọi thứ kiểm/tiêu thụ đầu ra model là post.",
+  "wrong": null,
+  "rows": {
+   "1": "Model Stage — `Claude-based classification`.",
+   "2": "Post-Processing — lưu `validated records` là bước cuối.",
+   "3": "Post-Processing — `schema validation of the extracted fields` kiểm đầu ra của model.",
+   "4": "Model Stage — `Claude-based extraction`.",
+   "5": "Pre-Processing — `prior to model invocation`.",
+   "6": "Pre-Processing — OCR biến ảnh thành văn bản cho model đọc."
+  }
+ },
+ {
+  "id": 11297,
+  "answer": [
+   "C",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Discernment = đánh giá chất lượng đầu ra AI, không tin con số bề mặt: được chấp nhận ≠ đúng, và tiêu chí bị bỏ sót là lỗ hổng phạm vi.",
+  "why": "Specialist liên tục ghi đè sau khi xét `criteria the assistant did not evaluate` → đó là `scope gap in the assistant's input space` (ô C). Và tỉ lệ 89% chỉ đo việc chấp nhận lúc đầu; `Acceptance does not establish whether recommendations remain correct after specialist review` (ô D). Cả hai đều là phán đoán về chất lượng đầu ra, đúng tinh thần Discernment.",
+  "wrong": {
+   "A": "`acceptance rate alone proves readiness`: chính là suy diễn sai cần bác bỏ.",
+   "B": "`survey response rate may not be statistically representative`: lo ngại thống kê chung chung, không phải nhận định về chất lượng đầu ra AI; bằng chứng override vẫn đáng xét.",
+   "E": "`probably too short`: phỏng đoán không có căn cứ trong đề."
+  },
+  "rows": null
+ },
+ {
+  "id": 11298,
+  "answer": [
+   "C",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Giảm chi phí theo bậc: đòn miễn phí (caching) trước; chỉ cắt nội dung hay đổi model khi đã chấp nhận rủi ro chất lượng.",
+  "why": "Ràng buộc là `accuracy remain unchanged`, nên chỉ chọn đòn không đổi nội dung model thấy. Ô C cache preamble 6.000 token tĩnh lặp mọi lần gọi — 45% chi phí, đòn lớn nhất và không mất gì. Ô E cache các chunk bán hàng được truy cập lặp lại — cùng nội dung, chỉ rẻ hơn. Cả hai giữ nguyên đầu vào nên độ chính xác không đổi.",
+  "wrong": {
+   "A": "`Reduce the number of historical sales chunks`: bớt dữ liệu model dùng để dự báo — có thể đổi accuracy.",
+   "B": "`Truncate the policy preamble`: cắt nội dung chính sách có thể đổi hành vi; caching đã giảm chi phí mà không mất gì.",
+   "D": "`smaller, faster Claude model tier`: bậc cuối, đánh đổi chất lượng và mất cache — vi phạm ràng buộc."
+  },
+  "rows": null
+ },
+ {
+  "id": 11299,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Skill = tri thức quy trình (cách làm, ví dụ) mang theo được; MCP = kết nối tới hệ thống/dữ liệu sống.",
+  "why": "Đề mô tả `fixed authoring procedure with embedded examples`, không cần gọi hệ thống ngoài, và cần dùng ở claude.ai, API, Claude Code — đúng định nghĩa Skill. Ô D nêu đúng yếu tố quyết định: `procedural knowledge with no live external-system calls`.",
+  "wrong": {
+   "A": "`query a live database`: là lý do chọn MCP, ngược hướng.",
+   "B": "`callable from a developer's command-line interface`: cả Skill lẫn MCP đều dùng được trong Claude Code — không phân biệt.",
+   "C": "`direct authentication against the corporate identity provider`: nhu cầu xác thực hệ thống ngoài nghiêng về MCP."
+  },
+  "rows": null
+ },
+ {
+  "id": 11300,
+  "answer": [],
+  "rows_answer": {
+   "1": "A",
+   "2": "B",
+   "3": "A",
+   "4": "B",
+   "5": "A"
+  },
+  "confidence": "high",
+  "remember": "Least privilege: giữ đúng tool phục vụ trách nhiệm “soạn nháp để review”; bỏ mọi tool gửi đi trực tiếp hoặc không liên quan.",
+  "why": "Trách nhiệm là `draft purchase requests for review`. Cần tra catalog, tra chính sách và ghi nháp vào hàng review. Gửi email thẳng cho vendor bỏ qua bước review; tool admin database không liên quan tới procurement.",
+  "wrong": null,
+  "rows": {
+   "1": "Yes — tra vendor/SKU chỉ đọc, cần để soạn nháp.",
+   "2": "No — `emails purchase requests to vendors directly` vượt phạm vi “for review”, bỏ qua người duyệt.",
+   "3": "Yes — `creates purchase-request drafts in the review queue` chính là việc được giao.",
+   "4": "No — `production-database admin tool unrelated to procurement`: quyền rủi ro cao, không cần.",
+   "5": "Yes — đọc chính sách procurement giúp nháp đúng quy định, chỉ đọc."
+  }
+ },
+ {
+  "id": 11301,
+  "answer": [],
+  "rows_answer": {
+   "1": "A",
+   "2": "A",
+   "3": "B",
+   "4": "A",
+   "5": "B"
+  },
+  "confidence": "high",
+  "remember": "Chọn model theo workload và đo trên mẫu đại diện; model mạnh nhất hay mới nhất không tự động là đúng.",
+  "why": "Model nặng thường chậm và đắt hơn, nên chọn model phải dựa trên eval với dữ liệu thật của workload. Tiered routing là cách cân bằng chi phí – năng lực. “Luôn chọn mạnh nhất” và “chọn bản mới công bố” đều bỏ qua ràng buộc thật.",
+  "wrong": null,
+  "rows": {
+   "1": "Yes — model suy luận nặng chậm hơn và tốn rate limit hơn trên cùng input.",
+   "2": "Yes — `representative-sample evaluation on the target workload` là căn cứ đúng.",
+   "3": "No — `always ... regardless of the workload profile` bỏ qua chi phí, độ trễ, SLA.",
+   "4": "Yes — route việc thường sang model nhẹ, giữ model nặng cho ca khó.",
+   "5": "No — `most recently announced` không phải bằng chứng phù hợp; phải eval."
+  }
+ },
+ {
+  "id": 11302,
+  "answer": [
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cải thiện workflow = đưa AI tới đúng nơi dev làm việc; mỗi lần phải chuyển công cụ là thêm ma sát.",
+  "why": "Ô C: Proposal A `reduces context switching` vì hỗ trợ ngay trong IDE. Ô B: Proposal B bắt dev `leave the IDE`, mất ngữ cảnh code và tăng ma sát — đi ngược mục tiêu năng suất. Hai nhận định đánh giá đúng theo tiêu chí workflow chứ không theo năng lực model.",
+  "wrong": {
+   "A": "`auditable log`: audit là mục tiêu khác, không phải cải thiện workflow; IDE vẫn có log được.",
+   "D": "`asynchronous review queue`: hàng đợi bất đồng bộ làm chậm vòng phản hồi khi đang code, không tăng tốc.",
+   "E": "`equivalent because the model capabilities are identical`: điểm tích hợp quyết định ma sát và ngữ cảnh — không tương đương."
+  },
+  "rows": null
+ },
+ {
+  "id": 11303,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Tài liệu lớn, hỏi rải rác nhiều lần trong một vụ việc và không được lưu ngoài tenancy → index trong tenancy, lấy đúng đoạn cần cho mỗi câu hỏi.",
+  "why": "14 câu hỏi trải suốt một vụ án nên TTL của prompt cache (phút đến một giờ) khó giữ được giữa các lần hỏi, và cache lưu nội dung ở phía nhà cung cấp — đúng chỗ ràng buộc `not be stored outside Fabrikam's tenancy` nhắm tới. Vector store đặt trong tenancy, `retrieve only the relevant passages per query` giảm mạnh token mỗi lần mà vẫn giữ đúng văn bản gốc nên chất lượng không mất.",
+  "wrong": {
+   "A": "`Summarize each filing once`: tóm tắt làm mất chi tiết pháp lý, câu hỏi cụ thể sẽ trả lời sai — vi phạm `preserving response quality`.",
+   "B": "`Cache the filing as the prompt prefix`: cache có TTL ngắn so với nhịp hỏi trong cả vụ án và giữ nội dung ngoài tenancy — vướng ràng buộc bảo mật.",
+   "D": "`smaller Claude model`: bậc giảm chi phí cuối cùng, đánh đổi chất lượng trên văn bản pháp lý dài."
+  },
+  "rows": null
+ },
+ {
+  "id": 11304,
+  "answer": [
+   "A",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "“An toàn khi bị tấn công” → adversarial test; “đúng xuyên thành phần” → integration test end-to-end.",
+  "why": "Đề hỏi hai mục tiêu cụ thể. `safety under attack` khớp với ô A: prompt injection và malformed input. `cross-component correctness` khớp với ô D: kiểm hành vi end-to-end qua mọi thành phần. Các loại test khác có ích nhưng không nhắm đúng hai mục tiêu đó.",
+  "wrong": {
+   "B": "`Regression tests against a stable reference set`: bắt hồi quy chất lượng, không phải tấn công hay tương tác giữa thành phần.",
+   "C": "`Smoke tests`: chỉ kiểm đường chính còn sống, quá nông.",
+   "E": "`Unit tests targeting only individual prompt-template rendering`: đúng phạm vi một thành phần — ngược với cross-component."
+  },
+  "rows": null
+ },
+ {
+  "id": 11305,
+  "answer": [
+   "A",
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Muốn giảm cả tiền lẫn trễ cùng lúc: bớt token phải xử lý (prompt caching) hoặc dùng model nhẹ hơn cho việc dễ (model routing).",
+  "why": "Ô A: `prompt caching` trên tiền tố tĩnh vừa giảm giá input token bị tính, vừa giảm time-to-first-token vì phần prefix không phải xử lý lại. Ô B: `Route straightforward query types to a smaller, faster Claude model` — model nhỏ rẻ hơn và nhanh hơn, còn ca khó vẫn giữ model lớn nên không hạ chất lượng ca cốt lõi.",
+  "wrong": {
+   "C": "`Increase max_tokens` chỉ là trần độ dài; output dài hơn thì tốn tiền và chậm hơn, không phải tối ưu cả hai.",
+   "D": "`fetches the full source corpus into the context window` — nhồi thêm token, tăng cả chi phí lẫn độ trễ.",
+   "E": "`additional few-shot examples on every request` — thêm input token mỗi lần gọi, đi ngược mục tiêu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11306,
+  "answer": [
+   "B",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Trình tự tuân thủ: xác định luật có áp dụng không → kiểm kê kiểm soát đang có → map luồng dữ liệu vào điều khoản → so gap → ghi nhận → khắc phục.",
+  "why": "Trước khi map luồng dữ liệu vào từng điều khoản, phải biết luật đó có áp dụng không (`applicability ... data types, jurisdiction, and audience`) và phải biết mình đang có những kiểm soát/affordance nào (`Inventory the vendor-provided compliance tooling`). Hai bước này là đầu vào cho việc map; còn so gap, ghi nhận gap và lên lịch khắc phục đều diễn ra sau khi đã map.",
+  "wrong": {
+   "A": "`Compare the in-place controls ... identify any compliance gaps` — so gap cần có bản map điều khoản trước, nên đứng sau.",
+   "C": "`Schedule the remediation work` dựa trên gap đã ưu tiên — bước cuối cùng của chuỗi.",
+   "D": "`Document the identified gaps` — chỉ làm được sau khi đã tìm ra gap, tức sau bước map."
+  },
+  "rows": null
+ },
+ {
+  "id": 11307,
+  "answer": [
+   "A",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Diligence với sự cố đơn lẻ: đo tần suất trên tổng thể và kiểm tra kiểm soát cấu trúc — đừng phản ứng thái quá, cũng đừng bỏ qua.",
+  "why": "Câu hỏi là sự cố này cần sửa kiến trúc hay chỉ là trường hợp lẻ. Ô A trả lời phần \"bao nhiêu\": `Sample recent summaries to estimate the fabrication frequency`. Ô C trả lời phần \"vì sao\": `Review whether citation-grounding controls exist` trong pipeline. Hai bước này gộp lại là bằng chứng để quyết định.",
+  "wrong": {
+   "B": "`Disable the assistant immediately ... without any prior diagnostic analysis` — phản ứng thái quá, chưa chẩn đoán gì đã tắt.",
+   "D": "`does not fabricate output as a matter of design` — sai sự thật, LLM có thể bịa; truyền thông như vậy làm mất lòng tin.",
+   "E": "`Treat the incident as an anecdotal isolated case` — bỏ qua tín hiệu mà không điều tra, trái với Diligence."
+  },
+  "rows": null
+ },
+ {
+  "id": 11308,
+  "answer": [
+   "C",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Allowlist outbound chặn đường dữ liệu đi ra (exfiltration); eval set ổn định chạy sau mỗi lần nâng model bắt drift chất lượng.",
+  "why": "Control A — `outbound tool allowlist with destination restrictions` — khoá chỗ dữ liệu có thể bị gửi đi, đúng là chặn `data exfiltration via outbound tool calls`. Control B — chấm điểm trên `stable adversarial evaluation set after each model-version change` — là regression test theo phiên bản, đúng với `silent quality drift after a model-version upgrade`.",
+  "wrong": {
+   "A": "Allowlist không ngăn được injection xâm nhập qua dữ liệu truy hồi; nó chỉ giới hạn hậu quả. Rủi ro injection cần xử lý dữ liệu như untrusted ở đầu vào.",
+   "B": "Allowlist outbound không liên quan gì tới việc đo chất lượng sau khi nâng model.",
+   "D": "Eval chạy offline sau khi đổi model không chặn được lời gọi outbound ở runtime."
+  },
+  "rows": null
+ },
+ {
+  "id": 11309,
+  "answer": [
+   "C",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Chọn model: định nghĩa yêu cầu (chất lượng, độ trễ, khối lượng) → chọn ứng viên → chạy mẫu đại diện → lấy model nhẹ nhất đạt chuẩn → retest khi có bản mới.",
+  "why": "Không thể chạy thử nếu chưa có thước đo và chưa có ứng viên. Ô D (`Define the quality bar, latency tolerance, and expected volume`) tạo hồ sơ yêu cầu; ô C (`Choose a candidate model based on the requirements profile`) chọn model để đem thử. Cả hai phải xong trước bước test thực nghiệm.",
+  "wrong": {
+   "A": "`Select the lightest model that consistently meets the quality bar across the sample` — cần kết quả chạy mẫu, nên đứng sau.",
+   "B": "`Retest ... when a new model version becomes available` — bước vận hành về sau.",
+   "E": "`Sign off the production rollout plan` — đến khi đã chọn xong model, đứng sau test."
+  },
+  "rows": null
+ },
+ {
+  "id": 11310,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Runbook phải đủ để on-call tự xử lý: alert + triage → escalation → rollback → chỉ tới dashboard/log.",
+  "why": "Runbook để người trực vận hành hành động mà không cần hỏi ai. Ô B có đủ chuỗi: `Common alerts and their triage steps, escalation paths, rollback procedures, and references to the relevant dashboards and logs`. Các ô khác đều có chữ `only`, cắt mất một mắt xích.",
+  "wrong": {
+   "A": "`Dashboard and log references only` — biết nhìn ở đâu nhưng không biết phải làm gì.",
+   "C": "`Alert definitions and triage steps only` — thiếu escalation và rollback khi triage không xử lý được.",
+   "D": "`Escalation paths and rollback procedures only` — thiếu bước nhận diện alert và triage ban đầu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11311,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Buổi feedback hiệu quả: agenda tập trung, gửi tài liệu trước, ghi quyết định bằng văn bản, chốt người phụ trách và hạn.",
+  "why": "Ô B bao trọn vòng đời buổi họp: chuẩn bị (`share the artifacts in advance`), tập trung (`focused agenda`), và kết quả không mất đi (`capture decisions ... in writing, and confirm action owners and dates`). Đó là cách biến góp ý thành hành động truy vết được.",
+  "wrong": {
+   "A": "`no pre-distributed agenda` và `rely on participants' memory` — không chuẩn bị, không lưu vết.",
+   "C": "`Distribute artifacts at the session start rather than in advance` — stakeholder không kịp đọc nên góp ý hời hợt.",
+   "D": "`End the session without recording decisions` — mất hết đầu ra của buổi họp."
+  },
+  "rows": null
+ },
+ {
+  "id": 11312,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tài liệu bám code thật: cho agent đọc code bằng tool, và đầu ra vẫn đi qua quy trình review thông thường.",
+  "why": "Yêu cầu là `grounded in the actual code`, nên agent phải đọc code thật qua `filesystem and code-search tools`. Ô C còn giữ `the team's normal review workflow`, tức có người kiểm trước khi xuất bản. Đó là ô duy nhất vừa grounded vừa có kiểm soát.",
+  "wrong": {
+   "A": "`from the model's training-data recall without reading any of the actual repository code` — trái hẳn yêu cầu grounded.",
+   "B": "`publish ... directly to the public-facing site without ... review` — bỏ chốt chặn của người.",
+   "D": "`Disable all filesystem and code-search tools` — agent không còn đọc được code, mất mục đích."
+  },
+  "rows": null
+ },
+ {
+  "id": 11313,
+  "answer": [],
+  "rows_answer": {
+   "1": "A",
+   "2": "A",
+   "3": "B",
+   "4": "B"
+  },
+  "confidence": "high",
+  "remember": "Kiến trúc tốt: xác thực trước truy hồi, hàng đợi hấp thụ tải đột biến, logic tất định nằm trong code, PII phải được che.",
+  "why": "Ở quy mô hàng nghìn người dùng đồng thời, các chốt bảo mật và tính toán chính xác phải được cưỡng chế trong cấu trúc, không giao cho prompt. Hai dòng đầu là thực hành chuẩn; hai dòng sau giao phép tính cho model và làm lộ dữ liệu nhạy cảm.",
+  "wrong": null,
+  "rows": {
+   "1": "Yes — `Authentication and authorization run before retrieval` để truy hồi lọc theo danh tính, dữ liệu không đúng quyền không bao giờ vào ngữ cảnh.",
+   "2": "Yes — `asynchronous queue absorbs bursty traffic` giúp tách intake khỏi lớp gọi model, chịu được tải đột biến và rate limit.",
+   "3": "No — `Tax computation is encoded directly in the system prompt` — phép tính tất định phải nằm trong code (hoặc tool), LLM không tính chính xác ổn định.",
+   "4": "No — `unredacted government identifiers` trong log vi phạm tối thiểu hoá dữ liệu và rủi ro tuân thủ; phải redact."
+  }
+ },
+ {
+  "id": 11314,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Khán giả lẫn: nói quyết định + giá trị kinh doanh + trade-off trước (cho sponsor), rồi đi sâu kỹ thuật (cho kỹ sư).",
+  "why": "Ô B xếp lớp nội dung: `Lead with the decision, the business outcomes it serves, and the trade-offs accepted` để exec nắm ngay điều cần, sau đó `technical rationale, alternatives, and implementation implications` cho kỹ sư triển khai. Một bài, hai tầng độ sâu, ai cũng có thứ mình cần.",
+  "wrong": {
+   "A": "`deep dive into low-level implementation details ... and stop there` — bỏ rơi executive sponsor.",
+   "C": "`Skip the rationale, alternatives, and trade-off discussion entirely` — không ai có ngữ cảnh để triển khai hay thẩm định.",
+   "D": "`equal weight throughout` — không phân tầng, exec bị ngập chi tiết, kỹ sư thiếu chiều sâu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11315,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Hỏi đáp có trích dẫn từ kho nội bộ chính thức, ưu tiên rẻ, nhanh, dễ kiểm toán → augmented LLM + RAG, không cần agent.",
+  "why": "Bài toán là trả lời có `citations to the authoritative internal source set`, ưu tiên `Latency, cost, and audit predictability`. Ô A (`Augmented LLM with retrieval-augmented generation over the indexed authoritative corpus`) là pattern đơn giản nhất đủ dùng: một lần truy hồi, một lần gọi model, có trích dẫn để kiểm toán.",
+  "wrong": {
+   "B": "`Multi-agent orchestration ... for every query` — over-engineer, tăng trễ, chi phí và khó đoán.",
+   "C": "`open web-browsing tools ... without constraining retrieval to the authoritative internal corpus` — rời khỏi nguồn chính thức, mất khả năng kiểm toán.",
+   "D": "`entire policy corpus concatenated into every request` — tốn token, chậm, và trích dẫn kém chính xác."
+  },
+  "rows": null
+ },
+ {
+  "id": 11316,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "RBAC cưỡng chế ở tầng dữ liệu/truy hồi: tài liệu không được phép thì không bao giờ đi tới prompt.",
+  "why": "Ô B chặn `At the retrieval layer, before any role-restricted content reaches the prompt-construction step or the model` — dữ liệu sai quyền không có mặt trong ngữ cảnh, nên không gì có thể làm lộ nó. Prompt không phải chốt bảo mật, và lọc sau khi sinh là đã quá muộn.",
+  "wrong": {
+   "A": "`natural-language instruction for Claude to ignore unauthorized documents` — trông cậy model, bị prompt injection vượt qua dễ dàng.",
+   "C": "`rely on the model's general refusal behavior` — không có kiểm soát nào được cưỡng chế.",
+   "D": "`post-filtering content that should not have been retrieved` — dữ liệu đã vào model, lọc output không tin cậy được."
+  },
+  "rows": null
+ },
+ {
+  "id": 11317,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Phân loại khối lượng lớn, nhãn rõ, ngân sách độ trễ chặt → Haiku.",
+  "why": "Workload có `high volumes`, `tight per-message latency budget` và `well-defined classification labels` — đúng hồ sơ của model nhỏ, nhanh, rẻ. Ô B nói đúng lý do: độ trễ và chi phí của Haiku khớp với tác vụ cần `limited reasoning depth`.",
+  "wrong": {
+   "A": "Opus `maximum reasoning depth regardless of classification complexity` — đắt và chậm, vượt quá cái tác vụ cần.",
+   "C": "`larger general-purpose models are preferred even when workload latency requirements are strict` — ngược ràng buộc độ trễ.",
+   "D": "`extended thinking ... to every moderation request` — thêm token suy luận cho mọi request, phá ngân sách độ trễ."
+  },
+  "rows": null
+ },
+ {
+  "id": 11318,
+  "answer": [
+   "B",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Cấm hẳn một loại nội dung: định nghĩa phạm vi + câu từ chối cố định trong prompt, và có output classifier chặn ở cửa ra.",
+  "why": "Hai ô chạm trực tiếp vào ràng buộc `must never provide regulated investment recommendations`: ô E chỉ dẫn hành vi từ đầu (`explicit out-of-scope categories ... with fixed refusal phrasing`), còn ô B là lớp cưỡng chế tách biệt (`output classifier that detects and blocks`) bắt những gì lọt qua. Phòng thủ nhiều lớp, có một lớp không trông cậy vào model.",
+  "wrong": {
+   "A": "`Increase response temperature` — tăng ngẫu nhiên chẳng ngăn được nội dung bị cấm, còn làm hành vi khó đoán hơn.",
+   "C": "`Limit session length` — giảm khối lượng, không chặn được nội dung cụ thể.",
+   "D": "`Log all user queries to a SIEM for post-hoc compliance review` — phát hiện sau khi lỡ rồi, không ngăn chặn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11319,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Thêm scope giữa chừng: ghi nhận nhu cầu, nói thật tác động, đưa ra lựa chọn (hoãn, cắt bớt, gia hạn) để stakeholder quyết.",
+  "why": "Ô C vừa tôn trọng nhu cầu thật (`Acknowledge the request`) vừa giữ kỳ vọng thực tế (`describe the scope and timeline implications transparently`), và trao quyền lựa chọn bằng các phương án `defer it, descope something else, or extend the timeline`. Đó là cách căn chỉnh kỳ vọng mà không hy sinh kế hoạch.",
+  "wrong": {
+   "A": "`Hide the scope-addition request from the broader delivery team` — thiếu minh bạch, rủi ro dồn về sau.",
+   "B": "`Decline the request outright without acknowledging the stakeholder's underlying need` — làm mất quan hệ, bỏ lỡ nhu cầu thật.",
+   "D": "`Accept the additional scope ... without describing the timeline` — hứa ngầm rồi trễ hạn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11320,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Exfiltration = dữ liệu nhạy cảm bị đẩy ra ngoài qua tool outbound, thường do injection trong dữ liệu truy hồi điều khiển.",
+  "why": "Ô C là kịch bản kinh điển: nội dung độc trong tài liệu truy hồi (`Adversarial content in a retrieved document`) ra lệnh model gọi tool HTTP để `send sensitive content to an attacker-controlled URL`. Có đủ ba yếu tố: dữ liệu nhạy cảm, nội dung không tin cậy, và kênh đi ra ngoài.",
+  "wrong": {
+   "A": "Gọi `allow-listed domain` cho yêu cầu do người dùng khởi xướng là hoạt động bình thường.",
+   "B": "`routine question ... routine answer` — không có dấu hiệu rủi ro nào.",
+   "D": "Trả về tài liệu `the user is authorized to view` — đúng quyền, không có gì rò rỉ."
+  },
+  "rows": null
+ },
+ {
+  "id": 11321,
+  "answer": [
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Checklist đạo đức hỏi: ai chịu thiệt (khái quát hoá không có căn cứ) và ai chịu trách nhiệm (con người, không phải model).",
+  "why": "Ô B nhắm vào bias: `outputs do not rely on generalizations about people that the underlying data does not support`. Ô C nhắm vào trách nhiệm giải trình: `high-impact decisions retain human accountability`. Cả hai là câu hỏi đạo đức thật, còn các ô kia thuộc về pháp lý hợp đồng hoặc hiệu năng.",
+  "wrong": {
+   "A": "`vendor licensing terms` là câu hỏi pháp lý/hợp đồng, không phải đạo đức AI.",
+   "D": "`Restrict ethics review to outputs that exceed a defined model-confidence threshold` — confidence cao không có nghĩa là công bằng; thu hẹp review là sai.",
+   "E": "`latency and throughput targets` là chỉ số hiệu năng, không phải kiểm tra đạo đức."
+  },
+  "rows": null
+ },
+ {
+  "id": 11322,
+  "answer": [
+   "B",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Guardrail vững: cưỡng chế ở tầng điều phối trước khi tool chạy, và được kiểm bằng eval đối kháng có theo dõi regression.",
+  "why": "Ô B là chốt chặn cấu trúc: `Per-role tool allow-lists enforced at the orchestration layer before any tool call executes` — không trông cậy model. Ô E là cách chứng minh guardrail còn hiệu lực: `Adversarial-input coverage in the evaluation set with regression tracking`. Hai ô này là đặc tính của bản thân guardrail; các ô kia là quy trình vận hành phụ trợ.",
+  "wrong": {
+   "A": "`Centralized log retention ... quarterly review` — phát hiện sau, chu kỳ chậm; là giám sát chứ không phải thiết kế guardrail.",
+   "C": "`User feedback channels` — kênh phản hồi bị động, không phải đặc tính guardrail vững.",
+   "D": "`Periodic refresh of the system prompt wording` — chỉnh lời trong prompt vẫn là trông cậy model, không phải cưỡng chế."
+  },
+  "rows": null
+ },
+ {
+  "id": 11323,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "HITL khối lượng lớn: review toàn bộ ca confidence thấp và ca tác động cao, cộng mẫu ngẫu nhiên nhỏ ở ca thường để bắt lỗi ẩn.",
+  "why": "Ô B (`Risk-stratified sampling`) dồn công sức người vào chỗ rủi ro nhất (`all low-confidence and high-impact outputs`) và vẫn giữ một mẫu ngẫu nhiên nhỏ ở `high-confidence routine outputs` để phát hiện lỗi tự tin sai. Đó là cân bằng giữa thông lượng và giám sát.",
+  "wrong": {
+   "A": "`No sampling, relying entirely on user complaints` — phát hiện khi người dùng đã bị ảnh hưởng.",
+   "C": "`Inverse sampling` — review ca an toàn, bỏ đúng những ca nguy hiểm nhất.",
+   "D": "`Universal review of every output` — đề đã nói review tất cả là `infeasible`."
+  },
+  "rows": null
+ },
+ {
+  "id": 11324,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Yêu cầu mơ hồ → discovery có cấu trúc trước: quyết định nào đang hỏng, chỉ số nào đo được nó, rồi mới thiết kế.",
+  "why": "Sponsor không nói được hành trình nào hỏng, chỉ số nào, quyết định nào cần hỗ trợ. Ô D (`Facilitate a structured discovery to define the failing decision and the target metric`) làm việc đó cùng sponsor, thay vì đẩy lại hay đoán bừa. Đây là bước đầu tiên đúng của Delegation: xác định rõ việc gì nên giao cho AI.",
+  "wrong": {
+   "A": "`revise the request and resubmit it later` — đẩy trách nhiệm lại, không giúp làm rõ vấn đề.",
+   "B": "`Begin prototyping a generic assistant against the broad request` — làm trước khi hiểu, dễ giải sai bài toán.",
+   "C": "`Propose a fixed scope ... based on your own assumptions` — áp giả định của mình thay vì khám phá nhu cầu thật."
+  },
+  "rows": null
+ },
+ {
+  "id": 11325,
+  "answer": [
+   "A",
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Parity tỉ lệ duyệt ≠ parity tỉ lệ lỗi; khớp với người chấm ≠ không thiên lệch nếu chính người chấm thiên lệch.",
+  "why": "Discernment là nhìn ra giới hạn của bằng chứng. Ô A: `Approval rate parity does not by itself assess error rate parity` — tỉ lệ duyệt bằng nhau vẫn có thể giấu false negative/positive lệch giữa các nhóm. Ô B: khớp 94% với underwriter chỉ cho thấy model sao chép người, `does not establish freedom from underwriter-introduced bias`.",
+  "wrong": {
+   "C": "`94 percent match rate is sufficient evidence of fairness` — đúng là điều cần bác bỏ.",
+   "D": "`likely missed at least some of the protected groups` — suy đoán không có căn cứ trong đề.",
+   "E": "`A larger sample is needed` — đề không cho thấy cỡ mẫu là vấn đề; lỗ hổng nằm ở phương pháp đo, không ở cỡ mẫu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11326,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tối ưu độ trễ mà giữ chất lượng: cắt context thừa (top-k vừa đủ) và cache phần tĩnh của prompt.",
+  "why": "Ô B tác động trực tiếp lên lượng token phải xử lý mỗi lượt: `Reduce retrieval depth to the top-k passages that historically cover the answer` giữ lại đúng phần cần, còn `cache stable system-prompt content` giảm thời gian xử lý prefix. Chất lượng không đổi vì những passage hữu ích vẫn còn.",
+  "wrong": {
+   "A": "`Disable prompt caching entirely` — làm chậm hơn; cache không làm nội dung bị cũ theo nghĩa đề nêu.",
+   "C": "`Increase retrieval depth to the corpus maximum ... regardless of latency` — ngược mục tiêu.",
+   "D": "`Switch every turn to the heaviest available model` — chính đề đã nói nó làm xấu SLO độ trễ."
+  },
+  "rows": null
+ },
+ {
+  "id": 11327,
+  "answer": [
+   "D",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Routine căn chỉnh kỳ vọng: có nhịp định kỳ xem lại giả định, và đối mặt trực tiếp với bất đồng thay vì che đi.",
+  "why": "Ô D (`regular cadence for revisiting expectations and assumptions`) giữ cho kỳ vọng không lệch dần khi điều kiện thay đổi. Ô E (`Reconcile divergent stakeholder positions explicitly rather than papering over them`) xử lý gốc rễ của lệch kỳ vọng giữa nhiều bên. Hai ô này là cốt lõi của feedback-and-alignment; các ô kia là chi tiết hậu cần hoặc leo thang thái quá.",
+  "wrong": {
+   "A": "`Record each session and distribute the recording` — hậu cần hữu ích nhưng không tạo ra căn chỉnh; tốt hơn là ghi quyết định bằng văn bản.",
+   "B": "`Escalate any disagreement ... for binding resolution` — leo thang mọi bất đồng làm tắc nghẽn sponsor và bỏ qua việc tự hoà giải.",
+   "C": "`Rotate facilitation` — chỉ là cách tổ chức, không đảm bảo căn chỉnh kỳ vọng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11328,
+  "answer": [
+   "A",
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tài liệu bàn giao đủ dùng khi đội thực thi tự trả lời được \"làm gì\" (contract, schema) và \"vì sao\" (decision log).",
+  "why": "Ô A cho biết chính xác phải xây gì: `integration contracts, configuration schemas, and expected input/output shapes for each component`. Ô B cho biết vì sao chọn vậy và đã loại gì: `decision log that records the rationale ... and the alternatives rejected`, để đội tự ra quyết định khi gặp tình huống mới mà không phải hỏi kiến trúc sư.",
+  "wrong": {
+   "C": "`high-level narrative ... without component-level detail` — không đủ để triển khai.",
+   "D": "`architect's contact information` — chính là dấu hiệu vẫn cần kiến trúc sư, trái đề `without ongoing architect involvement`.",
+   "E": "`does not specify which was selected or why` — thiếu quyết định cốt lõi."
+  },
+  "rows": null
+ },
+ {
+  "id": 11329,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Prompt mâu thuẫn thì sửa tận gốc: bỏ hoặc viết lại chỉ dẫn sai để prompt nhất quán với ràng buộc grounded.",
+  "why": "Hai chỉ dẫn `never to speculate beyond the supplied source` và `confidently fill in any gaps` đá nhau, model sẽ hành xử thất thường. Ô B `Remove or rewrite the gap-filling instruction` giữ một hướng duy nhất là bám nguồn — phù hợp với hệ grounded và tránh bịa.",
+  "wrong": {
+   "A": "`apply whichever appears most contextually appropriate` — vẫn để model tự phân xử mâu thuẫn, hành vi khó đoán.",
+   "C": "`Increase temperature so output randomness masks the contradiction` — che lỗi bằng ngẫu nhiên, làm tệ hơn.",
+   "D": "`Keep both instructions and rely on the model to decide` — giữ nguyên lỗi thiết kế."
+  },
+  "rows": null
+ },
+ {
+  "id": 11330,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bước cố định, đoán trước được → workflow (prompt chaining); agent chỉ khi đường đi không đoán trước được.",
+  "why": "Job gồm các bước cố định `extract metadata, classify, summarize, and persist`. Ô D chọn workflow với lý do đúng: `the steps are well-defined and predictable per-request token cost is preferred over flexibility`. Đây là nguyên tắc của Anthropic: dùng pattern đơn giản nhất đủ dùng.",
+  "wrong": {
+   "A": "Kết luận đúng nhưng lý do sai: `agentic patterns do not support tool invocations` — agent dùng tool được.",
+   "B": "`open-ended planning ... produces more consistent structured outputs` — ngược lại, workflow cố định mới nhất quán hơn.",
+   "C": "`agents are categorically more accurate ... always preferable` — khẳng định tuyệt đối sai, agent tốn và khó đoán hơn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11331,
+  "answer": [
+   "A",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Capability bloat: tool chồng chéo mô tả + nhiều miền nghiệp vụ trong một agent → tách theo miền, đừng vá bằng router.",
+  "why": "Lý do để tách năng lực (decomposition) chứ không thêm router phải chỉ ra gốc bệnh. Ô A (`Tool descriptions overlap across multiple claim categories`) giải thích vì sao model chọn nhầm tool, độ chính xác giảm. Ô C (`34 tools serve four distinct claim-workflow domains`) cho thấy ranh giới tự nhiên để tách thành các agent/ bộ tool theo miền. Router chỉ là thêm một lớp phía trên một cấu hình vẫn phình.",
+  "wrong": {
+   "B": "`not been invoked across the most recent 90 days` — lý do để gỡ (prune) tool, không phải lý do để decompose theo miền.",
+   "D": "`router pattern is well documented` — lại là lý lẽ ủng hộ router, không phải ủng hộ decomposition.",
+   "E": "`additional model call on every incoming request` — là chi phí của router, nhưng không chứng minh vì sao phải decompose; không chỉ ra gốc bệnh."
+  },
+  "rows": null
+ },
+ {
+  "id": 11332,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cấu hình không ai được tắt → managed settings đặt tập trung, ưu tiên cao nhất, không ghi đè được.",
+  "why": "Trong Claude Code, managed settings (do tổ chức/IT đặt) có ưu tiên cao nhất và không bị user hay project settings ghi đè. Ô C (`Managed configuration applied centrally and marked as non-overridable`) là cách duy nhất đảm bảo `cannot be disabled by any individual engineer`.",
+  "wrong": {
+   "A": "`User scope (~/.claude/settings.json)` — chính kỹ sư sửa được.",
+   "B": "`Environment variable defined in the CI/CD pipeline only` — không áp dụng cho máy local của kỹ sư.",
+   "D": "`Project scope ... committed to the repository` — bị ghi đè bởi settings local hoặc sửa trong commit."
+  },
+  "rows": null
+ },
+ {
+  "id": 11333,
+  "answer": [
+   "A",
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "User scope = sở thích cá nhân đi theo người qua mọi dự án; chính sách công ty → managed; cấu hình chung repo → project.",
+  "why": "Ô A (`personal editor theme preferences that follow an engineer across projects`) và ô B (`preferred Claude response language that applies to all repositories`) đều là cá nhân và xuyên dự án — đúng nghĩa của user scope `~/.claude/settings.json`. Hai ô sai đều thuộc scope khác rõ ràng.",
+  "wrong": {
+   "C": "`company-wide policy that disables a feature for all engineers` — thuộc managed scope, không phải user.",
+   "D": "`MCP server endpoints shared by all contributors to a specific repository` — thuộc project scope (`.mcp.json`) commit vào repo.",
+   "E": "`Storing API authentication keys` — secret nên nằm trong biến môi trường/keychain hoặc credential store, không phải chỗ hình mẫu của user-scope settings; và tránh commit cũng có thể làm bằng local project settings."
+  },
+  "rows": null
+ },
+ {
+  "id": 11334,
+  "answer": [
+   "D",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Chọn MCP / API trực tiếp / A2A theo bản chất tích hợp: cần dùng lại qua nhiều client AI không, và tương tác stateless-ngắn hay stateful-dài.",
+  "why": "Ô D (`portable across multiple AI clients`) là lý do đặc trưng để chọn MCP — viết một lần, nhiều client dùng. Ô E (`stateless and latency-sensitive or stateful and longer-running`) quyết định giữa gọi API trực tiếp và handoff agent-to-agent. Đây là yếu tố kiến trúc, không phải yếu tố đội ngũ hay tài liệu.",
+  "wrong": {
+   "A": "`vendor publishes detailed reference documentation` — yếu tố phụ, không phân biệt các cơ chế.",
+   "B": "`prior implementation experience` — thói quen đội ngũ, không phải tiêu chí kiến trúc.",
+   "C": "`encryption in transit` — yêu cầu bắt buộc với mọi lựa chọn, không giúp phân biệt."
+  },
+  "rows": null
+ },
+ {
+  "id": 11335,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Một lời gọi stateless, độ trễ thấp, API HTTP đã ổn định → gọi API trực tiếp với credential có phạm vi hẹp.",
+  "why": "Dịch vụ giá đã có `stable HTTP API`, tương tác là `single low-latency stateless tool call`. Ô A là đơn giản nhất và đúng nhất: `direct API call ... with the appropriate scoped credentials` — không thêm lớp nào, vẫn giữ least privilege.",
+  "wrong": {
+   "B": "`long-lived stateful session protocol for a stateless single-call interaction` — không khớp bản chất tương tác.",
+   "C": "`bespoke streaming protocol ... over an unrelated asynchronous message bus` — over-engineer, tăng trễ.",
+   "D": "`agent-to-agent handoff` — thêm một lần gọi model chỉ để gọi một API."
+  },
+  "rows": null
+ },
+ {
+  "id": 11336,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Hallucination trong hệ grounded → ràng buộc vào nguồn, bắt trích dẫn, thêm bước kiểm chứng.",
+  "why": "Lỗi được mô tả là `claims not supported by the retrieved source documents` — tức là ungrounded output. Ô A chặn đúng lỗi này: `Constrain responses to source-supported content, require citations, and add a verification step`. Đó là biện pháp trực tiếp, còn eval chỉ giúp phát hiện.",
+  "wrong": {
+   "B": "`stable adversarial evaluation set` — phát hiện drift, không trực tiếp giảm câu bịa ở runtime.",
+   "C": "`per-user OAuth tokens` — kiểm soát truy cập, không liên quan grounding.",
+   "D": "`Treat retrieved data as untrusted ... input classifiers` — chống prompt injection, không phải hallucination."
+  },
+  "rows": null
+ },
+ {
+  "id": 11337,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tiêu chí leo thang nhất quán phải đo được: ngưỡng confidence, danh mục tác động cao, cờ mơ hồ từ classifier, và yêu cầu của người dùng.",
+  "why": "Ô D cho bộ tiêu chí khách quan: `confidence score below a defined threshold`, `high-impact decision categories`, `ambiguity flags raised by content classifiers`, và `explicit request for review`. Mỗi ca mơ hồ đều đi cùng một đường, không phụ thuộc ai đang rảnh hay model tự quyết.",
+  "wrong": {
+   "A": "`the model decides independently` — không có tiêu chí, hành vi không nhất quán.",
+   "B": "`only after an affected customer has contacted support` — leo thang sau khi đã gây hại.",
+   "C": "`at the discretion of whoever is available` — tuỳ người, không nhất quán."
+  },
+  "rows": null
+ },
+ {
+  "id": 11338,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Ca từng pass nay fail sau khi đổi prompt → regression test trên bộ tham chiếu ổn định.",
+  "why": "Triệu chứng `previously passing test cases now produce unexpected outputs` chính là định nghĩa regression. Ô C (`Regression tests scored against a stable reference set of known-good behavior`) được thiết kế đúng để bắt loại lỗi này mỗi khi prompt hay model thay đổi.",
+  "wrong": {
+   "A": "`Integration tests` kiểm sự phối hợp giữa các thành phần, không chuyên bắt thay đổi hành vi so với trước.",
+   "B": "`Adversarial tests ... prompt-injection` — mục tiêu bảo mật, khác loại lỗi.",
+   "D": "`Smoke tests ... availability` — chỉ biết hệ còn chạy, không biết chất lượng có lùi."
+  },
+  "rows": null
+ },
+ {
+  "id": 11339,
+  "answer": [
+   "B",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Metric phải ánh xạ một-một vào yêu cầu: trần chi phí → cost/query; không lộ dữ liệu bệnh nhân → tỉ lệ cưỡng chế RBAC trên bộ red-team.",
+  "why": "Hai yêu cầu đề nêu là `per-query cost ceiling` và `never surface patient data to unauthorized roles`. Ô D đo trực tiếp `Per-query token cost measured against the defined cost ceiling`; ô B đo `Role-based access-control enforcement rate measured on a red-team dataset`. Các ô còn lại là chỉ số tốt nhưng không gắn với hai yêu cầu này.",
+  "wrong": {
+   "A": "`BLEU score` — đo chất lượng văn bản, không phải chi phí hay quyền truy cập.",
+   "C": "`Throughput` — chỉ số hiệu năng, không có trong yêu cầu.",
+   "E": "`Response latency at the 95th percentile` — độ trễ không phải ràng buộc đề nêu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11340,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Đội delivery cần đủ bộ: trách nhiệm thành phần, contract, sequence diagram, tham số cấu hình có mặc định, runbook.",
+  "why": "Đội sẽ xây và vận hành hệ, nên ô A với đủ `Component responsibilities, contracts between components, sequence diagrams of the dominant flows, configuration parameters with defaults, and operational runbooks` là bộ hoàn chỉnh. Các ô khác đều thiếu một mảnh mà đội sẽ phải quay lại hỏi.",
+  "wrong": {
+   "B": "`without sequence diagrams ... configuration parameters ... or runbooks` — thiếu luồng chạy và vận hành.",
+   "C": "`without interface contracts, configuration-parameter tables, or operational runbooks` — không đủ để code tích hợp.",
+   "D": "`An architecture overview and a list of known limitations` — quá cao tầng để triển khai."
+  },
+  "rows": null
+ },
+ {
+  "id": 11341,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Chi phí do prompt lặp dài + context truy hồi lớn → cache phần lặp và cắt context về đúng đoạn liên quan.",
+  "why": "Ô C đánh vào đúng hai nguồn chi phí đề nêu: `Move the long, repeated system prompt into a cacheable prefix` (đọc cache rẻ hơn nhiều so với input thường) và `trim retrieved context to the spans relevant to each query`. Không đổi model hay hy sinh chất lượng.",
+  "wrong": {
+   "A": "`Increase retrieval depth` — chính đề nói làm nặng thêm nguồn chi phí.",
+   "B": "`Add additional repeated content to the system prompt` — tăng đúng thứ đang tốn tiền nhất.",
+   "D": "`Switch every request to the heaviest available model` — giá mỗi token còn cao hơn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11342,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Minh bạch: nói rõ với người dùng cuối là có AI tham gia, và luôn có đường sang người thật.",
+  "why": "Ô C (`Disclose AI involvement to end users ... and provide a documented path to reach a human`) đáp ứng cả hai vế của minh bạch có trách nhiệm: người dùng biết mình đang tương tác với AI, và có lối thoát khi cần. Đây cũng là yêu cầu tuân thủ ở nhiều khu vực.",
+  "wrong": {
+   "A": "`Misrepresent the AI's role` — lừa dối người dùng, phá đồng thuận có hiểu biết.",
+   "B": "`Refuse to answer any user question about ... whether AI was involved` — che giấu.",
+   "D": "`only to internal staff ... withholding that information from the end users` — người bị ảnh hưởng lại không được biết."
+  },
+  "rows": null
+ },
+ {
+  "id": 11343,
+  "answer": [
+   "A",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Output AI vẫn phải được kiểm chứng; số dòng không phải thước đo rủi ro — một dòng có thể phá cả hệ.",
+  "why": "Ô A chỉ ra lỗi nguyên tắc: bỏ review là `eliminates the verification mechanism required for AI-generated output`. Ô E chỉ ra lỗi tiêu chí: `Line count is a poor proxy for the actual risk` — thay đổi nhỏ về auth hay SQL có thể nguy hiểm hơn hàng trăm dòng. Hai phản biện này đều là Diligence: chịu trách nhiệm về những gì AI tạo ra.",
+  "wrong": {
+   "B": "`Code-review capacity should be expanded to handle every code change` — giải pháp tài nguyên, không phải phản biện vào đề xuất; và không thực tế.",
+   "C": "`increased to 200 lines` — nới thêm cái tiêu chí vốn đã sai.",
+   "D": "`rejected by default` — phản ứng cực đoan, phá mục đích áp dụng Claude Code."
+  },
+  "rows": null
+ },
+ {
+  "id": 11344,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "SLA vận hành được = metric + ngưỡng + cửa sổ đo + hệ quả khi vi phạm.",
+  "why": "Ô B có đủ bốn thành phần: `defined metric, threshold, evaluation window, and consequence for breach`, kèm ví dụ cụ thể `p95 per-request latency under 800 ms over a 28-day window`. Chỉ khi đủ như vậy mới đo được, phát hiện vi phạm được và kích hoạt quy trình khắc phục.",
+  "wrong": {
+   "A": "`the team feels satisfied` — không đo khách quan được.",
+   "C": "`the system will be fast and reliable` — không có metric, ngưỡng hay cửa sổ.",
+   "D": "`omits the evaluation window and breach consequence` — không xác định được lúc nào vi phạm và làm gì."
+  },
+  "rows": null
+ },
+ {
+  "id": 11345,
+  "answer": [
+   "C",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "HIPAA xoay quanh PHI: ai được chạm (access control) và PHI đi đâu (BAA). Chỉnh tham số model không phải tuân thủ.",
+  "why": "HIPAA đòi bảo vệ PHI ở hai mặt: chỉ người có thẩm quyền mới truy hồi được (C, `role-based access controls`) và PHI không được rời sang bên thứ ba khi `without a BAA in place` (D). Cả hai đều là kiểm soát cấu trúc trực tiếp lên luồng dữ liệu bệnh nhân. Các ô còn lại là tối ưu chi phí, chất lượng hay trải nghiệm, không dính gì tới nghĩa vụ pháp lý.",
+  "wrong": {
+   "A": "`low max_tokens`: giảm độ dài đầu ra là chuyện chi phí; PHI vẫn đi qua y nguyên, không kiểm soát được ai thấy.",
+   "B": "`highest-capability model`: độ chính xác chẩn đoán không phải yêu cầu HIPAA; model mạnh mà không BAA vẫn vi phạm.",
+   "E": "`streaming responses`: chỉ giảm độ trễ cảm nhận, là trụ UX/SLA, chẳng bảo vệ PHI."
+  },
+  "rows": null
+ },
+ {
+  "id": 11346,
+  "answer": [
+   "A",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Thiết kế HITL theo thứ tự: chọn điểm cần người (tác động × khả năng lùi) → định lấy mẫu và leo thang → rồi mới tài liệu, đào tạo, thí điểm.",
+  "why": "Đề hỏi đúng các `design steps` phải xong trước khi `piloting`. Bước nền là E: xác định điểm quyết định cần người theo `impact and reversibility`; ngay sau đó là A: định `sampling strategy` và `escalation criteria` tại mỗi điểm đó — không có hai thứ này thì không có gì để thí điểm. Tài liệu hoá SLA và đào tạo đội soát là bước vận hành hoá, thường hoàn thiện song song/sau khi thiết kế đã được thí điểm kiểm chứng.",
+  "wrong": {
+   "B": "`based on observed pilot findings`: cần có pilot mới có phát hiện — bước này nằm SAU pilot theo định nghĩa.",
+   "C": "`Onboard the reviewer pool`: là bước triển khai vận hành, không phải bước thiết kế; đào tạo cả đội trước khi thiết kế được kiểm chứng dễ phải làm lại.",
+   "D": "`Document ... SLAs for each step`: tài liệu chốt SLA là đầu ra hoàn thiện sau khi pilot cho số liệu thật, không phải bước thiết kế lõi."
+  },
+  "rows": null
+ },
+ {
+  "id": 11347,
+  "answer": [
+   "A",
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Chia sẻ trong nhóm → project scope (commit vào git). Bảo mật không được ghi đè → managed. Cá nhân → user/local.",
+  "why": "A đặt MCP server và permission dùng chung ở `project scope ... under version control`, nên cả nhóm nhận cùng cấu hình qua repo. B dùng `managed configuration` cho thiết lập bảo mật vì managed nằm trên cùng thứ tự ưu tiên, kỹ sư không ghi đè được. Mỗi scope được dùng đúng mục đích của nó.",
+  "wrong": {
+   "C": "`local scope for security-critical`: local là scope cá nhân, cho phép từng người tự nới — ngược với yêu cầu bảo mật.",
+   "D": "`user scope for team-shared MCP servers`: user scope nằm trên máy từng người, không chia sẻ được qua repo, mất nhất quán.",
+   "E": "`project scope for personal editor preferences`: ép sở thích cá nhân lên cả nhóm; thứ đó thuộc user/local scope."
+  },
+  "rows": null
+ },
+ {
+  "id": 11348,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tool giữ lại phải ánh xạ được vào việc đã định hoặc chuyển giao thường xuyên; 'có thể hữu ích' là capability bloat.",
+  "why": "Mỗi tool thừa tốn token định nghĩa, tăng nhầm lẫn khi chọn tool và mở rộng bề mặt tấn công. C giữ đúng nhóm `required` và nhóm `frequently used and reduces handoffs` — hai nhóm có lý do kinh doanh cụ thể. Nhóm 3 và 4 là phình năng lực, nên cắt.",
+  "wrong": {
+   "A": "`Only category 3`: bỏ chính các tool bắt buộc để giữ tool cho việc không liên quan — tác tử hết làm được việc.",
+   "B": "`Only category 4`: chỉ giữ tool phỏng đoán, đúng định nghĩa capability bloat, và cũng mất tool bắt buộc.",
+   "D": "`broader tool access is categorically better`: sai tiền đề; nhiều tool hơn làm giảm độ chính xác chọn tool và tăng rủi ro."
+  },
+  "rows": null
+ },
+ {
+  "id": 11349,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Quyết định kiến trúc cần truy vết được → ADR: bối cảnh, quyết định, phương án đã xét, hệ quả, ngày và tác giả.",
+  "why": "Kiểm toán và onboarding cần một bản ghi bền, có cấu trúc, trả lời được 'vì sao chọn cái này chứ không chọn cái kia'. C — `Architecture Decision Record` — có đủ `context, decision, alternatives, consequences, date and authors`. Các ô kia hoặc thiếu lý lẽ, hoặc không có bản ghi.",
+  "wrong": {
+   "A": "`slide deck ... no written rationale`: thiếu chính phần lý lẽ mà kiểm toán cần, lại nằm lẫn trong thư mục thuyết trình.",
+   "B": "`code comment ... opinion of one engineer`: rải rác, một chiều, không ghi phương án đã xét hay ai duyệt.",
+   "D": "`verbal note ... no written record`: không có bản ghi thì không kiểm toán được."
+  },
+  "rows": null
+ },
+ {
+  "id": 11350,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nội dung truy hồi là dữ liệu không tin cậy, không phải lệnh: lọc đầu vào và kiểm đầu ra ngay tại chỗ nó đi vào.",
+  "why": "Mối đe doạ là indirect prompt injection qua tài liệu truy hồi. A xử lý đúng điểm vào: `Treat all retrieved content as untrusted input`, chặn bằng `input classifiers` và chặn hậu quả bằng `output validation`. Các ô kia chỉ giảm thiểu một hệ quả phụ hoặc phát hiện muộn.",
+  "wrong": {
+   "B": "`Require citations`: chống bịa đặt (hallucination), nhưng tài liệu bị cài lệnh vẫn được trích dẫn đàng hoàng.",
+   "C": "`allow-list` đích gọi ra: chỉ hạn chế rò rỉ dữ liệu ra ngoài, không ngăn mô hình bị thao túng hành vi.",
+   "D": "`adversarial evaluation set on each model-version change`: là kiểm thử định kỳ, không phải biện pháp giảm thiểu lúc chạy."
+  },
+  "rows": null
+ },
+ {
+  "id": 11351,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bộ eval phải phủ đúng tập người dùng sẽ phục vụ; điểm cao trên tập con hẹp không chứng minh gì cho phần còn lại.",
+  "why": "Tuyển dụng là miền nhạy cảm về thiên lệch; bộ eval chỉ một vùng, một dải thâm niên không lộ được lỗi trên nhóm khác. B `Expand the evaluation set` cho khớp các vùng và dải thâm niên sẽ phục vụ, rồi `rescore ... before broader release`. Đó là sửa đúng gốc: độ phủ.",
+  "wrong": {
+   "A": "`Discard all quantitative evaluation`: thay bằng cảm nhận từ nhóm `convenience-selected` còn kém đại diện hơn.",
+   "C": "`Reduce ... to a single demographic subgroup`: thu hẹp thêm, làm vấn đề tệ hơn.",
+   "D": "`scores are already high on that subset`: điểm cao trên tập hẹp chính là ảo tưởng mà đề đang cảnh báo."
+  },
+  "rows": null
+ },
+ {
+  "id": 11352,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Viết cho nhiều bên: chốt quyết định lên đầu, rồi đáp thẳng mối quan tâm của từng người (CFO tiền, pháp chế rủi ro, CIO kỹ thuật).",
+  "why": "Ban chỉ đạo cần biết ngay đang được đề nghị duyệt cái gì, nên D `Lead with the architectural decision`. Sau đó `address each stakeholder's primary concerns directly`: chi phí cho CFO, rủi ro pháp lý cho general counsel, tích hợp cho CIO. Mỗi người tìm thấy phần của mình mà không phải lội qua phần của người khác.",
+  "wrong": {
+   "A": "`Lead with the technical architecture diagram`: chỉ phục vụ CIO, CFO và pháp chế mất hút ngay từ đầu.",
+   "B": "`Lead with detailed cost projections`: chỉ phục vụ CFO, và đặt số liệu trước cả lý lẽ.",
+   "C": "`no stakeholder differentiation`: phớt lờ đúng dữ kiện đề nêu là mỗi bên quan tâm khác nhau."
+  },
+  "rows": null
+ },
+ {
+  "id": 11353,
+  "answer": [
+   "C",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Chẩn đoán = thu bằng chứng và cô lập biến: repro tối giản, kiểm trạng thái thành phần (vd. /mcp, claude mcp list) trước khi leo thang.",
+  "why": "C là kỹ thuật chẩn đoán kinh điển: `minimal reproduction case that isolates one variable at a time`. E là thao tác cụ thể của Claude Code: liệt kê MCP server và xem trạng thái để bắt lỗi kết nối. Cả hai tạo bằng chứng mà không phá trạng thái hiện tại.",
+  "wrong": {
+   "A": "`Increase the model sampling temperature`: thêm ngẫu nhiên làm sự cố khó tái hiện hơn, không phải dễ hơn.",
+   "B": "`before any local reproduction or evidence collection`: phiếu hỗ trợ không bằng chứng thì không ai xử lý được.",
+   "D": "`Roll back ... immediately`: thay đổi lớn trước khi có bằng chứng, xoá luôn hiện trường."
+  },
+  "rows": null
+ },
+ {
+  "id": 11354,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nhanh hơn (efficiency) chưa phải làm được nhiều hơn (productivity); thời gian soát lại là hiệu suất bị trừ ngược.",
+  "why": "Quan sát 1 là bớt thời gian thao tác — efficiency. Quan sát 2: thời gian tiết kiệm chưa thành sản lượng tính phí, tức productivity `not yet been realized`. Quan sát 3 là tiền hạ tầng — solution cost. Quan sát 4 là 8 phút soát thêm, `an efficiency loss that partially offsets Observation 1`. D gán đúng cả bốn.",
+  "wrong": {
+   "A": "`Observations 1 and 2 both indicate efficiency gains`: quan sát 2 là productivity chưa đạt; còn 8 phút soát là chuyện efficiency, không phải SLA.",
+   "B": "`Observation 1 is a transformation outcome`: làm nhanh hơn việc cũ không phải transformation; 22% chi phí cũng không phải SLA.",
+   "C": "`net performance-SLA improvement`: thời gian xử lý tài liệu không phải SLA độ trễ hệ thống; retry dư thừa là cost, không phải `productivity drain`."
+  },
+  "rows": null
+ },
+ {
+  "id": 11355,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bước đầu tiên là bước rẻ nhất, có trọng điểm nhất: kiểm xem server đã đăng ký chưa, rồi khởi động lại phiên.",
+  "why": "Triệu chứng là server mới không xuất hiện; hai nguyên nhân thường gặp nhất là chưa đăng ký đúng scope hoặc phiên chưa nạp lại cấu hình. C kiểm bằng `listing command` rồi `reconnect the session`, vì `configuration changes typically require a restart`. Rẻ, không phá gì, đúng gốc.",
+  "wrong": {
+   "A": "`Disable every MCP server`: phá cả các server đang chạy tốt mà vẫn chưa biết server mới đã đăng ký chưa.",
+   "B": "`Switch ... to a different Claude product family`: bỏ cuộc chứ không chẩn đoán.",
+   "D": "`Reinstall the developer's operating system`: cực đoan, xoá sạch hiện trường trước bất kỳ bước có trọng điểm nào."
+  },
+  "rows": null
+ },
+ {
+  "id": 11356,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nhiều tool → đừng nạp hết; phơi tập con, nạp thêm theo nhu cầu (tool search/progressive disclosure). Giữ bề rộng, bớt token.",
+  "why": "Đề có hai ràng buộc: giảm token/độ trễ VÀ `without sacrificing capability breadth`. A — `progressive tool discovery` — chỉ phơi một tập con chọn lọc, các tool khác vẫn nạp được `on demand`, nên cả 60 tool vẫn còn. Đây là đúng tinh thần tool search / progressive disclosure của Anthropic.",
+  "wrong": {
+   "B": "`separate model call to summarize all 60 tool definitions`: thêm một lượt gọi mỗi turn — tăng độ trễ, và bản tóm tắt không dùng được làm định nghĩa tool.",
+   "C": "`load all 60 ... accepting the higher token cost`: không giải quyết gì, chỉ chấp nhận vấn đề.",
+   "D": "`fixed set of five tools ... regardless of whether ... relevant`: hy sinh bề rộng năng lực, vi phạm ràng buộc đề."
+  },
+  "rows": null
+ },
+ {
+  "id": 11357,
+  "answer": [
+   "A",
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Skill gói kiến thức/quy trình cho model; còn ai được gọi (authz) và lưu vết kiểm toán phải nằm ở tầng ứng dụng, ngoài tầm model.",
+  "why": "Skill là hướng dẫn mà model đọc khi chạy; nó không xác thực được danh tính người gọi, cũng không bảo đảm ghi log bền vững. B (`Verify the requesting user is authorized`) phải chặn trước khi Skill được gọi, và A (`Log every generated summary to ... audit trail`) phải là bản ghi tất định của hệ thống. Disclaimer, danh sách từ cấm, văn phong là nội dung — đúng chỗ của Skill.",
+  "wrong": {
+   "C": "`house style guidelines`: định dạng là nội dung hướng dẫn, đặt trong Skill là hợp lý.",
+   "D": "`disclaimer template`: đề nói Skill đã chứa sẵn — đây chính là phần Skill gánh.",
+   "E": "`prohibited-language list`: cũng đã nằm trong Skill do compliance sở hữu và cập nhật."
+  },
+  "rows": null
+ },
+ {
+  "id": 11358,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "GDPR = hợp đồng (DPA) + tối thiểu hoá dữ liệu + thời hạn lưu giữ + quyền chủ thể dữ liệu. Thiếu một vế là hở.",
+  "why": "A gom đủ các trụ GDPR: `signed Data Processing Addendum` (cơ sở pháp lý với bên xử lý), `data-retention configuration` (giới hạn lưu giữ), `redaction of personal data not needed` (tối thiểu hoá dữ liệu), và `data-subject-rights handling` (quyền truy cập/xoá). Các ô còn lại đều tháo bỏ chính các kiểm soát này.",
+  "wrong": {
+   "B": "`disabling all data-retention ... accepting the resulting GDPR compliance exposure`: tự nhận rủi ro vi phạm.",
+   "C": "`personal Claude account tier ... no signed Data Processing Addendum`: không có cơ sở hợp đồng để xử lý dữ liệu EU.",
+   "D": "`pasting full EU personal data into every prompt`: vi phạm thẳng nguyên tắc `data minimization` và `purpose limitation`."
+  },
+  "rows": null
+ },
+ {
+  "id": 11359,
+  "answer": [
+   "D",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Khoảng hở quan trắc là thứ KHÔNG được ghi: không biết model/phiên bản nào trả lời, không nối được các bước của một yêu cầu.",
+  "why": "Đề hỏi `gaps`, nên chỉ những ô mô tả thứ đang thiếu mới đúng. D: thiếu `Model identity and version` thì không truy được hồi quy khi đổi model. E: `correlation identifiers do not propagate` thì không nối được một yêu cầu xuyên qua nhiều tác tử và tool — mất khả năng truy vết đầu-cuối.",
+  "wrong": {
+   "A": "`Trace spans ... are exported`: đây là điều đã làm đúng, không phải khoảng hở.",
+   "B": "`Latency and token usage ... are emitted`: đã có, là thực hành tốt.",
+   "C": "`recorded with redaction applied`: đã ghi lại và còn che trường nhạy cảm — thực hành tốt."
+  },
+  "rows": null
+ },
+ {
+  "id": 11360,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Người duyệt bảo mật hỏi: đe doạ gì, kiểm soát nào chặn, rủi ro còn lại ai chấp nhận, truy vết được không.",
+  "why": "C nói đúng ngôn ngữ của security/compliance: `Threat model`, `control mappings`, `residual-risk acceptance criteria`, `audit traceability`. Ba ô kia đều được gắn nhãn rõ cho đối tượng khác (PM, engineering, executive).",
+  "wrong": {
+   "A": "`for the product manager`: lịch bàn giao và phạm vi tính năng, không phải mối quan tâm của bảo mật.",
+   "B": "`for the engineering team`: giao diện thành phần và trình tự triển khai là chuyện thực thi.",
+   "D": "`for executive review`: rủi ro chỉ ở `high-level`, không đủ sâu để người duyệt bảo mật đánh giá."
+  },
+  "rows": null
+ },
+ {
+  "id": 11361,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Subagent đáng lập khi việc chuyên biệt LẶP LẠI và cần prompt riêng, tool hẹp, model riêng. Việc một lần thì dùng Claude Code chung.",
+  "why": "Subagent là cấu hình tái sử dụng: system prompt riêng, danh sách tool riêng, model riêng, ngữ cảnh tách biệt. A có đủ cả ba nhu cầu đó cộng với `recurring` `across many sessions` — đúng lý do để đầu tư. Các ô còn lại đều mô tả tình huống không cần chuyên biệt hoá.",
+  "wrong": {
+   "B": "`one-time ad hoc question that will not recur`: không đáng chi phí lập và bảo trì subagent.",
+   "C": "`no recurring specialized tasks`: không có gì để chuyên biệt hoá.",
+   "D": "`same generic system prompt ... no task-specific specialization`: phủ định chính lý do tồn tại của subagent."
+  },
+  "rows": null
+ },
+ {
+  "id": 11362,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Phải đổi trách nhiệm thành phần hay hợp đồng lõi → quay lại thiết kế. Sửa chữ, chỉnh ngưỡng, cập nhật runbook → lặp tại chỗ.",
+  "why": "Tín hiệu quay lại pha thiết kế là khi kiến trúc hiện tại không còn chứa nổi yêu cầu: D `cannot meet the new requirements without changes to component responsibilities or core contracts`. Ba ô kia đều tự ghi rõ là thay đổi cục bộ, không đụng trách nhiệm hay hợp đồng.",
+  "wrong": {
+   "A": "`minor copy edit`: thay đổi nội dung cục bộ.",
+   "B": "`small numerical adjustment` ngưỡng cảnh báo: cấu hình vận hành, đề tự nói `without a new design cycle`.",
+   "C": "`runbook step ... clarification edit`: cập nhật tài liệu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11363,
+  "answer": [
+   "A",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Đặc tả trước, đo sau: định chỉ số + lát cắt và SLO + error budget, rồi mới instrument, dựng dashboard, tinh ngưỡng.",
+  "why": "Muốn biết phải phát chỉ số và vết gì thì trước hết phải định `the metrics and the slices` (A) và mục tiêu mà chúng phục vụ — `SLOs and the error budgets` (C). Đây là hai bước đặc tả thuần tuý. Dashboard, tinh ngưỡng và tài liệu đều cần dữ liệu đã được phát ra.",
+  "wrong": {
+   "B": "`based on observed normal-state distributions`: cần dữ liệu quan sát được — chỉ có sau khi instrument.",
+   "D": "`Build the dashboards`: dashboard hiển thị chỉ số, nên đứng sau bước phát chỉ số.",
+   "E": "`Document the dashboards, alerts, and runbooks`: tài liệu hoá những thứ được dựng sau instrumentation."
+  },
+  "rows": null
+ },
+ {
+  "id": 11364,
+  "answer": [
+   "B",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Trước pilot Claude Code: xác định chỗ AI giúp và chỗ người giữ quyền, rồi cấu hình project scope (MCP, quyền, subagent, CLAUDE.md).",
+  "why": "Đề nói rõ phải xong `design and configuration steps`. Bước thiết kế là B: `where AI-assisted tooling adds value and where human authority must remain`. Bước cấu hình là E: `project-scope MCP servers, permissions, subagents, and persistent project context`. Thiếu một trong hai thì pilot không có gì để chạy.",
+  "wrong": {
+   "A": "`on-call runbooks`: tài liệu vận hành hoàn chỉnh cho ca trực là đầu ra để rollout, không phải điều kiện của một pilot nhóm nhỏ.",
+   "C": "`formal sign-off from each manager`: quá tay cho một pilot nhỏ, và không phải bước thiết kế/cấu hình.",
+   "D": "`based on pilot findings`: nằm SAU pilot theo định nghĩa."
+  },
+  "rows": null
+ },
+ {
+  "id": 11365,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "HIPAA với Anthropic: gói doanh nghiệp + BAA đã ký + ZDR + audit log. Không có BAA thì không được đưa PHI vào.",
+  "why": "B có đủ các mảnh hợp đồng và kỹ thuật: `signed Business Associate Agreement`, `Zero Data Retention enabled`, `audit logging configured`. Đây là cấu hình mà Anthropic cung cấp cho khách hàng y tế. Các ô còn lại đều thiếu BAA — điều kiện tiên quyết.",
+  "wrong": {
+   "A": "`consumer products meet HIPAA requirements out of the box`: sai — gói tiêu dùng không có BAA.",
+   "C": "`absence of logs satisfies HIPAA ... without a signed BAA`: HIPAA lại đòi audit control; tắt log mà không BAA là hai lần sai.",
+   "D": "`ad-hoc personal Claude account ... no Business Associate Agreement`: shadow IT với PHI."
+  },
+  "rows": null
+ },
+ {
+  "id": 11366,
+  "answer": [
+   "A",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Truyền đạt quyết định tốt = có phương án đã xét kèm tiêu chí, và có chủ sở hữu + nhịp xem lại khi giả định đổi.",
+  "why": "D (`Alternatives considered along with the criteria`) cho người đọc thấy vì sao chọn cái này — cốt lõi của mọi ADR. A (`Ownership and review cadence`) giữ quyết định còn sống: ai chịu trách nhiệm và khi nào quay lại xem khi điều kiện thay đổi. Cả hai là chất lượng nội dung, không phải hình thức hay nghi thức.",
+  "wrong": {
+   "B": "`mandatory attendance from senior engineering leaders`: là nghi thức phân phối, không làm quyết định rõ hơn.",
+   "C": "`Omission of rejected alternatives`: bỏ đúng phần giá trị nhất cho người đọc sau này.",
+   "E": "`standardize the visual presentation`: chỉ chuẩn hoá hình thức; mẫu đẹp mà thiếu lý lẽ vẫn yếu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11367,
+  "answer": [
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Production DB: mặc định chỉ đọc, tool subagent hẹp, ghi thì phải người xác nhận — chặn bằng cấu trúc, không bằng lời dặn.",
+  "why": "D xếp ba lớp phòng thủ: `read-only credential by default` (chặn ở tầng hạ tầng), `restrict the subagent's tool list to read-only` (chặn ở tầng tool), và `require explicit human confirmation` cho mọi thao tác ghi (cổng HITL cho việc không đảo ngược được). Ba ô kia đều gỡ bỏ rào chắn.",
+  "wrong": {
+   "A": "`write directly to the production database without ... confirmation gates`: không có rào chắn nào.",
+   "B": "`fully privileged credential ... without explicit human confirmation`: trái nguyên tắc đặc quyền tối thiểu.",
+   "C": "`Disable all logging and auditing`: mất khả năng phát hiện dữ liệu bị sửa sai."
+  },
+  "rows": null
+ },
+ {
+  "id": 11368,
+  "answer": [
+   "B",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Eval theo thứ tự: định chỉ số + lát cắt → tuyển và gán nhãn dữ liệu theo lát cắt → chạy → chấm → rà lỗi → gate phát hành.",
+  "why": "Trước khi chạy hệ trên tập eval phải biết đo gì — `Define the metrics and slices` trên ca `representative, edge, and adversarial` (D) — và phải có dữ liệu đúng các lát cắt đó, đã gán nhãn tham chiếu (B). Chấm điểm, rà ca hỏng và gate phát hành đều cần đầu ra của lần chạy.",
+  "wrong": {
+   "A": "`Publish the aggregated metrics ... gate releases`: cần chỉ số đã chấm — sau khi chạy.",
+   "C": "`Review failure cases`: phải chạy rồi mới có ca hỏng để rà.",
+   "E": "`Score the deployment outputs`: cần có đầu ra — chính là bước ngay sau khi chạy."
+  },
+  "rows": null
+ },
+ {
+  "id": 11370,
+  "answer": [
+   "A",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Trước pilot cấu hình: hiểu workflow + ranh giới bảo mật (cái gì managed, cái gì project), rồi định baseline project scope.",
+  "why": "Bước lập kế hoạch đầu tiên là D: hiểu `team workflows, security boundaries` và phân định `managed configuration versus project scope`. Từ đó mới định được A: `project-scope baseline` gồm MCP server, permission, subagent. Có baseline thì mới có thứ để thí điểm với nhóm nhỏ.",
+  "wrong": {
+   "B": "`Onboard every engineer in the organization`: quá tay trước một pilot nhóm nhỏ, và chưa có cấu hình ổn định để đào tạo.",
+   "C": "`Roll out the stabilized configuration to additional teams`: là bước SAU pilot.",
+   "E": "`based on the pilot findings`: cần có pilot trước."
+  },
+  "rows": null
+ },
+ {
+  "id": 11371,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "SLA cứng là bộ lọc trước, không phải tiêu chí cân đo: loại phương án vi phạm SLA, rồi mới so cost và efficiency trên phần còn lại.",
+  "why": "X trung bình 4,2 giây, vượt `SLA requires responses under 3 seconds`, nên bị loại trước mọi cân nhắc chất lượng. C làm đúng thứ tự: loại X, rồi đánh giá Y bằng chênh lệch chi phí năm (2 triệu phiên × 0,09 USD = 180 nghìn USD) và xem độ chênh chất lượng có ảnh hưởng thật tới năng suất lâm sàng không. Đây là phân tích nhiều trụ, có đánh đổi rõ ràng.",
+  "wrong": {
+   "A": "`based solely on the 50% cost reduction`: chỉ một trụ, bỏ qua câu hỏi chất lượng có đủ không.",
+   "B": "`any SLA gap can be addressed ... after deployment`: vi phạm ràng buộc cứng; SLA thắng ham muốn chất lượng.",
+   "D": "`hybrid ... without additional analysis`: X vẫn vi phạm SLA ở các ca phức tạp, và thiếu phân tích."
+  },
+  "rows": null
+ },
+ {
+  "id": 11374,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Thứ tự Claude Code: Managed > CLI args > Local project > Shared project > User. Càng cá nhân, càng rộng thì càng thấp.",
+  "why": "Theo tài liệu Claude Code, managed settings đứng đầu và không bị ghi đè; tiếp theo là đối số dòng lệnh cho một phiên, rồi `.claude/settings.local.json`, rồi `.claude/settings.json` dùng chung, cuối cùng là `~/.claude/settings.json` của user. C `Managed > command-line arguments > local > project > user` khớp đúng.",
+  "wrong": {
+   "A": "`Local > managed`: đặt local trên managed thì cá nhân ghi đè được chính sách bảo mật tổ chức.",
+   "B": "`Project > user > managed`: managed ở giữa và CLI xuống cuối — sai cả hai.",
+   "D": "`User > ... > managed`: đảo ngược hoàn toàn; managed phải cao nhất."
+  },
+  "rows": null
+ },
+ {
+  "id": 11375,
+  "answer": [
+   "A",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Discovery có cấu trúc = moi ràng buộc từ stakeholder trước khi chốt phạm vi + viết ra tiêu chí thành công/ngưỡng thất bại có thể gate.",
+  "why": "A dùng workshop để làm lộ `latency, accuracy, and compliance constraints before scoping begins` — ràng buộc phải biết trước khi thiết kế. D chốt `explicit success criteria and failure thresholds that will gate production deployment` — thứ để eval và quyết go/no-go. Cả hai làm yêu cầu tường minh và kiểm được.",
+  "wrong": {
+   "B": "`based on the architect's prior project experience before stakeholder input`: chọn giải pháp trước khi hiểu yêu cầu.",
+   "C": "`rather than written requirements`: prototype bỏ qua yêu cầu viết ra — không còn là discovery có cấu trúc.",
+   "E": "`Deferring constraint documentation`: ràng buộc phát hiện muộn sẽ phá thiết kế, chứ không chống scope creep."
+  },
+  "rows": null
+ },
+ {
+  "id": 11376,
+  "answer": [],
+  "rows_answer": {
+   "1": "C",
+   "2": "B",
+   "3": "A",
+   "4": "C",
+   "5": "B",
+   "6": "A"
+  },
+  "confidence": "medium",
+  "remember": "Trước prompt: lọc và nén nguyên liệu (cắt passage, tóm lịch sử). Trong prompt: sắp xếp cho cache. Sau model: kiểm schema, lưu kết quả.",
+  "why": "Phân loại theo câu hỏi 'tactic này tác động lên cái gì'. Nén nguyên liệu đầu vào (lịch sử hội thoại, passage truy hồi) là Input Preparation; bố cục prompt để cache trúng (phần ổn định lên đầu) là Prompt Construction; mọi thứ làm với đầu ra của model là Output Handling.",
+  "wrong": null,
+  "rows": {
+   "1": "`Persist the validated output`: thao tác sau khi model trả lời → Output Handling.",
+   "2": "`Order the prompt sections so cacheable content sits before`: sắp thứ tự trong prompt → Prompt Construction.",
+   "3": "`Summarize prior conversation history`: nén nguyên liệu trước khi ghép prompt → Input Preparation.",
+   "4": "`Validate ... structured output against the expected schema`: kiểm đầu ra → Output Handling.",
+   "5": "`Move stable repeated content into a cacheable prefix`: bố cục prefix cache trong prompt → Prompt Construction.",
+   "6": "`Trim retrieved passages to spans relevant`: lọc dữ liệu truy hồi trước khi đưa vào → Input Preparation."
+  }
+ },
+ {
+  "id": 11377,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Phạm vi giao việc cho AI theo LOẠI rủi ro (gian lận, tiền lệ, khiếu nại, đảo ngược được không), không chỉ theo con số.",
+  "why": "Ngưỡng 50 USD chỉ đo quy mô từng giao dịch, bỏ qua các rủi ro khác: gian lận lặp nhiều lần dưới ngưỡng, tiền lệ chính sách, khách hàng dễ tổn thương. B `Delegation scope should reflect the type of risk involved, not the transaction size alone` là nguyên tắc Delegation đúng — có thể vẫn tự động hoá, nhưng ranh giới vẽ theo loại rủi ro.",
+  "wrong": {
+   "A": "`always include human review on every decision`: phủ định lợi ích tự động hoá; HITL phải tương xứng rủi ro.",
+   "C": "`primarily by maximizing efficiency gains`: đúng cái lý lẽ cần phản biện; hiệu suất không phải tiêu chí chính.",
+   "D": "`avoided entirely wherever financial transactions occur`: cực đoan, bỏ cả các ca rủi ro thấp thật."
+  },
+  "rows": null
+ },
+ {
+  "id": 11378,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Giải thích lặp lại mỗi phiên → ghi một lần vào CLAUDE.md commit trong repo; mọi phiên tự nạp.",
+  "why": "Gốc của lãng phí là ngữ cảnh dự án không bền giữa các phiên. B đặt quy ước và kiến trúc vào `project-scoped CLAUDE.md ... committed to the repository, so each session loads it automatically` — xoá hẳn công lặp lại, và cả nhóm dùng chung một nguồn.",
+  "wrong": {
+   "A": "`Forbid the use of Claude Code`: bỏ luôn năng suất để tránh chi phí khởi động.",
+   "C": "`retype ... more quickly`: vẫn là công thủ công lặp lại, chỉ nhanh hơn chút.",
+   "D": "`Remove all documented project conventions`: phá chuẩn chung của nhóm."
+  },
+  "rows": null
+ },
+ {
+  "id": 11379,
+  "answer": [
+   "A",
+   "E"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Một quy trình dùng chung, đổi thường xuyên → một Skill do chủ nghiệp vụ sở hữu, mọi luồng tham chiếu cùng Skill đó.",
+  "why": "Yêu cầu là `applied identically` ở ba luồng và đổi 4–6 lần/năm. A cho compliance sở hữu Skill nên họ cập nhật trực tiếp khi luật đổi; E cho cả ba luồng `Reference the same Claude Skill`, nên một lần sửa là cả ba nhận ngay, không lệch phiên bản. Skill là gói quy trình tái dùng được, model nạp đúng lúc cần.",
+  "wrong": {
+   "B": "`Embed ... into each workflow's system prompt`: ba bản sao, mỗi lần luật đổi phải sửa ba chỗ, dễ lệch.",
+   "C": "`shared retrieval corpus`: retrieval trả về đoạn trích theo độ tương đồng, không bảo đảm quy trình được áp nguyên vẹn, `identically`.",
+   "D": "`each workflow team rewrite the procedure`: phá ngay yêu cầu áp giống hệt nhau."
+  },
+  "rows": null
+ },
+ {
+  "id": 11380,
+  "answer": [
+   "B",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Liên tục vòng đời = mang tài sản và bài học sang pha sau: giữ khung eval + reference set, đưa lessons learned vào pha kế.",
+  "why": "B giữ `evaluation framework and reference set` qua các vòng lặp, nên kết quả so được với nhau và phát hiện được hồi quy. D đưa `lessons learned` của pha này thành đầu vào pha sau. Cả hai tạo dòng chảy tri thức xuyên vòng đời, thay vì mỗi pha làm lại từ đầu.",
+  "wrong": {
+   "A": "`notify the listed parties at every phase transition`: thủ tục thông báo, không mang tri thức gì sang pha sau.",
+   "C": "`Archive every phase deliverable in long-term storage`: lưu trữ thụ động, không ai dùng lại thì không có tính liên tục.",
+   "E": "`Lock decisions made in early phases`: ngược tinh thần lặp; quyết định phải được xem lại khi giả định thay đổi."
+  },
+  "rows": null
+ },
+ {
+  "id": 11465,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Khối lượng lớn + độ trễ vài trăm ms + ngân sách chặt → model nhỏ nhất đạt yêu cầu (Haiku). Đừng chọn model to rồi tự biện minh cho cái giá.",
+  "why": "Đề có ba ràng buộc cứng: lưu lượng rất cao, phản hồi `within a few hundred milliseconds`, `tight per-conversation cost budget`. Haiku 4.5 là model nhanh nhất, rẻ nhất mà vẫn có năng lực suy luận gần tầng frontier, đủ cho troubleshooting nhiều lượt. Mọi ô khác đều vi phạm ràng buộc chi phí hoặc độ trễ.",
+  "wrong": {
+   "A": "Opus 4.8 `despite its higher per-token cost`: phá ngân sách và chậm hơn; `guarantees ... accuracy` là nói quá.",
+   "C": "Sonnet 5 `justifies the extra cost`: đề đã nói ngân sách chặt — tự biện minh vượt ràng buộc.",
+   "D": "Fable 5: tầng đắt nhất; context lớn không phải nhu cầu, và mỗi hội thoại vốn tách riêng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11466,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Agentic dài hơi, phức tạp, ít checkpoint, ưu tiên đúng hơn rẻ → Opus.",
+  "why": "Refactor nhiều giờ trên codebase lớn với `minimal human checkpoints` đòi khả năng lập kế hoạch và tự sửa sai bền bỉ; đề còn nói rõ `prioritizing correctness over cost`. Opus 4.8 là tầng dành cho agentic coding phức tạp, dài hơi — đúng chỗ.",
+  "wrong": {
+   "A": "Haiku 4.5 `many parallel refactor attempts`: nhiều lần thử kém không thay được một lần đúng; đề ưu tiên correctness.",
+   "B": "Sonnet 5 `speed keeps ... responsive`: tối ưu tốc độ, trong khi đề đã ưu tiên độ đúng hơn chi phí.",
+   "D": "`extending context compensates for its lower reasoning depth`: context dài không bù được năng lực suy luận."
+  },
+  "rows": null
+ },
+ {
+  "id": 11467,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Model mặc định đa dụng cho cả tổ chức: Sonnet — trí tuệ frontier, tốc độ hằng ngày, giá vừa phải.",
+  "why": "Đề muốn `best combination of frontier intelligence and everyday speed without paying premium enterprise pricing` cho đủ loại việc. Sonnet 5 là tầng cân bằng thông minh–tốc độ–chi phí cho coding, agent và tác vụ hằng ngày ở quy mô lớn.",
+  "wrong": {
+   "A": "Opus 4.8 `premium reasoning ... on every team's day-to-day`: trả giá premium mà đề đã loại.",
+   "C": "Haiku 4.5: rẻ nhưng không đạt `frontier intelligence` cho coding và agent phức tạp.",
+   "D": "Fable 5: tầng đắt nhất cho suy luận khó nhất — không phải model mặc định hằng ngày."
+  },
+  "rows": null
+ },
+ {
+  "id": 11468,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cần trỏ đúng câu trong tài liệu nguồn để người soát kiểm → tính năng Citations, không phải JSON schema hay thinking.",
+  "why": "Yêu cầu là `cite the exact sentences it relied on` trong hợp đồng đã tải lên. Citations của Claude trả về đoạn trích chính xác kèm vị trí trong tài liệu nguồn, nên người soát đối chiếu được từng câu. Đây là tính năng được thiết kế đúng cho grounding có kiểm chứng.",
+  "wrong": {
+   "A": "Structured outputs: ép định dạng JSON, không ràng buộc nội dung vào nguồn hay trỏ được câu gốc.",
+   "C": "Extended thinking: lộ quá trình suy luận, không phải trích dẫn kiểm chứng được câu nào trong hợp đồng.",
+   "D": "Prompt caching: tối ưu chi phí/độ trễ, không liên quan tới grounding hay trích dẫn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11469,
+  "answer": [
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "RAG trên kho riêng mà vẫn muốn trích dẫn chuẩn như web search → trả kết quả dưới dạng search result content blocks.",
+  "why": "Search results (search result content blocks) cho phép ứng dụng tự đưa kết quả truy hồi từ kho riêng vào, và Claude trích dẫn chúng với chất lượng như web search. C khớp cả hai ràng buộc: `citation-quality source attribution` và không gửi truy vấn ra chỉ mục bên ngoài.",
+  "wrong": {
+   "A": "Web search tool: chính là gửi truy vấn ra chỉ mục web công khai, trái ràng buộc đề.",
+   "B": "Web fetch: lấy nội dung từ URL; kho ticket nội bộ không phơi ra internet, và không tự cho trích dẫn kiểu RAG.",
+   "D": "Code execution: sandbox chạy mã, không phải cơ chế gán nguồn trích dẫn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11470,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bắt đầu bằng model nhỏ nhất đạt yêu cầu, benchmark trên dữ liệu thật, chỉ nâng cấp khi thấy khoảng hở năng lực.",
+  "why": "Đề có trần chi phí mỗi ticket và muốn `avoid over-provisioning intelligence`. A bắt đầu ở Haiku 4.5, `benchmark it against real tickets`, và chỉ chuyển sang model mạnh hơn `when a capability gap appears` — quyết định dựa trên bằng chứng chứ không phỏng đoán.",
+  "wrong": {
+   "B": "Opus 4.8 `at maximum effort` cho mọi ticket: đúng kiểu over-provisioning đề muốn tránh và phá trần chi phí.",
+   "C": "`Alternate ... at random`: không định tuyến theo độ khó, chất lượng thất thường.",
+   "D": "Fine-tune classifier ngoài Claude: mất năng lực suy luận edge case mà đề yêu cầu, lại thêm gánh bảo trì."
+  },
+  "rows": null
+ },
+ {
+  "id": 11471,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nhiều hệ thống, không muốn tự viết tool cho từng cái, để model tự quyết gọi gì → MCP servers.",
+  "why": "MCP là giao thức chuẩn để phơi hệ thống ngoài thành tool; dùng server có sẵn thì không phải viết và bảo trì code thực thi cho từng tích hợp. Agent vẫn tự quyết khi nào gọi wiki, DB hay chat. A khớp cả hai yêu cầu.",
+  "wrong": {
+   "B": "`manual tool loop ... hand-written handlers`: chính là code tuỳ biến mà đề muốn tránh.",
+   "C": "`Embed ... contents directly into the system prompt`: không post được vào chat, dữ liệu cũ, phình context.",
+   "D": "`static decision tree ... without the model`: bỏ mất quyền tự quyết của agent."
+  },
+  "rows": null
+ },
+ {
+  "id": 11472,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Việc phải xảy ra MỌI lần → đặt vào hook do harness chạy, đừng nhờ mô hình nhớ.",
+  "why": "Hook `PostToolUse` khớp `Edit` và `Write` chạy tất định sau mỗi lời gọi, do SDK thực thi chứ không phụ thuộc mô hình. Đó đúng là vòng phản hồi tự động mà đề cần, không phải nhắc trong từng prompt.",
+  "wrong": {
+   "B": "`asking Claude to remember`: dựa vào thiện chí mô hình, phiên nhiều giờ sẽ quên — không đảm bảo kiểm toán.",
+   "C": "`Poll the filesystem`: đoán gián tiếp, trễ, bỏ sót và không biết thay đổi do agent hay ai khác.",
+   "D": "`manually confirm`: phá tính tự chủ nhiều giờ, biến việc tự động thành thủ công."
+  },
+  "rows": null
+ },
+ {
+  "id": 11473,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Không muốn tự vận hành agent loop + cần sandbox do Anthropic quản lý → Managed Agents.",
+  "why": "Managed Agents để Anthropic chạy agent loop và sandbox, ứng dụng chỉ gửi sự kiện và stream kết quả qua REST. Khớp cả ba điều kiện: `Anthropic-managed sandbox`, REST streaming, không vận hành hạ tầng.",
+  "wrong": {
+   "B": "`inside their own process`: Agent SDK nghĩa là tự host loop — đúng điều đề muốn tránh.",
+   "C": "`implement the entire tool-execution loop themselves`: còn nặng gánh vận hành hơn nữa.",
+   "D": "`interactive mode`: CLI tương tác dành cho người dùng, không phải môi trường production."
+  },
+  "rows": null
+ },
+ {
+  "id": 11474,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nội dung lớn, không đổi, dùng lại nhiều lần → prompt caching giảm cả chi phí lẫn TTFT.",
+  "why": "PDF 40 trang là tiền tố cố định cho mọi câu hỏi tiếp theo; cache nó thì các lần sau đọc từ cache, rẻ hơn và nhanh hơn mà không đổi model hay câu hỏi.",
+  "wrong": {
+   "B": "`third-party OCR ... before every single request`: thêm chặng và độ trễ, xử lý lại mỗi lần.",
+   "C": "`effort` cao làm mô hình suy nghĩ nhiều hơn, chậm và đắt hơn, không nhanh hơn.",
+   "D": "`40 separate one-page requests`: mất ngữ cảnh toàn hợp đồng, tốn gấp nhiều lần."
+  },
+  "rows": null
+ },
+ {
+  "id": 11475,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Muốn cô lập ngữ cảnh và chỉ nhận kết luận gọn → subagent.",
+  "why": "Subagent chạy trong context window riêng và chỉ trả message cuối về cho cuộc hội thoại cha. Nội dung hàng chục tệp và suy luận trung gian ở lại bên trong, đúng nhu cầu `concise final finding`.",
+  "wrong": {
+   "B": "Agent team dành cho các thành viên phối hợp, nhắn nhau — quá tay cho một cuộc điều tra đơn lẻ.",
+   "C": "Hook xoá tool result khỏi transcript là hack, mất thông tin mà không cho ra kết luận gọn.",
+   "D": "`full filesystem access outside the conversation`: không liên quan tới cô lập ngữ cảnh, lại mở rộng quyền."
+  },
+  "rows": null
+ },
+ {
+  "id": 11476,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Các việc độc lập → gọi subagent trong cùng một lượt để chạy song song.",
+  "why": "Ba bài review độc lập trên cùng PR, không phụ thuộc nhau. Gọi cả ba trong cùng một lượt thì chúng chạy đồng thời, tổng thời gian ≈ subagent chậm nhất.",
+  "wrong": {
+   "B": "`one at a time in sequence`: thời gian thành tổng của cả ba — ngược yêu cầu.",
+   "C": "Gộp thành một subagent làm tuần tự và loãng chuyên môn.",
+   "D": "Chạy ba lần trong cùng phiên vẫn tuần tự, đổi model không giải quyết song song."
+  },
+  "rows": null
+ },
+ {
+  "id": 11477,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Read-only thật sự = allowlist chỉ có tool đọc; không cấp rồi chặn.",
+  "why": "Đặt `tools` chỉ gồm `Read` và `Grep` thì subagent không hề có tool ghi hay chạy lệnh, nên `even accidentally` cũng không thể. Quyền bị giới hạn ở cấu hình, không trông vào mô hình.",
+  "wrong": {
+   "B": "Bỏ trống `tools` là thừa hưởng toàn bộ tool của cha, gồm cả ghi và Bash.",
+   "C": "Cấp `Edit`/`Write` rồi dùng hook chặn: cồng kềnh, thừa quyền, dễ sai sót cấu hình.",
+   "D": "`Bash` là quyền thực thi lệnh — vi phạm thẳng yêu cầu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11478,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cần các agent nói chuyện, phản biện lẫn nhau → agent team; subagent chỉ báo về cha.",
+  "why": "Agent team cho các teammate nhắn trực tiếp với nhau, nên có thể điều tra giả thuyết riêng rồi chủ động bác bỏ lý thuyết của nhau. Đó đúng là cơ chế tranh luận đối kháng đề yêu cầu.",
+  "wrong": {
+   "B": "`subagents can message each other`: sai — subagent chỉ trả kết quả về agent cha.",
+   "C": "Một subagent tuần tự mất tính độc lập và không có phản biện chéo.",
+   "D": "Extended thinking là một luồng suy luận, không có nhiều góc nhìn độc lập."
+  },
+  "rows": null
+ },
+ {
+  "id": 11479,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "low",
+  "remember": "Subagent lồng nhau có giới hạn độ sâu cố định, không vô hạn và không phụ thuộc foreground/background.",
+  "why": "Theo tài liệu Claude Code mới, subagent có thể lồng nhau nhưng bị chặn ở một độ sâu tối đa (năm cấp dưới agent chính), bất kể chạy foreground hay background. Giới hạn cứng này ngăn đệ quy chạy mất kiểm soát.",
+  "wrong": {
+   "B": "Ngưỡng ba cấp và ngoại lệ `unless it runs in the foreground` không có trong tài liệu.",
+   "C": "`nest indefinitely`: không có giới hạn là rủi ro đệ quy vô tận — hệ thống luôn đặt trần.",
+   "D": "Quá chặt: các cấp dưới vẫn được spawn cho tới giới hạn độ sâu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11480,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Chuỗi bước cố định + cổng kiểm tra lập trình giữa các bước → prompt chaining.",
+  "why": "Sinh copy rồi dịch là chuỗi tuần tự cố định; kiểm tra độ dài ký tự là `programmatic check` — đúng hình mẫu gate trong prompt chaining. Không cần LLM chấm điểm hay điều phối động.",
+  "wrong": {
+   "B": "Routing dùng khi phải phân loại đầu vào; ở đây cả ba ngôn ngữ đều cần dịch.",
+   "C": "`real-time traffic analysis`: bịa thêm yêu cầu, over-engineer.",
+   "D": "Độ dài ký tự kiểm bằng code là đủ, không cần LLM thứ hai lặp chấm điểm."
+  },
+  "rows": null
+ },
+ {
+  "id": 11481,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Phân loại trước rồi chuyển tới prompt chuyên biệt → routing.",
+  "why": "Đề nêu rõ bước đầu phải xác định loại ticket, mỗi loại cần prompt riêng. Routing chính là một lời gọi phân loại rồi điều hướng tới prompt chuyên biệt.",
+  "wrong": {
+   "A": "Chạy cả ba prompt rồi lấy cái xong trước: lãng phí và không đúng chuyên môn.",
+   "C": "Xích qua cả ba prompt tuần tự: ticket không cần đi qua các loại không liên quan.",
+   "D": "Orchestrator-workers dành cho subtask không đoán trước — ở đây các loại đã cố định."
+  },
+  "rows": null
+ },
+ {
+  "id": 11482,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Các phần việc KHÁC nhau chạy đồng thời rồi gộp → parallelization sectioning.",
+  "why": "Kiểm tra lỗ hổng và kiểm tra giấy phép là hai nhiệm vụ độc lập, chạy cùng lúc rồi gộp báo cáo — đúng định nghĩa sectioning.",
+  "wrong": {
+   "B": "Voting là chạy CÙNG một prompt nhiều lần; đề có hai nhiệm vụ khác nhau.",
+   "C": "Hai check độc lập, không có quan hệ chấm điểm–sửa lặp.",
+   "D": "Chaining là tuần tự, trái với `simultaneously`."
+  },
+  "rows": null
+ },
+ {
+  "id": 11483,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Mỗi chiều cần tool và trọng tâm riêng → orchestrator + subagent chuyên biệt với tool scoped.",
+  "why": "Ba chiều kiểm toán khác tool, khác trọng tâm, nên tách thành subagent với tool set và description riêng do orchestrator gọi qua Agent tool. Mỗi subagent giữ ngữ cảnh gọn và quyền vừa đủ.",
+  "wrong": {
+   "B": "`without additional configuration`: một agent ôm hết, không scope tool, ngữ cảnh lẫn lộn.",
+   "C": "Ba tool trong một MCP server không tách ngữ cảnh hay trọng tâm — chỉ là tool, không phải phân rã.",
+   "D": "Tăng context và thinking không phải phân rã vấn đề."
+  },
+  "rows": null
+ },
+ {
+  "id": 11484,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Ghép model với độ khó của từng subtask: việc nhiều-đơn giản → Haiku, việc khó → Opus.",
+  "why": "Phân loại khối lượng lớn là việc đơn giản, cần nhanh và rẻ → Haiku 4.5. Lập kế hoạch khắc phục kỹ thuật chi tiết là việc khó → Opus 4.8. Đây chính là lợi ích của phân rã: chọn model theo subtask.",
+  "wrong": {
+   "B": "Opus cho mọi thứ vẫn đắt hơn Haiku với việc phân loại khối lượng lớn.",
+   "C": "Prompt dài hơn không bù được năng lực cho việc suy luận phức tạp.",
+   "D": "`randomly`: không có lý do kiến trúc, chất lượng thất thường."
+  },
+  "rows": null
+ },
+ {
+  "id": 11485,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nhiều lời gọi tool nhỏ liên tiếp → programmatic tool calling, chạy trong code, bớt round trip.",
+  "why": "Programmatic tool calling cho Claude viết code gọi tool trong container thực thi, kết quả trung gian không phải đi qua từng lượt hội thoại. Cắt cả độ trễ lẫn token đúng chỗ đề nêu.",
+  "wrong": {
+   "B": "Mỗi tool một subagent còn thêm overhead khởi tạo ngữ cảnh.",
+   "C": "Message Batches là xử lý bất đồng bộ nhiều request độc lập, không chạy vòng lặp tool trong một cuộc hội thoại.",
+   "D": "`effort` cao hơn tăng token suy luận, không giảm round trip."
+  },
+  "rows": null
+ },
+ {
+  "id": 11486,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Executor nhanh cho việc thường + advisor thông minh hỏi ở điểm chiến lược → advisor tool.",
+  "why": "Advisor tool tách vai: model nhanh làm các bước thường ngày, model mạnh hơn chỉ được tham vấn tại các checkpoint chiến lược giữa lúc sinh. Đúng `strategic mid-generation guidance` mà không làm chậm bước routine.",
+  "wrong": {
+   "B": "Dùng model mạnh nhất cho mọi bước làm chậm và đắt chính các bước routine.",
+   "C": "Người duyệt từng bước làm chậm toàn bộ, không phải guidance giữa lúc sinh.",
+   "D": "Chạy hai lần rồi gộp transcript: lãng phí, không có hướng dẫn tại checkpoint."
+  },
+  "rows": null
+ },
+ {
+  "id": 11487,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "SLA độ trễ dưới 1 giây + chi phí bền vững cho việc routine → Haiku.",
+  "why": "Haiku 4.5 là model nhanh nhất và rẻ nhất mỗi token, đủ thông minh cho câu hỏi tài khoản thường gặp. Khớp đúng hai trụ: latency và chi phí.",
+  "wrong": {
+   "B": "`premium pricing`: fast mode của Opus đắt, trái trụ chi phí.",
+   "C": "Sonnet tắt thinking vẫn chậm và đắt hơn Haiku.",
+   "D": "Context 1M nạp cả kho mỗi request làm tăng độ trễ và chi phí."
+  },
+  "rows": null
+ },
+ {
+  "id": 11488,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Thiết kế lại quy trình và vai trò → Transformation; làm cùng việc nhanh hơn → Productivity.",
+  "why": "Đề nói rõ `not as automating the existing manual process but as fundamentally redesigning` và paralegal chuyển sang vai trò mới. Đó là trụ Transformation.",
+  "wrong": {
+   "B": "Productivity giữ nguyên quy trình — trái với framing của đề.",
+   "C": "Cost reduction có thể là hệ quả, nhưng không phải framing chính.",
+   "D": "Đề không nhắc cam kết thời gian xử lý với khách hàng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11489,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Khối lượng lớn, không ai chờ → Message Batches API, giảm khoảng 50% chi phí.",
+  "why": "Việc chạy qua đêm, không có người dùng tương tác, nên xử lý bất đồng bộ là đủ. Batch API giảm khoảng một nửa chi phí mà giữ nguyên chất lượng model.",
+  "wrong": {
+   "B": "Đồng bộ đắt hơn batch; tắt cache không tiết kiệm gì đáng kể.",
+   "C": "`only apply to the highest-tier model`: sai, batch giảm giá cho mọi model, và Opus cho mọi ticket là lãng phí.",
+   "D": "Max effort đồng bộ cho 40 triệu ticket: tốn kém khổng lồ, trái mục tiêu giảm chi phí."
+  },
+  "rows": null
+ },
+ {
+  "id": 11490,
+  "answer": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bắt đầu với model nhanh, rẻ để lặp nhanh; lên model mạnh khi cần chất lượng.",
+  "why": "Hướng dẫn của Anthropic: bắt đầu với model nhanh, tiết kiệm để prototype lặp nhanh, hợp với yêu cầu độ trễ chặt, chi phí nhạy cảm và tác vụ khối lượng lớn, đơn giản. Ba ý A, B, C đúng nguyên văn tinh thần đó.",
+  "wrong": {
+   "D": "`cannot be accessed until`: không có ràng buộc truy cập như vậy.",
+   "E": "`guarantees the same accuracy`: sai, Haiku không bằng Opus trên mọi tác vụ."
+  },
+  "rows": null
+ },
+ {
+  "id": 11491,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bước đầu tiên để định hình giọng điệu → giao vai trò cụ thể trong system prompt.",
+  "why": "Role prompting trong system prompt là đòn bẩy mạnh nhất cho giọng điệu và trọng tâm. Mô tả sản phẩm, đối tượng và tone cụ thể sẽ giảm lệch formality và lạc đề.",
+  "wrong": {
+   "B": "`system prompts have less influence`: sai, system prompt là chỗ đặt vai trò.",
+   "C": "Chỉ cấm cụm từ không định hình được tone; hướng dẫn tích cực hiệu quả hơn.",
+   "D": "`max_tokens` chỉ giới hạn độ dài, không sửa tone."
+  },
+  "rows": null
+ },
+ {
+  "id": 11492,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Sàng lọc đầu vào rẻ, nhanh → model nhẹ (Haiku) với output có cấu trúc trước hội thoại chính.",
+  "why": "Anthropic khuyến nghị dùng model nhẹ như Haiku làm harmlessness screen cho input người dùng, trả kết quả có cấu trúc. Nhanh, rẻ, mở rộng được và chặn trước khi tới hội thoại chính.",
+  "wrong": {
+   "B": "Model lớn nhất chạy hai lần: đắt và chậm, trái `low-latency`.",
+   "C": "`Rely exclusively`: chỉ system prompt không đủ trước jailbreak có chủ đích.",
+   "D": "Lọc sau khi đã hiển thị là quá muộn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11493,
+  "answer": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nội dung từ tool là dữ liệu không tin cậy: khai báo chính sách, đóng gói an toàn, sàng lọc.",
+  "why": "Ba lớp phòng thủ: system prompt nói rõ tool output là dữ liệu không được ghi đè chỉ thị (A); JSON-encode để nội dung không phá cấu trúc (B); classifier nhẹ sàng lọc và gắn cờ injection (C).",
+  "wrong": {
+   "D": "Trộn chỉ thị của developer vào `tool_result` làm mờ ranh giới tin cậy — đúng điều injection khai thác.",
+   "E": "`broad, unscoped access`: vi phạm least privilege, phóng đại thiệt hại khi bị injection."
+  },
+  "rows": null
+ },
+ {
+  "id": 11494,
+  "answer": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Template = phần cố định + biến có placeholder; bọc biến bằng XML tag.",
+  "why": "Prompt template tách nội dung cố định và biến qua placeholder (A), giúp test bằng cách thay giá trị đầu vào (B), và bọc biến trong thẻ XML để rõ cấu trúc (C).",
+  "wrong": {
+   "D": "`only usable inside claude.ai`: sai, template dùng được với API và Console.",
+   "E": "Ngược bản chất template — mục đích chính là tái sử dụng phần cố định."
+  },
+  "rows": null
+ },
+ {
+  "id": 11495,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Muốn định dạng nhất quán → 3–5 ví dụ đa dạng trong thẻ `<example>`.",
+  "why": "Few-shot (multishot) là cách đáng tin nhất để khoá định dạng và cách viết nhãn. Ba đến năm cặp ticket–output đa dạng cho Claude mẫu chính xác để bắt chước.",
+  "wrong": {
+   "A": "Tăng `temperature` làm đầu ra còn thất thường hơn.",
+   "C": "Một ví dụ duy nhất dễ bị bắt chước quá mức và thiếu độ phủ.",
+   "D": "Tóm tắt và giải thích thêm không cố định định dạng nhãn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11496,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Ví dụ phải đa dạng; ví dụ đồng dạng khiến Claude học nhầm mẫu.",
+  "why": "Năm ví dụ cùng dương tính, cùng cấu trúc nên Claude học mẫu ngoài ý muốn. Cách sửa là thêm ví dụ tiêu cực, hỗn hợp và cấu trúc khác nhau.",
+  "wrong": {
+   "B": "Thiếu `<thinking>` không phải nguyên nhân lệch về một loại cảm xúc.",
+   "C": "`regardless of content`: nhiều ví dụ giống nhau chỉ củng cố thiên lệch.",
+   "D": "Vị trí không phải gốc vấn đề; nội dung thiếu đa dạng mới là."
+  },
+  "rows": null
+ },
+ {
+  "id": 11497,
+  "answer": [
+   "A",
+   "B",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Long context: tài liệu ở trên, câu hỏi ở cuối, bọc XML, trích dẫn trước khi trả lời.",
+  "why": "Hướng dẫn long-context: đặt tài liệu dài ở đầu, truy vấn ở cuối (A); bọc mỗi tài liệu trong `<document>` với subtag source/content (B); yêu cầu trích `<quotes>` trước để lọc nhiễu (D).",
+  "wrong": {
+   "C": "Ngược hướng dẫn: câu hỏi ở cuối cải thiện chất lượng đáng kể.",
+   "E": "`cannot reliably compare`: sai, Claude xử lý được nhiều tài liệu dài.",
+   "F": "Bỏ XML làm mất cấu trúc, ngược hướng dẫn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11498,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Kiểm tra bộ ví dụ → nhờ Claude đánh giá độ liên quan, đa dạng hoặc sinh thêm.",
+  "why": "Tài liệu prompt engineering gợi ý nhờ Claude đánh giá ví dụ về relevance và diversity, hoặc sinh thêm ví dụ từ bộ ban đầu. Đó là cách xác thực trực tiếp.",
+  "wrong": {
+   "B": "`four-example limit`: không có giới hạn như vậy; xoá ngẫu nhiên có thể mất edge case.",
+   "C": "Gộp thành một khối làm mất ranh giới giữa các ví dụ.",
+   "D": "Bỏ hết ví dụ là lùi lại, mất lợi ích few-shot."
+  },
+  "rows": null
+ },
+ {
+  "id": 11499,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Đặt breakpoint ở cuối phần tĩnh; phần thay đổi mỗi request nằm sau breakpoint.",
+  "why": "Cache khớp theo tiền tố tới breakpoint. Đặt `cache_control` trên khối cuối của system prompt tĩnh thì phần 6.000 token ấy được dùng lại ở mọi request, còn user message khác nhau nằm ngoài.",
+  "wrong": {
+   "B": "User message luôn khác nên cache viết mới mỗi lần, không bao giờ hit.",
+   "C": "Bỏ qua chính phần tĩnh lớn nhất; đề cũng không nói tool đổi nhiều.",
+   "D": "Breakpoint trên user message biến đổi chỉ tạo cache write lãng phí."
+  },
+  "rows": null
+ },
+ {
+  "id": 11500,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Model mới: input vừa nhưng input+max_tokens vượt → vẫn chạy, dừng với `model_context_window_exceeded`.",
+  "why": "Với các model Claude đời mới, API không còn từ chối khi input + `max_tokens` vượt context window. Request được chấp nhận và nếu chạm giới hạn thì dừng sớm với `stop_reason` là `model_context_window_exceeded`.",
+  "wrong": {
+   "B": "Lỗi 400 chỉ khi bản thân input vượt context window; đây là hành vi cũ.",
+   "C": "API không tự cắt lịch sử hội thoại.",
+   "D": "Context window cố định theo model, không tự nâng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11501,
+  "answer": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Mỗi nguồn chi phí một cách chữa: tool search, programmatic tool calling, caching.",
+  "why": "Schema nạp sẵn dù không dùng → tool search tool nạp theo nhu cầu (A). Nhiều `tool_result` từ lời gọi nhỏ → programmatic tool calling gom thành một script (B). Định nghĩa tool ổn định gửi lại → prompt caching tính giá cache-read (C).",
+  "wrong": {
+   "D": "`max_tokens` là giới hạn output, không giảm chi phí input.",
+   "E": "Context lớn hơn không giảm token gửi đi, chỉ chứa được nhiều hơn.",
+   "F": "Tiết kiệm vài ký tự là không đáng kể, không giải quyết nguồn nào."
+  },
+  "rows": null
+ },
+ {
+  "id": 11502,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Đổi `tool_choice` chỉ làm mất cache phần messages; tools và system vẫn hit.",
+  "why": "Theo bảng invalidation của prompt caching, thay đổi `tool_choice` chỉ ảnh hưởng các khối message. Phần tools và system prompt vẫn đọc từ cache, messages phải xử lý lại.",
+  "wrong": {
+   "B": "Đổi `tool_choice` khác với sửa mảng `tools`; không làm mất toàn bộ cache.",
+   "C": "`Nothing is invalidated`: sai, cache messages bị mất.",
+   "D": "Ngược thứ bậc: tools ở đầu tiền tố vẫn còn, messages mới bị mất."
+  },
+  "rows": null
+ },
+ {
+  "id": 11503,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Tra cache chỉ lùi khoảng 20 block từ breakpoint → hội thoại dài cần thêm breakpoint tường minh.",
+  "why": "Hệ thống chỉ kiểm tra cache hit trong khoảng 20 block trước breakpoint. Từ block 35 lùi 20 block không tới block 12, nên phải thêm breakpoint ở giữa để giữ chuỗi khớp.",
+  "wrong": {
+   "B": "Caching không chỉ theo dõi một lượt gần nhất.",
+   "C": "Không có quy tắc xoá cache sau 30 block.",
+   "D": "Đặt breakpoint ở block đầu chỉ cache phần nhỏ, bỏ phí phần còn lại."
+  },
+  "rows": null
+ },
+ {
+  "id": 11504,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "`name` của Skill không được chứa từ dành riêng \"anthropic\" hay \"claude\".",
+  "why": "Quy tắc frontmatter `SKILL.md`: `name` chỉ chữ thường, số, gạch nối và không chứa từ dành riêng \"anthropic\", \"claude\". `claude-pdf-helper` vi phạm đúng điều này.",
+  "wrong": {
+   "B": "Không có độ dài tối thiểu 45 ký tự cho description.",
+   "C": "Không yêu cầu hậu tố phiên bản.",
+   "D": "Ngược lại: gạch nối là ký tự hợp lệ trong `name`."
+  },
+  "rows": null
+ },
+ {
+  "id": 11505,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Skill dùng chung cho cả repo → `.claude/skills/` commit vào dự án.",
+  "why": "Project Skill trong `.claude/skills/` đi cùng codebase, ai clone repo cũng có, không phải cài thêm.",
+  "wrong": {
+   "B": "`~/.claude/skills/` là cá nhân, không tự đồng bộ theo repo.",
+   "C": "Claude Code đọc Skill từ hệ tệp, không `exclusively` qua API.",
+   "D": "Upload trên claude.ai không gắn với quyền truy cập GitHub repo."
+  },
+  "rows": null
+ },
+ {
+  "id": 11506,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Headless + chặn cứng → allowlist tool đọc + `dontAsk`: không có trong danh sách là từ chối.",
+  "why": "`dontAsk` tự từ chối mọi tool không được cho phép trước thay vì hỏi người dùng. Kết hợp với allowlist chỉ đọc, agent không thể sửa tệp hay chạy shell, cũng không treo chờ duyệt trong CI.",
+  "wrong": {
+   "B": "`bypassPermissions` cho mọi tool khác chạy tự do — blocklist dễ sót.",
+   "C": "`default` rơi về `canUseTool` / hỏi duyệt — đề cấm fallback tương tác.",
+   "D": "`acceptEdits` tự duyệt sửa tệp — đúng điều cấm."
+  },
+  "rows": null
+ },
+ {
+  "id": 11507,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Subagent tự khai báo `tools` riêng; giới hạn ở cấu hình, độc lập với lead agent.",
+  "why": "Trường `tools` trong `AgentDefinition` giới hạn chính xác tool subagent được dùng, bất kể lead agent có gì. Read-only được thực thi bằng cấu hình chứ không bằng lời mô tả.",
+  "wrong": {
+   "B": "Không khai báo `tools` thì subagent thừa hưởng tool của cha — gồm cả Write, Bash.",
+   "C": "`CLAUDE.md` chỉ là hướng dẫn, không phải ranh giới quyền.",
+   "D": "`plan` là chế độ của phiên, không phải cơ chế giới hạn riêng một subagent."
+  },
+  "rows": null
+ },
+ {
+  "id": 11508,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Phân loại ý định đơn giản, khối lượng lớn, cần 1–2 giây, ngân sách chặt → Haiku.",
+  "why": "Haiku 4.5 nhanh nhất, rẻ nhất, đủ chính xác cho intent classification đơn giản. Khớp cả ba ràng buộc độ trễ, khối lượng và chi phí.",
+  "wrong": {
+   "A": "Opus mạnh nhưng chậm và đắt — dư năng lực cho phân loại đơn giản.",
+   "C": "Model hàng đầu đắt, không nhắm tới latency thấp với việc đơn giản.",
+   "D": "Sonnet cân bằng nhưng vẫn chậm và đắt hơn Haiku cho việc này."
+  },
+  "rows": null
+ },
+ {
+  "id": 11509,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Việc đơn giản, nhiều, song song → `effort` `low`.",
+  "why": "`effort` thấp được thiết kế cho tác vụ đơn giản, khối lượng lớn như subagent lookup, giảm token và độ trễ mà chất lượng vẫn đủ.",
+  "wrong": {
+   "B": "`max` tốn token và chậm nhất; `guarantees` là phóng đại.",
+   "C": "`xhigh` dành cho việc agentic dài hơi khó, không phải lookup đơn giản.",
+   "D": "Giữ `high` mặc định là không tối ưu gì — đề muốn giảm latency."
+  },
+  "rows": null
+ },
+ {
+  "id": 11510,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Giữ suy luận cho độ chính xác, chỉ bỏ phần stream thinking → `display: \"omitted\"`.",
+  "why": "Với `display` `\"omitted\"`, mô hình vẫn suy nghĩ đầy đủ nhưng không stream token thinking, nên text đầu tiên đến sớm hơn. Giảm độ trễ cảm nhận mà không cắt suy luận cần cho bài toán khó.",
+  "wrong": {
+   "B": "Tắt thinking làm giảm độ chính xác cho bài toán định giá phức tạp.",
+   "C": "Budget nhỏ cố định cắt suy luận — hy sinh chính độ chính xác cần giữ.",
+   "D": "`larger budget always produces proportionally lower latency`: sai, budget lớn hơn thường chậm hơn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11511,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Khoảng cách giữa các lần đọc > 5 phút → TTL 1 giờ.",
+  "why": "Cache 5 phút sẽ hết hạn giữa các câu hỏi cách nhau hơn 20 phút, phải ghi lại giá đầy đủ liên tục. TTL 1 giờ ghi đắt hơn một chút nhưng giữ cache sống suốt các khoảng nghỉ, nên tổng chi phí và độ trễ thấp hơn.",
+  "wrong": {
+   "B": "`regardless of gap length`: sai, cache 5 phút hết hạn trước lần đọc tiếp.",
+   "C": "Caching giảm cả chi phí input lẫn TTFT với tài liệu dài.",
+   "D": "Cache nội dung thay đổi thì không bao giờ hit; phải cache phần lặp lại."
+  },
+  "rows": null
+ },
+ {
+  "id": 11512,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Agent dài hơi mà khảo sát quá hẹp → tăng `effort` (kèm `max_tokens`), chấp nhận trả thêm token và độ trễ.",
+  "why": "Triệu chứng là agent `scoping its investigation too narrowly` ở mức `effort` mặc định — đúng thứ `effort` cao hơn sửa: nghĩ sâu hơn, khảo sát rộng hơn. Ô A nâng lên `xhigh` và nới `max_tokens` cho đủ chỗ, đồng thời nói thẳng cái giá: `higher token cost and longer per-turn latency`. Với tác vụ nhiều giờ, ngân sách hàng triệu token, đây là đánh đổi hợp lý.",
+  "wrong": {
+   "B": "`Lower effort to medium`: đi ngược vấn đề — phạm vi đã hẹp còn bị khoanh hẹp hơn để đổi lấy tốc độ không ai yêu cầu.",
+   "C": "`prompted instructions alone will reliably substitute`: lời nhắc 'cẩn thận hơn' không thay được ngân sách suy luận; vế 'reliably' là cam kết sai.",
+   "D": "`faster, smaller model at low effort`: giảm độ sâu suy luận cho một tác vụ vốn cần khám phá rộng — tối ưu sai trục."
+  },
+  "rows": null
+ },
+ {
+  "id": 11513,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Contextual Retrieval áp cho CẢ hai index: cùng đoạn ngữ cảnh prepend vào chunk trước khi embed và trước khi tokenize cho BM25.",
+  "why": "Anthropic mô tả Contextual Retrieval gồm Contextual Embeddings **và** Contextual BM25: lấy cùng đoạn ngữ cảnh riêng cho từng chunk, ghép vào đầu chunk rồi mới đưa vào cả hai index. Ô A làm đúng vậy — BM25 vẫn khớp nguyên văn mã sản phẩm, chuỗi lỗi, nhưng nay có thêm ngữ cảnh cấp tài liệu.",
+  "wrong": {
+   "B": "`Replace the BM25 index entirely`: mất luôn khả năng khớp chính xác `product codes and error strings verbatim` mà đề muốn giữ.",
+   "C": "`Lower the BM25 term-frequency weighting`: chỉnh trọng số không thêm grounding nào, lại làm yếu khớp lexical.",
+   "D": "`only from document titles and section headings`: bỏ nội dung chunk thì mã lỗi trong thân bài không còn khớp được."
+  },
+  "rows": null
+ },
+ {
+  "id": 11514,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cache breakpoint đặt ở cuối phần tĩnh dùng chung, ngay trước phần thay đổi theo mỗi request.",
+  "why": "Prompt caching cache theo prefix: mọi thứ tới breakpoint phải giống hệt giữa các request. Tài liệu lặp lại ở mọi phiên, câu hỏi thì thay đổi, nên breakpoint đặt `On the last content block of the retrieved documentation` ngay trước câu hỏi là đúng chỗ — cache được phần lớn và đắt nhất.",
+  "wrong": {
+   "B": "`On the user's question itself`: câu hỏi đổi mỗi lần nên prefix không bao giờ khớp, cache gần như luôn miss.",
+   "C": "`leaving the retrieved documentation uncached`: bỏ lỡ chính phần dài, lặp lại cần cache.",
+   "D": "`caching only benefits requests that share an identical final message`: sai — cache theo prefix, phần cuối khác nhau vẫn hưởng lợi."
+  },
+  "rows": null
+ },
+ {
+  "id": 11515,
+  "answer": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Giảm retrieval failure: contextual embeddings + contextual BM25 + reranking — ba lớp cộng dồn theo số liệu Anthropic.",
+  "why": "Bài Contextual Retrieval của Anthropic đo được: Contextual Embeddings giảm tỷ lệ truy hồi hỏng, thêm Contextual BM25 giảm thêm, và thêm reranking giảm tiếp nữa. Ba ô A, B, C đúng là ba bước đó. Các ô còn lại chạm vào bước sinh, kích thước index hay tốc độ build — không phải truy hồi.",
+  "wrong": {
+   "D": "`sampling temperature during the final answer step`: ở bước sinh câu trả lời, không ảnh hưởng chunk nào được trả về.",
+   "E": "`binary quantization`: tiết kiệm dung lượng, đổi lại thường mất chút độ chính xác — không giảm lỗi truy hồi.",
+   "F": "`Disable overlap`: tối ưu tốc độ build, dễ cắt ngữ cảnh ở ranh giới chunk — có thể làm truy hồi tệ hơn."
+  },
+  "rows": null
+ },
+ {
+  "id": 11516,
+  "answer": [
+   "A",
+   "B",
+   "D"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Voyage: câu hỏi `input_type='query'`, đoạn được index `input_type='document'`; vector chuẩn hóa nên cosine = dot product.",
+  "why": "Voyage khuyên đặt `input_type` đúng vai: `query` cho câu người dùng gõ, `document` cho đoạn được index — model sẽ thêm prompt phù hợp để hai phía khớp nhau tốt hơn. Embedding của Voyage được chuẩn hóa về độ dài 1, nên cosine similarity và dot product cho cùng thứ hạng (D đúng).",
+  "wrong": {
+   "C": "`Leave input_type unspecified`: dùng được nhưng bỏ lỡ tối ưu truy hồi mà docs khuyên dùng.",
+   "E": "`binary-quantized ... to maximize retrieval accuracy`: lượng tử hóa nhị phân là để tiết kiệm, không phải tăng độ chính xác.",
+   "F": "`input_type='document' for both`: gán sai vai cho câu hỏi — đồng nhất cấu hình không phải mục tiêu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11517,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Audit theo user/tenant khi dùng chung một credential → gắn danh tính vào telemetry qua resource attributes, đừng suy ngược từ nội dung.",
+  "why": "Một credential dùng chung thì API key không phân biệt được tenant, nên danh tính phải đi theo telemetry. Ô A đưa `enduser.id` và `tenant.id` (đã percent-encode) vào `OTEL_RESOURCE_ATTRIBUTES`, nhờ vậy các sự kiện `tool_decision`, `tool_result`, `mcp_server_connection` đều mang user/tenant — trả lời thẳng câu 'khách nào gọi MCP action này'.",
+  "wrong": {
+   "B": "`separate Anthropic API key for every customer`: gánh nặng vận hành lớn, mà vẫn chỉ ra tới tenant, không tới user.",
+   "C": "`each customer stand up ... their own self-hosted OpenTelemetry collector`: đẩy việc sang khách và vẫn phải tách luồng chung — không giải quyết gì.",
+   "D": "`infer, from their contents alone`: suy đoán từ nội dung không phải audit trail, lại tăng rủi ro lộ dữ liệu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11518,
+  "answer": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "OTel cho cả tổ chức: cấu hình tập trung trong managed `settings.json`, thêm attribute để chia theo team, tắt flag cardinality không cần.",
+  "why": "Đề cần `scales without per-developer setup` và chi phí lưu trữ dự đoán được. A đặt biến trong `settings.json` do admin quản lý (không cần dev tự làm); B thêm `department`, `cost_center` để chia chi phí theo team; C tắt `OTEL_METRICS_INCLUDE_SESSION_ID` và các flag tương tự để không phình số time series.",
+  "wrong": {
+   "D": "`OTEL_METRICS_EXPORTER=console`: chỉ in ra máy local, không có collector trung tâm — trái mục tiêu giám sát tập trung.",
+   "E": "`manually export ... in their personal shell profile`: chính là cấu hình theo từng dev mà đề muốn tránh, dễ lệch nhau."
+  },
+  "rows": null
+ },
+ {
+  "id": 11519,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "TPM/RPM mỗi user giảm khi tổ chức lớn lên vì không phải ai cũng hoạt động cùng lúc — dùng con số của bậc quy mô đúng.",
+  "why": "Bảng khuyến nghị rate limit của Claude Code cho TPM/RPM mỗi user giảm dần theo quy mô tổ chức, vì tỷ lệ người dùng đồng thời thấp hơn khi đông người. Nhân con số của bậc 15 user với 300 sẽ cấp thừa. Ô A nói đúng: dùng con số thấp hơn của bậc 300 user.",
+  "wrong": {
+   "B": "`stay flat regardless of organization size`: sai — khuyến nghị giảm theo quy mô.",
+   "C": "`enforced per individual user rather than at the organization level`: rate limit áp ở cấp tổ chức, nên vẫn phải lập kế hoạch tổng.",
+   "D": "`only matters for Bedrock and Vertex`: Console cũng có rate limit cấp tổ chức."
+  },
+  "rows": null
+ },
+ {
+  "id": 11520,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Bedrock/Vertex không gửi usage về Anthropic → cần gateway tự host phía trước để gắn user, xuất metrics và áp spend cap.",
+  "why": "Chạy qua Bedrock thì dashboard và spend limit của Anthropic không thấy được traffic này. Muốn gán chi phí theo user và chặn cứng theo user thì phải đặt một lớp ở giữa do mình kiểm soát: ô A là gateway tự host trước Bedrock, thêm `per-user usage attribution, OTLP token metrics, and per-user spend limits`.",
+  "wrong": {
+   "B": "`aggregates Bedrock spend the same way`: dashboard analytics của Anthropic không nhận dữ liệu từ Bedrock.",
+   "C": "`/usage-credits ... automatically covers the entire Bedrock deployment`: lệnh trên máy dev không áp được giới hạn cho cả deployment Bedrock.",
+   "D": "`Console workspace limits ... govern usage across all providers`: workspace limit chỉ áp cho traffic qua API của Anthropic."
+  },
+  "rows": null
+ },
+ {
+  "id": 11521,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Ít tool, nhỏ, dùng thường xuyên → nạp thẳng hết; tool search chỉ đáng khi catalog lớn và ít tool được dùng.",
+  "why": "8 tool, mỗi cái dưới 100 token, gần như request nào cũng cần vài cái: tổng định nghĩa chỉ vài trăm token. Thêm tool search hay deferred loading chỉ thêm một vòng tìm kiếm trước mỗi lần gọi mà không tiết kiệm được gì. Ô A là cách đơn giản nhất mà vẫn chạy tốt.",
+  "wrong": {
+   "B": "`BM25 tool search ... before every call`: thêm bước tìm thừa cho một catalog nhỏ.",
+   "C": "`defer all 8 tools`: hoãn nạp tool nào cũng cần thì chỉ làm chậm.",
+   "D": "`defer loading for the entire toolset`: over-engineering, cùng nhược điểm với C."
+  },
+  "rows": null
+ },
+ {
+  "id": 11522,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Phiên dài sắp chạm giới hạn context mà vẫn cần nhớ phát hiện cũ → server-side compaction tóm tắt lượt cũ và chạy tiếp.",
+  "why": "Compaction tự tóm tắt các lượt trước khi context gần đầy, giữ lại phát hiện quan trọng để phiên `continues past the limit`. Đúng mẫu truy vấn đề mô tả: chạy nhiều giờ và vẫn phải tham chiếu kết quả đã truy hồi trước đó.",
+  "wrong": {
+   "B": "`Increase max_tokens`: tăng chỗ cho output, không giải quyết input đầy — còn chiếm thêm cửa sổ.",
+   "C": "`Re-upload every previously retrieved document`: làm context đầy nhanh hơn.",
+   "D": "`smaller context window`: đi ngược vấn đề và đẩy việc tóm tắt sang người dùng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11523,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Muốn tool search theo cách riêng (embeddings) → viết custom tool tự tìm, trả `tool_reference` blocks cho Claude mở rộng.",
+  "why": "Tool search hỗ trợ cài đặt tùy chỉnh: một tool của mình chạy tìm kiếm bằng embeddings rồi trả `tool_reference` trong `tool_result`, Claude sẽ nạp các tool được tham chiếu. Ô A dùng đúng index có sẵn, phù hợp mô tả thưa nhưng liên quan về ngữ nghĩa.",
+  "wrong": {
+   "B": "`BM25 ... approximates embedding-based semantic similarity`: BM25 là khớp từ khóa, mô tả thưa thì chính là chỗ nó yếu.",
+   "C": "`broad wildcard patterns to approximate semantic matching`: regex không hiểu ngữ nghĩa.",
+   "D": "`Disable tool search and load every tool`: bỏ yêu cầu khám phá tool và làm phình context."
+  },
+  "rows": null
+ },
+ {
+  "id": 11524,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tên tool có tiền tố chặt, cần khớp mẫu chính xác → regex variant; ngôn ngữ tự nhiên, xếp hạng mờ → BM25.",
+  "why": "Ở biến thể regex, Claude tự viết pattern kiểu Python trên tên và mô tả tool, nên khớp được tiền tố như `db_read_` hay cả hai thứ tự từ. Đề nói rõ `precise pattern matches ... rather than relying on fuzzy natural-language ranking` — đó là A.",
+  "wrong": {
+   "B": "`BM25 ... natural language queries`: chính là kiểu xếp hạng mờ mà đề muốn tránh.",
+   "C": "`memory tool`: dùng để lưu thông tin giữa các phiên, không phải tool search.",
+   "D": "`code execution tool`: chạy script trong sandbox, không phải cơ chế khám phá tool."
+  },
+  "rows": null
+ },
+ {
+  "id": 11525,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "MCP connector của Messages API chỉ nói chuyện với remote MCP server (HTTPS: Streamable HTTP/SSE); stdio local không với tới được.",
+  "why": "Muốn gọi từ phía server qua Messages API mà `without operating a separate MCP client process` thì dùng MCP connector, và connector chỉ hỗ trợ server từ xa qua HTTP. Ô A triển khai service thành remote MCP server rồi khai báo trong `mcp_servers`.",
+  "wrong": {
+   "B": "`list its local process path directly inside the mcp_servers array`: API không thể spawn process trên máy của bạn; stdio không được hỗ trợ.",
+   "C": "`client-side tool definition`: lúc đó app phải tự chạy vòng `tool_use`, đúng việc đề muốn tránh.",
+   "D": "`Upload ... tool schema to the Files API`: Files API chứa file, không chạy hay gọi tool."
+  },
+  "rows": null
+ },
+ {
+  "id": 11526,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cần agent loop + tool đọc/sửa/chạy mà không tự viết vòng `tool_use` → Claude Agent SDK.",
+  "why": "Agent SDK có sẵn vòng lặp agent và các tool `Read`, `Edit`, `Bash`, tự thực thi rồi gửi kết quả lại — đúng yêu cầu lặp tới khi test pass `without the team writing custom logic to parse tool_use blocks`.",
+  "wrong": {
+   "B": "`implement a loop that inspects stop_reason`: chính là logic tự viết mà đề muốn tránh.",
+   "C": "`interactively ... engineer can approve every file edit`: CI là tự động, không có người duyệt từng bước.",
+   "D": "`MCP connector ... remote MCP server`: chỉ cung cấp tool, không có môi trường chạy test/sửa code; vẫn phải tự lo phần còn lại."
+  },
+  "rows": null
+ },
+ {
+  "id": 11527,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Bộ tool nhỏ (~1.2K token), dùng gần như mọi request → nạp nguyên khối; progressive discovery dành cho catalog lớn.",
+  "why": "7 tool khoảng 1.200 token là chi phí context nhỏ, và tool nào cũng thường xuyên được dùng. Tool search chỉ thêm một bước tìm kiếm mà không tiết kiệm được gì đáng kể. Ô A là lựa chọn monolithic hợp lý.",
+  "wrong": {
+   "B": "`BM25 ... retrieves only the tools relevant`: gần như tool nào cũng liên quan, nên lọc là thừa.",
+   "C": "`defer all seven tools`: thêm độ trễ tìm kiếm trước mỗi lần gọi.",
+   "D": "`Split the tools across two separate MCP servers`: over-engineering cho 1.200 token."
+  },
+  "rows": null
+ },
+ {
+  "id": 11528,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Catalog tool lớn (hàng chục nghìn token) → tool search, chỉ nạp vài tool cần cho từng request.",
+  "why": "55K token định nghĩa tool chiếm context trước khi agent làm bất cứ việc gì. Tool search hoãn nạp và chỉ kéo vào `three to five tools relevant to each request`, giảm phình context ngay tại gốc — đúng ca dùng mà Anthropic mô tả cho nhiều MCP server.",
+  "wrong": {
+   "B": "`raise the context window limit`: không phải tùy chọn thật, và context vẫn phình, độ chính xác chọn tool vẫn giảm.",
+   "C": "`Manually rewrite every MCP server's tool descriptions`: tốn công, dễ hỏng chất lượng mô tả, mà vẫn nạp toàn bộ.",
+   "D": "`prompt caching`: giảm chi phí và độ trễ, nhưng token vẫn nằm trong context window."
+  },
+  "rows": null
+ },
+ {
+  "id": 11529,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Phân loại vào nhãn cố định, có ground truth → exact-match accuracy / F1 từ confusion matrix.",
+  "why": "Nhãn đóng gồm 5 lớp, có tập test 5.000 vé đã gắn nhãn, đề cần `automated, unambiguous grading` — đây là code-based grading kinh điển. Accuracy cho cái nhìn tổng; F1 theo lớp bắt được các lớp hiếm như fraud.",
+  "wrong": {
+   "B": "`average the pairwise cosine similarity`: đo tính nhất quán giữa các phiên bản diễn đạt, không đo độ đúng nhãn.",
+   "C": "`ROUGE-L ... reference summary`: dành cho tóm tắt, không phải phân loại.",
+   "D": "`second Claude model to rate ... Likert`: chủ quan và tốn kém, trong khi có thể so khớp nhãn một cách tuyệt đối."
+  },
+  "rows": null
+ },
+ {
+  "id": 11530,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tóm tắt có bản tham chiếu, cần đo cả phần trùng nội dung lẫn thứ tự ý → ROUGE-L (longest common subsequence).",
+  "why": "ROUGE-L dựa trên chuỗi con chung dài nhất, nên vừa thưởng cho việc giữ thông tin chính vừa nhạy với thứ tự ý — đúng `both the overlap ... and the ordering of ideas`.",
+  "wrong": {
+   "B": "`Exact-match ... character-for-character`: bản tóm tắt hay nhưng khác chữ vẫn bị chấm 0.",
+   "C": "`ten independently generated summaries`: đo tính nhất quán giữa các lần sinh, không so với reference.",
+   "D": "`flags ... personally identifiable information`: kiểm tra an toàn, không phải chất lượng tóm tắt."
+  },
+  "rows": null
+ },
+ {
+  "id": 11531,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "So 2 phiên bản prompt phân loại → chạy cùng một tập held-out có nhãn, so exact-match accuracy.",
+  "why": "Cùng một tập held-out, cùng ground truth, metric khách quan, chạy tự động — vừa `fastest` vừa `most objective`. Ô A là phép so sánh công bằng duy nhất trước khi đưa prompt mới lên production.",
+  "wrong": {
+   "B": "`vote on which one feels more accurate`: chậm, chủ quan, mẫu nhỏ.",
+   "C": "`rate its own confidence`: độ tự tin của model không phải độ chính xác.",
+   "D": "`Deploy ... to all traffic immediately`: rủi ro, và thời gian xử lý là proxy nhiễu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11532,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Có reference summary, cần thưởng việc giữ ý chính theo thứ tự tương tự, chấm tự động hàng loạt → ROUGE-L (F1).",
+  "why": "ROUGE-L đo longest common subsequence giữa bản ứng viên và reference, nên thưởng cho việc giữ thông tin chính theo `similar order`. Theo dõi F1 qua các phiên bản prompt cho phép so sánh tự động ở quy mô 250 bài.",
+  "wrong": {
+   "B": "`exact string match`: tóm tắt gần như không bao giờ trùng nguyên văn — metric vô dụng.",
+   "C": "`protected health information` yes/no: kiểm tra an toàn, không đo chất lượng tóm tắt.",
+   "D": "`wall-clock latency`: tốc độ không phải chất lượng."
+  },
+  "rows": null
+ },
+ {
+  "id": 11533,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Eval: ưu tiên nhiều câu chấm tự động hơn ít câu chấm tay chất lượng cao.",
+  "why": "Hướng dẫn xây eval của Anthropic nói rõ: nhiều câu hỏi với chấm tự động (tín hiệu mỗi câu thấp hơn một chút) tốt hơn ít câu chấm tay chất lượng cao. Số mẫu lớn giảm nhiễu khi so các prompt ứng viên trước A/B test.",
+  "wrong": {
+   "B": "`always produce more trustworthy comparisons regardless of sample size`: bỏ qua cỡ mẫu — 80 câu dễ nhiễu.",
+   "C": "`just 10 examples`: quá ít để so sánh có ý nghĩa thống kê.",
+   "D": "`subjective impressions`: không phải eval."
+  },
+  "rows": null
+ },
+ {
+  "id": 11534,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Eval phải phản ánh dữ liệu thật: thêm edge case (mỉa mai, lan man, mơ hồ, lạc đề) bên cạnh case sạch.",
+  "why": "Nguyên tắc thiết kế eval theo task: mô phỏng phân phối thật và đưa edge case vào — input mơ hồ, quá dài, lạc đề, giọng điệu khó. Ô A liệt kê đúng các loại đó, `that mirror real user behavior`.",
+  "wrong": {
+   "B": "`grammatically perfect and closely match the examples`: chỉ test happy path, đo quá lạc quan.",
+   "C": "`single repeated booking request`: chỉ đo tính nhất quán, độ phủ bằng 0.",
+   "D": "`exactly the format the prompt ... demonstrate`: người dùng thật không viết theo template."
+  },
+  "rows": null
+ },
+ {
+  "id": 11535,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Hallucination trong RAG → bắt trích nguyên văn nguồn trước khi trả lời, cho phép nói 'không biết'.",
+  "why": "Gốc lỗi: model bịa con số không có trong nguồn. Kỹ thuật giảm hallucination của Anthropic gồm hai vế: yêu cầu `quote exact policy text before answering` để bám tài liệu, và cho phép `admitting uncertainty` khi không có — ô A gộp cả hai.",
+  "wrong": {
+   "B": "`supplement any gaps ... using its general knowledge`: chính là nguồn sinh ra con số bịa.",
+   "C": "`always state a specific numeric figure`: ép model bịa khi tài liệu không có.",
+   "D": "`restate the entire policy document`: tốn token, không ngăn được bịa."
+  },
+  "rows": null
+ },
+ {
+  "id": 11536,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Câu hỏi ngắn, theo mẫu, lưu lượng cao mà chậm và đắt → model quá mạnh so với việc; chuyển sang model nhẹ như Haiku.",
+  "why": "Trả lời tình trạng đơn, giờ mở cửa không cần model lớn nhất. Opus vừa chậm hơn vừa đắt hơn cho tác vụ đơn giản — đúng hai triệu chứng `slow replies` và hóa đơn cao. Chọn model phù hợp (Haiku 4.5), kiểm lại accuracy rồi mới quyết định.",
+  "wrong": {
+   "B": "`hallucination problem`: đề không có dấu hiệu sai nội dung; thêm verification còn chậm hơn.",
+   "C": "`exceeding the context window`: câu hỏi ngắn theo mẫu, khó mà tràn context; triệu chứng cũng không phải bị cắt.",
+   "D": "`longer, more detailed system prompt`: thêm token thì càng chậm và đắt."
+  },
+  "rows": null
+ },
+ {
+  "id": 11537,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Format JSON trôi giữa các lần chạy dù dữ liệu ổn → prompt thiếu schema; cố định danh sách field + ví dụ mẫu.",
+  "why": "Dữ liệu `well-formed and consistent` nên lỗi nằm ở đặc tả output: không có schema thì model tự chọn tên field và cách lồng. Cố định danh sách field kèm một JSON mẫu (hoặc dùng structured outputs) sẽ neo format lại.",
+  "wrong": {
+   "B": "`tickets contain conflicting information`: trái với dữ kiện đề nói dữ liệu nhất quán.",
+   "C": "`hallucinating ticket details`: vấn đề là cấu trúc, không phải nội dung sai.",
+   "D": "`rate limit`: rate limit gây lỗi gọi API, không làm đổi tên field."
+  },
+  "rows": null
+ },
+ {
+  "id": 11538,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "`CLAUDE_CODE_ENABLE_TELEMETRY=1` chỉ là công tắc; phải chọn exporter (`OTEL_METRICS_EXPORTER`, `OTEL_LOGS_EXPORTER`) thì mới có dữ liệu ra ngoài.",
+  "why": "Trong Claude Code, bật telemetry thôi chưa đủ: chưa đặt exporter nào thì không có gì được xuất. Đề nói rõ `No other telemetry variables were configured`, nên ô B đúng nguyên nhân — cần đặt exporter là `otlp` và endpoint.",
+  "wrong": {
+   "A": "`CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1`: chỉ dành cho tính năng beta (như traces), không phải điều kiện để metrics/logs chạy.",
+   "C": "`console exporter ... required local fallback`: không có yêu cầu như vậy; console chỉ là một exporter tùy chọn.",
+   "D": "`Admin API key ... OTEL_EXPORTER_OTLP_HEADERS`: header dùng để xác thực với collector của bạn, không phải điều kiện để CLI phát tín hiệu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11539,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Cardinality nổ vì `session.id` → tắt `OTEL_METRICS_INCLUDE_SESSION_ID`, giữ các attribute khác như `model`.",
+  "why": "Flag này chỉ bỏ `session.id` khỏi metrics, nên mỗi chuỗi không còn tách theo từng phiên ngắn, trong khi breakdown theo `model` vẫn còn. Sửa đúng nguyên nhân mà không mất chiều dữ liệu cần thiết.",
+  "wrong": {
+   "B": "`Disable the metrics exporter entirely`: mất giám sát realtime, chỉ để đối phó một attribute.",
+   "C": "`Increase OTEL_METRIC_EXPORT_INTERVAL`: giảm tần suất đẩy, không giảm số time series duy nhất.",
+   "D": "`Usage API bucket_width`: là API khác, không tác động gì tới metrics OTel đã xuất."
+  },
+  "rows": null
+ },
+ {
+  "id": 11540,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Theo dõi gần realtime bằng Usage API → `bucket_width=1m`, nâng `limit` nếu cần (mặc định 60, tối đa 1440), poll khoảng mỗi phút.",
+  "why": "Bucket 1 phút khớp nhịp kiểm tra `roughly once a minute`; mặc định trả 60 bucket, nâng tối đa 1440 (24 giờ) để xem đường nền. Poll mỗi phút là vừa với độ mịn của dữ liệu — poll dày hơn không làm dữ liệu mới hơn.",
+  "wrong": {
+   "B": "`bucket_width=1d`: quá thô, không thấy được đột biến theo phút trong lúc sự cố.",
+   "C": "`hourly buckets update automatically every 60 seconds`: độ mịn vẫn là giờ, không cho thấy đột biến theo phút.",
+   "D": "`poll every 5 seconds`: không làm dữ liệu tươi hơn bucket 1 phút, chỉ tốn request và dễ vướng rate limit."
+  },
+  "rows": null
+ },
+ {
+  "id": 11541,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Prefix lớn, cố định, lặp lại trong thời gian TTL → `cache_control` ephemeral: giảm cả chi phí lẫn độ trễ.",
+  "why": "Manual 30K token giống hệt ở mọi request, request cách nhau 30–90 giây (vẫn trong TTL 5 phút, mỗi lần đọc lại làm mới cache). Đặt breakpoint sau manual thì các request sau đọc từ cache — rẻ hơn nhiều và time-to-first-token nhanh hơn, không đổi model hay nội dung.",
+  "wrong": {
+   "B": "`rotate through them randomly`: mất thông tin, và prefix thay đổi làm cache khó hit.",
+   "C": "`Move the manual text to the end of the user message`: không giảm token xử lý, lại phá prefix ổn định.",
+   "D": "`Reduce max_tokens`: câu trả lời vốn ngắn; chi phí nằm ở 30K token input."
+  },
+  "rows": null
+ },
+ {
+  "id": 11542,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "BAA chỉ phủ phạm vi đã thỏa thuận: tổ chức bật HIPAA, gọi API, chỉ dùng tính năng đủ điều kiện BAA.",
+  "why": "Có BAA không có nghĩa mọi bề mặt sản phẩm đều được xử lý PHI. Chỉ cấu hình HIPAA-enabled với `only BAA-eligible features enabled` mới nằm trong phạm vi. Ô A đúng cấu hình đó.",
+  "wrong": {
+   "B": "`Workbench interface ... same organization`: chung tổ chức không đồng nghĩa với việc Workbench được BAA phủ.",
+   "C": "`Claude Pro subscription shared among clinical staff`: gói consumer, nằm ngoài BAA, lại dùng chung tài khoản.",
+   "D": "`without activating HIPAA settings`: chưa bật cấu hình HIPAA thì không nằm trong phạm vi BAA."
+  },
+  "rows": null
+ },
+ {
+  "id": 11543,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Phải hỏi người duyệt dù ở mode nào, kể cả `bypassPermissions` → `PreToolUse` hook trả `ask`; hook chạy trước mọi rule và mode.",
+  "why": "Trong Agent SDK, hook chạy đầu tiên trong chuỗi quyết định quyền, trước deny/ask/allow rule và trước mode check. Một `PreToolUse` hook nhắm riêng tool chuyển tiền và trả `permissionDecision: \"ask\"` thì vẫn buộc người duyệt kể cả khi session chuyển sang `bypassPermissions` — được thực thi bằng cấu trúc, không phụ thuộc cấu hình mode.",
+  "wrong": {
+   "B": "`bare allowedTools entry ... callback never runs`: tự thừa nhận chuyển tiền sẽ tự duyệt, không qua người.",
+   "C": "`acceptEdits`: mode có thể bị đổi, và bypass sẽ bỏ qua `canUseTool`.",
+   "D": "`canUseTool ... lift the deny rule`: tự thừa nhận deny không thể gỡ từ callback, nên tool bị chặn hẳn chứ không phải 'cần duyệt'."
+  },
+  "rows": null
+ },
+ {
+  "id": 11544,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Nhiều request, cần nhanh dưới 1 giây, ngân sách hạn chế → bắt đầu bằng model nhỏ nhanh (Haiku), test rồi chỉ nâng cấp khi chưa đạt.",
+  "why": "50.000 request triage ngắn mỗi ngày, cần `sub-second`, ngân sách hạn chế — cả ba yêu cầu đều chỉ về Haiku 4.5. Ô A còn đúng quy trình: test trên mẫu vé thật và `upgrade only if it fails` — bắt đầu từ lựa chọn rẻ nhất, nâng dần theo dữ liệu.",
+  "wrong": {
+   "B": "`Opus 4.8 at the xhigh effort`: chậm và đắt nhất, trái cả ba yêu cầu.",
+   "C": "`extended thinking on every request`: thêm độ trễ và chi phí cho một tác vụ ngắn.",
+   "D": "`1M token context window will reduce the number of requests`: mỗi vé là một request riêng, context lớn không giúp gì; và cũng không khớp yêu cầu."
+  },
+  "rows": null
+ },
+ {
+  "id": 11545,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Độ chính xác quan trọng hơn chi phí, suy luận phức tạp, agent tự chủ dài hơi → model mạnh nhất (Opus).",
+  "why": "Discovery cho thấy `accuracy outweighs response cost` cộng thêm agent tự lập kế hoạch nhiều bước — đúng chỗ mạnh của Opus (reasoning phức tạp, agentic nâng cao). Ô A khớp thẳng các yêu cầu đã thu thập.",
+  "wrong": {
+   "B": "`Haiku 4.5 ... low per-token cost`: tối ưu chi phí trong khi đề ưu tiên độ chính xác.",
+   "C": "`reduced effort ... reducing overall project cost`: lại tối ưu chi phí, giảm độ sâu suy luận.",
+   "D": "`Batch API ... improving synthesis accuracy`: Batch API giảm chi phí cho tác vụ không gấp, không tăng độ chính xác; cũng không hợp với agent tương tác."
+  },
+  "rows": null
+ },
+ {
+  "id": 11546,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Trung thực theo Anthropic gồm calibrated: thể hiện đúng mức chắc chắn, không tự tin quá mức khi bằng chứng mơ hồ.",
+  "why": "Các nguyên tắc về honesty của Claude có calibration: mức tự tin phải tương xứng với bằng chứng, nói rõ khi không chắc. Đây chính là cơ chế giảm khả năng tool `misrepresent its own confidence` với hồ sơ mơ hồ.",
+  "wrong": {
+   "B": "`most favorable interpretation`: thiên lệch, đi ngược tính trung thực.",
+   "C": "`returning a blank response`: né tránh, không phải calibration; vẫn có thể nói rõ phần chưa chắc.",
+   "D": "`direct resume quotation`: không thể hiện mức độ không chắc chắn, không phải cách tiếp cận được mô tả."
+  },
+  "rows": null
+ },
+ {
+  "id": 11547,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Compaction = tự tóm tắt lịch sử khi context gần đầy; context editing = chiến lược cấu hình được (xóa tool result cũ, quản lý thinking blocks).",
+  "why": "Hai cơ chế bổ trợ nhau: compaction tóm tắt phần hội thoại trước khi chạm ngưỡng; context editing xóa có chọn lọc nội dung cũ như `clearing old tool results` hay thinking blocks theo cấu hình. Ô A mô tả đúng cả hai.",
+  "wrong": {
+   "B": "Đảo ngược hai cơ chế: compaction mới là tóm tắt, context editing mới là xóa.",
+   "C": "`only works with Claude Haiku 4.5`: bịa ràng buộc theo model.",
+   "D": "`both require the Batch API`: cả hai đều dùng được trong Messages API đồng bộ."
+  },
+  "rows": null
+ },
+ {
+  "id": 11548,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "medium",
+  "remember": "Thông báo retire 'ngoài Bedrock và Google Cloud' → traffic API trực tiếp phải migrate; Bedrock/Vertex theo lịch riêng của nền tảng đó.",
+  "why": "Thông báo đã nói rõ phạm vi: `retired outside of Bedrock and Google Cloud`. Vì vậy phần chạy qua API trực tiếp phải chuyển sang model còn hỗ trợ trước ngày retire; phần chạy trên Bedrock hay Vertex đi theo lịch của từng nền tảng. Ô A đặt đúng kỳ vọng với stakeholder.",
+  "wrong": {
+   "B": "`only affects new customers`: retire nghĩa là ngừng phục vụ với mọi người dùng, không có miễn trừ.",
+   "C": "`apply uniformly across every hosting platform`: trái với chính nội dung thông báo.",
+   "D": "`only restricts access to the Console UI`: retire chặn cả việc gọi API."
+  },
+  "rows": null
+ },
+ {
+  "id": 11549,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Tác vụ dài, bất đồng bộ mà khách không muốn vận hành agent loop hay sandbox → Claude Managed Agents (Anthropic vận hành hạ tầng).",
+  "why": "Yêu cầu then chốt là `avoid operating any agent-loop or sandbox infrastructure themselves`. Managed Agents do Anthropic vận hành sandbox và session cho công việc dài, bất đồng bộ — khớp đúng điều kiện đó.",
+  "wrong": {
+   "A": "`implement a custom tool-execution loop`: chính là hạ tầng khách không muốn tự vận hành.",
+   "C": "`Agent SDK inside the customer's own servers`: khách vẫn phải tự lo vòng đời process và sandbox.",
+   "D": "`Files API together with prompt caching`: không có cơ chế orchestration hay thực thi tool nào."
+  },
+  "rows": null
+ },
+ {
+  "id": 11550,
+  "answer": [
+   "B"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Autocompact thrashing do một output quá lớn đổ đầy context → đọc theo đoạn (line range) hoặc giao cho subagent có context riêng.",
+  "why": "Thông báo cho thấy vừa compact xong thì context lại đầy — nguyên nhân là đọc nguyên file log 40.000 dòng. Đọc từng khoảng dòng hoặc giao cho subagent phân tích (subagent có context riêng, chỉ trả về tóm tắt) xử lý đúng gốc và vẫn tiếp tục điều tra được.",
+  "wrong": {
+   "A": "`Raise CLAUDE_CODE_MAX_RETRIES`: thử lại cũng sẽ đầy lại y như cũ.",
+   "C": "`DISABLE_AUTO_COMPACT`: file vẫn không vừa context; tắt compaction chỉ làm chạm giới hạn cứng.",
+   "D": "`/clear ... paste only the final error line`: mất toàn bộ tiến độ điều tra, và một dòng lỗi thường không đủ để tìm root cause."
+  },
+  "rows": null
+ },
+ {
+  "id": 11551,
+  "answer": [
+   "A"
+  ],
+  "rows_answer": null,
+  "confidence": "high",
+  "remember": "Agent SDK nói chuyện với CLI qua stdout → đừng dùng `console` exporter; xuất OTLP tới collector local (ví dụ Jaeger all-in-one).",
+  "why": "SDK chạy CLI dưới dạng subprocess và đọc message qua stdout. Exporter `console` cũng ghi telemetry ra stdout nên hai luồng trộn vào nhau, làm hỏng việc parse. Ô A giải thích đúng cơ chế và đưa cách thay thế: OTLP tới collector hoặc Jaeger chạy local.",
+  "wrong": {
+   "B": "`requires an interactive terminal`: sai nguyên nhân — vấn đề là dùng chung stdout, không phải thiếu TTY.",
+   "C": "`only supports trace output ... legacy log format`: bịa cơ chế.",
+   "D": "`buffers indefinitely without flushing`: sai cơ chế; triệu chứng là xen lẫn dữ liệu, không phải bị chặn."
+  },
+  "rows": null
+ }
+]

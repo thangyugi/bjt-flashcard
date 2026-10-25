@@ -12,6 +12,7 @@
     "predev": "tsx scripts/build-catalog.ts",
     "prebuild": "tsx scripts/build-catalog.ts",
     "catalog": "tsx scripts/build-catalog.ts",
+    "ccarp:build": "tsx scripts/build-ccarp.ts",
     "db:test": "bash supabase/tests/run.sh",
     "media:upload": "tsx scripts/upload-media.ts"
   },
