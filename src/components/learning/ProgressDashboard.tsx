@@ -112,7 +112,7 @@ export function ProgressDashboard() {
               return (
                 <li key={c.key} className="flex flex-col gap-1.5">
                   <div className="flex items-baseline justify-between gap-2 text-[14px]">
-                    <Link href={COURSE_HREF[c.key] ?? "/courses"} className="font-semibold text-ink hover:underline">
+                    <Link href={COURSE_HREF[c.key] ?? "/courses"} className="-my-2.5 inline-block py-2.5 font-semibold text-ink hover:underline">
                       {COURSE_LABEL[c.key] ?? c.title}
                     </Link>
                     <span className="text-ink-3">

@@ -49,7 +49,7 @@ export function Breadcrumbs({ items, className, children }: { items: Crumb[]; cl
             href={parent.href}
             aria-label={`Quay lại: ${parent.label}`}
             title={`Quay lại: ${parent.label}`}
-            className="crumbs-back mr-1 grid h-7 w-7 shrink-0 place-items-center rounded-md border border-line-strong text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
+            className="crumbs-back mr-1 grid h-10 w-10 shrink-0 sm:h-7 sm:w-7 place-items-center rounded-md border border-line-strong text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
           </Link>
@@ -58,7 +58,7 @@ export function Breadcrumbs({ items, className, children }: { items: Crumb[]; cl
           <span key={`${c.label}-${i}`} className="flex min-w-0 items-center gap-1.5">
             {i > 0 && <span aria-hidden>›</span>}
             {c.href ? (
-              <Link href={c.href} className="hover:text-ink">
+              <Link href={c.href} className="-my-2.5 py-2.5 hover:text-ink sm:my-0 sm:py-0">
                 {c.label}
               </Link>
             ) : (
@@ -245,5 +245,5 @@ export const btn = {
     "inline-flex h-11 items-center justify-center gap-2.5 rounded-[10px] bg-brand px-[18px] text-[14.5px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-brand-hover",
   ghost:
     "inline-flex h-11 items-center justify-center gap-2.5 rounded-[10px] border border-line-strong px-[18px] text-[14.5px] font-semibold whitespace-nowrap text-ink transition-colors hover:border-ink-3 hover:bg-surface",
-  sm: "!h-9 !px-3.5 !text-[13.5px] !rounded-lg",
+  sm: "!h-9 !px-3.5 !text-[13.5px] !rounded-lg pointer-coarse:!h-10",
 };

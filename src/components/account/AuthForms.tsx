@@ -126,10 +126,10 @@ export function LoginForm() {
           {mode === "password" ? "Đăng nhập" : "Gửi link đăng nhập"}
         </PrimaryButton>
         <div className="flex flex-wrap items-center justify-between gap-2 text-[13px]">
-          <button type="button" className="font-semibold text-ink-2 hover:text-ink" onClick={() => setMode(mode === "password" ? "link" : "password")}>
+          <button type="button" className="min-h-10 font-semibold text-ink-2 hover:text-ink" onClick={() => setMode(mode === "password" ? "link" : "password")}>
             {mode === "password" ? "Đăng nhập không cần mật khẩu" : "Dùng mật khẩu"}
           </button>
-          <Link href="/forgot-password" className="font-semibold text-ink-2 hover:text-ink">
+          <Link href="/forgot-password" className="inline-flex min-h-10 items-center font-semibold text-ink-2 hover:text-ink">
             Quên mật khẩu?
           </Link>
         </div>

@@ -117,7 +117,7 @@ export function FieldGuide(props: FieldGuideProps) {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Tìm theo tên Việt hoặc tên khoa học"
-            className="w-full rounded-[10px] border border-line bg-paper py-2 pr-3 pl-8 text-[13px] text-ink outline-none placeholder:text-ink-3 focus:border-brand focus:ring-2 focus:ring-brand/15"
+            className="w-full rounded-[10px] border border-line bg-paper py-2 pointer-coarse:min-h-10 pr-3 pl-8 text-[13px] text-ink outline-none placeholder:text-ink-3 focus:border-brand focus:ring-2 focus:ring-brand/15"
           />
         </label>
         <div className="scrollbar-none flex gap-1.5 overflow-x-auto" role="group" aria-label="Lọc theo độ hiếm">
@@ -128,7 +128,7 @@ export function FieldGuide(props: FieldGuideProps) {
               aria-pressed={filter === v}
               onClick={() => setFilter(v)}
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12.5px] whitespace-nowrap",
+                "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12.5px] whitespace-nowrap pointer-coarse:min-h-10",
                 filter === v ? "border-ink bg-ink text-surface" : "border-line bg-surface text-ink-2 hover:text-ink"
               )}
             >
@@ -275,7 +275,7 @@ function Detail({ sel, growth, creatureStatus, balance, freePlots, live, onGrowt
           type="button"
           disabled={!can || !freePlots || !live}
           onClick={() => onSow(sp.id)}
-          className="rounded-[10px] border border-brand bg-brand px-3.5 py-2 text-[13px] font-semibold text-white hover:bg-brand-hover disabled:cursor-not-allowed disabled:border-line disabled:bg-surface-2 disabled:text-ink-3"
+          className="rounded-[10px] border border-brand bg-brand px-3.5 py-2 pointer-coarse:min-h-10 text-[13px] font-semibold text-white hover:bg-brand-hover disabled:cursor-not-allowed disabled:border-line disabled:bg-surface-2 disabled:text-ink-3"
         >
           {sowLabel}
         </button>
@@ -287,7 +287,7 @@ function Detail({ sel, growth, creatureStatus, balance, freePlots, live, onGrowt
 
 function SecondaryButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} className="rounded-[10px] border border-line bg-surface px-3.5 py-2 text-[13px] font-semibold text-ink hover:bg-surface-2">
+    <button type="button" onClick={onClick} className="rounded-[10px] border border-line bg-surface px-3.5 py-2 pointer-coarse:min-h-10 text-[13px] font-semibold text-ink hover:bg-surface-2">
       {children}
     </button>
   );

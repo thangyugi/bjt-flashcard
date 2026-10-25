@@ -57,20 +57,20 @@ export default async function CourseQuizPage({ params }: PageProps<"/quiz/[cours
           <>
             <AsideNote title="Sau khi làm bài">
               <p>Kết quả lần gần nhất hiện ngay trên ô của từng dạng. Muốn ôn lại theo lịch, thêm các mục của bài vào lịch ôn ngay trong trang bài học.</p>
-              <Link href="/review" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
+              <Link href="/review" className="inline-flex min-h-10 items-center font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
                 Ôn tập tổng hợp
               </Link>
             </AsideNote>
             <AsideNote title="Khóa khác">
-              <p className="flex flex-col gap-1">
+              <p className="flex flex-col">
                 {(Object.keys(SLUGS) as string[])
                   .filter((s) => SLUGS[s] !== id)
                   .map((s) => (
-                    <Link key={s} href={`/quiz/${s}`} className="font-semibold text-ink hover:underline">
+                    <Link key={s} href={`/quiz/${s}`} className="flex min-h-10 items-center font-semibold text-ink hover:underline">
                       {COURSE_META[SLUGS[s]].title}
                     </Link>
                   ))}
-                <Link href="/quiz/bjt" className="font-semibold text-ink hover:underline">
+                <Link href="/quiz/bjt" className="flex min-h-10 items-center font-semibold text-ink hover:underline">
                   {COURSE_META.bjt.title}
                 </Link>
               </p>

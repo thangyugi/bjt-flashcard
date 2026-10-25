@@ -24,7 +24,7 @@ export function AccountButton() {
     return (
       <Link
         href={`/login${next}`}
-        className="flex h-9 items-center rounded-lg border border-line-strong px-3 text-[13.5px] font-semibold whitespace-nowrap text-ink transition-colors hover:border-ink-3 hover:bg-surface"
+        className="flex h-10 items-center rounded-lg border border-line-strong px-3 text-[13.5px] md:h-9 font-semibold whitespace-nowrap text-ink transition-colors hover:border-ink-3 hover:bg-surface"
       >
         Đăng nhập
       </Link>
@@ -102,7 +102,7 @@ function AccountMenu({ email, name }: { email: string; name: string }) {
         aria-label={`Tài khoản: ${display}`}
         title={`Tài khoản: ${display}`}
         className={cn(
-          "flex h-9 w-9 items-center justify-center rounded-full border border-line-strong bg-surface-2 text-[13.5px] font-bold text-ink-2 uppercase transition-colors hover:border-ink-3 hover:text-ink",
+          "flex h-10 w-10 items-center md:h-9 md:w-9 justify-center rounded-full border border-line-strong bg-surface-2 text-[13.5px] font-bold text-ink-2 uppercase transition-colors hover:border-ink-3 hover:text-ink",
           // Trang của tài khoản (Portfolio, Tài khoản) không thuộc mục điều hướng nào → nút tài khoản là mục đang chọn
           !open && /^\/(portfolio|account)(\/|$)/.test(pathname) && "border-brand text-brand",
           open && "border-ink bg-ink text-paper hover:text-paper"

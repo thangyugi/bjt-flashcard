@@ -44,6 +44,13 @@ export function LessonNavigator({
   const [q, setQ] = useState("");
   const [active, setActive] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  // Nút "lên đầu trang" chỉ hiện khi đã cuộn xuống (ở đầu trang nó che nút mục lục của bài)
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Theo dõi từ đang hiện trên màn hình
   useEffect(() => {
@@ -98,15 +105,17 @@ export function LessonNavigator({
 
   return (
     <>
-      <div className="fixed right-4 bottom-[calc(env(safe-area-inset-bottom)+92px)] z-40 flex flex-col items-end gap-2 md:bottom-6 xl:hidden">
-        <button
-          type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label="Lên đầu trang"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-ink-2 shadow-md"
-        >
-          <ArrowUp className="h-[18px] w-[18px]" aria-hidden />
-        </button>
+      <div className="fixed right-4 bottom-[calc(var(--tabbar-h)+12px)] z-40 flex flex-col items-end gap-2 md:bottom-6 xl:hidden">
+        {scrolled && (
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Lên đầu trang"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-ink-2 shadow-md"
+          >
+            <ArrowUp className="h-[18px] w-[18px]" aria-hidden />
+          </button>
+        )}
         <button
           type="button"
           onClick={() => setOpen(true)}

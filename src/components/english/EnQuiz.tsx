@@ -136,7 +136,7 @@ export function EnQuiz({
             setPicked({});
             setRound((r) => r + 1);
           }}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong bg-surface px-3 py-1.5 text-[13px] font-semibold text-ink-2 hover:text-ink"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong bg-surface px-3 py-1.5 text-[13px] font-semibold text-ink-2 hover:text-ink pointer-coarse:min-h-10"
         >
           <RotateCcw className="h-3.5 w-3.5" aria-hidden /> Làm lại (đảo đáp án)
         </button>

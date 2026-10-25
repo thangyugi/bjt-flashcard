@@ -94,7 +94,7 @@ export default function BjtGroupsPage() {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-[15px] font-bold text-ink">{group.name}</p>
-                      <span className="rounded-md border border-line px-2 py-0.5 text-[10px] font-bold text-ink-2">
+                      <span className="rounded-md border border-line px-2 py-0.5 text-[11.5px] font-bold text-ink-2">
                         {group.sourceType === "JLPT" ? "JLPT N1" : group.sourceType}
                       </span>
                     </div>

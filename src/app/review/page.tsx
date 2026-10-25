@@ -14,7 +14,7 @@ export default function ReviewPage() {
         title="Ôn tập hôm nay"
         lead="Mọi khóa trong một chỗ: từ vựng, ngữ pháp, âm IPA. Tự nhớ lại → lật thẻ → chấm thật lòng. Mỗi thẻ quay lại đúng lúc bạn sắp quên, nên ôn ít mà vẫn nhớ lâu."
         actions={
-          <a href="#cach-hoat-dong" className="text-[14px] font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
+          <a href="#cach-hoat-dong" className="inline-flex min-h-10 items-center text-[14px] font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
             Lịch ôn hoạt động thế nào?
           </a>
         }
@@ -46,13 +46,13 @@ export default function ReviewPage() {
                 </a>
               </p>
               <p className="flex flex-wrap gap-x-4 gap-y-1">
-                <Link href="/courses" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
+                <Link href="/courses" className="inline-flex min-h-10 items-center font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
                   Học bài mới
                 </Link>
-                <Link href="/quiz" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
+                <Link href="/quiz" className="inline-flex min-h-10 items-center font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
                   Làm trắc nghiệm
                 </Link>
-                <Link href="/progress" className="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
+                <Link href="/progress" className="inline-flex min-h-10 items-center font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink-3">
                   Xem tiến độ
                 </Link>
               </p>

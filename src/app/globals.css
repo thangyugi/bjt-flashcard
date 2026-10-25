@@ -132,6 +132,8 @@
   --measure: 72ch;
   /* chiều cao thanh tiêu đề dính (Header) */
   --header-h: 3.5rem;
+  /* chiều cao thanh tab dưới đáy (mobile) gồm vùng an toàn của iPhone: viền 1 + đệm 8 + nút 44 + max(safe, 14) + 13 dư */
+  --tabbar-h: calc(4.125rem + max(env(safe-area-inset-bottom, 0px), 14px));
 }
 @media (min-width: 640px) {
   :root { --gutter: 24px; }
@@ -507,5 +509,12 @@ ruby rt {
     padding: 2px 14px 14px;
     max-height: 60vh;
     overflow-y: auto;
+  }
+  /* Màn cảm ứng: mỗi mục lục cao tối thiểu 40px để dễ chạm */
+  @media (pointer: coarse) {
+    .ltoc a {
+      padding-top: 9px;
+      padding-bottom: 9px;
+    }
   }
 }

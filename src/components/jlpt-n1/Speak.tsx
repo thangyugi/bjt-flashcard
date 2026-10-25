@@ -78,7 +78,7 @@ export function SpeakButton({
       title={playing ? "Dừng đọc" : label}
       className={cn(
         "inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border transition-colors",
-        size === "md" ? "h-10 min-w-10 px-2.5" : "h-8 min-w-8 px-1.5",
+        size === "md" ? "h-10 min-w-10 px-2.5" : "h-8 min-w-8 px-1.5 pointer-coarse:h-10 pointer-coarse:min-w-10",
         playing
           ? "border-brand bg-brand text-white"
           : "border-line-strong bg-surface text-brand hover:bg-brand-soft",
@@ -113,7 +113,7 @@ export function VoiceSettings({ className }: { className?: string }) {
 
   const pick = voices ? pickVoice(gender) : null;
   const seg = (on: boolean) =>
-    cn("rounded-lg px-3 py-1.5 text-[13px] font-semibold transition-colors", on ? "bg-surface text-ink shadow-sm" : "text-ink-3 hover:text-ink");
+    cn("rounded-lg px-3 py-1.5 text-[13px] font-semibold transition-colors pointer-coarse:min-h-10", on ? "bg-surface text-ink shadow-sm" : "text-ink-3 hover:text-ink");
 
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>

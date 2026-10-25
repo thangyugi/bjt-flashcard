@@ -74,7 +74,7 @@ export function FlashCard({ item, index, total, groupName }: FlashCardProps) {
       onClick={() => setIsExpanded(true)}
       aria-label={`Mở rộng thẻ ${item.kanji}`}
       title="Mở rộng"
-      className="absolute top-2.5 right-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-lg text-ink-3 transition-colors hover:bg-brand-soft hover:text-brand focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
+      className="absolute top-2.5 right-2.5 z-10 flex h-8 w-8 items-center pointer-coarse:h-10 pointer-coarse:w-10 justify-center rounded-lg text-ink-3 transition-colors hover:bg-brand-soft hover:text-brand focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
     >
       <Maximize2 className="h-[15px] w-[15px]" strokeWidth={2.2} aria-hidden />
     </button>

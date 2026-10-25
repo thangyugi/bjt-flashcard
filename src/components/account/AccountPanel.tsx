@@ -168,7 +168,7 @@ export function AccountPanel() {
   );
 }
 
-const linkCls = "text-[13.5px] font-semibold text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink-3";
+const linkCls = "inline-flex min-h-10 items-center text-[13.5px] font-semibold text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink-3";
 
 /** Một ô của lưới tài khoản: tiêu đề in hoa trên vạch mảnh, nội dung, ghi chú xám ở chân ô (các ô cao bằng nhau) */
 function Cell({ id, title, note, danger, children }: { id?: string; title: string; note?: string; danger?: boolean; children: React.ReactNode }) {
@@ -233,7 +233,7 @@ function Settings() {
                 role="radio"
                 aria-checked={r.value === o.v}
                 onClick={() => r.set(o.v)}
-                className={cn("h-8 min-w-14 rounded-[7px] px-2.5 text-[13px] font-semibold transition-colors", r.value === o.v ? "bg-ink text-white" : "text-ink-2 hover:text-ink")}
+                className={cn("h-8 min-w-14 rounded-[7px] px-2.5 pointer-coarse:h-10 text-[13px] font-semibold transition-colors", r.value === o.v ? "bg-ink text-white" : "text-ink-2 hover:text-ink")}
               >
                 {o.label}
               </button>

@@ -274,7 +274,7 @@ export function CourseQuiz({ data, course }: { data: ChooserData; course: Course
                   <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
                 </Link>
                 {q.more?.map((m) => (
-                  <Link key={m.href} href={m.href} className="text-[14px] font-semibold text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink-3">
+                  <Link key={m.href} href={m.href} className="inline-flex min-h-10 items-center text-[14px] font-semibold text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink-3">
                     {m.label}
                   </Link>
                 ))}

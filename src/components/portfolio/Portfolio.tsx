@@ -98,7 +98,7 @@ export function Portfolio() {
       </div>
       {panel && <Panels panel={panel} doc={view} onClose={() => setPanel(null)} />}
       {sync === "error" && error && (
-        <div role="alert" className="fixed inset-x-4 bottom-24 z-[55] mx-auto flex max-w-[520px] flex-wrap items-center gap-3 border border-brand-muted bg-paper px-4 py-3 text-[14px] text-ink shadow-[0_12px_32px_rgba(28,25,23,0.14)] md:bottom-6">
+        <div role="alert" className="fixed inset-x-4 bottom-[calc(var(--tabbar-h)+12px)] z-[55] mx-auto flex max-w-[520px] flex-wrap items-center gap-3 border border-brand-muted bg-paper px-4 py-3 text-[14px] text-ink shadow-[0_12px_32px_rgba(28,25,23,0.14)] md:bottom-6">
           <span className="min-w-0 flex-1">
             <b className="text-brand">Chưa lưu được lên máy chủ.</b> {error} Thay đổi vẫn còn trên máy này.
           </span>

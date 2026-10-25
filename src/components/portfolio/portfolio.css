@@ -875,3 +875,10 @@
     font-size: 13px;
   }
 }
+
+/* Màn cảm ứng: nút công cụ / chip đạt vùng chạm ≥ 40px */
+@media (pointer: coarse) {
+  .pf .tbtn,
+  .pf .chip,
+  .pf summary { min-height: 40px; }
+}

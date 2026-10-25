@@ -61,10 +61,10 @@ export function LessonPager({
         )}
       </div>
       {links.length > 0 && (
-        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[14px]">
+        <ul className="flex flex-wrap gap-x-6 gap-y-0 text-[14px]">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="inline-flex items-center gap-1.5 font-semibold text-ink-2 underline-offset-4 hover:text-ink hover:underline">
+              <Link href={l.href} className="inline-flex min-h-10 items-center gap-1.5 font-semibold text-ink-2 underline-offset-4 hover:text-ink hover:underline">
                 {l.label}
                 <ArrowRight className="h-3.5 w-3.5" aria-hidden />
               </Link>

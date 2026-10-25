@@ -58,7 +58,7 @@ export function EnSpeakButton({
       title={playing ? "Dừng" : label}
       className={cn(
         "inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border transition-colors",
-        size === "lg" ? "h-12 min-w-12 px-3" : size === "md" ? "h-10 min-w-10 px-2.5" : "h-8 min-w-8 px-1.5",
+        size === "lg" ? "h-12 min-w-12 px-3" : size === "md" ? "h-10 min-w-10 px-2.5" : "h-8 min-w-8 px-1.5 pointer-coarse:h-10 pointer-coarse:min-w-10",
         playing ? "border-[#1d4ed8] bg-[#1d4ed8] text-white" : "border-line-strong bg-surface text-[#1d4ed8] hover:bg-[#e8efff]",
         showLabel && "px-3",
         className
@@ -89,7 +89,7 @@ export function EnVoiceSettings({ className }: { className?: string }) {
     return <p className={cn("text-[13px] text-ink-3", className)}>Trình duyệt này chưa hỗ trợ đọc. Hãy dùng Safari, Chrome hoặc Edge.</p>;
   const pick = ttsSupported() ? pickEnglishVoice(enAccent, gender) : { voice: null, simulated: false };
   const seg = (on: boolean) =>
-    cn("rounded-lg px-3 py-1.5 text-[13px] font-semibold transition-colors", on ? "bg-surface text-ink shadow-sm" : "text-ink-3 hover:text-ink");
+    cn("rounded-lg px-3 py-1.5 text-[13px] font-semibold transition-colors pointer-coarse:min-h-10", on ? "bg-surface text-ink shadow-sm" : "text-ink-3 hover:text-ink");
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
       <div className="flex flex-wrap items-center gap-2">

@@ -241,7 +241,7 @@ export function QuizHub() {
                   aria-pressed={source === s}
                   onClick={() => setSource(s)}
                   className={cn(
-                    "h-8 rounded-[9px] px-3.5 text-[13px] transition-colors",
+                    "h-8 rounded-[9px] px-3.5 text-[13px] transition-colors pointer-coarse:h-10",
                     source === s ? "bg-surface font-bold text-ink shadow-[0_1px_2px_rgba(28,25,23,0.06)]" : "font-medium text-ink-2"
                   )}
                 >
@@ -286,7 +286,7 @@ export function QuizHub() {
       <aside className="sticky top-[calc(var(--header-h)+24px)] hidden w-[400px] shrink-0 panel p-5 lg:block">{setup}</aside>
 
       {/* Mobile / tablet: nút bắt đầu cố định */}
-      <div className="fixed inset-x-0 bottom-20 z-40 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur md:bottom-0 lg:hidden">
+      <div className="fixed inset-x-0 bottom-[var(--tabbar-h)] z-40 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur md:bottom-0 lg:hidden">
         <div className="mx-auto flex max-w-[720px] items-center gap-3">
           <div className="flex min-w-0 flex-1 flex-col">
             <span className="truncate text-sm font-bold text-ink">{selected.label}</span>
