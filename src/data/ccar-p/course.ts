@@ -4,12 +4,14 @@
  */
 import guideJson from "./guide.json";
 import bankJson from "./bank.json";
-import type { BankQuestion, DomainMeta, Guide, GuideBlock, GuideDomain, GuideTask, LessonMeta } from "./types";
-import { EXAM_FACTS, MOCK_PASS_PCT, setId } from "./meta";
+import supplementJson from "./supplement.json";
+import type { Supplement, BankQuestion, DomainMeta, Guide, GuideBlock, GuideDomain, GuideTask, LessonMeta } from "./types";
+import { AUTHORED_SET_TITLE, EXAM_FACTS, MOCK_PASS_PCT, setId } from "./meta";
 import { seededShuffle } from "./shuffle";
 
 export const GUIDE = guideJson as unknown as Guide;
 export const BANK = bankJson as unknown as BankQuestion[];
+export const SUPPLEMENT = supplementJson as unknown as Supplement;
 export const DOMAINS: GuideDomain[] = GUIDE.domains;
 export const TASKS: (GuideTask & { domain: number })[] = DOMAINS.flatMap((d) => d.tasks.map((t) => ({ ...t, domain: d.num })));
 
@@ -137,7 +139,7 @@ export function renderSections(titles: string[], headingLevel: 2 | 3 = 2): strin
 
 export interface PracticeSet {
   id: string;
-  kind: "domain" | "task" | "v2";
+  kind: "domain" | "task" | "v2" | "authored";
   title: string;
   desc: string;
   ids: number[];
@@ -149,7 +151,8 @@ export function practiceSets(): PracticeSet[] {
   const sets: PracticeSet[] = [];
   for (const d of DOMAINS) {
     const ids = BANK.filter((q) => q.domain === d.num).map((q) => q.id);
-    sets.push({ id: setId.domain(d.num), kind: "domain", title: `Domain ${d.num} · ${d.title}`, desc: `${ids.length} câu · tỉ trọng đề thật ${d.weight}%`, ids });
+    const own = BANK.filter((q) => q.domain === d.num && q.authored).length;
+    sets.push({ id: setId.domain(d.num), kind: "domain", title: `Domain ${d.num} · ${d.title}`, desc: `${ids.length} câu${own ? ` (${own} câu Claude biên soạn)` : ""} · tỉ trọng đề thật ${d.weight}%`, ids });
   }
   for (const t of TASKS) {
     const ids = BANK.filter((q) => q.task === t.id).map((q) => q.id);
@@ -157,6 +160,14 @@ export function practiceSets(): PracticeSet[] {
   }
   const v2 = BANK.filter((q) => q.v2).map((q) => q.id);
   sets.push({ id: setId.v2, kind: "v2", title: "Bộ đề v2", desc: `${v2.length} câu của bộ “ccar-p-v2” trong ngân hàng gốc`, ids: v2 });
+  const authored = BANK.filter((q) => q.authored);
+  if (authored.length) {
+    sets.push({ id: setId.authored(), kind: "authored", title: AUTHORED_SET_TITLE, desc: `${authored.length} câu mới do Claude biên soạn theo tài liệu công khai của Anthropic`, ids: authored.map((q) => q.id) });
+    for (const d of DOMAINS) {
+      const ids = authored.filter((q) => q.domain === d.num).map((q) => q.id);
+      if (ids.length) sets.push({ id: setId.authored(d.num), kind: "authored", title: `${AUTHORED_SET_TITLE} · Domain ${d.num}`, desc: `${ids.length} câu Claude biên soạn của Domain ${d.num} · ${d.title}`, ids });
+    }
+  }
   return sets;
 }
 

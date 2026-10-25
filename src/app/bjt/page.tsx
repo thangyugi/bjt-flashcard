@@ -49,7 +49,7 @@ export default function BjtGroupsPage() {
             Từ vựng BJT <span className="font-mincho tracking-[0.12em] normal-case">ビジネス日本語</span>
           </>
         }
-        accent="#a14f06"
+        accent="#8f5a00"
         title="Chọn nhóm để học"
         lead="Học tập trung theo từng nhóm chủ đề công sở. Thẻ đã thuộc được tính vào tiến độ bên cạnh."
         actions={
@@ -94,7 +94,7 @@ export default function BjtGroupsPage() {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-[15px] font-bold text-ink">{group.name}</p>
-                      <span className="rounded-md border border-line px-2 py-0.5 text-[10px] font-bold text-ink-2">
+                      <span className="rounded-md border border-line px-2 py-0.5 text-[11.5px] font-bold text-ink-2">
                         {group.sourceType === "JLPT" ? "JLPT N1" : group.sourceType}
                       </span>
                     </div>

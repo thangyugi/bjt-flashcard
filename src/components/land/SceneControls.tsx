@@ -18,7 +18,7 @@ export function SceneTitle() {
 
 /** Nút chuyển Đi dạo / Toàn cảnh */
 export function ModeToggle({ view, onWalk, onOverview }: { view: LandView; onWalk: () => void; onOverview: () => void }) {
-  const btn = "rounded-[10px] px-3 py-1.5 text-[12.5px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5f1ea]";
+  const btn = "rounded-[10px] px-3 py-1.5 text-[12.5px] font-semibold pointer-coarse:min-h-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5f1ea]";
   return (
     <div role="group" aria-label="Chế độ xem" className={cn(GLASS, "absolute top-4 right-[calc(16px+env(safe-area-inset-right))] flex rounded-xl border-white/12 p-[3px]")}>
       <button type="button" aria-pressed={view === "walk"} onClick={onWalk} className={cn(btn, view === "walk" ? "bg-[#f5f1ea] text-ink" : "hover:bg-white/10")}>
@@ -248,10 +248,10 @@ export function Toast({ msg }: { msg: string | null }) {
   );
 }
 
-/** Dòng hướng dẫn thao tác (chỉ máy tính) */
+/** Dòng hướng dẫn thao tác (chỉ màn rộng; chừa chỗ cho đồng hồ ở góc trái dưới) */
 export function HelpLine({ view }: { view: LandView }) {
   return (
-    <p className={cn(GLASS, "absolute right-[calc(16px+env(safe-area-inset-right))] bottom-[calc(16px+env(safe-area-inset-bottom))] hidden px-3 py-1.5 text-[12px] md:block", GLASS_INK_2)}>
+    <p className={cn(GLASS, "absolute right-[calc(16px+env(safe-area-inset-right))] bottom-[calc(16px+env(safe-area-inset-bottom))] hidden max-w-[calc(100%-280px)] px-3 py-1.5 text-[12px] lg:block", GLASS_INK_2)}>
       {view === "walk"
         ? "WASD hoặc phím mũi tên để đi · giữ Shift để chạy · chạm mặt đất để đi tới · E để tương tác"
         : "Kéo để xoay · cuộn hoặc chụm để thu phóng · chạm vào cây hay sinh vật để xem"}

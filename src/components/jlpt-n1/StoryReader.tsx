@@ -17,7 +17,7 @@ export function StoryReader({ story }: { story: N1StoryPara[] }) {
         <button
           type="button"
           onClick={() => setAll((v) => !v)}
-          className="flex h-9 items-center gap-2 rounded-lg border border-line-strong bg-surface px-3 text-[13px] font-semibold text-ink-2 hover:bg-surface-2"
+          className="flex h-9 items-center gap-2 rounded-lg border border-line-strong bg-surface px-3 text-[13px] pointer-coarse:h-10 font-semibold text-ink-2 hover:bg-surface-2"
         >
           {all ? <EyeOff className="h-4 w-4" aria-hidden /> : <Eye className="h-4 w-4" aria-hidden />}
           {all ? "Ẩn bản dịch" : "Hiện tất cả bản dịch"}

@@ -59,7 +59,7 @@ export default function PrivacyPage() {
           </ul>
         </section>
       ))}
-      <Link href="/account" className="text-[14px] font-semibold text-brand hover:underline">
+      <Link href="/account" className="inline-flex min-h-10 items-center text-[14px] font-semibold text-brand hover:underline">
         Đến trang tài khoản →
       </Link>
       </div>

@@ -50,7 +50,7 @@ export function VocabularyBrowser() {
                   aria-pressed={on}
                   onClick={() => setActiveFilter(f.value)}
                   className={cn(
-                    "h-9 rounded-[9px] px-4 text-[13px] transition-colors",
+                    "h-9 rounded-[9px] px-4 text-[13px] transition-colors pointer-coarse:h-10",
                     on ? "bg-surface font-bold text-ink shadow-[0_1px_2px_rgba(28,25,23,0.04),0_2px_8px_rgba(28,25,23,0.04)]" : "font-medium text-ink-2 hover:text-ink"
                   )}
                 >

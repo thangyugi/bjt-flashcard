@@ -1,14 +1,29 @@
 /* ══════════════════════════════════════════════════════════
    Claude Certified Architect – Professional — /claude-ccar-p
-   Dựa trên giao diện .oci-* (oci.css), chỉ đổi màu nhấn sang tím
-   và thêm phần riêng: thứ tự học, câu hỏi bảng, lời giải.
+   Dựa trên giao diện .oci-* (oci.css), đổi sang bảng màu thương hiệu
+   Anthropic/Claude (đất nung trên nền ngà) và thêm phần riêng:
+   thứ tự học, câu hỏi bảng, lời giải.
 ══════════════════════════════════════════════════════════ */
 
 .oci-root.ccar-root {
-  --o-accent: #6d28d9;
-  --o-accent-hover: #5b21b6;
-  --o-accent-soft: #f1ebfd;
+  /* Màu khóa (main/deep/soft): đất nung Claude làm đậm để chữ đạt WCAG AA.
+     main #A9502F: chữ trắng 5.4:1, trên nền ngà 4.7:1 · deep #8C3F22: chữ trắng 7.4:1
+     mark #D97757 (coral Claude) chỉ dùng cho mảng tô, vạch, hình vẽ — không dùng làm màu chữ. */
+  --o-accent: #a9502f;
+  --o-accent-hover: #8c3f22;
+  --o-accent-soft: #faede6;
   --o-accent-ink: #ffffff;
+  --o-accent-mark: #d97757;
+  /* Bề mặt kiểu Anthropic (ngà / giấy / slate) — chỉ trong khóa này */
+  --o-bg: #f0eee6;
+  --o-surface: #faf9f5;
+  --o-surface-2: #e8e6dc;
+  --o-surface-3: #dedbd0;
+  --o-line: rgba(25, 25, 25, 0.1);
+  --o-line-strong: rgba(25, 25, 25, 0.18);
+  --o-text: #191919;
+  --o-text-2: #4f4a43;
+  --o-text-3: #6b645b;
 }
 
 /* Thứ tự học 3 → 4 → 1 → … */
@@ -26,7 +41,7 @@
 @media (max-width: 640px) { .ccar-order a { flex: 1 1 40%; } .ccar-order .arr { display: none; } }
 
 /* Thẻ domain + danh sách task statement */
-.ccar-domains { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.ccar-domains { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 @media (min-width: 900px) { .ccar-domains { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .ccar-domain { display: grid; gap: 10px; padding: 18px 20px; border-radius: 18px; background: var(--o-surface); border: 1px solid var(--o-line); min-width: 0; }
 .ccar-domain .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
@@ -45,7 +60,7 @@
 .ccar-domain .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--o-text-3); }
 .ccar-domain .foot a { font-weight: 650; color: var(--o-accent); }
 .ccar-wbar { height: 6px; border-radius: 99px; background: var(--o-surface-3); overflow: hidden; }
-.ccar-wbar > i { display: block; height: 100%; border-radius: inherit; background: var(--o-accent); }
+.ccar-wbar > i { display: block; height: 100%; border-radius: inherit; background: var(--o-accent-mark); }
 
 /* Khối bài đọc dài trên trang chủ khóa (đăng ký thi, số liệu) */
 .ccar-guide { padding: 6px 0 0; }
@@ -97,3 +112,27 @@
 .ccar-conf { padding: 1px 8px; border-radius: 99px; font-weight: 700; background: var(--o-amber-soft); color: var(--o-amber); }
 .ccar-conf.low { background: var(--o-bad-soft); color: var(--o-bad); }
 @media (min-width: 820px) { .ccar-span2 { grid-column: span 2; } }
+
+/* ── Nội dung do Claude biên soạn: nhãn câu hỏi, bộ đề, lớp bổ sung, thẻ kiến thức nền ── */
+.ccar-tag.authored { background: var(--o-accent-soft); color: var(--o-accent-hover); vertical-align: 1px; white-space: nowrap; }
+.ccar-authored-card .top { color: inherit; }
+.ccar-dfilter { display: flex; flex-wrap: wrap; gap: 6px; }
+.ccar-dfilter a {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0 12px; border-radius: 10px;
+  border: 1px solid var(--o-line-strong); background: var(--o-surface); font-size: 13.5px; font-weight: 650;
+}
+.ccar-dfilter a:hover { border-color: var(--o-accent); color: var(--o-accent); }
+.ccar-dfilter small { font-size: 12px; font-weight: 600; color: var(--o-text-3); }
+.ccar-supp-note { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--o-text-2); }
+.oci-prose .ccar-supp { margin-top: 2.4em; padding-top: 4px; border-top: 2px solid var(--o-accent-mark); }
+.oci-prose .ccar-supp > h2::before { content: "✦ "; color: var(--o-accent-mark); }
+.oci-prose .ccar-supp-note { font-size: 0.92em; padding: 10px 14px; border-radius: 12px; background: var(--o-accent-soft); }
+.oci-prose .ccar-supp-note a { color: var(--o-accent-hover); text-decoration: underline; text-underline-offset: 2px; }
+.oci-prose .ccar-supp-item { margin: 1.4em 0 0; padding: 14px 16px 4px; border-radius: 14px; background: var(--o-surface); border: 1px solid var(--o-line); min-width: 0; }
+.oci-prose .ccar-supp-item > h3 { margin: 6px 0 0.5em; }
+.oci-prose .ccar-supp-layer { display: inline-block; font-size: 12px; font-weight: 750; letter-spacing: 0.02em; color: var(--o-accent-hover); }
+.oci-prose .ccar-ref + .ccar-ref { margin-top: 2em; }
+@media (pointer: coarse) {
+  .ccar-domain .foot a, .ccar-authored-card > .top { display: inline-flex; align-items: center; min-height: 40px; }
+  .ccar-domain li a { padding-top: 10px; padding-bottom: 10px; }
+}

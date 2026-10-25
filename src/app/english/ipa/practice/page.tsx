@@ -33,11 +33,11 @@ export default function IpaPracticePage() {
               </ul>
             </AsideNote>
             <AsideNote title="Trong khóa IPA">
-              <p className="flex flex-col gap-1">
-                <Link href="/english/ipa" className="font-semibold text-ink hover:underline">
+              <p className="flex flex-col">
+                <Link href="/english/ipa" className="flex min-h-10 items-center font-semibold text-ink hover:underline">
                   Mục lục bài
                 </Link>
-                <Link href="/english/ipa/review" className="font-semibold text-ink hover:underline">
+                <Link href="/english/ipa/review" className="flex min-h-10 items-center font-semibold text-ink hover:underline">
                   Ôn tập ngắt quãng
                 </Link>
               </p>

@@ -66,7 +66,7 @@ export function InterviewReader({ sections }: { sections: InterviewSection[] }) 
   return (
     <div className="flex flex-col gap-6">
       {/* Thanh công cụ dính: mục lục + furigana + cỡ chữ */}
-      <div className="sticky top-14 z-30 -mx-4 border-b border-line bg-paper/95 px-4 py-2.5 backdrop-blur md:top-16 sm:-mx-8 sm:px-8">
+      <div className="sticky top-[var(--header-h)] z-30 -mx-[var(--gutter)] border-b border-line bg-paper/95 px-[var(--gutter)] py-2.5 backdrop-blur">
         <div className="flex items-center gap-3">
           <nav aria-label="Mục lục" className="flex min-w-0 flex-1 gap-1.5 overflow-x-auto [scrollbar-width:none]">
             {sections.map((s) => (
@@ -74,7 +74,7 @@ export function InterviewReader({ sections }: { sections: InterviewSection[] }) 
                 key={s.id}
                 href={`#${s.id}`}
                 className={cn(
-                  "shrink-0 rounded-full border px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap transition-colors",
+                  "shrink-0 rounded-full border px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap transition-colors pointer-coarse:py-2.5",
                   active === s.id ? "border-ink bg-ink text-paper" : "border-line bg-surface text-ink-2 hover:text-ink"
                 )}
               >
@@ -88,7 +88,7 @@ export function InterviewReader({ sections }: { sections: InterviewSection[] }) 
               onClick={() => setFurigana((v) => !v)}
               aria-pressed={furigana}
               className={cn(
-                "h-9 rounded-lg border px-2.5 font-jp text-[13px] font-bold transition-colors",
+                "h-9 rounded-lg border px-2.5 font-jp text-[13px] font-bold transition-colors pointer-coarse:h-10",
                 furigana ? "border-brand bg-brand-soft text-brand-soft-ink" : "border-line bg-surface text-ink-3"
               )}
               title="Bật / tắt furigana"
@@ -114,7 +114,7 @@ export function InterviewReader({ sections }: { sections: InterviewSection[] }) 
               type="button"
               onClick={() => setSize(i)}
               aria-label={`Cỡ chữ ${px}`}
-              className={cn("h-7 w-7 rounded-md text-[12px] font-bold", i === size ? "bg-ink text-paper" : "bg-surface-2 text-ink-3")}
+              className={cn("h-7 w-7 rounded-md text-[12px] font-bold pointer-coarse:h-10 pointer-coarse:w-10", i === size ? "bg-ink text-paper" : "bg-surface-2 text-ink-3")}
             >
               {i + 1}
             </button>

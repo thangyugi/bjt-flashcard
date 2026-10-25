@@ -23,7 +23,7 @@ export function MobileTabBar() {
   return (
     <>
       {/* Chừa chỗ để nội dung không bị thanh cố định che */}
-      <div className="h-20 md:hidden" aria-hidden />
+      <div className="h-[var(--tabbar-h)] md:hidden" aria-hidden />
       <nav
         aria-label="Điều hướng chính"
         className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-line-strong bg-paper px-1 pt-2 pb-[max(env(safe-area-inset-bottom),14px)] md:hidden"

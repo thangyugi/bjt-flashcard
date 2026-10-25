@@ -41,7 +41,7 @@ export function PatternCard({ p, index, lessonId }: { p: N1Pattern; index: numbe
       <header className="flex flex-col gap-3 border-b border-line bg-surface-2/60 px-5 py-5 sm:px-7 sm:py-6">
         <div className="flex items-center gap-2.5">
           <span className="font-mincho text-2xl text-brand">{CIRCLED[index] ?? index + 1}</span>
-          <span className="rounded-full bg-surface px-2.5 py-1 text-[11.5px] font-semibold text-ink-2">{p.register}</span>
+          <span className="rounded-full bg-surface px-2.5 py-1 text-[12.5px] font-semibold text-ink-2">{p.register}</span>
         </div>
         <div className="flex items-center gap-3">
           <h3 className="text-[30px] leading-[1.5] font-bold text-ink sm:text-[36px]">

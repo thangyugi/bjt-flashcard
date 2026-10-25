@@ -56,7 +56,7 @@ function CourseChips({ idx, value, onChange }: { idx: ItemIndex; value: CourseFi
             aria-pressed={value === c}
             onClick={() => onChange(c)}
             className={cn(
-              "flex h-9 items-center gap-1.5 rounded-full border px-3.5 text-[13px] font-semibold transition-colors",
+              "flex h-9 items-center gap-1.5 rounded-full border px-3.5 pointer-coarse:h-10 text-[13px] font-semibold transition-colors",
               value === c ? "border-ink bg-ink text-paper" : "border-line-strong bg-surface text-ink-2 hover:text-ink"
             )}
           >

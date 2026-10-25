@@ -39,7 +39,7 @@ export function Header() {
   return (
     <header className={cn("sticky top-0 z-50 border-b border-line-strong bg-paper", hideOnMobile && "hidden md:block")}>
       <div className="page-x flex h-[var(--header-h)] items-center justify-between gap-4">
-        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="LeoEdu, trang chủ">
+        <Link href="/" className="flex min-w-0 items-center gap-3 self-stretch" aria-label="LeoEdu, trang chủ">
           <span
             className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-brand font-mincho text-[18px] leading-none font-bold text-white"
             aria-hidden
@@ -94,7 +94,7 @@ function CrystalChip() {
       href="/land"
       title="Tinh thể — mở vùng đất"
       aria-label={`${balance.toLocaleString("vi-VN")} Tinh thể, mở vùng đất`}
-      className="flex h-9 items-center gap-2 rounded-lg border border-line-strong px-3 text-[13.5px] font-semibold text-ink tabular-nums transition-colors hover:border-ink-3 [&_svg]:h-3.5 [&_svg]:w-3.5"
+      className="flex h-10 items-center gap-2 rounded-lg border border-line-strong px-3 text-[13.5px] md:h-9 font-semibold text-ink tabular-nums transition-colors hover:border-ink-3 [&_svg]:h-3.5 [&_svg]:w-3.5"
     >
       <Gem />
       {balance.toLocaleString("vi-VN")}

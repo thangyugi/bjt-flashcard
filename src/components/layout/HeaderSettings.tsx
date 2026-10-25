@@ -55,7 +55,7 @@ export function HeaderSettings() {
         aria-label="Giọng đọc tiếng Nhật"
         title="Giọng đọc tiếng Nhật"
         className={cn(
-          "flex h-9 min-w-9 items-center justify-center gap-2 rounded-lg border border-line-strong px-2 text-[13.5px] font-semibold text-ink-2 transition-colors hover:border-ink-3 hover:text-ink lg:px-3",
+          "flex h-10 min-w-10 items-center justify-center gap-2 rounded-lg md:h-9 md:min-w-9 border border-line-strong px-2 text-[13.5px] font-semibold text-ink-2 transition-colors hover:border-ink-3 hover:text-ink lg:px-3",
           open && "border-ink-3 bg-surface text-ink"
         )}
       >

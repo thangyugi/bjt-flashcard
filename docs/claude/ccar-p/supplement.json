@@ -1,0 +1,553 @@
+{
+ "label": "Bổ sung do Claude biên soạn",
+ "source": "claude-supplement",
+ "updated": "2026-10-25",
+ "note": "Nội dung bổ sung ngoài tài liệu gốc. Số liệu, tên model, giá và tính năng có thể đã thay đổi — đối chiếu tài liệu chính thức của Anthropic (docs.claude.com / platform.claude.com).",
+ "tasks": {
+  "1.1": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Khi nào KHÔNG cần tới LLM",
+     "body_md": "Trước khi chọn Claude, hỏi: việc này có giải được bằng **luật cố định** (regex, SQL, if/else, tra bảng) không? Nếu đầu vào có cấu trúc và đầu ra tất định thì code thường rẻ hơn, nhanh hơn, dễ kiểm hơn.\n\n| Dấu hiệu | Hướng đi |\n|---|---|\n| Đầu vào là ngôn ngữ tự nhiên, đa dạng, mơ hồ | hợp với Claude |\n| Đầu ra phải đúng tuyệt đối, tính toán chính xác | code (hoặc Claude gọi tool tính toán) |\n| Không có dữ liệu mẫu để đánh giá | chưa đủ điều kiện — thu mẫu trước |\n| Lỗi không phát hiện được, không gỡ lại được | thêm HITL hoặc không tự động hoá |"
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Tiêu chí thành công theo cách Anthropic mô tả",
+     "body_md": "Tài liệu Anthropic (mục *Define success criteria*) yêu cầu tiêu chí phải **cụ thể · đo được · khả thi · liên quan**, và thường **nhiều chiều** (ví dụ: độ chính xác ≥ X% *và* p95 < Y giây *và* tỉ lệ rò dữ liệu = 0). Ô đáp án chỉ có một mục tiêu mơ hồ (\"trả lời tốt hơn\") là ô yếu."
+    }
+   ]
+  },
+  "1.2": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Messages API là stateless",
+     "body_md": "API không nhớ hội thoại: **mỗi request phải gửi lại toàn bộ lịch sử** (hoặc bản đã compaction). Vì vậy trạng thái phiên, bộ nhớ dài hạn, ID phiên đều là trách nhiệm của tầng ứng dụng — đây là một khối bắt buộc trong sơ đồ end-to-end."
+    },
+    {
+     "layer": "bay",
+     "title": "Vòng lặp tool là một phần của kiến trúc",
+     "body_md": "Khi `stop_reason = \"tool_use\"`, ứng dụng phải chạy tool rồi gửi `tool_result` trở lại — đó là một vòng lặp, không phải một lượt gọi. Với server tool chạy lâu, API có thể trả `pause_turn`: phải gửi lại để model tiếp tục. Sơ đồ nào vẽ \"gọi model một lần là xong\" cho một hệ có tool là thiếu tầng."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Độ bền của tầng gọi model",
+     "body_md": "Thiết kế end-to-end phải có: retry có backoff cho 429/5xx/529 (SDK chính thức đã tự retry một số lần), timeout hợp lý, streaming cho đầu ra dài, và kế hoạch khi model từ chối (`refusal`) — ví dụ cơ chế fallback sang model khác mà Anthropic cung cấp cho một số model (kiểm tra mục *Refusals and fallback* trong docs)."
+    }
+   ]
+  },
+  "1.3": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Định nghĩa gốc: workflow vs agent",
+     "body_md": "Theo bài *Building effective agents* của Anthropic:\n- **Workflow**: LLM và tool được điều phối qua **đường đi định sẵn trong code**.\n- **Agent**: LLM **tự điều hướng** quy trình và cách dùng tool, giữ quyền quyết định cách hoàn thành việc.\n- Khối xây dựng chung là **augmented LLM** — LLM có thêm retrieval, tool và memory.\n\nLời khuyên cốt lõi: tìm giải pháp đơn giản nhất có thể; framework giúp khởi đầu nhanh nhưng che mất prompt và response thật bên dưới — hiểu rõ code bên dưới trước khi dùng."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Năm mẫu workflow cần gọi đúng tên",
+     "body_md": "| Mẫu | Ý tưởng | Dùng khi |\n|---|---|---|\n| Prompt chaining | chuỗi bước, có thể chèn \"cổng kiểm\" giữa các bước | việc tách gọn thành các bước cố định |\n| Routing | phân loại đầu vào rồi chuyển tới xử lý chuyên biệt | loại yêu cầu khác nhau rõ rệt |\n| Parallelization | *sectioning* (chia phần độc lập) hoặc *voting* (chạy nhiều lần lấy đồng thuận) | tăng tốc, hoặc tăng độ tin cậy |\n| Orchestrator–workers | LLM trung tâm tự chia việc động cho worker | không biết trước có bao nhiêu việc con |\n| Evaluator–optimizer | một LLM sinh, một LLM chấm và phản hồi, lặp lại | có tiêu chí chấm rõ, sửa lặp có lợi |"
+    }
+   ]
+  },
+  "1.4": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Giao việc cho worker thế nào",
+     "body_md": "Kinh nghiệm Anthropic công bố từ hệ research đa agent: orchestrator phải giao cho mỗi worker **mục tiêu rõ · định dạng đầu ra · công cụ/nguồn nên dùng · ranh giới việc** — giao mơ hồ thì các worker làm trùng hoặc bỏ sót. Đồng thời Anthropic cũng ghi nhận hệ đa agent tiêu tốn **nhiều lần token** so với một cuộc chat thường, nên chỉ đáng khi giá trị việc đủ cao và việc song song hoá được."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Subagent trong Claude Code / Agent SDK",
+     "body_md": "Subagent có **context window riêng**, system prompt riêng và **danh sách tool riêng**. Hai lợi ích thi hay hỏi: (1) cô lập ngữ cảnh — phần đọc nặng không làm bẩn phiên chính; (2) giới hạn quyền — subagent review chỉ cần tool đọc. Chỉ bản tóm tắt kết quả quay về agent chính."
+    },
+    {
+     "layer": "bay",
+     "title": "Multi-agent không hợp việc phụ thuộc chặt",
+     "body_md": "Việc mà các bước cần chia sẻ nhiều ngữ cảnh với nhau (ví dụ sửa nhiều tệp code liên quan chặt) thường **không** hợp chia cho nhiều agent song song — chúng sẽ ra quyết định mâu thuẫn. Hợp nhất là việc đọc/tìm kiếm độc lập theo chiều rộng."
+    }
+   ]
+  },
+  "1.5": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Kỹ thuật nối chuỗi prompt (prompt chaining)",
+     "body_md": "- Truyền đầu ra bước trước sang bước sau bằng **thẻ XML** (ví dụ `<summary>…</summary>`) để ranh giới rõ.\n- Mỗi bước một mục tiêu duy nhất; có thể chèn **cổng kiểm bằng code** giữa các bước (sai thì dừng sớm).\n- Mẫu **tự sửa (self-correction)**: sinh → model rà lại theo tiêu chí → sửa. Hiệu quả cho việc có tiêu chí rõ.\n- Các bước độc lập nhau thì chạy **song song**, đừng xếp tuần tự."
+    }
+   ]
+  },
+  "1.6": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Tính ROI không chỉ có tiền token",
+     "body_md": "Chi phí thật của một việc hoàn thành = token (input + output, kể cả thinking) × đơn giá · số lần chạy lại · thời gian người review/sửa · chi phí vận hành (eval, giám sát, bảo trì prompt). Lưu ý **output token đắt hơn input token nhiều lần**, nên đầu ra dài dòng là chỗ rò tiền phổ biến. Đơn giá cụ thể: kiểm tra trang *Pricing* của Anthropic."
+    }
+   ]
+  },
+  "2.1": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Hai chiến lược chọn model của Anthropic",
+     "body_md": "1. **Bắt đầu từ model nhỏ/rẻ**, nâng lên khi eval cho thấy chưa đạt — hợp việc khối lượng lớn, đơn giản.\n2. **Bắt đầu từ model mạnh nhất** để xác lập *trần chất lượng*, rồi tối ưu xuống (effort thấp hơn, model nhỏ hơn) trong khi giữ ngưỡng — hợp việc phức tạp.\n\nCả hai đều cần eval để quyết. Tra năng lực từng model (context window, output tối đa, có hỗ trợ thinking/vision…) qua **Models API** hoặc trang *Models overview*, đừng nhớ số."
+    },
+    {
+     "layer": "bay",
+     "title": "Alias vs ID cố định",
+     "body_md": "Môi trường production nên **ghim ID model cụ thể** để hành vi không đổi ngầm; theo dõi trang *Model deprecations* để lên kế hoạch chuyển đổi trước ngày retire. Alias/\"bản mới nhất\" tiện cho thử nghiệm nhưng có thể đổi hành vi mà bạn không hay."
+    }
+   ]
+  },
+  "2.2": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Các kỹ thuật prompt nền tảng trong docs Anthropic",
+     "body_md": "- **Rõ ràng, trực tiếp, có ngữ cảnh**: nói mục đích, người đọc, *vì sao* có ràng buộc — model đời mới làm theo lý do tốt hơn làm theo lệnh cụt.\n- **Role prompting** qua system prompt (vai trò chuyên gia cụ thể).\n- **Thẻ XML** để tách chỉ dẫn, dữ liệu, ví dụ (`<document>`, `<instructions>`, `<example>`).\n- Tài liệu dài đặt **lên đầu**, câu hỏi/chỉ dẫn đặt **cuối** prompt."
+    },
+    {
+     "layer": "bay",
+     "title": "Prefill đã bị bỏ ở model đời mới",
+     "body_md": "Kỹ thuật cũ \"điền sẵn đầu câu trả lời của assistant\" (prefill, ví dụ mở sẵn `{`) **trả lỗi 400 trên các model đời mới**. Ép định dạng thì dùng **structured outputs** (`output_config.format`) hoặc chỉ dẫn trong system prompt. Đề viết theo tài liệu cũ có thể vẫn nhắc prefill — hiểu đó là kỹ thuật cũ."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Kênh chỉ dẫn giữa hội thoại",
+     "body_md": "Một số model đời mới cho phép chèn message `role: \"system\"` **giữa** mảng messages: đổi chỉ dẫn của operator mà **không phá cache** của tiền tố, và mang thẩm quyền operator (khác với chèn chữ vào message user). Kiểm tra danh sách model hỗ trợ trong docs *Prompt caching*."
+    }
+   ]
+  },
+  "2.3": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Few-shot và CoT viết sao cho đúng",
+     "body_md": "- Ví dụ few-shot bọc trong `<example>`, **đa dạng** (phủ ca biên), **liên quan** tới việc thật; ví dụ giống nhau quá thì model bắt chước cả chi tiết thừa.\n- CoT thủ công: yêu cầu lập luận trong `<thinking>` rồi đáp án trong `<answer>` để code tách được.\n- Với **extended/adaptive thinking**: chỉ dẫn mức cao (\"hãy suy nghĩ kỹ về…\") thường tốt hơn kịch bản từng bước cứng nhắc.\n- Với tài liệu dài: bảo model **trích dẫn đoạn liên quan trước**, rồi mới trả lời."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Công cụ hỗ trợ trong Console",
+     "body_md": "Claude Console có **prompt generator** (sinh prompt nháp từ mô tả việc), **prompt improver** và công cụ **Evaluate** để chạy prompt trên nhiều ca kiểm thử. Đề hỏi \"bắt đầu nhanh khi chưa có prompt\" thì dùng generator; \"so sánh phiên bản prompt\" thì dùng tập test + eval."
+    }
+   ]
+  },
+  "2.4": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Ngữ cảnh 'đúng lúc' (just-in-time)",
+     "body_md": "Theo bài *Effective context engineering for AI agents* của Anthropic: thay vì nạp hết dữ liệu trước, agent giữ **định danh nhẹ** (đường dẫn tệp, ID bản ghi, URL) rồi dùng tool để nạp chi tiết khi cần. Mục tiêu: tập token **nhỏ nhất mà tín hiệu cao nhất**. Tool cũng nên trả kết quả **gọn, có phân trang/lọc**, đừng đổ nguyên bảng vào ngữ cảnh."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Đếm và tra giới hạn bằng API, không đoán",
+     "body_md": "- `count_tokens` (endpoint đếm token) ước lượng chính xác số token trước khi gửi.\n- Models API trả `max_input_tokens` (cửa sổ) và `max_tokens` (output tối đa) cho từng model.\n- Tokenizer có thể **khác giữa các thế hệ model** — chuyển model thì đếm lại."
+    }
+   ]
+  },
+  "2.5": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Số liệu prompt caching cần nắm (nguyên tắc)",
+     "body_md": "| Điểm | Nội dung |\n|---|---|\n| Ghi cache | đắt hơn giá input thường một chút |\n| Đọc cache | chỉ bằng một phần nhỏ giá input (cỡ ~10%) |\n| TTL | mặc định ~5 phút, **làm mới mỗi lần trúng**; có tuỳ chọn 1 giờ với giá ghi cao hơn |\n| Breakpoint | tối đa 4 `cache_control` mỗi request (hoặc dùng cache tự động cấp request) |\n| Độ dài tối thiểu | có ngưỡng tối thiểu theo model — tiền tố ngắn hơn sẽ **lặng lẽ không cache** |\n\nHệ số chính xác: xem trang *Prompt caching* và *Pricing*."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Skills: progressive disclosure",
+     "body_md": "Một Skill là thư mục có `SKILL.md` (frontmatter `name`, `description`) cùng script/tài liệu kèm. Nạp theo **ba tầng**: chỉ metadata (tên + mô tả) luôn có trong ngữ cảnh → nội dung `SKILL.md` nạp khi Claude thấy liên quan → tệp phụ nạp khi cần. Nhờ vậy có thể cài nhiều Skill mà không phình ngữ cảnh. Skills dùng được trong Claude Code, claude.ai và API (cần code execution)."
+    }
+   ]
+  },
+  "3.1": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Nguyên tắc thiết kế tool cho agent (ACI)",
+     "body_md": "Anthropic gọi giao diện agent–tool là **ACI** và khuyên đầu tư vào nó như đầu tư vào UI:\n- **Ít tool mà chất** hơn nhiều tool bọc nguyên API: gộp thao tác hay đi cùng nhau (ví dụ một tool `schedule_event` thay vì `list_users` + `list_events` + `create_event`).\n- **Tên + mô tả rõ**, có namespace (`crm_search`, `billing_search`) để khỏi nhầm.\n- Trả về **ngữ cảnh có ý nghĩa** (tên người, không chỉ UUID), gọn, có phân trang/giới hạn.\n- Thông báo lỗi **chỉ cách sửa**, không chỉ mã lỗi.\n- Thiết kế chống dùng sai (*poka-yoke*): ví dụ bắt đường dẫn tuyệt đối thay vì tương đối."
+    },
+    {
+     "layer": "bay",
+     "title": "MCP server cũng gây phình năng lực",
+     "body_md": "Kết nối một MCP server là nạp **toàn bộ** tool của nó vào ngữ cảnh. Nhiều server ⇒ hàng trăm định nghĩa tool. Cách chữa: chỉ bật server cần cho vai trò đó, giới hạn tool cho từng subagent, hoặc dùng tool search / defer loading."
+    }
+   ]
+  },
+  "3.2": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Cơ chế xác thực trong hệ sinh thái Claude",
+     "body_md": "| Bối cảnh | Cơ chế |\n|---|---|\n| Gọi Claude API | API key theo **workspace**; khoá Admin API tách riêng, chỉ dùng cho quản trị |\n| Workload trên cloud/CI | workload identity federation — đổi token danh tính lấy credential ngắn hạn, khỏi lưu key tĩnh |\n| MCP server từ xa | ủy quyền dựa trên **OAuth** theo đặc tả MCP |\n| Bedrock / Vertex AI | IAM của AWS / Google Cloud, không dùng API key Anthropic |"
+    },
+    {
+     "layer": "bay",
+     "title": "Confused deputy",
+     "body_md": "Agent có quyền cao hành động theo yêu cầu của người (hoặc nội dung bị tiêm) có quyền thấp — gọi là *confused deputy*. Chữa bằng cách chạy tool **dưới danh tính và phạm vi quyền của người dùng cuối**, không phải của agent."
+    }
+   ]
+  },
+  "3.3": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Tách hai loại độ trễ",
+     "body_md": "- **TTFT** (time to first token): chịu ảnh hưởng của độ dài input và thinking — prompt caching giảm được TTFT.\n- **Thời gian sinh output**: tỉ lệ với số output token — yêu cầu trả lời gọn, giảm effort, model nhanh hơn.\n- **Streaming** chỉ cải thiện độ trễ *cảm nhận*.\nĐề hỏi \"giảm độ trễ\" mà đầu ra rất dài ⇒ đòn đúng thường là bớt output, không phải bật cache."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Chế độ tốc độ cao có trả phí thêm",
+     "body_md": "Anthropic có cung cấp các tuỳ chọn trả thêm để lấy tốc độ hoặc thông lượng ổn định (ví dụ *fast mode* dạng research preview cho một số model Opus, *Priority Tier*). Các tuỳ chọn này thay đổi thường xuyên và chỉ có cho một số model/nền tảng — kiểm tra docs trước khi đưa vào thiết kế."
+    }
+   ]
+  },
+  "3.4": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Công cụ quan sát có sẵn",
+     "body_md": "- Mỗi response có **request ID** — luôn log để đối chiếu khi báo lỗi với Anthropic.\n- SDK hỗ trợ **OpenTelemetry** tracing; Claude Code cũng xuất metric/event qua OpenTelemetry cho quản trị đội.\n- **Usage & Cost API** (Admin API) cho báo cáo chi phí cấp tổ chức; Console có trang usage/logs.\n- Header rate limit trong response cho biết hạn mức còn lại."
+    }
+   ]
+  },
+  "3.5": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Contextual Retrieval của Anthropic",
+     "body_md": "Kỹ thuật Anthropic công bố: trước khi embed, dùng Claude sinh **một đoạn ngữ cảnh ngắn cho từng chunk** (chunk này thuộc tài liệu nào, nói về phần nào) rồi gắn vào đầu chunk; áp dụng cho cả embedding (*contextual embeddings*) lẫn chỉ mục từ khoá (*contextual BM25*). Bài viết báo cáo giảm đáng kể tỉ lệ truy hồi trượt, và giảm thêm khi kết hợp **rerank**. Chi phí tiền xử lý thấp nhờ **prompt caching** (tài liệu gốc được cache, chỉ đổi chunk)."
+    },
+    {
+     "layer": "bay",
+     "title": "Anthropic không có model embedding riêng",
+     "body_md": "Claude không cung cấp endpoint embedding; docs của Anthropic gợi ý dùng nhà cung cấp embedding bên ngoài (ví dụ Voyage AI). Ô đáp án \"gọi endpoint embedding của Claude\" là sai."
+    }
+   ]
+  },
+  "3.6": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Các chiến lược truy hồi và cách đo",
+     "body_md": "| Chiến lược | Ghi chú |\n|---|---|\n| Agentic search | agent tự dùng tool kiểu grep/glob/đọc tệp, lặp lại tới khi đủ — Claude Code dùng cách này cho mã nguồn thay vì index vector |\n| Vector / BM25 / hybrid | xem bảng chính; hybrid + rerank là mặc định an toàn cho văn bản hỗn hợp |\n| Contextual Retrieval | gắn ngữ cảnh vào chunk trước khi index (xem 3.5) |\n| Web search server tool | dữ liệu công khai, cần mới — có trích dẫn nguồn |\n| Long context + cache | kho nhỏ, ổn định |\n\nĐo truy hồi **tách riêng** khỏi đo câu trả lời: recall@k (đoạn đúng có nằm trong top-k không), độ chính xác của top-k, MRR. Câu trả lời sai mà recall thấp ⇒ sửa retrieval, không sửa prompt."
+    },
+    {
+     "layer": "bay",
+     "title": "Tăng k không phải lúc nào cũng tốt",
+     "body_md": "Lấy nhiều chunk hơn tăng recall nhưng tăng token, độ trễ và nhiễu (context rot). Cách cân bằng chuẩn: lấy rộng (k lớn) → **rerank** → chỉ đưa vài đoạn tốt nhất vào ngữ cảnh."
+    }
+   ]
+  },
+  "3.7": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "MCP gồm những gì",
+     "body_md": "- **Kiến trúc**: *host* (ứng dụng như Claude Desktop, Claude Code) chứa *client*, mỗi client nối 1–1 với một *server*.\n- **Ba primitive phía server**: *tools* (model quyết định gọi) · *resources* (dữ liệu để đọc, ứng dụng quyết định đưa vào) · *prompts* (mẫu prompt, người dùng chọn).\n- **Transport**: `stdio` cho server chạy cục bộ; **Streamable HTTP** cho server từ xa (HTTP+SSE kiểu cũ đã bị thay thế).\n- Về bản chất, tool MCP tới tay model vẫn là **tool use** bình thường."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Cùng là MCP nhưng nối ở đâu",
+     "body_md": "| Bề mặt | Cách khai báo |\n|---|---|\n| Claude Code | `claude mcp add …` hoặc tệp `.mcp.json` (phạm vi project, commit được) |\n| Messages API | MCP connector: `mcp_servers` + toolset trỏ đúng tên server (beta) |\n| claude.ai / Desktop | connectors (server từ xa) do người dùng/quản trị bật |\n| Agent SDK | khai MCP server trong options |"
+    }
+   ]
+  },
+  "3.8": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Ba cơ chế progressive discovery chính thức",
+     "body_md": "| Cơ chế | Lớp luôn có trong ngữ cảnh | Lớp nạp khi cần |\n|---|---|---|\n| Tool search + `defer_loading` | tool search và vài tool thiết yếu | định nghĩa các tool còn lại |\n| Agent Skills | tên + mô tả Skill | `SKILL.md`, rồi tệp phụ |\n| Just-in-time retrieval | đường dẫn / ID / mục lục | nội dung tệp, bản ghi |\n\nMẫu **lai** là phổ biến nhất: Claude Code nạp `CLAUDE.md` ngay từ đầu (monolithic cho quy ước cốt lõi), còn mã nguồn thì tự tìm và đọc khi cần (progressive)."
+    },
+    {
+     "layer": "bay",
+     "title": "Monolithic không có nghĩa là không cache",
+     "body_md": "Chọn monolithic thì **phải** đặt khối tĩnh lên đầu và bật caching — monolithic không cache vừa đắt vừa chậm, gần như luôn là ô sai."
+    }
+   ]
+  },
+  "4.1": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Các chiều đo Anthropic liệt kê",
+     "body_md": "Ngoài năm nhóm hãng nêu, docs *Define success criteria* gợi ý các chiều: **task fidelity** (độ trung thành với việc) · **consistency** (câu hỏi giống nhau → trả lời nhất quán) · **relevance & coherence** · **tone & style** · **privacy preservation** · **context utilization** (dùng đúng ngữ cảnh được cấp) · **latency** · **price**. Với agent, thêm: tỉ lệ hoàn thành việc, số lượt/số lần gọi tool trên mỗi việc."
+    }
+   ]
+  },
+  "4.2": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Ba cách chấm và mẹo cho LLM-as-a-judge",
+     "body_md": "Thứ tự ưu tiên theo docs Anthropic: **code-based** (nhanh, tin cậy nhất) → **LLM-based** (linh hoạt, mở rộng được) → **human** (đắt, chậm — dùng có chọn lọc).\n\nMẹo LLM-as-a-judge:\n- Rubric **chi tiết, cụ thể** (\"câu trả lời phải nhắc tới X\"), không chung chung.\n- Đầu ra **rời rạc, dễ đếm**: đúng/sai, hoặc thang 1–5.\n- Cho judge **suy luận trước rồi chấm**, sau đó bỏ phần suy luận, chỉ giữ điểm.\n- **Hiệu chỉnh** judge với một mẫu người chấm; coi chừng thiên lệch vị trí/độ dài."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Ưu tiên số lượng ca",
+     "body_md": "Docs khuyên: nhiều ca có chấm tự động tốt hơn ít ca chấm tay chất lượng cao. Có thể dùng Claude **sinh thêm ca kiểm thử** từ một tập ví dụ gốc, rồi người duyệt lại."
+    }
+   ]
+  },
+  "4.3": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Không tất định ⇒ chạy nhiều lần",
+     "body_md": "Cùng prompt có thể ra kết quả khác nhau, nên mỗi ca nên chạy **nhiều lần** và báo cáo tỉ lệ. Với agent, phân biệt **pass@k** (ít nhất một lần đạt trong k lần — đo năng lực) và **pass^k** (đạt cả k lần — đo độ tin cậy, quan trọng cho production)."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Đưa thay đổi ra traffic thật",
+     "body_md": "Trình tự an toàn: eval offline → **shadow** (chạy song song, không trả cho người dùng) → **canary** vài phần trăm traffic → mở rộng. Luôn có cờ tắt và ngưỡng tự động rollback theo metric an toàn."
+    }
+   ]
+  },
+  "4.4": {
+   "add": [
+    {
+     "layer": "cach-chon",
+     "title": "Lỗi 400 ngay sau khi nâng model",
+     "body_md": "Đổi sang model đời mới mà request cũ bắt đầu trả **400** thường do tham số đã bị bỏ hoặc đổi trên model mới, ví dụ: prefill assistant, ngân sách thinking cố định (`budget_tokens`), tham số sampling (`temperature`/`top_p`/`top_k`), hoặc ép `tool_choice`. Đó là lỗi **tương thích API**, không phải lỗi prompt — xem *Migration guide* của model đích."
+    },
+    {
+     "layer": "can-thuoc",
+     "title": "Mã lỗi HTTP cần nhận ra",
+     "body_md": "| Mã | Nghĩa | Thử lại? |\n|---|---|---|\n| 400 | request sai (tham số, tràn cửa sổ…) | không |\n| 401 / 403 | sai key / không đủ quyền | không |\n| 404 | sai model hoặc endpoint | không |\n| 413 | request quá lớn | không — cắt nhỏ |\n| 429 | vượt rate limit | có, theo `retry-after` |\n| 500 | lỗi phía server | có, backoff |\n| 529 | API quá tải (overloaded) | có, backoff |"
+    }
+   ]
+  },
+  "4.5": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Hai đòn chồng lên nhau được",
+     "body_md": "- **Batch API** giảm khoảng **một nửa** giá token cho việc không cần tức thì, và **cộng dồn được** với prompt caching.\n- **Output token đắt hơn input** nhiều lần ⇒ yêu cầu đầu ra gọn, dùng structured outputs thay văn xuôi, hạ effort để bớt thinking.\n- Tokenizer có thể khác giữa thế hệ model: cùng văn bản nhưng số token khác ⇒ so chi phí phải đếm lại."
+    }
+   ]
+  },
+  "4.6": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Tín hiệu vận hành từ API",
+     "body_md": "- Header `anthropic-ratelimit-*` cho biết hạn mức request/token còn lại — theo dõi để chủ động giãn tải trước khi dính 429.\n- Theo dõi riêng tỉ lệ **429** (lỗi của mình: vượt hạn mức) và **529** (phía nhà cung cấp quá tải).\n- Tỉ lệ `stop_reason = max_tokens` tăng ⇒ đầu ra bị cụt; tỉ lệ `refusal` tăng ⇒ thay đổi traffic hoặc có tấn công.\n- Đội dùng Claude Code: bật xuất **OpenTelemetry** để theo dõi chi phí, số phiên, mức sử dụng tool."
+    }
+   ]
+  },
+  "5.1": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Bộ guardrail theo docs Anthropic (Strengthen guardrails)",
+     "body_md": "Docs Anthropic nhóm guardrail thành các mục: **giảm hallucination · tăng nhất quán đầu ra · giảm jailbreak · xử lý refusal khi streaming · giảm rò rỉ prompt · giữ nhân vật (in character)**. Các đòn cụ thể hay gặp:\n\n| Đòn | Cách làm |\n|---|---|\n| Harmlessness screen | model nhỏ, nhanh (tầng Haiku) phân loại đầu vào/đầu ra trước, trả kết quả có cấu trúc |\n| Input/output classifier | chặn trước khi vào model và trước khi tới người dùng |\n| Giới hạn hành động | least privilege cho tool, HITL cho hành động không đảo ngược |\n| Xử lý refusal | đọc `stop_reason`, có đường lùi (fallback / thông báo cho người dùng) |\n| Giám sát liên tục | log mẫu, phát hiện mẫu tấn công lặp lại |\n\nNguyên tắc: **phòng thủ nhiều lớp** — không lớp nào đủ một mình."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Chống rò rỉ system prompt",
+     "body_md": "Không có cách prompt nào bảo đảm 100% system prompt không lộ. Đòn đúng: **đừng để bí mật** (key, dữ liệu nhạy cảm) trong prompt; nếu cần, lọc đầu ra bằng code để phát hiện chuỗi nhạy cảm. Docs cũng lưu ý thêm lớp chống rò rỉ có thể làm giảm chất lượng — chỉ dùng khi thật cần."
+    }
+   ]
+  },
+  "5.2": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Các kiểu hỏng hay gặp ở agent",
+     "body_md": "| Kiểu hỏng | Ý nghĩa |\n|---|---|\n| Indirect prompt injection | lệnh ẩn trong tài liệu, trang web, tool result — không đến từ người dùng |\n| Sycophancy | chiều theo ý người dùng dù sai |\n| Reward hacking / gian lận test | agent lập trình sửa test hoặc viết code đặc trị cho test để \"qua\" |\n| Over-agency | làm nhiều hơn được yêu cầu (sửa tệp không liên quan, hành động không xin phép) |\n| Knowledge cutoff | không biết sự kiện sau ngày cắt dữ liệu — cần retrieval/web search |"
+    }
+   ]
+  },
+  "5.3": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Cơ chế HITL có sẵn trong sản phẩm Anthropic",
+     "body_md": "- **Claude Code**: chế độ quyền (mặc định hỏi trước khi sửa/chạy lệnh · tự chấp nhận sửa tệp · *plan mode* chỉ đọc và lập kế hoạch · bỏ qua quyền — chỉ dùng trong sandbox cô lập); luật `allow`/`ask`/`deny`; checkpoint để quay lại.\n- **Agent SDK**: callback xét duyệt từng lần gọi tool và hook `PreToolUse` để chặn/sửa.\n- **Managed Agents**: chính sách quyền theo tool (`always_allow` / `always_ask` / `auto`) với sự kiện xác nhận gửi về client."
+    }
+   ]
+  },
+  "5.4": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Những điểm dữ liệu cần biết về Anthropic",
+     "body_md": "- Theo điều khoản thương mại, Anthropic **mặc định không dùng dữ liệu API của khách hàng để huấn luyện** model.\n- **Zero Data Retention (ZDR)**: thoả thuận để dữ liệu không được lưu sau khi xử lý (trừ các ngoại lệ theo luật/an toàn); **không phải tính năng/model nào cũng đủ điều kiện ZDR** — kiểm tra trước.\n- **HIPAA**: cần thoả thuận BAA với Anthropic, và chỉ áp cho các tính năng đủ điều kiện.\n- **Vị trí xử lý**: có tham số chọn vùng suy luận cho một số model; hoặc triển khai qua Amazon Bedrock / Google Cloud Vertex AI để dữ liệu đi trong hạ tầng đám mây đã ký hợp đồng.\n- **FedRAMP**: thường đi qua nền tảng đám mây có chứng nhận phù hợp (vùng dành cho chính phủ). Chi tiết: *Anthropic Trust Center* và trang tuân thủ của nhà cung cấp đám mây."
+    }
+   ]
+  },
+  "5.5": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Kiểm thử phản thực (counterfactual)",
+     "body_md": "Cách đo bias thực dụng, cũng là cách Anthropic dùng trong nghiên cứu đánh giá phân biệt đối xử: giữ nguyên ca kiểm thử, **chỉ đổi thuộc tính nhân khẩu** (tên, giới, tuổi, dân tộc) rồi so quyết định của model. Kết quả lệch theo thuộc tính ⇒ có bias, dù độ chính xác trung bình cao."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Usage Policy: ca dùng rủi ro cao",
+     "body_md": "Usage Policy của Anthropic đặt yêu cầu thêm cho **ca dùng rủi ro cao** (ví dụ tư vấn pháp lý, y tế, tài chính, tuyển dụng, nhà ở…): có **người chuyên môn xem xét** đầu ra (human-in-the-loop) và **công bố cho người dùng** rằng có dùng AI. Ô đáp án bỏ một trong hai yêu cầu này cho ca rủi ro cao là ô sai."
+    }
+   ]
+  },
+  "6.1": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Đầu ra bắt buộc của giai đoạn discovery",
+     "body_md": "| Sản phẩm | Nội dung |\n|---|---|\n| Problem statement | bài toán + người chịu ảnh hưởng + chỉ số kinh doanh |\n| Baseline | hiện tại làm bằng gì, mất bao lâu, tốn bao nhiêu, sai bao nhiêu |\n| Tiêu chí thành công | ngưỡng đo được, nhiều chiều (chất lượng · độ trễ · chi phí · an toàn) |\n| Kiểm kê dữ liệu | nguồn, hình dạng, độ tươi, quyền truy cập, dữ liệu nhạy cảm |\n| Phân loại rủi ro | hành động có đảo ngược được không, có thuộc ca rủi ro cao không |\n| Tập mẫu thật | vài chục ví dụ đầu vào + đầu ra mong muốn — **hạt giống của tập eval** |\n\nMẹo thi: thu **ví dụ thật** từ khách hàng ngay trong discovery là bước hay bị bỏ — không có nó thì không làm được prototype lẫn eval."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Prototype sớm để kiểm khả thi",
+     "body_md": "Sau vài buổi khảo sát, dựng **prototype nhanh** (Console/Workbench hoặc một script) trên mẫu thật để kiểm *viability* — Claude có làm được việc này không — trước khi cam kết kiến trúc. Đây là cách trả lời câu hỏi \"có nên làm không\" bằng bằng chứng."
+    }
+   ]
+  },
+  "6.2": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Khung bản ghi quyết định (ADR)",
+     "body_md": "Mỗi quyết định ghi bốn phần: **Bối cảnh** (ràng buộc, số liệu) · **Quyết định** · **Phương án đã cân nhắc và lý do loại** · **Hệ quả** (được gì, mất gì, khi nào xem lại).\n\nKhi trình bày đánh đổi của hệ LLM, luôn nói rõ ba điều mà người không chuyên hay hiểu sai:\n1. Kết quả **không tất định** — cùng câu hỏi có thể ra câu trả lời khác.\n2. Chất lượng được đo **trên tập test**, không phải lời hứa cho mọi ca.\n3. Chi phí là **khoảng ước tính** kèm giả định (lưu lượng, độ dài, tỉ lệ cache)."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "Demo cả ca thất bại",
+     "body_md": "Demo cho bên liên quan nên có cả **ca model làm sai và cách hệ xử lý** (chuyển người, hỏi lại, từ chối). Demo chỉ ca đẹp tạo kỳ vọng sai — đúng loại rủi ro giao tiếp đề hay gài."
+    }
+   ]
+  },
+  "6.3": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "SLI · SLO · SLA",
+     "body_md": "| Thuật ngữ | Nghĩa |\n|---|---|\n| SLI | chỉ số đo thực tế (p95 latency, tỉ lệ thành công) |\n| SLO | mục tiêu nội bộ cho SLI (p95 < 3 giây trong 99% thời gian) |\n| SLA | cam kết với khách hàng, thường kèm hệ quả khi vi phạm; nên lỏng hơn SLO |"
+    },
+    {
+     "layer": "bay",
+     "title": "SLA của bạn phụ thuộc nhà cung cấp model",
+     "body_md": "Đừng cam kết SLA chặt hơn những gì phụ thuộc bên dưới cho phép: rate limit, lỗi quá tải 529, sự cố của nhà cung cấp. Chuẩn bị đường dự phòng (retry, model dự phòng, nền tảng thứ hai như Bedrock/Vertex, chế độ suy giảm) và tính hạn mức cho giờ cao điểm."
+    }
+   ]
+  },
+  "6.4": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Những thứ phải ghi phiên bản trong tài liệu",
+     "body_md": "ID model đã ghim · phiên bản prompt/template · schema tool · cấu hình (effort, max_tokens, caching) · phiên bản tập eval và kết quả gần nhất · phiên bản index/embedding. Thiếu một trong số đó thì không tái lập được hành vi khi điều tra sự cố.\n\nTham khảo giới hạn model từ **system card / model card** Anthropic công bố cho từng model — nguồn chính thức để mô tả năng lực và rủi ro trong tài liệu."
+    },
+    {
+     "layer": "cach-chon",
+     "title": "CLAUDE.md là implementation guidance sống",
+     "body_md": "Với đội phát triển dùng Claude Code, quy ước kiến trúc, lệnh build/test, điều cấm… nên nằm trong `CLAUDE.md` của repo: vừa là tài liệu cho người, vừa được Claude nạp tự động mỗi phiên."
+    }
+   ]
+  },
+  "6.5": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Vòng đời model phía nhà cung cấp",
+     "body_md": "Model có vòng đời riêng: phát hành → **deprecated** (thông báo trước) → **retired** (request trả lỗi). Vì vậy giai đoạn monitoring/iteration phải có:\n- Ghim ID model; theo dõi trang *Model deprecations*.\n- Khi có model mới: chạy lại **cùng tập eval**, đọc *migration guide* (tham số bị bỏ, hành vi đổi), rà lại prompt cho bớt chỉ dẫn thừa, đo lại chi phí (tokenizer có thể khác).\n- Kế hoạch **rollback** về model cũ trong thời gian còn được hỗ trợ.\n- Cuối vòng đời hệ thống: kế hoạch ngừng dùng — xoá dữ liệu, index, log theo chính sách lưu trữ."
+    },
+    {
+     "layer": "bay",
+     "title": "Handoff thiếu eval là handoff hụt",
+     "body_md": "Bàn giao mà đội vận hành không nhận được **tập eval chạy được + ngưỡng đạt** thì họ không có cách biết thay đổi sau này làm tốt lên hay xấu đi."
+    }
+   ]
+  },
+  "7.1": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Thứ tự ưu tiên cấu hình Claude Code",
+     "body_md": "Settings (từ cao xuống thấp): **managed** (quản trị tổ chức, không ghi đè được) → tham số dòng lệnh → **local** (`.claude/settings.local.json`, không commit) → **project** (`.claude/settings.json`, commit cho cả đội) → **user** (`~/.claude/settings.json`).\n\nLuật quyền: **deny thắng ask, ask thắng allow**. Muốn cấm cả đội đọc `.env` mà không ai gỡ được ⇒ luật `deny` trong managed settings.\n\nXem thẻ *Claude Code cho đội* ở trang Kiến trúc nền để có bảng đầy đủ."
+    }
+   ]
+  },
+  "7.2": {
+   "add": [
+    {
+     "layer": "cach-chon",
+     "title": "Luồng làm việc Anthropic khuyên cho Claude Code",
+     "body_md": "- **Explore → Plan → Code → Commit**: cho đọc code trước, lập kế hoạch (plan mode) rồi mới sửa.\n- **TDD**: viết test trước, xác nhận test fail, rồi để Claude sửa tới khi pass — cho model một đích kiểm chứng được.\n- Cho Claude **cách tự kiểm** (chạy test, lint, screenshot) để nó tự lặp.\n- Dùng **subagent** để review hoặc điều tra song song mà không làm bẩn ngữ cảnh chính.\n- Tự động hoá trong CI bằng **headless mode** (`claude -p`) hoặc **GitHub Actions** (gắn `@claude` trong issue/PR)."
+    }
+   ]
+  },
+  "7.3": {
+   "add": [
+    {
+     "layer": "can-thuoc",
+     "title": "Công cụ gỡ lỗi nên biết",
+     "body_md": "| Lớp | Công cụ |\n|---|---|\n| API | request ID · `stop_reason` · `usage` · header rate limit · bật log debug của SDK |\n| Agent SDK | hook ghi lại mọi lần gọi tool · lưu transcript phiên |\n| Claude Code | `/doctor` kiểm cài đặt · chế độ debug/verbose · transcript phiên · `/context` xem cái gì đang chiếm ngữ cảnh (tuỳ phiên bản) |\n\nPhân biệt **429** (bạn vượt hạn mức — giãn tải, xin tăng hạn mức) với **529** (nhà cung cấp quá tải — backoff, cân nhắc dự phòng)."
+    }
+   ]
+  }
+ },
+ "reference_title": "Kiến thức nền về Claude",
+ "reference": [
+  {
+   "id": "model-family",
+   "title": "Họ model Claude & nguyên tắc chọn",
+   "body_md": "Anthropic chia model theo **tầng**, mỗi thế hệ mới thường ra lại đủ các tầng. Đọc theo trục **năng lực ↔ độ trễ ↔ chi phí**:\n\n| Tầng | Vị trí | Hợp với |\n|---|---|---|\n| Haiku | nhỏ nhất, nhanh nhất, rẻ nhất | phân loại, trích xuất, định tuyến, harmlessness screen, sub-agent đọc nhiều, việc khối lượng lớn cần độ trễ thấp |\n| Sonnet | cân bằng năng lực/giá | phần lớn workload production: coding, agent hằng ngày, xử lý tài liệu, chat doanh nghiệp |\n| Opus | mạnh, đắt hơn | suy luận khó, agent dài hơi, coding phức tạp, việc giá trị cao |\n| Tầng cao nhất (hiện có tên Fable) | trên Opus, giá cao hơn Opus | việc suy luận khó nhất, chạy dài; có ràng buộc riêng (ví dụ về lưu dữ liệu) |\n\n**Nguyên tắc chọn**\n- Chọn model **nhỏ nhất đạt ngưỡng eval**, đánh giá theo chi phí trên mỗi việc hoàn thành.\n- Trước khi đổi xuống model nhỏ hơn, thử **hạ effort** trên cùng model (giữ cache, thường giữ chất lượng tốt hơn).\n- Kết hợp nhiều tầng: router/worker dùng Haiku, việc khó dùng Sonnet/Opus.\n- Ghim ID model trong production; theo dõi deprecation.\n- Năng lực mỗi model (context window, output tối đa, thinking, vision, tính năng) tra qua **Models API**.\n\n> Tên phiên bản, giá và giới hạn thay đổi thường xuyên — **kiểm tra trang *Models overview* và *Pricing* của Anthropic để có số mới nhất.**"
+  },
+  {
+   "id": "messages-api",
+   "title": "Messages API — những điều cốt lõi",
+   "body_md": "Mọi thứ đi qua một endpoint: `POST /v1/messages`. Tool, structured outputs, thinking đều là tham số của endpoint này.\n\n| Thành phần | Ghi nhớ |\n|---|---|\n| `model` | ID model |\n| `system` | system prompt — vai trò, phạm vi, quy tắc; tách khỏi dữ liệu người dùng |\n| `messages` | mảng lượt `user` / `assistant`, bắt đầu bằng `user`; API **stateless** — gửi lại toàn bộ lịch sử |\n| `content` | chuỗi hoặc mảng khối: `text`, `image`, `document`, `tool_use`, `tool_result`, `thinking`… |\n| `max_tokens` | trần **cứng** cho output; chạm trần ⇒ cụt giữa chừng |\n| `stop_sequences` | chuỗi dừng tuỳ chọn |\n| `stream` | trả từng phần qua SSE |\n| `output_config` | nơi đặt `effort` và `format` (structured outputs) |\n\n**`stop_reason`** — luôn đọc trước khi đọc nội dung:\n\n| Giá trị | Ý nghĩa / việc cần làm |\n|---|---|\n| `end_turn` | xong tự nhiên |\n| `max_tokens` | bị cụt — tăng `max_tokens` hoặc chia đầu ra |\n| `stop_sequence` | gặp chuỗi dừng |\n| `tool_use` | model muốn gọi tool — chạy rồi trả `tool_result` |\n| `pause_turn` | lượt dài (server tool) tạm dừng — gửi lại để tiếp |\n| `refusal` | model từ chối (vẫn HTTP 200) — đọc `stop_details` |\n\n**Tham số sampling** (`temperature`, `top_p`, `top_k`): kiến thức kinh điển — temperature thấp cho việc phân tích/phân loại, cao hơn cho sáng tạo; *không* bảo đảm tất định. Lưu ý: **các model đời mới đã bỏ các tham số này** (gửi lên trả 400), độ sâu điều khiển bằng `effort` và prompt — kiểm tra *Migration guide*.\n\n**Streaming**: sự kiện `message_start` → `content_block_start` / `content_block_delta` / `content_block_stop` → `message_delta` (có `stop_reason`, usage) → `message_stop`. Giảm độ trễ cảm nhận và **cần thiết cho `max_tokens` lớn** để tránh timeout HTTP. Lỗi có thể xảy ra **giữa stream** — phải xử lý.\n\n**usage**: `input_tokens`, `output_tokens`, `cache_creation_input_tokens`, `cache_read_input_tokens` — log đủ cả bốn."
+  },
+  {
+   "id": "tool-use",
+   "title": "Tool use & structured outputs",
+   "body_md": "**Hai loại tool**\n\n| Loại | Ai thực thi | Ví dụ |\n|---|---|---|\n| Client tool (tự định nghĩa) | code của bạn | `name` + `description` + `input_schema` (JSON Schema) |\n| Tool do Anthropic định nghĩa, chạy phía client | code của bạn, schema có sẵn | bash, text editor, computer use, memory |\n| Server tool | hạ tầng Anthropic, kết quả nằm ngay trong response | web search, web fetch, code execution, tool search |\n\n**Vòng lặp client tool**: model trả `tool_use` (có `id`) → bạn chạy → gửi `tool_result` với đúng `tool_use_id` → lặp tới `end_turn`. Tool lỗi: trả `tool_result` với `is_error: true` và thông điệp rõ.\n\n**`tool_choice`**\n\n| Giá trị | Nghĩa |\n|---|---|\n| `auto` | model tự quyết có gọi tool không (mặc định khi có tool) |\n| `any` | buộc gọi một tool nào đó |\n| `tool` | buộc gọi đúng tool chỉ định |\n| `none` | không cho gọi tool |\n\nLưu ý: một số model đời mới **không còn hỗ trợ ép `any`/`tool`** (trả 400) — thay bằng `auto` + chỉ dẫn rõ + `strict: true`, hoặc structured outputs. `disable_parallel_tool_use` giới hạn mỗi lượt tối đa một lần gọi.\n\n**Parallel tool calls** (mặc định bật): một message assistant có thể chứa nhiều `tool_use`; trả **mọi** `tool_result` trong **một** message user.\n\n**Structured outputs**\n- `output_config.format` với JSON Schema ⇒ câu trả lời **chắc chắn hợp schema** (SDK có helper parse).\n- `strict: true` trên định nghĩa tool ⇒ tham số tool hợp schema (cần `additionalProperties: false` + `required`).\n- Kỹ thuật cũ (prefill `{`, \"hãy trả JSON\") kém tin cậy hơn; prefill đã bị bỏ ở model đời mới.\n- Lưu ý: citations **không dùng chung** được với `output_config.format`.\n\n**Tool Runner** (trong SDK) tự chạy vòng lặp cho tool bạn định nghĩa; **programmatic tool calling** cho Claude gọi tool từ trong code execution để bớt lượt và bớt token."
+  },
+  {
+   "id": "caching-batch-tokens",
+   "title": "Prompt caching · Message Batches · Token counting",
+   "body_md": "**Prompt caching**\n- Cache khớp theo **tiền tố**, thứ tự dựng: `tools` → `system` → `messages`. Đổi một byte ở đâu thì mọi thứ phía sau mất cache.\n- Đánh dấu bằng `cache_control: {type: \"ephemeral\"}` trên khối (tối đa 4 breakpoint) hoặc **cache tự động** ở cấp request.\n- **TTL**: mặc định ~5 phút, làm mới mỗi lần trúng; tuỳ chọn 1 giờ (giá ghi cao hơn) cho lưu lượng thưa.\n- **Chi phí**: ghi cache đắt hơn input thường một chút; đọc cache rẻ hơn nhiều (cỡ ~10% giá input) và **giảm TTFT**.\n- **Phá cache**: đổi danh sách/định nghĩa tool (phá tất cả), dấu thời gian/ID trong system, JSON không sắp khoá, đổi model, đổi một số thiết lập như thinking.\n- Có **độ dài tối thiểu** để được cache (tuỳ model) — ngắn hơn thì lặng lẽ không cache.\n- Kiểm tra bằng `cache_read_input_tokens`. Cache **không** giải phóng context window.\n\n**Message Batches API**\n- Gửi lô request **bất đồng bộ**, giá giảm khoảng **50%**; đa số xong nhanh nhưng chỉ cam kết trong khoảng tối đa 24 giờ.\n- Kết quả trả về **không theo thứ tự** — ghép bằng `custom_id`.\n- Hợp: đánh giá offline, gắn nhãn dữ liệu hàng loạt, tóm tắt tài liệu qua đêm. Không hợp: chat, việc cần tức thì.\n- Cộng dồn được với prompt caching.\n\n**Token counting**\n- Endpoint `count_tokens` nhận cùng cấu trúc request (system, tools, ảnh, PDF) và trả số input token — dùng để ước lượng chi phí, kiểm tràn cửa sổ, định tuyến theo độ dài.\n- Không dùng tokenizer của hãng khác; tokenizer có thể khác giữa các thế hệ Claude.\n\n> Hệ số giá và giới hạn chính xác: trang *Prompt caching*, *Batch processing*, *Pricing*."
+  },
+  {
+   "id": "thinking-context-files",
+   "title": "Thinking · Citations · Files · PDF/Vision · Context window",
+   "body_md": "**Extended / adaptive thinking**\n- Model suy nghĩ trong khối `thinking` trước khi trả lời; giúp nhiều với toán, logic, phân tích nhiều bước, coding, agent; ít lợi với tra cứu đơn giản, phân loại.\n- Kiểu cũ: đặt ngân sách token cố định (`budget_tokens`). Model đời mới: **adaptive thinking** — model tự quyết nghĩ bao nhiêu, điều chỉnh bằng **effort** (`low` → `max`). Ngân sách cố định đã bị bỏ trên các model mới.\n- Token thinking **tính tiền như output** và chiếm context; có thể hiển thị dạng tóm tắt hoặc ẩn.\n- **Với tool use**: phải gửi lại khối thinking **nguyên vẹn** trong lịch sử; thinking xen giữa các lần gọi tool (*interleaved*) giúp model suy luận trên tool result.\n\n**Citations**\n- Bật `citations: {enabled: true}` trên khối `document` ⇒ câu trả lời kèm trích dẫn trỏ tới vị trí cụ thể (ký tự, trang PDF, khối nội dung).\n- Đáng tin hơn bảo model \"hãy trích dẫn\" bằng prompt; giúp giảm bịa và kiểm chứng được.\n\n**Files API**\n- Tải tệp lên một lần, dùng lại bằng `file_id` qua nhiều request (PDF, văn bản, ảnh; tệp do code execution tạo ra cũng tải về được).\n\n**PDF & Vision**\n- PDF đưa vào bằng khối `document` (base64, URL hoặc `file_id`); Claude đọc cả chữ lẫn hình trong trang. Ảnh đưa vào bằng khối `image`.\n- Ảnh và trang PDF **tốn token** — trang nhiều có thể chiếm phần lớn cửa sổ. Có giới hạn kích thước/số trang (xem docs *PDF support*, *Vision*).\n- Mẹo: đặt ảnh/tài liệu **trước** câu hỏi.\n\n**Context window & quản lý ngữ cảnh**\n- Cửa sổ chứa mọi thứ: system, tool definitions, lịch sử, tool result, ảnh, thinking, output. Model đời mới có cửa sổ rất lớn (tới hàng trăm nghìn – 1 triệu token tuỳ model) — tra `max_input_tokens` qua Models API.\n- Công cụ: **context editing** (xoá tool result/thinking cũ) · **compaction** (tóm tắt phía server) · **memory tool** (lưu trạng thái ra tệp ngoài cửa sổ) · **tool search** (nạp định nghĩa tool khi cần)."
+  },
+  {
+   "id": "mcp",
+   "title": "Model Context Protocol (MCP)",
+   "body_md": "**MCP** là chuẩn mở (Anthropic khởi xướng) để nối ứng dụng AI với dữ liệu và công cụ bên ngoài — \"viết một lần, nhiều client dùng\".\n\n| Thành phần | Vai trò |\n|---|---|\n| Host | ứng dụng người dùng chạy (Claude Desktop, Claude Code, IDE…) |\n| Client | nằm trong host, giữ kết nối 1–1 với một server |\n| Server | cung cấp năng lực cho model |\n\n**Primitive phía server**\n\n| Primitive | Ai điều khiển | Ví dụ |\n|---|---|---|\n| Tools | model quyết định gọi | tạo ticket, truy vấn DB |\n| Resources | ứng dụng đưa vào ngữ cảnh | nội dung tệp, schema DB |\n| Prompts | người dùng chọn | mẫu \"review PR\", lệnh tắt |\n\nPhía client còn có các khả năng như *sampling* (server nhờ client gọi model), *roots*, *elicitation* (hỏi thêm người dùng).\n\n**Transport**: `stdio` (server cục bộ, tiến trình con) · **Streamable HTTP** (server từ xa; thay cho HTTP+SSE kiểu cũ). Server từ xa dùng **OAuth** để ủy quyền.\n\n**MCP hay tool trực tiếp?**\n\n| Chọn MCP khi | Chọn tool trực tiếp khi |\n|---|---|\n| nhiều app/agent dùng chung một tích hợp | một app, vài tool nội bộ |\n| tích hợp do bên thứ ba cung cấp sẵn | cần độ trễ thấp nhất, ít thành phần |\n| muốn cắm vào Claude Code / Desktop / claude.ai | logic gắn chặt với code ứng dụng |\n\nBảo mật: chỉ dùng server **tin cậy**; tool result từ MCP là **dữ liệu không tin cậy** (có thể chứa prompt injection); cấp quyền tối thiểu cho credential của server."
+  },
+  {
+   "id": "agent-patterns",
+   "title": "Building effective agents & Claude Agent SDK",
+   "body_md": "**Nguyên tắc gốc** (bài *Building effective agents* của Anthropic)\n1. **Bắt đầu đơn giản** — một lần gọi tối ưu tốt (retrieval + ví dụ) thường đủ; chỉ thêm độ phức tạp khi đo thấy cần.\n2. **Minh bạch** — cho thấy các bước lập kế hoạch của agent.\n3. **Đầu tư vào ACI** — tài liệu và kiểm thử tool kỹ như thiết kế UI.\n\n**Workflow vs agent**: workflow = đường đi định sẵn trong code (dễ đoán, rẻ); agent = model tự điều hướng (linh hoạt, đắt, khó đoán). Agent hợp việc mở, không đoán trước số bước, có môi trường phản hồi (test, kết quả tool) và có rào chắn.\n\n| Mẫu | Một dòng |\n|---|---|\n| Augmented LLM | khối nền: LLM + retrieval + tool + memory |\n| Prompt chaining | chuỗi bước cố định, có cổng kiểm |\n| Routing | phân loại rồi chuyển tới xử lý/model chuyên biệt |\n| Parallelization | sectioning (chia phần) hoặc voting (lấy đồng thuận) |\n| Orchestrator–workers | LLM trung tâm chia việc động |\n| Evaluator–optimizer | sinh → chấm → sửa, lặp |\n| Autonomous agent | vòng lặp tool tới khi xong, có điều kiện dừng |\n\n**Claude Agent SDK**\n- Là harness của **Claude Code đóng gói thành thư viện** (Python/TypeScript): vòng lặp agent, tool có sẵn (đọc/sửa tệp, bash, tìm kiếm, web), quản lý ngữ cảnh/compaction, subagent, hook, quyền, MCP, phiên.\n- Bạn tự **host và vận hành**. Khác với *Tool Runner* trong Client SDK (chỉ chạy vòng lặp cho tool bạn tự định nghĩa) và với *Managed Agents* (Anthropic chạy cả vòng lặp lẫn sandbox).\n- Vòng lặp chuẩn của agent: **thu thập ngữ cảnh → hành động → kiểm chứng kết quả → lặp**."
+  },
+  {
+   "id": "claude-code-teams",
+   "title": "Claude Code cho đội",
+   "body_md": "**Bộ nhớ CLAUDE.md** (nạp tự động mỗi phiên, cấp trên trước)\n\n| Cấp | Vị trí điển hình | Dùng cho |\n|---|---|---|\n| Tổ chức (managed policy) | đường dẫn hệ thống do IT triển khai | quy định bắt buộc toàn công ty |\n| Project | `./CLAUDE.md` hoặc `./.claude/CLAUDE.md` (commit) | kiến trúc, lệnh build/test, quy ước của đội |\n| User | `~/.claude/CLAUDE.md` | thói quen cá nhân trên mọi dự án |\n| Thư mục con | `CLAUDE.md` trong thư mục con | nạp khi Claude làm việc ở đó |\n\nCó thể **import** tệp khác bằng cú pháp `@đường/dẫn`. Lệnh `/init` sinh CLAUDE.md khởi đầu; `/memory` để sửa.\n\n**Settings — 4 phạm vi** (ưu tiên cao → thấp): **managed** (IT, không ghi đè) → *tham số dòng lệnh* → **local** `.claude/settings.local.json` (cá nhân, không commit) → **project** `.claude/settings.json` (commit) → **user** `~/.claude/settings.json`.\n\n**Permissions**: luật `allow` / `ask` / `deny` dạng `Tool(mẫu)`, ví dụ `Bash(npm run test:*)`, `Read(./.env)`. **deny > ask > allow**. Chế độ quyền: mặc định (hỏi), tự chấp nhận sửa, plan mode (chỉ đọc), bỏ qua quyền (chỉ trong sandbox cô lập).\n\n| Cơ chế | Là gì | Khi nào dùng |\n|---|---|---|\n| Hooks | lệnh shell chạy ở sự kiện (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `SessionStart`…) do **harness cưỡng chế**; `PreToolUse` có thể chặn tool | \"mỗi lần X thì luôn Y\" — format, lint, chặn lệnh nguy hiểm |\n| Subagents | `.claude/agents/*.md`: prompt riêng, tool riêng, context riêng | review, điều tra song song, cô lập ngữ cảnh |\n| Skills | thư mục có `SKILL.md`, nạp theo progressive disclosure, Claude tự gọi khi liên quan | quy trình/kiến thức chuyên môn đóng gói |\n| Slash commands | lệnh tắt do người gọi (`.claude/commands/`) | prompt lặp lại người dùng chủ động chạy |\n| MCP | `.mcp.json` (project) hoặc `claude mcp add` | nối hệ thống nội bộ |\n| Plugins | gói gồm commands, agents, skills, hooks, MCP | phát cả bộ cho đội qua marketplace |\n\n**Headless / CI**: `claude -p \"…\"` chạy không tương tác, có `--output-format json` / `stream-json`, giới hạn tool bằng `--allowedTools`. **GitHub Actions**: action chính thức của Anthropic cho phép gắn `@claude` trong issue/PR để Claude làm việc và mở PR; cũng chạy được qua Bedrock/Vertex.\n\n> Tên tệp/cờ có thể thay đổi giữa các phiên bản — kiểm tra docs *Claude Code settings*, *Memory*, *Hooks*."
+  },
+  {
+   "id": "evals",
+   "title": "Evals — đánh giá có hệ thống",
+   "body_md": "**Trình tự**: định nghĩa tiêu chí thành công → xây tập test → chọn cách chấm → chạy → phân tích lỗi → sửa → chạy lại (hồi quy).\n\n**Tiêu chí thành công tốt**: cụ thể · đo được · khả thi · liên quan · thường nhiều chiều (chất lượng, độ trễ, chi phí, an toàn).\n\n**Tập test**\n- Phản ánh **phân bố traffic thật**; thêm ca biên, ca xấu, ca tấn công (prompt injection), câu hỏi ngoài phạm vi.\n- Ưu tiên **số lượng** ca chấm tự động; có thể dùng Claude sinh thêm ca rồi người duyệt.\n- Tách **train / validation / test**; con số báo cáo lấy trên tập test chưa dùng để chỉnh.\n- Mỗi lỗi thật ngoài production ⇒ thêm thành một ca (**regression set**).\n\n**Cách chấm**\n\n| Cách | Ưu | Nhược | Dùng cho |\n|---|---|---|---|\n| Code-based (exact/string match, kiểm schema, chạy test) | nhanh, rẻ, tin cậy | chỉ cho đầu ra có đáp án rõ | phân loại, trích xuất, JSON, code |\n| Model-graded (LLM-as-a-judge) | linh hoạt, mở rộng được | cần rubric tốt, cần hiệu chỉnh | văn xuôi, giọng, tính đầy đủ |\n| Human | chuẩn vàng | đắt, chậm | ca hệ trọng, hiệu chỉnh judge |\n\n**Với agent**: chấm **kết quả cuối** (trạng thái môi trường) hơn là chấm từng bước; chạy nhiều lần vì không tất định (pass@k vs pass^k); theo dõi cả số lượt, token, thời gian.\n\n**Công cụ**: Console có *Evaluate* để chạy prompt trên bộ ca; trong code dùng Batch API cho eval lớn để giảm chi phí."
+  },
+  {
+   "id": "safety-governance",
+   "title": "An toàn & quản trị",
+   "body_md": "**Guardrail nhiều lớp**\n\n| Lớp | Đòn |\n|---|---|\n| Đầu vào | harmlessness screen bằng model nhỏ (tầng Haiku), lọc độ dài/định dạng, tách dữ liệu khỏi chỉ dẫn bằng thẻ XML |\n| Model | system prompt rõ phạm vi, model có huấn luyện an toàn, xử lý `refusal` |\n| Hành động | least privilege cho tool, HITL cho hành động không đảo ngược, sandbox |\n| Đầu ra | output classifier, lọc dữ liệu nhạy cảm, structured outputs |\n| Vận hành | giám sát, cảnh báo, phản ứng sự cố |\n\n**Giảm hallucination** (theo docs Anthropic)\n- **Cho phép nói \"tôi không biết\"** một cách tường minh.\n- Yêu cầu **trích nguyên văn** đoạn liên quan trước khi trả lời (với tài liệu dài).\n- Bật **citations**; yêu cầu mỗi khẳng định có nguồn, rút lại khẳng định không tìm được nguồn.\n- Giới hạn vào tài liệu được cấp (\"chỉ dùng thông tin trong tài liệu\"); dùng retrieval cho kiến thức nội bộ/mới.\n- So nhiều lần chạy (best-of-N) để phát hiện mâu thuẫn; cho model tự kiểm lại.\n\n**Jailbreak & prompt injection**\n- Harmlessness screen trước; system prompt nêu rõ giá trị/ranh giới; giám sát người dùng lặp lại hành vi lạm dụng.\n- **Indirect injection** (lệnh ẩn trong web, tài liệu, tool result, email) nguy hiểm hơn với agent: coi mọi nội dung bên ngoài là **dữ liệu không tin cậy**; giới hạn quyền tool; xác nhận của người trước hành động nhạy cảm; tách agent đọc nội dung lạ khỏi agent có quyền ghi.\n- Anthropic công bố nghiên cứu **Constitutional Classifiers** — bộ phân loại đầu vào/đầu ra huấn luyện từ một \"hiến chương\" để chặn jailbreak phổ quát.\n\n**Dữ liệu & triển khai**\n- Mặc định Anthropic không dùng dữ liệu API thương mại để huấn luyện; **ZDR** là thoả thuận không lưu dữ liệu sau xử lý — không áp cho mọi tính năng/model.\n- Triển khai qua **Amazon Bedrock**, **Google Cloud Vertex AI** (và các nền tảng khác như Microsoft Foundry): xác thực bằng IAM của cloud, thanh toán qua cloud, dữ liệu trong hạ tầng cloud; ID model, tính năng beta và thời điểm có model mới **có thể khác** API trực tiếp.\n\n**Khung an toàn của Anthropic (mức khái niệm)**\n- **Constitutional AI**: huấn luyện model theo một bộ nguyên tắc (\"hiến pháp\"); model tự phê bình/sửa câu trả lời theo nguyên tắc và dùng phản hồi của AI (RLAIF) thay một phần cho nhãn của người. Anthropic đã công bố hiến pháp của Claude.\n- **Responsible Scaling Policy (RSP)**: cam kết đánh giá năng lực nguy hiểm của model trước khi phát hành; vượt **ngưỡng năng lực** thì phải áp **mức bảo vệ tương ứng** (AI Safety Levels — ASL-1, ASL-2, ASL-3…) về triển khai và bảo mật. Mỗi model có **system card** mô tả kết quả đánh giá.\n- **Usage Policy**: quy định cách dùng được phép; ca dùng rủi ro cao cần HITL và công bố việc dùng AI.\n\n> Chính sách thay đổi theo thời gian — xem *Anthropic Trust Center*, *Usage Policy*, *Responsible Scaling Policy* bản mới nhất."
+  },
+  {
+   "id": "glossary",
+   "title": "Bảng thuật ngữ (58 mục)",
+   "body_md": "| Thuật ngữ | Nghĩa |\n|---|---|\n| Context window | tổng số token model xử lý trong một request: input + output (kể cả thinking). |\n| Token | đơn vị văn bản model xử lý và tính tiền; không bằng một từ. |\n| System prompt | chỉ dẫn cấp operator: vai trò, phạm vi, quy tắc — tách khỏi dữ liệu người dùng. |\n| stop_reason | lý do model dừng: end_turn, max_tokens, stop_sequence, tool_use, pause_turn, refusal. |\n| max_tokens | trần cứng số token output; chạm trần thì câu trả lời bị cụt. |\n| Streaming (SSE) | nhận output từng phần; giảm độ trễ cảm nhận, cần cho output dài. |\n| Effort | nấc điều chỉnh độ kỹ/lượng token model bỏ ra (low → max), nằm trong output_config. |\n| Adaptive thinking | model tự quyết suy nghĩ bao nhiêu trước khi trả lời; thay cho ngân sách thinking cố định. |\n| Extended thinking | khả năng suy luận trong khối thinking trước khi trả lời, tính tiền như output. |\n| Tool use | model yêu cầu gọi hàm bằng khối tool_use; ứng dụng chạy và trả tool_result. |\n| Client tool | tool do code của bạn thực thi. |\n| Server tool | tool Anthropic thực thi phía server: web search, web fetch, code execution. |\n| tool_choice | kiểm soát việc gọi tool: auto, any, tool, none. |\n| Parallel tool use | nhiều tool_use trong một lượt; trả mọi tool_result trong một message. |\n| Structured outputs | ép câu trả lời hoặc tham số tool khớp JSON Schema. |\n| strict: true | cờ trên tool bảo đảm tham số hợp schema. |\n| Prompt caching | tái dùng tiền tố prompt đã xử lý để giảm chi phí và TTFT. |\n| Cache breakpoint | điểm đánh dấu cache_control; mọi thứ trước nó được cache. |\n| TTFT | thời gian tới token đầu tiên. |\n| Message Batches API | xử lý lô bất đồng bộ, rẻ khoảng một nửa, không tức thì. |\n| Token counting | endpoint đếm input token trước khi gửi request. |\n| Citations | trích dẫn có vị trí cụ thể từ tài liệu được cấp. |\n| Files API | tải tệp một lần, dùng lại bằng file_id. |\n| Context rot | chất lượng giảm khi ngữ cảnh quá dài/nhiễu. |\n| Context editing | tự động xoá tool result/thinking cũ khỏi ngữ cảnh. |\n| Compaction | tóm tắt phần đầu hội thoại để tiếp tục vượt giới hạn cửa sổ. |\n| Memory tool | tool cho Claude lưu/đọc thông tin ra tệp ngoài cửa sổ ngữ cảnh, qua nhiều phiên. |\n| Tool search / defer_loading | nạp định nghĩa tool khi cần thay vì nạp tất cả từ đầu. |\n| RAG | truy hồi tài liệu liên quan rồi đưa vào ngữ cảnh để trả lời có căn cứ. |\n| Contextual Retrieval | gắn ngữ cảnh do Claude sinh vào từng chunk trước khi index để truy hồi tốt hơn. |\n| Rerank | xếp hạng lại ứng viên truy hồi bằng model chuyên dụng trước khi đưa vào prompt. |\n| MCP | chuẩn mở nối ứng dụng AI với tool/dữ liệu qua client–server. |\n| MCP connector | tính năng API cho Messages API gọi thẳng MCP server từ xa. |\n| Augmented LLM | LLM được tăng cường retrieval, tool, memory — khối nền của agent. |\n| Workflow | LLM và tool điều phối theo đường đi định sẵn trong code. |\n| Agent | LLM tự điều hướng quy trình và dùng tool trong vòng lặp tới khi xong. |\n| Orchestrator–workers | một LLM chia việc động cho các worker rồi tổng hợp. |\n| Evaluator–optimizer | một LLM sinh, một LLM chấm và phản hồi, lặp tới khi đạt. |\n| Subagent | agent con có context, prompt, tool riêng; trả bản tóm cho agent chính. |\n| Claude Agent SDK | thư viện đóng gói harness Claude Code để tự dựng agent. |\n| Agent Skills | thư mục SKILL.md + tài nguyên, nạp dần khi liên quan. |\n| CLAUDE.md | tệp bộ nhớ/quy ước Claude Code tự nạp mỗi phiên. |\n| Hook (Claude Code) | lệnh chạy tự động ở sự kiện vòng đời, do harness cưỡng chế. |\n| Headless mode | chạy Claude Code không tương tác (claude -p) trong script/CI. |\n| Eval | bộ ca kiểm thử + cách chấm để đo chất lượng hệ thống. |\n| LLM-as-a-judge | dùng model chấm đầu ra theo rubric. |\n| Hallucination | model tạo thông tin nghe hợp lý nhưng sai/không có nguồn. |\n| Prompt injection | nội dung đưa vào chứa lệnh nhằm chiếm quyền điều khiển model. |\n| Jailbreak | cố ý lách hàng rào an toàn của model. |\n| Harmlessness screen | bước phân loại đầu vào/đầu ra bằng model nhỏ để chặn nội dung có hại. |\n| Refusal | model từ chối; API trả stop_reason = refusal với HTTP 200. |\n| HITL | human-in-the-loop: người duyệt trước các hành động/quyết định quan trọng. |\n| Least privilege | chỉ cấp đúng năng lực/quyền cần cho vai trò. |\n| ZDR | zero data retention: thoả thuận không lưu dữ liệu sau xử lý. |\n| Constitutional AI | phương pháp huấn luyện theo bộ nguyên tắc, dùng phản hồi của AI. |\n| RSP / ASL | chính sách mở rộng có trách nhiệm; mức bảo vệ tăng theo năng lực model. |\n| Rate limit (429) / Overloaded (529) | vượt hạn mức của bạn / API quá tải phía nhà cung cấp. |\n| Model deprecation | model được báo sắp ngừng; sau ngày retire request sẽ lỗi. |"
+  }
+ ]
+}

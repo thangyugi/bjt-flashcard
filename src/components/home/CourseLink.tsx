@@ -36,6 +36,7 @@ export function CourseLink({
   id,
   href,
   color,
+  mark,
   lessons,
   bjtTotal,
   art,
@@ -44,6 +45,7 @@ export function CourseLink({
   id: string;
   href: string;
   color: string;
+  mark?: string;
   lessons: CourseLessons;
   bjtTotal: number;
   art: ReactNode;
@@ -59,7 +61,7 @@ export function CourseLink({
   const main = viewer === "guest" ? `/register?next=${encodeURIComponent(href)}` : href;
 
   return (
-    <div className="col course" style={{ "--c": color } as CSSProperties}>
+    <div className="col course" style={{ "--c": color, "--cm": mark ?? color } as CSSProperties}>
       {/* Cả cột bấm được (lớp phủ) → trang danh sách bài của khóa; "Học tiếp" là liên kết nhỏ riêng, nằm trên lớp phủ */}
       <Link className="hit" href={main} aria-label={`${lessons.title}: ${user ? "xem danh sách bài" : viewer === "guest" ? "đăng ký để học" : "mở khóa học"}`} />
       <div className="art">{art}</div>

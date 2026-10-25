@@ -43,7 +43,7 @@ export function PlanStrip({ balance, earned, spent, xpToNext }: { balance: numbe
           aria-expanded={open}
           aria-controls="land-plan"
           onClick={() => setOpen((o) => !o)}
-          className="flex w-full min-w-0 items-center gap-2.5 rounded-lg border border-line-strong bg-paper px-3 py-1.5 text-left text-[14px] hover:border-line-strong md:w-auto md:max-w-full"
+          className="flex w-full min-w-0 items-center gap-2.5 rounded-lg border border-line-strong bg-paper px-3 py-1.5 text-left text-[14px] pointer-coarse:min-h-10 hover:border-line-strong md:w-auto md:max-w-full"
         >
           <span className="font-semibold whitespace-nowrap text-ink">Kế hoạch hôm nay</span>
           <span

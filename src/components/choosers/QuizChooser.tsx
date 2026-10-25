@@ -149,7 +149,7 @@ export function useQuizItems(data: ChooserData): { items: QuizItem[]; recommende
       course: "ccar-p",
       group: "Luyện tập",
       title: "Luyện tập CCAR-P",
-      desc: "Theo domain hoặc task statement, bộ đề v2 hay trộn ngẫu nhiên. Đề tiếng Việt kèm bản gốc tiếng Anh, giải thích từng ô.",
+      desc: "Theo domain hoặc task statement, bộ đề v2, bộ đề Claude biên soạn hay trộn ngẫu nhiên. Đề tiếng Việt kèm bản gốc tiếng Anh, giải thích từng ô.",
       meta: `${counts.ccarQuestions} câu · 7 domain · bộ v2 ${counts.ccarV2} câu`,
       result: score(latest(ccarPractice, (k) => !k.startsWith("exam:"))?.[1]),
       primary: last.ccar
@@ -157,6 +157,7 @@ export function useQuizItems(data: ChooserData): { items: QuizItem[]; recommende
         : { label: "Chọn bộ để luyện", href: "/claude-ccar-p/practice" },
       more: [
         { label: "Bộ đề v2", href: "/claude-ccar-p/practice/v2" },
+        { label: "Bộ đề Claude biên soạn", href: "/claude-ccar-p/practice/claude" },
         { label: "Trộn ngẫu nhiên 20 câu", href: "/claude-ccar-p/practice/mix?n=20" },
       ],
     },
@@ -273,7 +274,7 @@ export function CourseQuiz({ data, course }: { data: ChooserData; course: Course
                   <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
                 </Link>
                 {q.more?.map((m) => (
-                  <Link key={m.href} href={m.href} className="text-[14px] font-semibold text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink-3">
+                  <Link key={m.href} href={m.href} className="inline-flex min-h-10 items-center text-[14px] font-semibold text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink-3">
                     {m.label}
                   </Link>
                 ))}
