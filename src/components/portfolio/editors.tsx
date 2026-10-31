@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { ArrowDown, ArrowUp, Plus, Trash2, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Check, Plus, Trash2, X } from "lucide-react";
 import {
   PHASES,
   TECH_GROUPS,
@@ -15,7 +15,7 @@ import {
 } from "@/lib/portfolio/types";
 
 /*
- * Bảng chỉnh sửa (side panel) và các biểu mẫu của portfolio. Chrome bằng tiếng Việt; nội dung là chữ người dùng viết.
+ * Bảng chỉnh sửa (hộp thoại lớn giữa màn hình) và các biểu mẫu của portfolio. Chrome bằng tiếng Việt; nội dung là chữ người dùng viết.
  * Danh sách (担当内容, 学んだこと…) nhập "mỗi dòng một mục" để gõ nhanh cả trên điện thoại.
  */
 
@@ -27,20 +27,30 @@ const lines = (s: string) =>
     .filter(Boolean);
 const isUrl = (s: string) => /^https?:\/\/[^\s.]+\.[^\s]+$/i.test(s.trim());
 
-/** Khung bảng bên phải: hộp thoại, Esc / nền mờ để đóng, khóa cuộn trang, focus ô đầu tiên */
+/** Hộp thoại chỉnh sửa lớn: Esc / nền mờ để đóng, khóa cuộn trang, focus ô đầu tiên; tùy chọn nút xóa ở chân */
 export function EditPanel({
   title,
+  eyebrow,
+  lead,
   onClose,
   onSubmit,
   submitLabel = "Lưu",
+  onDelete,
+  deleteLabel = "Xóa",
   children,
 }: {
   title: string;
+  eyebrow?: string;
+  lead?: ReactNode;
   onClose: () => void;
   onSubmit: () => boolean;
   submitLabel?: string;
+  /** Có → hiện nút xóa (hỏi xác nhận) ở góc trái chân hộp thoại */
+  onDelete?: () => void;
+  deleteLabel?: string;
   children: ReactNode;
 }) {
+  const [askDel, setAskDel] = useState(false);
   const id = useId();
   const ref = useRef<HTMLFormElement>(null);
   // onClose thường là hàm mới mỗi lần vẽ → giữ trong ref để hiệu ứng mở bảng chỉ chạy một lần
@@ -81,21 +91,50 @@ export function EditPanel({
       <section role="dialog" aria-modal="true" aria-labelledby={id}>
         <form ref={ref} onSubmit={submit} noValidate className="flex h-full min-h-0 flex-col">
           <div className="ph">
-            <h2 id={id} className="text-[16px] font-bold text-ink">
-              {title}
-            </h2>
-            <button type="button" onClick={onClose} className="grid h-9 w-9 place-items-center rounded-lg text-ink-3 hover:bg-surface-2 hover:text-ink" aria-label="Đóng">
+            <div className="min-w-0">
+              {eyebrow && <p className="eyebrow-label">{eyebrow}</p>}
+              <h2 id={id}>{title}</h2>
+              {lead && <p className="mt-1.5 text-[14px] leading-relaxed text-ink-3">{lead}</p>}
+            </div>
+            <button type="button" onClick={onClose} className="x" aria-label="Đóng">
               <X className="h-5 w-5" aria-hidden />
             </button>
           </div>
           <div className="pb">{children}</div>
           <div className="pfoot">
-            <button type="button" onClick={onClose} className="inline-flex h-10 items-center rounded-[10px] border border-line-strong px-4 text-[14px] font-semibold text-ink hover:border-ink-3">
-              Hủy
-            </button>
-            <button type="submit" className="inline-flex h-10 items-center rounded-[10px] bg-brand px-5 text-[14px] font-semibold text-white hover:bg-brand-hover">
-              {submitLabel}
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              {onDelete &&
+                (askDel ? (
+                  <>
+                    <span className="text-[14px] font-semibold text-brand-soft-ink">Xóa hẳn? Không hoàn tác được.</span>
+                    <button
+                      type="button"
+                      className="tbtn brand lg"
+                      onClick={() => {
+                        onDelete();
+                        close.current();
+                      }}
+                    >
+                      {deleteLabel}
+                    </button>
+                    <button type="button" className="tbtn lg" onClick={() => setAskDel(false)}>
+                      Không
+                    </button>
+                  </>
+                ) : (
+                  <button type="button" className="tbtn danger lg" onClick={() => setAskDel(true)}>
+                    <Trash2 aria-hidden /> {deleteLabel}
+                  </button>
+                ))}
+            </div>
+            <div className="ml-auto flex gap-2.5">
+              <button type="button" onClick={onClose} className="tbtn lg">
+                Hủy
+              </button>
+              <button type="submit" className="tbtn brand lg">
+                <Check aria-hidden /> {submitLabel}
+              </button>
+            </div>
           </div>
         </form>
       </section>
@@ -103,7 +142,7 @@ export function EditPanel({
   );
 }
 
-function Field({ label, hint, error, children }: { label: string; hint?: string; error?: string; children: ReactNode }) {
+export function Field({ label, hint, error, children }: { label: string; hint?: string; error?: string; children: ReactNode }) {
   return (
     <label className="f">
       <span>
@@ -115,7 +154,7 @@ function Field({ label, hint, error, children }: { label: string; hint?: string;
   );
 }
 
-function Text({
+export function Text({
   value,
   onChange,
   invalid,
@@ -134,7 +173,22 @@ function Text({
   return <input type={type} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={invalid || undefined} {...rest} />;
 }
 
-function Area({ value, onChange, invalid, rows = 4, ...rest }: { value: string; onChange: (v: string) => void; invalid?: boolean; rows?: number; placeholder?: string; maxLength?: number }) {
+export function Area({
+  value,
+  onChange,
+  invalid,
+  rows = 4,
+  ...rest
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  invalid?: boolean;
+  rows?: number;
+  placeholder?: string;
+  maxLength?: number;
+  lang?: string;
+  className?: string;
+}) {
   return <textarea value={value} rows={rows} onChange={(e) => onChange(e.target.value)} aria-invalid={invalid || undefined} {...rest} />;
 }
 
@@ -178,35 +232,23 @@ function TagInput({ value, onChange, label }: { value: string[]; onChange: (v: s
   );
 }
 
-function SmallBtn({ children, onClick, label, disabled }: { children: ReactNode; onClick: () => void; label: string; disabled?: boolean }) {
+export function SmallBtn({ children, onClick, label, disabled, danger }: { children: ReactNode; onClick: () => void; label: string; disabled?: boolean; danger?: boolean }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={label}
-      title={label}
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line-strong text-ink-2 hover:border-ink-3 hover:text-ink disabled:opacity-35"
-    >
+    <button type="button" onClick={onClick} disabled={disabled} aria-label={label} title={label} className={danger ? "tbtn icon danger" : "tbtn icon"}>
       {children}
     </button>
   );
 }
 
-function AddBtn({ children, onClick, disabled }: { children: ReactNode; onClick: () => void; disabled?: boolean }) {
+export function AddBtn({ children, onClick, disabled }: { children: ReactNode; onClick: () => void; disabled?: boolean }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="inline-flex h-10 items-center gap-2 self-start rounded-lg border border-dashed border-line-strong px-3.5 text-[13.5px] font-semibold text-ink-2 hover:border-ink-3 hover:text-ink disabled:opacity-40"
-    >
-      <Plus className="h-4 w-4" aria-hidden /> {children}
+    <button type="button" onClick={onClick} disabled={disabled} className="tbtn self-start border-dashed">
+      <Plus aria-hidden /> {children}
     </button>
   );
 }
 
-const move = <T,>(a: T[], i: number, d: number) => {
+export const move = <T,>(a: T[], i: number, d: number) => {
   const j = i + d;
   if (j < 0 || j >= a.length) return a;
   const b = [...a];
@@ -246,7 +288,11 @@ export function HeaderForm({ initial, onSave, onClose }: { initial: Header; onSa
   };
 
   return (
-    <EditPanel title="Sửa phần giới thiệu" onClose={onClose} onSubmit={submit}>
+    <EditPanel eyebrow="My Portfolio · Phần đầu trang" title="Sửa phần giới thiệu" onClose={onClose} onSubmit={submit}>
+      <fieldset>
+        <legend>
+          <span className="n">1</span> Thông tin
+        </legend>
       <Field label="Tên hiển thị" hint="dòng cuối hiện màu xám" error={err.name}>
         <Text value={v.name} onChange={(name) => up({ name })} invalid={!!err.name} maxLength={60} placeholder="Kenta Morimoto" />
       </Field>
@@ -261,9 +307,14 @@ export function HeaderForm({ initial, onSave, onClose }: { initial: Header; onSa
       <Field label="Giới thiệu ngắn" hint={`${v.intro.length}/600`}>
         <Area value={v.intro} onChange={(intro) => up({ intro })} maxLength={600} rows={5} />
       </Field>
+      </fieldset>
+
+      <div className="cols2">
 
       <fieldset>
-        <legend>Liên kết (tối đa 4)</legend>
+        <legend>
+          <span className="n">3</span> Liên kết (tối đa 4)
+        </legend>
         {v.links.length === 0 && <p className="text-[13px] text-ink-3">Chưa có liên kết. Thêm trang portfolio, GitHub, blog…</p>}
         {v.links.map((l, i) => (
           <div key={i} className="rep">
@@ -273,7 +324,7 @@ export function HeaderForm({ initial, onSave, onClose }: { initial: Header; onSa
             <Field label="Địa chỉ" error={err[`link${i}u`]}>
               <Text type="url" value={l.url} onChange={(url) => up({ links: v.links.map((x, j) => (j === i ? { ...x, url } : x)) })} invalid={!!err[`link${i}u`]} placeholder="https://" maxLength={300} />
             </Field>
-            <SmallBtn label="Xóa liên kết" onClick={() => up({ links: v.links.filter((_, j) => j !== i) })}>
+            <SmallBtn danger label="Xóa liên kết" onClick={() => up({ links: v.links.filter((_, j) => j !== i) })}>
               <Trash2 className="h-4 w-4" aria-hidden />
             </SmallBtn>
           </div>
@@ -284,7 +335,9 @@ export function HeaderForm({ initial, onSave, onClose }: { initial: Header; onSa
       </fieldset>
 
       <fieldset>
-        <legend>5 ô số liệu</legend>
+        <legend>
+          <span className="n">2</span> 5 ô số liệu
+        </legend>
         <p className="-mt-1 text-[12.5px] text-ink-3">Số / chữ ngắn (vd. 8年, N2, −48%) và nhãn bên dưới. Để trống cả hai để ẩn ô.</p>
         {v.facts.map((f, i) => (
           <div key={i} className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-2">
@@ -297,6 +350,7 @@ export function HeaderForm({ initial, onSave, onClose }: { initial: Header; onSa
           </div>
         ))}
       </fieldset>
+      </div>
     </EditPanel>
   );
 }
@@ -318,7 +372,7 @@ export function PrForm({ initial, onSave, onClose }: { initial: Pr; onSave: (v: 
     return true;
   };
   return (
-    <EditPanel title="Sửa 自己PR" onClose={onClose} onSubmit={submit}>
+    <EditPanel eyebrow="My Portfolio · Self PR" title="Sửa 自己PR" lead="Mỗi nhóm là một cột (vd. 技術 / 性格); mỗi dòng trong «Các ý» là một gạch đầu dòng." onClose={onClose} onSubmit={submit}>
       {rows.length === 0 && <p className="text-[14px] text-ink-3">Chưa có nhóm nào. Mỗi nhóm là một cột (vd. 技術 / 性格) với các ý gạch đầu dòng.</p>}
       {rows.map((r, i) => (
         <fieldset key={r.id}>
@@ -336,7 +390,7 @@ export function PrForm({ initial, onSave, onClose }: { initial: Pr; onSave: (v: 
             <SmallBtn label="Xuống" onClick={() => setRows(move(rows, i, 1))} disabled={i === rows.length - 1}>
               <ArrowDown className="h-4 w-4" aria-hidden />
             </SmallBtn>
-            <SmallBtn label="Xóa nhóm" onClick={() => setRows(rows.filter((_, j) => j !== i))}>
+            <SmallBtn danger label="Xóa nhóm" onClick={() => setRows(rows.filter((_, j) => j !== i))}>
               <Trash2 className="h-4 w-4" aria-hidden />
             </SmallBtn>
           </div>
@@ -377,7 +431,7 @@ export function SkillsForm({ initial, onSave, onClose }: { initial: Skills; onSa
     return true;
   };
   return (
-    <EditPanel title="Sửa 技術経験" onClose={onClose} onSubmit={submit}>
+    <EditPanel eyebrow="My Portfolio · Skills" title="Sửa 技術経験" lead="Mỗi nhóm là một cột; mỗi kỹ năng kèm số năm kinh nghiệm." onClose={onClose} onSubmit={submit}>
       {groups.length === 0 && <p className="text-[14px] text-ink-3">Chưa có nhóm kỹ năng. Thêm nhóm (言語, FW, 開発工程…), rồi thêm từng mục với số năm kinh nghiệm.</p>}
       {groups.map((g, i) => (
         <fieldset key={g.id}>
@@ -391,7 +445,7 @@ export function SkillsForm({ initial, onSave, onClose }: { initial: Skills; onSa
             <SmallBtn label="Nhóm lên" onClick={() => setGroups(move(groups, i, -1))} disabled={i === 0}>
               <ArrowUp className="h-4 w-4" aria-hidden />
             </SmallBtn>
-            <SmallBtn label="Xóa nhóm" onClick={() => setGroups(groups.filter((_, j) => j !== i))}>
+            <SmallBtn danger label="Xóa nhóm" onClick={() => setGroups(groups.filter((_, j) => j !== i))}>
               <Trash2 className="h-4 w-4" aria-hidden />
             </SmallBtn>
           </div>
@@ -403,7 +457,7 @@ export function SkillsForm({ initial, onSave, onClose }: { initial: Skills; onSa
               <Field label={k === 0 ? "Số năm" : ""} error={err[`y${i}.${k}`]}>
                 <Text type="number" value={it.years} aria-label="Số năm" onChange={(years) => setG(i, { items: g.items.map((x, j) => (j === k ? { ...x, years } : x)) })} invalid={!!err[`y${i}.${k}`]} />
               </Field>
-              <SmallBtn label="Xóa mục" onClick={() => setG(i, { items: g.items.filter((_, j) => j !== k) })}>
+              <SmallBtn danger label="Xóa mục" onClick={() => setG(i, { items: g.items.filter((_, j) => j !== k) })}>
                 <Trash2 className="h-4 w-4" aria-hidden />
               </SmallBtn>
             </div>
@@ -435,7 +489,7 @@ export function EducationForm({ initial, onSave, onClose }: { initial: Education
     return true;
   };
   return (
-    <EditPanel title="Sửa 学歴・資格" onClose={onClose} onSubmit={submit}>
+    <EditPanel eyebrow="My Portfolio · Education" title="Sửa 学歴・資格" onClose={onClose} onSubmit={submit}>
       {rows.length === 0 && <p className="text-[14px] text-ink-3">Chưa có mục nào. Thêm trường học, chứng chỉ (JLPT, TOEIC, AWS…).</p>}
       {rows.map((r, i) => (
         <fieldset key={r.id}>
@@ -453,7 +507,7 @@ export function EducationForm({ initial, onSave, onClose }: { initial: Education
             <SmallBtn label="Xuống" onClick={() => setRows(move(rows, i, 1))} disabled={i === rows.length - 1}>
               <ArrowDown className="h-4 w-4" aria-hidden />
             </SmallBtn>
-            <SmallBtn label="Xóa mục" onClick={() => setRows(rows.filter((_, j) => j !== i))}>
+            <SmallBtn danger label="Xóa mục" onClick={() => setRows(rows.filter((_, j) => j !== i))}>
               <Trash2 className="h-4 w-4" aria-hidden />
             </SmallBtn>
           </div>
@@ -467,7 +521,19 @@ export function EducationForm({ initial, onSave, onClose }: { initial: Education
 }
 
 // ═══════════════ 業務経歴: mẫu 職務経歴書 cho một dự án ═══════════════
-export function ProjectForm({ initial, isNew, onSave, onClose }: { initial: ProjectData; isNew: boolean; onSave: (v: ProjectData) => void; onClose: () => void }) {
+export function ProjectForm({
+  initial,
+  isNew,
+  onSave,
+  onClose,
+  onDelete,
+}: {
+  initial: ProjectData;
+  isNew: boolean;
+  onSave: (v: ProjectData) => void;
+  onClose: () => void;
+  onDelete?: () => void;
+}) {
   const [v, setV] = useState(initial);
   const [team, setTeam] = useState(initial.teamSize == null ? "" : String(initial.teamSize));
   const [txt, setTxt] = useState({ duties: initial.duties.join("\n"), results: initial.results.join("\n"), learnings: initial.learnings.join("\n") });
@@ -505,82 +571,104 @@ export function ProjectForm({ initial, isNew, onSave, onClose }: { initial: Proj
   };
 
   return (
-    <EditPanel title={isNew ? "Thêm dự án (職務経歴書)" : "Sửa dự án"} onClose={onClose} onSubmit={submit} submitLabel={isNew ? "Thêm dự án" : "Lưu"}>
-      <Field label="案件名 · Tên dự án" error={err.title}>
-        <Text value={v.title} onChange={(title) => up({ title })} invalid={!!err.title} maxLength={200} lang="ja" placeholder="例：ECサイトのフロントエンド刷新" />
-      </Field>
-
+    <EditPanel
+      eyebrow="My Portfolio · 業務経歴"
+      title={isNew ? "Thêm dự án mới" : "Sửa dự án"}
+      lead="Điền theo mẫu 職務経歴書: thời gian, vai trò, công đoạn, công nghệ và việc đảm nhận."
+      onClose={onClose}
+      onSubmit={submit}
+      submitLabel={isNew ? "Thêm dự án" : "Lưu"}
+      onDelete={onDelete}
+      deleteLabel="Xóa dự án"
+    >
       <fieldset>
-        <legend>期間 · Thời gian</legend>
-        <div className="row2">
-          <Field label="Từ tháng" error={err.from}>
+        <legend>
+          <span className="n">1</span> Thông tin chung
+        </legend>
+        <Field label="案件名 · Tên dự án" error={err.title}>
+          <Text value={v.title} onChange={(title) => up({ title })} invalid={!!err.title} maxLength={200} lang="ja" placeholder="例：ECサイトのフロントエンド刷新" />
+        </Field>
+        <div className="row3">
+          <Field label="期間 · Từ tháng" error={err.from}>
             <Text type="month" value={v.from} onChange={(from) => up({ from })} invalid={!!err.from} />
           </Field>
           <Field label="Đến tháng" error={err.to}>
             {current ? (
-              <span className="flex h-[42px] items-center rounded-lg border border-dashed border-line-strong px-3 text-[15px] font-normal text-ink-2">現在 (đang tham gia)</span>
+              <span className="flex h-12 items-center rounded-xl border border-dashed border-line-strong px-3.5 text-[15px] font-normal text-ink-2">現在 (đang tham gia)</span>
             ) : (
               <Text type="month" value={v.to ?? ""} onChange={(to) => up({ to })} invalid={!!err.to} />
             )}
           </Field>
+          <label className="flex items-center gap-2 self-end pb-3 text-[14px] text-ink">
+            <input type="checkbox" checked={current} onChange={(e) => up({ to: e.target.checked ? null : "" })} /> 現在 — vẫn đang tham gia
+          </label>
         </div>
-        <label className="flex items-center gap-2 text-[14px] text-ink">
-          <input type="checkbox" checked={current} onChange={(e) => up({ to: e.target.checked ? null : "" })} /> 現在 — vẫn đang tham gia
-        </label>
-      </fieldset>
-
-      <div className="row2">
-        <Field label="業界 · Ngành">
-          <Text value={v.industry} onChange={(industry) => up({ industry })} maxLength={80} lang="ja" placeholder="EC・小売" />
-        </Field>
-        <Field label="チーム人数 · Số người" error={err.team}>
-          <Text type="number" value={team} onChange={setTeam} invalid={!!err.team} placeholder="8" />
-        </Field>
-      </div>
-      <Field label="役割 · Vai trò">
-        <Text value={v.role} onChange={(role) => up({ role })} maxLength={60} lang="ja" placeholder="SE / テックリード / BrSE" />
-      </Field>
-
-      <fieldset>
-        <legend>参加工程 · Công đoạn tham gia</legend>
-        <div className="checks" lang="ja">
-          {PHASES.map((p) => (
-            <label key={p.key}>
-              <input
-                type="checkbox"
-                checked={v.phases.includes(p.key)}
-                onChange={(e) => up({ phases: e.target.checked ? PHASES.map((x) => x.key).filter((k) => k === p.key || v.phases.includes(k)) : v.phases.filter((k) => k !== p.key) })}
-              />
-              {p.label}
-            </label>
-          ))}
+        <div className="row3">
+          <Field label="業界 · Ngành">
+            <Text value={v.industry} onChange={(industry) => up({ industry })} maxLength={80} lang="ja" placeholder="EC・小売" />
+          </Field>
+          <Field label="役割 · Vai trò">
+            <Text value={v.role} onChange={(role) => up({ role })} maxLength={60} lang="ja" placeholder="SE / テックリード / BrSE" />
+          </Field>
+          <Field label="チーム人数 · Số người" error={err.team}>
+            <Text type="number" value={team} onChange={setTeam} invalid={!!err.team} placeholder="8" />
+          </Field>
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>技術要素 · Công nghệ</legend>
-        {TECH_GROUPS.map((g) => (
-          <div key={g.key} className="flex flex-col gap-1.5">
-            <span className="text-[13px] font-semibold text-ink-2" lang="ja">
-              {g.label}
-            </span>
-            <TagInput label={`技術要素: ${g.label}`} value={v.tech[g.key]} onChange={(t) => up({ tech: { ...v.tech, [g.key]: t } })} />
+      <div className="cols2">
+        <fieldset>
+          <legend>
+            <span className="n">2</span> 参加工程 · Công đoạn tham gia
+          </legend>
+          <div className="checks" lang="ja">
+            {PHASES.map((p) => (
+              <label key={p.key}>
+                <input
+                  type="checkbox"
+                  checked={v.phases.includes(p.key)}
+                  onChange={(e) => up({ phases: e.target.checked ? PHASES.map((x) => x.key).filter((k) => k === p.key || v.phases.includes(k)) : v.phases.filter((k) => k !== p.key) })}
+                />
+                {p.label}
+              </label>
+            ))}
           </div>
-        ))}
-      </fieldset>
+        </fieldset>
 
-      <Field label="概要 · Tóm tắt dự án" hint={`${v.summary.length}/1200`}>
-        <Area value={v.summary} onChange={(summary) => up({ summary })} rows={4} maxLength={1200} />
-      </Field>
-      <Field label="担当内容 · Việc đảm nhận" hint="mỗi dòng một mục" error={err.duties}>
-        <Area value={txt.duties} onChange={(duties) => setTxt({ ...txt, duties })} invalid={!!err.duties} rows={6} maxLength={5000} />
-      </Field>
-      <Field label="成果 · Kết quả" hint="tùy chọn, mỗi dòng một mục — nên có số liệu">
-        <Area value={txt.results} onChange={(results) => setTxt({ ...txt, results })} rows={4} maxLength={3000} />
-      </Field>
-      <Field label="学んだこと · Bài học" hint="mỗi dòng một mục">
-        <Area value={txt.learnings} onChange={(learnings) => setTxt({ ...txt, learnings })} rows={4} maxLength={3000} />
-      </Field>
+        <fieldset>
+          <legend>
+            <span className="n">3</span> 技術要素 · Công nghệ
+          </legend>
+          {TECH_GROUPS.map((g) => (
+            <div key={g.key} className="flex flex-col gap-1.5">
+              <span className="text-[13px] font-semibold text-ink-2" lang="ja">
+                {g.label}
+              </span>
+              <TagInput label={`技術要素: ${g.label}`} value={v.tech[g.key]} onChange={(t) => up({ tech: { ...v.tech, [g.key]: t } })} />
+            </div>
+          ))}
+        </fieldset>
+      </div>
+
+      <fieldset>
+        <legend>
+          <span className="n">4</span> Nội dung
+        </legend>
+        <Field label="概要 · Tóm tắt dự án" hint={`${v.summary.length}/1200`}>
+          <Area value={v.summary} onChange={(summary) => up({ summary })} rows={4} maxLength={1200} lang="ja" />
+        </Field>
+        <div className="row3">
+          <Field label="担当内容 · Việc đảm nhận" hint="mỗi dòng một mục" error={err.duties}>
+            <Area className="tall" value={txt.duties} onChange={(duties) => setTxt({ ...txt, duties })} invalid={!!err.duties} rows={8} maxLength={5000} lang="ja" />
+          </Field>
+          <Field label="成果 · Kết quả" hint="tùy chọn, nên có số liệu">
+            <Area className="tall" value={txt.results} onChange={(results) => setTxt({ ...txt, results })} rows={8} maxLength={3000} lang="ja" />
+          </Field>
+          <Field label="学んだこと · Bài học" hint="mỗi dòng một mục">
+            <Area className="tall" value={txt.learnings} onChange={(learnings) => setTxt({ ...txt, learnings })} rows={8} maxLength={3000} lang="ja" />
+          </Field>
+        </div>
+      </fieldset>
     </EditPanel>
   );
 }

@@ -3,8 +3,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getSession, supabase } from "@/lib/supabase/client";
-import { samplePortfolio } from "./sample";
-import { emptyDoc, newId, normalizeDoc, type Part, type PortfolioDoc, type Project, type ProjectData } from "./types";
+import { sampleInterview, sampleIntroduce, samplePortfolio } from "./sample";
+import { emptyDoc, newId, normalizeDoc, normalizeInterview, normalizeIntroduce, RESUME_PARTS, type Part, type PortfolioDoc, type Project, type ProjectData } from "./types";
+
+/** Phạm vi "xóa dữ liệu mẫu": từng trang con của Portfolio */
+export type SampleScope = "resume" | "introduce" | "interview";
 
 /**
  * Portfolio của người đang đăng nhập: bản lưu trên máy (zustand persist, xem được khi offline) + đồng bộ với
@@ -43,7 +46,7 @@ interface PortfolioStore extends Pending {
   deleteProject: (id: string) => void;
   moveProject: (id: string, delta: -1 | 1) => void;
   duplicateProject: (id: string) => string | null;
-  clearSample: () => void;
+  clearSample: (scope: SampleScope) => void;
   reset: () => void;
 }
 
@@ -115,11 +118,12 @@ export const usePortfolioStore = create<PortfolioStore>()(
             if (!v.portfolio && v.projects.length === 0) {
               // Tài khoản mới: bắt đầu bằng portfolio mẫu và lưu lên máy chủ
               set({ doc: samplePortfolio() });
-              touch({ parts: ["header", "pr", "skills", "education"], projects: get().doc!.projects.map((p) => p.id), order: true });
+              touch({ parts: [...RESUME_PARTS, "introduce", "interview"], projects: get().doc!.projects.map((p) => p.id), order: true });
               return;
             }
             set({
-              doc: normalizeDoc(v.portfolio ?? {}, v.projects as Project[]),
+              // Introduce / Interview chưa từng lưu (tài khoản cũ, hoặc máy chủ chưa có cột mới) → nội dung mẫu
+              doc: normalizeDoc(v.portfolio ?? {}, v.projects as Project[], { introduce: sampleIntroduce, interview: sampleInterview }),
               sync: "saved",
               syncedAt: new Date().toISOString(),
             });
@@ -237,14 +241,27 @@ export const usePortfolioStore = create<PortfolioStore>()(
           return copy.id;
         },
 
-        clearSample() {
+        clearSample(scope) {
           const d = get().doc;
           if (!d) return;
           const e = emptyDoc();
-          const parts = (["header", "pr", "skills", "education"] as const).filter((k) => d[k].sample);
+          if (scope === "introduce") {
+            if (!d.introduce.sample) return;
+            set({ doc: { ...d, introduce: e.introduce } });
+            touch({ parts: ["introduce"] });
+            return;
+          }
+          if (scope === "interview") {
+            if (!d.interview.sample) return;
+            set({ doc: { ...d, interview: e.interview } });
+            touch({ parts: ["interview"] });
+            return;
+          }
+          const parts = RESUME_PARTS.filter((k) => d[k].sample);
           const removed = d.projects.filter((p) => p.data.sample).map((p) => p.id);
           set({
             doc: {
+              ...d,
               header: d.header.sample ? e.header : d.header,
               pr: d.pr.sample ? e.pr : d.pr,
               skills: d.skills.sample ? e.skills : d.skills,
@@ -265,7 +282,16 @@ export const usePortfolioStore = create<PortfolioStore>()(
     },
     {
       name: "leoedu-portfolio",
-      version: 1,
+      version: 2,
+      // v1 → v2: thêm Introduce / Interview Q&A (bản lưu cũ chưa có → nội dung mẫu)
+      migrate: (persisted, version) => {
+        const s = persisted as Partial<PortfolioStore> | undefined;
+        if (s?.doc && version < 2) {
+          const d = s.doc as Partial<PortfolioDoc> & PortfolioDoc;
+          s.doc = { ...d, introduce: normalizeIntroduce(d.introduce) ?? sampleIntroduce(), interview: normalizeInterview(d.interview) ?? sampleInterview() };
+        }
+        return s as PortfolioStore;
+      },
       partialize: (s) => ({
         userId: s.userId,
         doc: s.doc,

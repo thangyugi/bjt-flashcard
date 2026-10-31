@@ -114,7 +114,60 @@ export interface Project {
   data: ProjectData;
 }
 
-export type Part = "header" | "pr" | "skills" | "education";
+// ── Introduce (自己紹介): thẻ hồ sơ + các mục giới thiệu, tiếng Nhật kèm bản dịch tiếng Việt ──
+export interface IntroProfile {
+  name: string;
+  /** Phiên âm (フリガナ) */
+  kana: string;
+  role: string;
+  location: string;
+  /** Số năm kinh nghiệm, viết tự do */
+  years: string;
+  /** Ngôn ngữ sử dụng, viết tự do */
+  langs: string;
+  /** Câu khẩu hiệu (キャッチコピー) */
+  catchJa: string;
+  catchVi: string;
+}
+export interface IntroBlock {
+  id: string;
+  titleJa: string;
+  titleVi: string;
+  bodyJa: string;
+  bodyVi: string;
+}
+export interface Introduce {
+  profile: IntroProfile;
+  /** Mục đầu tiên hiện nổi bật cạnh thẻ hồ sơ */
+  blocks: IntroBlock[];
+  sample?: boolean;
+}
+
+// ── Interview Q&A (面接Q&A): câu hỏi / trả lời tiếng Nhật kèm bản dịch tiếng Việt ──
+export const QA_CATS = [
+  { key: "intro", ja: "自己紹介・経歴", vi: "Giới thiệu & kinh nghiệm" },
+  { key: "tech", ja: "技術", vi: "Kỹ thuật" },
+  { key: "team", ja: "チームワーク", vi: "Làm việc nhóm" },
+  { key: "motive", ja: "志望動機・キャリア", vi: "Động lực & định hướng" },
+  { key: "reverse", ja: "逆質問", vi: "Câu hỏi ngược" },
+] as const;
+export type QaCat = (typeof QA_CATS)[number]["key"];
+export interface QaItem {
+  id: string;
+  cat: QaCat;
+  qJa: string;
+  qVi: string;
+  aJa: string;
+  aVi: string;
+}
+export interface Interview {
+  items: QaItem[];
+  sample?: boolean;
+}
+
+export type Part = "header" | "pr" | "skills" | "education" | "introduce" | "interview";
+/** Các phần của trang My Portfolio (職務経歴書) */
+export const RESUME_PARTS = ["header", "pr", "skills", "education"] as const;
 
 export interface PortfolioDoc {
   header: Header;
@@ -122,6 +175,8 @@ export interface PortfolioDoc {
   skills: Skills;
   education: Education;
   projects: Project[];
+  introduce: Introduce;
+  interview: Interview;
 }
 
 /** UUID v4 cho dự án / mục mới (tạo ngay trên máy để sửa offline rồi đồng bộ sau mà không trùng) */
@@ -153,13 +208,54 @@ export const emptyProject = (): ProjectData => ({
 
 export const emptyFacts = (): Fact[] => Array.from({ length: 5 }, () => ({ value: "", label: "" }));
 
+export const emptyIntroProfile = (): IntroProfile => ({ name: "", kana: "", role: "", location: "", years: "", langs: "", catchJa: "", catchVi: "" });
+
 export const emptyDoc = (): PortfolioDoc => ({
   header: { name: "", role: "", location: "", intro: "", links: [], facts: emptyFacts() },
   pr: { sections: [] },
   skills: { groups: [] },
   education: { entries: [] },
   projects: [],
+  introduce: { profile: emptyIntroProfile(), blocks: [] },
+  interview: { items: [] },
 });
+
+const str = (v: unknown) => (typeof v === "string" ? v : "");
+
+/** Introduce từ máy chủ / bộ nhớ cũ; chưa từng lưu (không có "blocks") → null để dùng nội dung mẫu */
+export function normalizeIntroduce(raw: unknown): Introduce | null {
+  const r = raw as Partial<Introduce> | null | undefined;
+  if (!r || !Array.isArray(r.blocks)) return null;
+  const p = (r.profile ?? {}) as Partial<Record<keyof IntroProfile, unknown>>;
+  const profile = emptyIntroProfile();
+  for (const k of Object.keys(profile) as (keyof IntroProfile)[]) profile[k] = str(p[k]);
+  return {
+    profile,
+    blocks: r.blocks
+      .filter((b): b is IntroBlock => !!b && typeof b === "object")
+      .map((b) => ({ id: str(b.id) || newId(), titleJa: str(b.titleJa), titleVi: str(b.titleVi), bodyJa: str(b.bodyJa), bodyVi: str(b.bodyVi) })),
+    sample: !!r.sample,
+  };
+}
+
+/** Interview Q&A từ máy chủ / bộ nhớ cũ; chưa từng lưu (không có "items") → null để dùng nội dung mẫu */
+export function normalizeInterview(raw: unknown): Interview | null {
+  const r = raw as Partial<Interview> | null | undefined;
+  if (!r || !Array.isArray(r.items)) return null;
+  return {
+    items: r.items
+      .filter((q): q is QaItem => !!q && typeof q === "object")
+      .map((q) => ({
+        id: str(q.id) || newId(),
+        cat: QA_CATS.some((c) => c.key === q.cat) ? q.cat : "intro",
+        qJa: str(q.qJa),
+        qVi: str(q.qVi),
+        aJa: str(q.aJa),
+        aVi: str(q.aVi),
+      })),
+    sample: !!r.sample,
+  };
+}
 
 /** Đọc dữ liệu từ máy chủ / bộ nhớ cũ một cách phòng thủ (thiếu khóa → giá trị rỗng) */
 export function normalizeProject(d: Partial<ProjectData> | null | undefined): ProjectData {
@@ -182,7 +278,11 @@ export function normalizeProject(d: Partial<ProjectData> | null | undefined): Pr
   };
 }
 
-export function normalizeDoc(raw: Partial<Record<Part, unknown>>, projects: Project[]): PortfolioDoc {
+export function normalizeDoc(
+  raw: Partial<Record<Part, unknown>>,
+  projects: Project[],
+  fallback: { introduce: () => Introduce; interview: () => Interview }
+): PortfolioDoc {
   const e = emptyDoc();
   const h = { ...e.header, ...(raw.header as Partial<Header> | undefined) };
   const facts = Array.isArray(h.facts) ? h.facts.slice(0, 5) : [];
@@ -193,6 +293,8 @@ export function normalizeDoc(raw: Partial<Record<Part, unknown>>, projects: Proj
     skills: { ...e.skills, ...(raw.skills as Partial<Skills> | undefined) },
     education: { ...e.education, ...(raw.education as Partial<Education> | undefined) },
     projects: projects.map((p) => ({ id: p.id, data: normalizeProject(p.data) })),
+    introduce: normalizeIntroduce(raw.introduce) ?? fallback.introduce(),
+    interview: normalizeInterview(raw.interview) ?? fallback.interview(),
   };
 }
 

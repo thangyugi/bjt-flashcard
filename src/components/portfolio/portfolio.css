@@ -3,6 +3,9 @@
 
 .pf {
   --jp: var(--font-jp);
+  /* Nền tổng thể trắng; các ô / thẻ bên trong giữ màu giấy (--paper) */
+  background: var(--surface);
+  min-height: calc(100dvh - var(--header-h));
 }
 .pf .jp {
   font-family: var(--jp);
@@ -461,13 +464,17 @@
 .pf .proj-tools {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--line-strong);
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
 }
 .pf .confirm {
   margin-top: 12px;
+  border-radius: 12px;
   border: 1px solid var(--brand-muted);
   background: var(--brand-soft);
   padding: 12px 14px;
@@ -526,38 +533,161 @@
   font-size: 13px;
 }
 
-/* nút nhỏ trong portfolio */
-.pf .tbtn {
+/* nút trong portfolio: màu theo vai trò — đen = sửa, đỏ = thêm / lưu, hồng = xóa, viền = phụ */
+.pf .tbtn,
+.pf-panel .tbtn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 32px;
-  padding: 0 10px;
+  justify-content: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 14px;
   border: 1px solid var(--line-strong);
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--surface);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--ink);
   white-space: nowrap;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s;
 }
-.pf .tbtn:hover:not(:disabled) {
-  border-color: var(--ink-3);
+.pf .tbtn:hover:not(:disabled),
+.pf-panel .tbtn:hover:not(:disabled) {
+  border-color: var(--ink);
 }
-.pf .tbtn:disabled {
-  opacity: 0.4;
+.pf .tbtn:disabled,
+.pf-panel .tbtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
-.pf .tbtn.danger {
-  color: var(--brand);
+.pf .tbtn svg,
+.pf-panel .tbtn svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
 }
-.pf .tbtn.solid {
+.pf .tbtn.icon,
+.pf-panel .tbtn.icon {
+  width: 38px;
+  padding: 0;
+}
+.pf .tbtn.lg,
+.pf-panel .tbtn.lg {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 14.5px;
+}
+.pf .tbtn.dark,
+.pf-panel .tbtn.dark {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.pf .tbtn.dark:hover:not(:disabled),
+.pf-panel .tbtn.dark:hover:not(:disabled) {
+  background: #000;
+}
+.pf .tbtn.brand,
+.pf .tbtn.solid,
+.pf-panel .tbtn.brand {
   background: var(--brand);
   border-color: var(--brand);
   color: #fff;
 }
-.pf .tbtn svg {
-  width: 15px;
-  height: 15px;
+.pf .tbtn.brand:hover:not(:disabled),
+.pf .tbtn.solid:hover:not(:disabled),
+.pf-panel .tbtn.brand:hover:not(:disabled) {
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
+}
+.pf .tbtn.danger,
+.pf-panel .tbtn.danger {
+  background: var(--brand-soft);
+  border-color: var(--brand-muted);
+  color: var(--brand-soft-ink);
+}
+.pf .tbtn.danger:hover:not(:disabled),
+.pf-panel .tbtn.danger:hover:not(:disabled) {
+  border-color: var(--brand-soft-ink);
+}
+/* nút trên thanh chỉnh sửa (nền đen) */
+.pf .tbtn.on-dark {
+  background: transparent;
+  border-color: rgb(255 255 255 / 0.4);
+  color: #fff;
+}
+.pf .tbtn.on-dark:hover:not(:disabled) {
+  border-color: #fff;
+}
+
+/* thanh "đang chỉnh sửa" */
+.pf .editbar {
+  background: var(--ink);
+  color: #fff;
+}
+.pf .editbar .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f2b84b;
+  flex: none;
+}
+
+/* công tắc bản dịch tiếng Việt */
+.pf .switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.pf .switch .track {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--line-strong);
+  transition: background 0.2s;
+  flex: none;
+}
+.pf .switch .track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+  transition: transform 0.2s;
+}
+.pf .switch[aria-checked="true"] .track {
+  background: var(--brand);
+}
+.pf .switch[aria-checked="true"] .track::after {
+  transform: translateX(18px);
+}
+
+/* thẻ (Introduce / Q&A): nền giấy trên nền trắng */
+.pf .card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  min-width: 0;
+}
+.pf .card.strong {
+  border-color: var(--ink);
+}
+.pf .vi-box {
+  border: 1px dashed var(--line-strong);
+  border-radius: 12px;
+  background: var(--surface);
 }
 
 @media (max-width: 1100px) {
@@ -630,7 +760,7 @@
   }
   .pf .grid-cells > * {
     border: 1px solid var(--line) !important;
-    background: var(--surface);
+    background: var(--paper);
     padding: 18px;
   }
   .pf .projects {
@@ -642,7 +772,7 @@
   .pf .proj {
     grid-template-columns: 1fr;
     border: 1px solid var(--line);
-    background: var(--surface);
+    background: var(--paper);
   }
   .pf .proj:first-child {
     border-top: 1px solid var(--line);
@@ -675,85 +805,136 @@
   .pf .empty {
     border: 1px solid var(--line);
     margin-top: 12px;
-    background: var(--surface);
+    background: var(--paper);
   }
 }
 
-/* bảng chỉnh sửa (side panel) */
+/* bảng chỉnh sửa: hộp thoại lớn giữa màn hình; điện thoại: toàn màn hình */
 .pf-panel {
   position: fixed;
   inset: 0;
   z-index: 60;
   display: flex;
-  justify-content: flex-end;
-  background: rgba(28, 25, 23, 0.28);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(28, 25, 23, 0.5);
 }
 .pf-panel > section {
-  width: min(640px, 100%);
-  height: 100%;
-  background: var(--paper);
-  border-left: 1px solid var(--line-strong);
+  width: min(1120px, 100%);
+  max-height: calc(100dvh - 48px);
+  background: var(--surface);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  box-shadow: -16px 0 40px rgba(28, 25, 23, 0.12);
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(28, 25, 23, 0.3);
 }
 .pf-panel .ph {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--line-strong);
+  gap: 16px;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--line);
+}
+.pf-panel .ph h2 {
+  margin: 6px 0 0;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.pf-panel .ph .x {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.pf-panel .ph .x:hover {
+  border-color: var(--ink);
 }
 .pf-panel .pb {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 20px;
+  padding: 24px 32px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
+  background: var(--paper);
 }
 .pf-panel .pfoot {
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 10px;
-  padding: 12px 20px max(env(safe-area-inset-bottom), 12px);
-  border-top: 1px solid var(--line-strong);
-  background: var(--paper);
+  padding: 16px 32px max(env(safe-area-inset-bottom), 16px);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
 }
 .pf-panel fieldset {
   border: 1px solid var(--line);
-  padding: 14px;
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 20px 22px 22px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   min-width: 0;
+  margin: 0;
 }
 .pf-panel legend {
-  padding: 0 6px;
-  font-size: 12px;
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--ink);
+}
+.pf-panel legend + * {
+  clear: both;
+}
+.pf-panel legend .n {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12.5px;
+  flex: none;
+}
+.pf-panel legend .n.brand {
+  background: var(--brand);
 }
 .pf-panel label.f {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--ink-2);
   min-width: 0;
 }
 .pf-panel .hint {
   font-weight: 400;
   color: var(--ink-3);
-  font-size: 12px;
+  font-size: 12.5px;
 }
 .pf-panel .err {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--brand);
   font-size: 12.5px;
 }
@@ -764,32 +945,49 @@
 .pf-panel textarea {
   width: 100%;
   min-width: 0;
+  min-height: 48px;
   border: 1px solid var(--line-strong);
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--surface);
-  padding: 9px 11px;
-  font-size: 15px;
+  padding: 11px 14px;
+  font-size: 16px;
   font-weight: 400;
   color: var(--ink);
-  font-family: var(--font-sans), var(--jp);
+  font-family: var(--font-sans), var(--font-jp);
 }
 .pf-panel textarea {
-  min-height: 96px;
-  line-height: 1.6;
+  min-height: 120px;
+  line-height: 1.7;
   resize: vertical;
+}
+.pf-panel textarea.tall {
+  min-height: 220px;
 }
 .pf-panel [aria-invalid="true"] {
   border-color: var(--brand);
 }
 .pf-panel input:focus-visible,
 .pf-panel textarea:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 4px rgb(28 25 23 / 0.1);
 }
 .pf-panel .row2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
+}
+.pf-panel .row3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+/* hai cột thẻ (vd. 日本語 | Tiếng Việt) */
+.pf-panel .cols2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
 }
 .pf-panel .checks {
   display: grid;
@@ -802,7 +1000,7 @@
   align-items: center;
   font-size: 14px;
   color: var(--ink);
-  min-height: 32px;
+  min-height: 34px;
 }
 .pf-panel input[type="checkbox"] {
   width: 18px;
@@ -810,21 +1008,44 @@
   accent-color: var(--brand);
   flex: none;
 }
+.pf-panel .seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pf-panel .seg button {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.pf-panel .seg button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
 .pf-panel .taginput {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
   border: 1px solid var(--line-strong);
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--surface);
   padding: 6px;
+  min-height: 48px;
 }
 .pf-panel .taginput input {
   flex: 1 1 120px;
   border: 0 !important;
   padding: 4px 6px !important;
+  min-height: 32px !important;
   outline: none !important;
+  box-shadow: none !important;
   background: transparent !important;
 }
 .pf-panel .taginput .t {
@@ -839,8 +1060,8 @@
   max-width: 100%;
 }
 .pf-panel .taginput .t button {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: grid;
   place-items: center;
   border-radius: 4px;
@@ -852,18 +1073,44 @@
 }
 .pf-panel .rep {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto;
   gap: 8px;
   align-items: end;
 }
-@media (max-width: 639px) {
+.pf-panel .lang-badge {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--ink);
+  flex: none;
+}
+.pf-panel .lang-badge.ja {
+  background: var(--brand);
+  font-family: var(--font-jp);
+}
+@media (max-width: 860px) {
+  .pf-panel {
+    padding: 0;
+  }
   .pf-panel > section {
-    border-left: 0;
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
   }
-  .pf-panel .pb {
-    padding: 16px;
+  .pf-panel .ph,
+  .pf-panel .pb,
+  .pf-panel .pfoot {
+    padding-left: 16px;
+    padding-right: 16px;
   }
-  .pf-panel .row2 {
+  .pf-panel .row2,
+  .pf-panel .row3,
+  .pf-panel .cols2 {
     grid-template-columns: 1fr;
   }
 }
@@ -881,4 +1128,5 @@
   .pf .tbtn,
   .pf .chip,
   .pf summary { min-height: 40px; }
+  .pf .tbtn.icon { min-width: 40px; }
 }
