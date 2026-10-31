@@ -28,6 +28,19 @@ begin
   assert jsonb_array_length(v -> 'projects') = 2, 'hai dự án';
   assert v #>> '{projects,0,data,title}' = '案件B', 'thứ tự sau khi sắp xếp lại';
   assert v #>> '{projects,1,data,title}' = '案件A（改）', 'upsert sửa dự án cũ';
+  assert v #> '{portfolio,introduce}' = '{}'::jsonb, 'introduce mặc định rỗng (ứng dụng hiện mẫu)';
+  assert v #> '{portfolio,interview}' = '{}'::jsonb, 'interview mặc định rỗng (ứng dụng hiện mẫu)';
+end $$;
+
+-- Introduce / Interview Q&A: lưu riêng từng phần, không đụng phần khác
+select public.save_my_portfolio('{"introduce":{"profile":{"name":"A"},"blocks":[]}}');
+select public.save_my_portfolio('{"interview":{"items":[{"id":"q1","cat":"tech","qJa":"質問","qVi":"Câu hỏi","aJa":"回答","aVi":"Trả lời"}]}}');
+do $$
+declare v jsonb := public.get_my_portfolio();
+begin
+  assert v #>> '{portfolio,introduce,profile,name}' = 'A', 'đọc lại introduce';
+  assert v #>> '{portfolio,interview,items,0,qVi}' = 'Câu hỏi', 'đọc lại interview';
+  assert v #>> '{portfolio,header,name}' = 'A', 'lưu introduce / interview không xóa header';
 end $$;
 
 -- Ràng buộc dữ liệu: thiếu khóa bắt buộc / sai định dạng tháng / tên trống → lỗi

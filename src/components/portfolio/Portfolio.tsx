@@ -1,196 +1,71 @@
 "use client";
 
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
-import { ArrowDown, ArrowUp, Copy, Pencil, Plus, RotateCw, Trash2 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useHydrated } from "@/hooks/useHydrated";
-import { usePortfolioStore, type SyncState } from "@/lib/portfolio/store";
+import { useMemo, useState, type CSSProperties, type ReactNode } from "react";
+import { ArrowDown, ArrowUp, Copy, Pencil, Plus, Trash2 } from "lucide-react";
+import { usePortfolioStore } from "@/lib/portfolio/store";
 import { hasSample } from "@/lib/portfolio/sample";
 import { PHASES, TECH_GROUPS, allTech, duration, emptyProject, months, ym, type Part, type PortfolioDoc, type Project } from "@/lib/portfolio/types";
 import { btn } from "@/components/ui/page";
 import { cn } from "@/lib/utils";
 import { EducationForm, HeaderForm, PrForm, ProjectForm, SkillsForm } from "./editors";
-import "./portfolio.css";
+import { PfFrame, SampleNotice } from "./shell";
 
-type PanelState = { kind: Part } | { kind: "project"; id: string | null };
+type PanelState = { kind: Extract<Part, "header" | "pr" | "skills" | "education"> } | { kind: "project"; id: string | null };
+
+const ANCHORS = [
+  { href: "#pr", label: "自己PR" },
+  { href: "#work", label: "業務経歴" },
+  { href: "#skills", label: "技術経験" },
+  { href: "#creds", label: "学歴・資格" },
+];
 
 /**
- * Trang portfolio (職務経歴書) của người đang đăng nhập. Chế độ xem giống bản thiết kế mẫu;
- * "Chỉnh sửa" bật các nút sửa / thêm / xóa / sắp xếp ở từng mục, biểu mẫu mở trong bảng bên phải.
+ * My Portfolio (職務経歴書) của người đang đăng nhập — trang con của /portfolio.
+ * "Chỉnh sửa" bật các nút sửa / thêm / xóa / sắp xếp ở từng mục; biểu mẫu mở trong hộp thoại lớn.
  */
 export function Portfolio() {
-  const hydrated = useHydrated();
-  const { user } = useAuth();
-  const doc = usePortfolioStore((s) => s.doc);
-  const owner = usePortfolioStore((s) => s.userId);
-  const sync = usePortfolioStore((s) => s.sync);
-  const error = usePortfolioStore((s) => s.error);
-  const load = usePortfolioStore((s) => s.load);
-  const flush = usePortfolioStore((s) => s.flush);
   const [editing, setEditing] = useState(false);
   const [panel, setPanel] = useState<PanelState | null>(null);
-
-  const uid = user?.id;
-  useEffect(() => {
-    if (hydrated && uid) void load(uid);
-  }, [hydrated, uid, load]);
-  // Có mạng lại → gửi thay đổi còn chờ
-  useEffect(() => {
-    const on = () => void flush();
-    window.addEventListener("online", on);
-    return () => window.removeEventListener("online", on);
-  }, [flush]);
-
-  // Offline (chưa có phiên Supabase): chỉ dùng bản lưu trên máy nếu đúng của tài khoản này (hoặc chưa biết tài khoản)
-  const view = hydrated && doc && (!uid || owner === uid) ? doc : null;
-
-  if (!view) {
-    if (hydrated && (sync === "error" || (!uid && sync !== "loading"))) {
-      return (
-        <div className="page-x pt-10 pb-16">
-          <div className="panel flex max-w-[640px] flex-col gap-4 bg-surface p-6">
-            <p className="eyebrow-label">Portfolio</p>
-            <h1 className="hx-title text-[clamp(26px,3vw,36px)]">Chưa tải được portfolio</h1>
-            <p className="text-[15px] leading-relaxed text-ink-2">{error ?? "Không kết nối được máy chủ và máy này chưa lưu bản nào. Kiểm tra mạng rồi thử lại."}</p>
-            <button type="button" className={cn(btn.primary, "self-start")} onClick={() => uid && void load(uid)} disabled={!uid}>
-              <RotateCw className="h-4 w-4" aria-hidden /> Thử lại
-            </button>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div role="status" aria-busy="true" className="page-x flex flex-col gap-6 pt-10 pb-12">
-        <span className="sr-only">Đang tải portfolio…</span>
-        <div className="skeleton h-4 w-48" />
-        <div className="skeleton h-24 w-[min(620px,90%)]" />
-        <div className="skeleton h-4 w-[min(560px,80%)]" />
-        <div className="mt-4 grid gap-3 sm:grid-cols-5">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <div key={i} className="skeleton h-16" />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   const open = (p: PanelState) => {
     setEditing(true);
     setPanel(p);
   };
 
   return (
-    <div className="pf">
-      <Toolbar doc={view} editing={editing} setEditing={setEditing} sync={sync} onRetry={() => void flush()} />
-      <div className="page-x pb-16">
-        {hasSample(view) && <SampleNotice />}
-        <Hero doc={view} editing={editing} onEdit={() => open({ kind: "header" })} />
-        <PrSection doc={view} editing={editing} onEdit={() => open({ kind: "pr" })} />
-        <WorkSection doc={view} editing={editing} onOpen={open} />
-        <SkillsSection doc={view} editing={editing} onEdit={() => open({ kind: "skills" })} />
-        <EduSection doc={view} editing={editing} onEdit={() => open({ kind: "education" })} />
-        <footer className="mt-16 flex flex-wrap justify-between gap-3 border-t border-line-strong pt-6 text-[13px] text-ink-3">
-          <span>
-            © {new Date().getFullYear()} {view.header.name || "Portfolio"} · LeoEdu Portfolio
-          </span>
-          <span>Chỉ bạn xem được trang này.</span>
-        </footer>
-      </div>
-      {panel && <Panels panel={panel} doc={view} onClose={() => setPanel(null)} />}
-      {sync === "error" && error && (
-        <div role="alert" className="fixed inset-x-4 bottom-[calc(var(--tabbar-h)+12px)] z-[55] mx-auto flex max-w-[520px] flex-wrap items-center gap-3 border border-brand-muted bg-paper px-4 py-3 text-[14px] text-ink shadow-[0_12px_32px_rgba(28,25,23,0.14)] md:bottom-6">
-          <span className="min-w-0 flex-1">
-            <b className="text-brand">Chưa lưu được lên máy chủ.</b> {error} Thay đổi vẫn còn trên máy này.
-          </span>
-          <button type="button" onClick={() => void flush()} className={cn(btn.ghost, btn.sm)}>
-            <RotateCw className="h-4 w-4" aria-hidden /> Thử lại
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─────────────── thanh công cụ ───────────────
-const SYNC_TEXT: Record<SyncState, string> = {
-  idle: "",
-  loading: "Đang tải…",
-  saving: "Đang lưu…",
-  saved: "Đã lưu lên máy chủ",
-  local: "Chưa lưu lên máy chủ",
-  error: "Lưu thất bại",
-};
-
-function Toolbar({ doc, editing, setEditing, sync, onRetry }: { doc: PortfolioDoc; editing: boolean; setEditing: (v: boolean) => void; sync: SyncState; onRetry: () => void }) {
-  const dot = sync === "saved" ? "bg-ok" : sync === "error" ? "bg-brand" : sync === "local" ? "bg-[#c2780b]" : "bg-ink-3 animate-pulse";
-  return (
-    <div className="sticky top-[var(--header-h)] z-40 border-b border-line-strong bg-paper/95 backdrop-blur-sm">
-      <div className="page-x flex min-h-[52px] flex-wrap items-center gap-x-5 gap-y-2 py-2">
-        <span className="flex min-w-0 items-center gap-2">
-          <b className="truncate text-[14px] text-ink">{doc.header.name || "Portfolio của bạn"}</b>
-          {hasSample(doc) && <span className="badge-sample">Mẫu</span>}
-        </span>
-        <nav aria-label="Mục lục portfolio" className="hidden items-center gap-5 text-[13.5px] font-medium text-ink-2 lg:flex" lang="ja">
-          <a href="#pr" className="hover:text-ink">自己PR</a>
-          <a href="#work" className="hover:text-ink">業務経歴</a>
-          <a href="#skills" className="hover:text-ink">技術経験</a>
-          <a href="#creds" className="hover:text-ink">学歴・資格</a>
-        </nav>
-        <div className="ml-auto flex items-center gap-3">
-          {sync !== "idle" && (
-            <span className="flex items-center gap-2 text-[12.5px] text-ink-3" role="status" aria-live="polite" title={sync === "local" ? "Thay đổi đang nằm trên máy này; sẽ gửi lên khi có mạng." : undefined}>
-              <span className={cn("h-2 w-2 shrink-0 rounded-full", dot)} aria-hidden />
-              <span className="hidden sm:inline">{SYNC_TEXT[sync]}</span>
-              {(sync === "local" || sync === "error") && (
-                <button type="button" onClick={onRetry} className="font-semibold text-ink underline decoration-line-strong underline-offset-4">
-                  <span className="sm:hidden">{SYNC_TEXT[sync]} · </span>Gửi lại
-                </button>
-              )}
-            </span>
+    <PfFrame
+      title="My Portfolio"
+      anchors={ANCHORS}
+      editing={editing}
+      setEditing={setEditing}
+      editHint="Đang chỉnh sửa · mỗi mục có nút «Sửa» ở góc phải"
+      editActions={
+        <button type="button" className="tbtn brand" onClick={() => open({ kind: "project", id: null })}>
+          <Plus aria-hidden /> Thêm dự án
+        </button>
+      }
+    >
+      {(view) => (
+        <>
+          {hasSample(view) && (
+            <SampleNotice scope="resume">
+              Đây là portfolio mẫu của một kỹ sư <b>hư cấu</b>, để bạn thấy một 職務経歴書 hoàn chỉnh trông thế nào. Bấm «Chỉnh sửa» để thay từng phần bằng của bạn.
+            </SampleNotice>
           )}
-          <button
-            type="button"
-            aria-pressed={editing}
-            onClick={() => setEditing(!editing)}
-            className={cn(btn.sm, editing ? btn.primary : btn.ghost)}
-          >
-            <Pencil className="h-4 w-4" aria-hidden /> {editing ? "Xong" : "Chỉnh sửa"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SampleNotice() {
-  const clearSample = usePortfolioStore((s) => s.clearSample);
-  const [ask, setAsk] = useState(false);
-  return (
-    <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 border border-dashed border-line-strong bg-surface px-4 py-3 text-[14px] leading-relaxed text-ink-2">
-      <span className="badge-sample">Mẫu</span>
-      {ask ? (
-        <>
-          <span className="min-w-0 flex-1">Xóa mọi phần còn nhãn «Mẫu»? Những phần bạn đã sửa được giữ nguyên.</span>
-          <span className="flex gap-2">
-            <button type="button" onClick={() => clearSample()} className={cn(btn.primary, btn.sm)}>
-              Xóa dữ liệu mẫu
-            </button>
-            <button type="button" onClick={() => setAsk(false)} className={cn(btn.ghost, btn.sm)}>
-              Hủy
-            </button>
-          </span>
-        </>
-      ) : (
-        <>
-          <span className="min-w-0 flex-1">
-            Đây là portfolio mẫu của một kỹ sư <b>hư cấu</b>, để bạn thấy một 職務経歴書 hoàn chỉnh trông thế nào. Bấm «Chỉnh sửa» để thay từng phần bằng của bạn.
-          </span>
-          <button type="button" onClick={() => setAsk(true)} className={cn(btn.ghost, btn.sm)}>
-            <Trash2 className="h-4 w-4" aria-hidden /> Xóa dữ liệu mẫu / Bắt đầu từ trang trống
-          </button>
+          <Hero doc={view} editing={editing} onEdit={() => open({ kind: "header" })} />
+          <PrSection doc={view} editing={editing} onEdit={() => open({ kind: "pr" })} />
+          <WorkSection doc={view} editing={editing} onOpen={open} />
+          <SkillsSection doc={view} editing={editing} onEdit={() => open({ kind: "skills" })} />
+          <EduSection doc={view} editing={editing} onEdit={() => open({ kind: "education" })} />
+          <footer className="mt-16 flex flex-wrap justify-between gap-3 border-t border-line-strong pt-6 text-[13px] text-ink-3">
+            <span>
+              © {new Date().getFullYear()} {view.header.name || "Portfolio"} · LeoEdu Portfolio
+            </span>
+            <span>Chỉ bạn xem được trang này.</span>
+          </footer>
+          {panel && <Panels panel={panel} doc={view} onClose={() => setPanel(null)} />}
         </>
       )}
-    </div>
+    </PfFrame>
   );
 }
 
@@ -232,9 +107,9 @@ function Sec({
   );
 }
 
-function EditBtn({ onClick, children = "Sửa", icon }: { onClick: () => void; children?: ReactNode; icon?: ReactNode }) {
+function EditBtn({ onClick, children = "Sửa", icon, brand }: { onClick: () => void; children?: ReactNode; icon?: ReactNode; brand?: boolean }) {
   return (
-    <button type="button" onClick={onClick} className="tbtn">
+    <button type="button" onClick={onClick} className={brand ? "tbtn brand" : "tbtn dark"}>
       {icon ?? <Pencil aria-hidden />} {children}
     </button>
   );
@@ -244,7 +119,7 @@ function Empty({ text, action, onAction }: { text: string; action: string; onAct
   return (
     <div className="empty">
       <span>{text}</span>
-      <button type="button" onClick={onAction} className="tbtn">
+      <button type="button" onClick={onAction} className="tbtn brand">
         <Plus aria-hidden /> {action}
       </button>
     </div>
@@ -288,11 +163,11 @@ function Hero({ doc, editing, onEdit }: { doc: PortfolioDoc; editing: boolean; o
         )}
         <div className="cta">
           {editing && (
-            <button type="button" onClick={onEdit} className={btn.primary}>
-              <Pencil className="h-4 w-4" aria-hidden /> Sửa phần giới thiệu
+            <button type="button" onClick={onEdit} className="tbtn dark lg">
+              <Pencil aria-hidden /> Sửa phần giới thiệu
             </button>
           )}
-          <a className={editing ? btn.ghost : btn.primary} href="#work" lang="ja">
+          <a className={btn.primary} href="#work" lang="ja">
             業務経歴を見る →
           </a>
           {h.links.map((l) => (
@@ -353,7 +228,7 @@ function HeroArt({ label }: { label: string }) {
 function PrSection({ doc, editing, onEdit }: { doc: PortfolioDoc; editing: boolean; onEdit: () => void }) {
   const s = doc.pr.sections;
   return (
-    <Sec id="pr" eyebrow="Self PR" title="自己PR" sample={doc.pr.sample} editing={editing} tools={<EditBtn onClick={onEdit} />} note="技術と人柄の両面から。">
+    <Sec id="pr" eyebrow="Self PR" title="自己PR" sample={doc.pr.sample} editing={editing} tools={<EditBtn onClick={onEdit}>Sửa 自己PR</EditBtn>} note="技術と人柄の両面から。">
       {s.length ? (
         <div className="grid-cells pr jp" lang="ja" style={{ "--n": Math.min(s.length, 3) } as CSSProperties}>
           {s.map((x) => (
@@ -395,7 +270,11 @@ function WorkSection({ doc, editing, onOpen }: { doc: PortfolioDoc; editing: boo
       title="業務経歴"
       sample={projects.some((p) => p.data.sample)}
       editing={editing}
-      tools={<EditBtn onClick={() => onOpen({ kind: "project", id: null })} icon={<Plus aria-hidden />}>Thêm dự án</EditBtn>}
+      tools={
+        <EditBtn brand onClick={() => onOpen({ kind: "project", id: null })} icon={<Plus aria-hidden />}>
+          Thêm dự án
+        </EditBtn>
+      }
       note={projects.length ? `参加したプロジェクト ${projects.length}件。技術で絞り込み、「詳細」で担当内容と学んだことを表示します。` : undefined}
     >
       {projects.length > 0 && chips.length > 0 && (
@@ -501,26 +380,26 @@ function ProjectCard({ p, no, index, total, hit, editing, onEdit }: { p: Project
         {editing && (
           <div lang="vi">
             <div className="proj-tools">
-              <button type="button" className="tbtn" onClick={onEdit}>
-                <Pencil aria-hidden /> Sửa
+              <button type="button" className="tbtn dark" onClick={onEdit}>
+                <Pencil aria-hidden /> Sửa dự án
               </button>
               <button type="button" className="tbtn" onClick={() => dup(p.id)}>
                 <Copy aria-hidden /> Nhân bản
               </button>
-              <button type="button" className="tbtn" onClick={() => mv(p.id, -1)} disabled={index === 0} aria-label="Đưa lên trên">
-                <ArrowUp aria-hidden /> Lên
+              <button type="button" className="tbtn icon" onClick={() => mv(p.id, -1)} disabled={index === 0} aria-label="Đưa lên trên" title="Đưa lên trên">
+                <ArrowUp aria-hidden />
               </button>
-              <button type="button" className="tbtn" onClick={() => mv(p.id, 1)} disabled={index === total - 1} aria-label="Đưa xuống dưới">
-                <ArrowDown aria-hidden /> Xuống
+              <button type="button" className="tbtn icon" onClick={() => mv(p.id, 1)} disabled={index === total - 1} aria-label="Đưa xuống dưới" title="Đưa xuống dưới">
+                <ArrowDown aria-hidden />
               </button>
-              <button type="button" className="tbtn danger" onClick={() => setAsk(true)} aria-expanded={ask}>
+              <button type="button" className="tbtn danger ml-auto" onClick={() => setAsk(true)} aria-expanded={ask}>
                 <Trash2 aria-hidden /> Xóa
               </button>
             </div>
             {ask && (
               <div className="confirm" role="alert">
                 <span className="min-w-0 flex-1">Xóa dự án «{d.title}»? Không hoàn tác được.</span>
-                <button type="button" className="tbtn solid" onClick={() => del(p.id)}>
+                <button type="button" className="tbtn brand" onClick={() => del(p.id)}>
                   Xóa dự án
                 </button>
                 <button type="button" className="tbtn" onClick={() => setAsk(false)}>
@@ -563,7 +442,7 @@ function ProjectCard({ p, no, index, total, hit, editing, onEdit }: { p: Project
 function SkillsSection({ doc, editing, onEdit }: { doc: PortfolioDoc; editing: boolean; onEdit: () => void }) {
   const g = doc.skills.groups;
   return (
-    <Sec id="skills" eyebrow="Skills · 経験年数" title="技術経験" sample={doc.skills.sample} editing={editing} tools={<EditBtn onClick={onEdit} />} note="主な言語・技術・工程の経験年数。">
+    <Sec id="skills" eyebrow="Skills · 経験年数" title="技術経験" sample={doc.skills.sample} editing={editing} tools={<EditBtn onClick={onEdit}>Sửa kỹ năng</EditBtn>} note="主な言語・技術・工程の経験年数。">
       {g.length ? (
         <div className="grid-cells skills jp" lang="ja" style={{ "--n": Math.min(g.length, 4) } as CSSProperties}>
           {g.map((x) => {
@@ -594,7 +473,7 @@ function SkillsSection({ doc, editing, onEdit }: { doc: PortfolioDoc; editing: b
 function EduSection({ doc, editing, onEdit }: { doc: PortfolioDoc; editing: boolean; onEdit: () => void }) {
   const e = doc.education.entries;
   return (
-    <Sec id="creds" eyebrow="Education & Certificates" title="学歴・資格" sample={doc.education.sample} editing={editing} tools={<EditBtn onClick={onEdit} />}>
+    <Sec id="creds" eyebrow="Education & Certificates" title="学歴・資格" sample={doc.education.sample} editing={editing} tools={<EditBtn onClick={onEdit}>Sửa học vấn</EditBtn>}>
       {e.length ? (
         <div className="grid-cells creds jp" lang="ja" style={{ "--n": Math.min(e.length, 4) } as CSSProperties}>
           {e.map((x) => (
@@ -615,6 +494,7 @@ function EduSection({ doc, editing, onEdit }: { doc: PortfolioDoc; editing: bool
 function Panels({ panel, doc, onClose }: { panel: PanelState; doc: PortfolioDoc; onClose: () => void }) {
   const savePart = usePortfolioStore((s) => s.savePart);
   const saveProject = usePortfolioStore((s) => s.saveProject);
+  const deleteProject = usePortfolioStore((s) => s.deleteProject);
   switch (panel.kind) {
     case "header":
       return <HeaderForm initial={doc.header} onClose={onClose} onSave={(v) => savePart("header", v)} />;
@@ -634,6 +514,7 @@ function Panels({ panel, doc, onClose }: { panel: PanelState; doc: PortfolioDoc;
           onSave={(v) => {
             saveProject(p ? p.id : null, v);
           }}
+          onDelete={p ? () => deleteProject(p.id) : undefined}
         />
       );
     }

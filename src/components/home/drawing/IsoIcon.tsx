@@ -275,6 +275,42 @@ const ICONS = {
     I.line([5.5, 10.4, 5.2], [5.5, 10.4, 2.4]);
     I.line([5.5, 10.4, 2.4], [10.6, 7.8, 2.4], { hid: true });
   },
+  /** Portfolio · Introduce: tấm thẻ tên đứng trên đế, chữ 私 */
+  intro(I: Api) {
+    I.box(0, 0, 0, 10, 0.8, 8);
+    I.box(3.4, 0.8, 3.6, 3.2, 0.5, 2.2, { noHid: true });
+    I.box(2, 1.3, 4.2, 6, 7.4, 1, { acc: "tlr", noHid: true });
+    const o = I.ip(2, 8.7, 5.2);
+    I.text({ x: 3, y: 5.1, size: 4, transform: `matrix(${0.866 * I.s},${0.5 * I.s},0,${I.s},${r1(o[0])},${r1(o[1])})`, text: "私", cls: "glyph" });
+  },
+  /** Portfolio · Interview Q&A: hai khối hỏi / đáp */
+  qa(I: Api) {
+    I.box(0, 0, 0, 13, 0.8, 8);
+    I.box(7, 0.8, 1.6, 5, 7.2, 1.4, { acc: "tlr", noHid: true });
+    const o2 = I.ip(7, 8, 3);
+    I.text({ x: 2.5, y: 4.9, size: 3.6, transform: `matrix(${0.866 * I.s},${0.5 * I.s},0,${I.s},${r1(o2[0])},${r1(o2[1])})`, text: "答", cls: "glyph" });
+    I.box(1, 0.8, 4.6, 5, 5, 1.4, { acc: "tlr", noHid: true });
+    const o1 = I.ip(1, 5.8, 6);
+    I.text({ x: 2.5, y: 3.8, size: 3.6, transform: `matrix(${0.866 * I.s},${0.5 * I.s},0,${I.s},${r1(o1[0])},${r1(o1[1])})`, text: "問", cls: "glyph" });
+  },
+  /** Portfolio · 職務経歴書: xấp giấy có dòng kẻ và cây bút */
+  resume(I: Api) {
+    I.box(0, 0, 0, 9, 0.35, 12);
+    I.box(0.5, 0.35, 0.5, 9, 0.35, 12, { noHid: true });
+    I.box(1, 0.7, 1, 9, 0.35, 12, { acc: "tlr", noHid: true });
+    I.poly(
+      [
+        [2.2, 1.05, 2],
+        [4.6, 1.05, 2],
+        [4.6, 1.05, 5],
+        [2.2, 1.05, 5],
+      ],
+      { close: true, fill: PAPER }
+    );
+    for (const z of [2.4, 3.6, 4.8]) I.line([5.4, 1.05, z], [8.8, 1.05, z], { w: 0.8 });
+    for (const z of [6.6, 7.8, 9, 10.2]) I.line([2.2, 1.05, z], [8.8, 1.05, z], { w: 0.8 });
+    I.box(11, 0, 1.5, 0.9, 0.9, 9.5, { acc: "tlr", noHid: true });
+  },
   soon(I: Api) {
     I.box(0, 0, 0, 9, 0.6, 9);
     I.box(0.5, 0.6, 0.5, 8, 8, 8, { wire: true });

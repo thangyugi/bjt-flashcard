@@ -304,6 +304,9 @@
 .hp .c5 {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
+.hp .c3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .hp .feat {
   border-top: 0;
 }
@@ -1317,6 +1320,7 @@
   }
 }
 @media (max-width: 640px) {
+  .hp .c3,
   .hp .c4,
   .hp .c5 {
     grid-template-columns: minmax(0, 1fr);
