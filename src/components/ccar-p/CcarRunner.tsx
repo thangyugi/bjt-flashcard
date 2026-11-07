@@ -3,14 +3,30 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, CircleCheck, CircleX, Clock, Flag, RotateCcw, Send, Trophy, X } from "lucide-react";
-import type { BankQuestion } from "@/data/ccar-p/types";
-import { AUTHORED_LABEL, CCAR_BASE, DOMAIN_SHORT } from "@/data/ccar-p/meta";
+import type { BankQuestion, ExplainMeta } from "@/data/ccar-p/types";
+import explainJson from "@/data/ccar-p/explain.json";
+import { AUTHORED_LABEL, CCAR_BASE, DOMAIN_SHORT, REFERENCE_PATH } from "@/data/ccar-p/meta";
 import { optionOrder, seededShuffle } from "@/data/ccar-p/shuffle";
 import { useCcarStore } from "@/store/ccar-p-store";
 import { BANK_VERSION } from "@/data/ccar-p/version";
 import { Breadcrumbs } from "@/components/ui/page";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
+const EXPLAIN = explainJson as unknown as ExplainMeta;
+/** Tên thẻ kiến thức nền (trang /kien-thuc-nen#id) */
+const REF_TITLE: Record<string, string> = {
+  "model-family": "Họ model Claude & cách chọn",
+  "messages-api": "Messages API — cốt lõi",
+  "tool-use": "Tool use & structured outputs",
+  "caching-batch-tokens": "Prompt caching · Batches · đếm token",
+  "thinking-context-files": "Thinking · Citations · Files · Context window",
+  mcp: "Model Context Protocol (MCP)",
+  "agent-patterns": "Mẫu agent & Claude Agent SDK",
+  "claude-code-teams": "Claude Code cho đội",
+  evals: "Evals — đánh giá có hệ thống",
+  "safety-governance": "An toàn & quản trị",
+  glossary: "Bảng thuật ngữ",
+};
 
 /* ═════════════════════════ Ngân hàng đề (tải một lần) ═════════════════════════ */
 
@@ -245,26 +261,36 @@ function QuestionCard({
               </span>
             )}
           </div>
-          <Explain q={q} letter={letter} order={order} />
+          <Explain q={q} letter={letter} order={order} opts={opts} />
         </>
       )}
     </div>
   );
 }
 
-function Explain({ q, letter, order }: { q: BankQuestion; letter: (k: string) => string; order: string[] }) {
+/** Rút gọn nội dung phương án để nhắc lại cạnh lời giải ô sai */
+const brief = (s: string, n = 110) => {
+  const t = s.replace(/\s+/g, " ").trim();
+  return t.length > n ? t.slice(0, n).replace(/\s+\S*$/, "") + "…" : t;
+};
+
+function Explain({ q, letter, order, opts }: { q: BankQuestion; letter: (k: string) => string; order: string[]; opts: Record<string, string> }) {
   const wrong = q.type === "mcq" ? order.filter((k) => !q.answer.includes(k) && q.wrong[k]) : [];
+  const terms = (q.terms ?? []).map((k) => EXPLAIN.terms[k]).filter(Boolean);
+  const refs = Array.from(new Set(terms.map((t) => t.ref).filter((r): r is string => !!r && r in REF_TITLE)));
+  const lesson = EXPLAIN.tasks[q.task];
+  const picks = q.type === "mcq" ? q.answer.map(letter).sort().join(", ") : "";
   return (
     <div className="ccar-explain">
       {q.remember && (
         <div className="remember">
-          <h4>✅ Kiến thức cần nhớ</h4>
+          <h4>🧠 Mẹo nhớ</h4>
           <Md as="p" text={q.remember} letter={letter} />
         </div>
       )}
       {q.why && (
         <div>
-          <h4>💡 Vì sao chọn {q.type === "mcq" ? (q.answer.length > 1 ? "các ô này" : "ô này") : "như vậy"}</h4>
+          <h4>💡 Vì sao {q.type === "mcq" ? `chọn ${picks}` : "đáp án như vậy"}</h4>
           <Md as="p" text={q.why} letter={letter} />
         </div>
       )}
@@ -275,12 +301,53 @@ function Explain({ q, letter, order }: { q: BankQuestion; letter: (k: string) =>
             {wrong.map((k) => (
               <li key={k}>
                 <span className="k">{letter(k)}</span>
-                <Md text={(q.type === "mcq" && q.wrong[k]) || ""} letter={letter} />
+                <span>
+                  <span className="opt">“{brief(opts[k] ?? q.options[k] ?? "")}”</span>
+                  <Md text={(q.type === "mcq" && q.wrong[k]) || ""} letter={letter} />
+                </span>
               </li>
             ))}
           </ul>
         </div>
       )}
+      {terms.length > 0 && (
+        <details className="ccar-terms" open>
+          <summary>📖 Giải nghĩa thuật ngữ trong câu ({terms.length})</summary>
+          <dl>
+            {terms.map((t) => (
+              <div key={t.t}>
+                <dt>{t.t}</dt>
+                <dd>
+                  <Md text={t.d} />
+                  {t.ref && t.ref in REF_TITLE && (
+                    <>
+                      {" "}
+                      <Link href={`${REFERENCE_PATH}#${t.ref}`} className="ref">
+                        Xem thêm →
+                      </Link>
+                    </>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </details>
+      )}
+      <div className="ccar-readmore">
+        <h4>🔗 Đọc thêm</h4>
+        <ul>
+          {lesson && (
+            <li>
+              <Link href={`${CCAR_BASE}/${q.task}`}>Bài {lesson}</Link> — phần lý thuyết của câu này
+            </li>
+          )}
+          {refs.map((r) => (
+            <li key={r}>
+              <Link href={`${REFERENCE_PATH}#${r}`}>Kiến thức nền: {REF_TITLE[r]}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
       <p className="ccar-notice">
         <span>
           {q.authored

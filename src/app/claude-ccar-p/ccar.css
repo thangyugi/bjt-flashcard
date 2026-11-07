@@ -108,6 +108,15 @@
 .ccar-explain li .k { flex: none; width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: var(--o-bad-soft); color: var(--o-bad); font-size: 12px; font-weight: 800; margin-top: 1px; }
 .ccar-explain code, .ccar-row code, .oci-opt-text code { font-family: var(--o-mono); font-size: 0.9em; padding: 1px 5px; border-radius: 5px; background: var(--o-surface-2); }
 .ccar-explain .remember { padding: 12px 14px; border-radius: 12px; background: var(--o-accent-soft); }
+.ccar-explain li .opt { display: block; font-size: 13px; color: var(--o-text-3); font-style: italic; margin-bottom: 2px; }
+.ccar-terms { border-radius: 12px; border: 1px solid var(--o-line); background: var(--o-surface-2); padding: 10px 14px; }
+.ccar-terms summary { cursor: pointer; font-weight: 750; min-height: 28px; display: flex; align-items: center; }
+.ccar-terms dl { margin: 8px 0 0; display: grid; gap: 8px; }
+.ccar-terms dt { font-weight: 700; font-size: 13.5px; }
+.ccar-terms dd { margin: 0; font-size: 13.5px; color: var(--o-text-2); }
+.ccar-terms .ref, .ccar-readmore a { color: var(--o-accent-hover); text-decoration: underline; text-underline-offset: 2px; }
+.ccar-readmore ul { display: grid; gap: 4px; padding-left: 18px; list-style: disc; }
+.ccar-readmore li { display: list-item; }
 .ccar-notice { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 12.5px; line-height: 1.5; color: var(--o-text-3); padding-top: 10px; border-top: 1px dashed var(--o-line-strong); }
 .ccar-conf { padding: 1px 8px; border-radius: 99px; font-weight: 700; background: var(--o-amber-soft); color: var(--o-amber); }
 .ccar-conf.low { background: var(--o-bad-soft); color: var(--o-bad); }

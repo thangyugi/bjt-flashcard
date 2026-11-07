@@ -1,0 +1,1411 @@
+[
+ {
+  "key": "token",
+  "term": "Token",
+  "vi": "Mẩu chữ nhỏ mà model đọc và viết (khoảng ¾ từ tiếng Anh). Model tính giới hạn và tính tiền theo số token.",
+  "match": [
+   "tokens?"
+  ],
+  "ref": "glossary"
+ },
+ {
+  "key": "context-window",
+  "term": "Context window (cửa sổ ngữ cảnh)",
+  "vi": "Tổng lượng chữ (tính bằng token) model “nhìn thấy” trong một lần gọi: prompt + lịch sử chat + tài liệu + câu trả lời. Vượt quá thì phải cắt bớt hoặc tóm tắt.",
+  "match": [
+   "context window",
+   "cửa sổ ngữ cảnh"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "context-budget",
+  "term": "Ngân sách ngữ cảnh",
+  "vi": "Phần cửa sổ ngữ cảnh còn trống để làm việc. Thứ gì nạp vào (định nghĩa tool, tài liệu, lịch sử) đều “tiêu” ngân sách này.",
+  "match": [
+   "context budget",
+   "ngân sách ngữ cảnh"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "context-rot",
+  "term": "Context rot",
+  "vi": "Ngữ cảnh càng dài và càng nhiều rác thì model càng dễ bỏ sót hoặc trả lời kém — giống người đọc tài liệu quá dày.",
+  "match": [
+   "context rot"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "system-prompt",
+  "term": "System prompt",
+  "vi": "Phần chỉ dẫn “nền” do nhà phát triển đặt cho model (vai trò, quy tắc, phạm vi), tách khỏi tin nhắn của người dùng.",
+  "match": [
+   "system prompts?",
+   "lời nhắc hệ thống"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "prompt-engineering",
+  "term": "Prompt engineering",
+  "vi": "Kỹ năng viết và tinh chỉnh prompt (vai trò, ví dụ, định dạng, chia bước) để model làm đúng ý, đo được bằng eval.",
+  "match": [
+   "prompt engineering"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "few-shot",
+  "term": "Few-shot (ví dụ mẫu)",
+  "vi": "Đưa vài ví dụ “đầu vào → đầu ra mong muốn” vào prompt để model bắt chước đúng định dạng và cách làm.",
+  "match": [
+   "few-shot",
+   "multishot",
+   "ví dụ mẫu"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "xml-tags",
+  "term": "Thẻ XML trong prompt",
+  "vi": "Bọc từng phần của prompt bằng thẻ như <document>…</document> để model phân biệt chỉ dẫn với dữ liệu.",
+  "match": [
+   "XML tags?",
+   "thẻ XML"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "prefill",
+  "term": "Prefill",
+  "vi": "Viết sẵn phần đầu câu trả lời của model (ví dụ dấu “{”) để ép định dạng. Một số model mới không còn hỗ trợ — thay bằng structured outputs.",
+  "match": [
+   "prefill(?:ing)?"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "temperature",
+  "term": "Temperature",
+  "vi": "Núm chỉnh độ “ngẫu nhiên” của câu trả lời: thấp → ổn định, lặp lại được; cao → đa dạng, sáng tạo hơn.",
+  "match": [
+   "temperature"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "max-tokens",
+  "term": "max_tokens",
+  "vi": "Trần số token model được phép viết ra. Chạm trần thì câu trả lời bị cắt cụt (stop_reason = max_tokens).",
+  "match": [
+   "max_tokens"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "stop-reason",
+  "term": "stop_reason",
+  "vi": "Trường cho biết vì sao model dừng: viết xong (end_turn), chạm trần (max_tokens), muốn gọi tool (tool_use), từ chối (refusal)…",
+  "match": [
+   "stop_reason"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "streaming",
+  "term": "Streaming",
+  "vi": "Nhận câu trả lời từng mẩu ngay khi model đang viết, thay vì chờ viết xong mới nhận — người dùng thấy chữ hiện ra sớm.",
+  "match": [
+   "streaming",
+   "stream(?:ed)?"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "ttft",
+  "term": "TTFT",
+  "vi": "Time To First Token — thời gian từ lúc gửi yêu cầu tới khi nhận được chữ đầu tiên. Chỉ số độ trễ người dùng cảm nhận.",
+  "match": [
+   "TTFT",
+   "time to first token"
+  ],
+  "cs": true,
+  "ref": "caching-batch-tokens"
+ },
+ {
+  "key": "latency",
+  "term": "Latency (độ trễ)",
+  "vi": "Thời gian chờ để có kết quả. Giảm bằng model nhỏ hơn, streaming, prompt caching, chạy song song.",
+  "match": [
+   "latency"
+  ],
+  "ref": "caching-batch-tokens"
+ },
+ {
+  "key": "throughput",
+  "term": "Throughput",
+  "vi": "Số yêu cầu/khối lượng việc xử lý được trong một đơn vị thời gian.",
+  "match": [
+   "throughput",
+   "thông lượng"
+  ]
+ },
+ {
+  "key": "rate-limit",
+  "term": "Rate limit",
+  "vi": "Hạn mức số yêu cầu/token mỗi phút của tài khoản. Vượt thì API trả lỗi 429 — cần chờ rồi thử lại (backoff).",
+  "match": [
+   "rate limits?",
+   "429"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "overloaded",
+  "term": "Lỗi 529 (Overloaded)",
+  "vi": "API quá tải phía nhà cung cấp, không phải lỗi của bạn. Xử lý: thử lại có giãn cách (backoff).",
+  "match": [
+   "529",
+   "overloaded"
+  ],
+  "ref": "messages-api"
+ },
+ {
+  "key": "backoff",
+  "term": "Exponential backoff",
+  "vi": "Thử lại sau lỗi tạm thời, mỗi lần chờ lâu gấp đôi (1s, 2s, 4s…) để không dồn thêm tải.",
+  "match": [
+   "exponential backoff",
+   "backoff",
+   "retry"
+  ]
+ },
+ {
+  "key": "idempotent",
+  "term": "Idempotent",
+  "vi": "Gọi lại nhiều lần vẫn cho cùng kết quả, không tạo bản ghi trùng — điều kiện để “thử lại” an toàn.",
+  "match": [
+   "idempoten\\w*"
+  ]
+ },
+ {
+  "key": "haiku",
+  "term": "Haiku",
+  "vi": "Model nhỏ nhất, nhanh và rẻ nhất của Claude — hợp việc đơn giản, khối lượng lớn, cần phản hồi nhanh (phân loại, trích xuất).",
+  "match": [
+   "Haiku"
+  ],
+  "cs": true,
+  "ref": "model-family"
+ },
+ {
+  "key": "sonnet",
+  "term": "Sonnet",
+  "vi": "Model tầm trung của Claude — cân bằng giữa chất lượng, tốc độ và giá; lựa chọn mặc định cho đa số ứng dụng.",
+  "match": [
+   "Sonnet"
+  ],
+  "cs": true,
+  "ref": "model-family"
+ },
+ {
+  "key": "opus",
+  "term": "Opus",
+  "vi": "Model mạnh nhất của Claude — cho việc khó, suy luận nhiều bước; chậm và đắt hơn.",
+  "match": [
+   "Opus"
+  ],
+  "cs": true,
+  "ref": "model-family"
+ },
+ {
+  "key": "model-routing",
+  "term": "Định tuyến model (model routing)",
+  "vi": "Gửi việc dễ cho model nhỏ/rẻ, việc khó cho model lớn — tiết kiệm chi phí mà vẫn giữ chất lượng.",
+  "match": [
+   "model routing",
+   "rout(?:e|ing) (?:to|between) models?",
+   "định tuyến model"
+  ],
+  "ref": "model-family"
+ },
+ {
+  "key": "extended-thinking",
+  "term": "Extended thinking",
+  "vi": "Cho model “nghĩ nháp” trước khi trả lời để giải bài khó tốt hơn. Phần nghĩ tốn thêm token và thời gian.",
+  "match": [
+   "extended thinking",
+   "adaptive thinking",
+   "thinking budget",
+   "budget_tokens"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "effort",
+  "term": "Effort",
+  "vi": "Nấc chỉnh model bỏ công bao nhiêu (ít → nhiều token, nhanh → kỹ).",
+  "match": [
+   "effort"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "tool-use",
+  "term": "Tool use (gọi công cụ)",
+  "vi": "Model không tự chạy code; nó trả về yêu cầu “hãy gọi hàm X với tham số Y”, ứng dụng của bạn chạy hàm rồi gửi kết quả lại cho model.",
+  "match": [
+   "tool use",
+   "tool calls?",
+   "tool calling",
+   "function calling",
+   "gọi tool",
+   "lời gọi tool"
+  ],
+  "ref": "tool-use"
+ },
+ {
+  "key": "tool-description",
+  "term": "Mô tả tool",
+  "vi": "Đoạn chữ giải thích tool làm gì, khi nào dùng, tham số nghĩa là gì. Model chọn tool chủ yếu dựa vào mô tả này — mô tả mơ hồ thì gọi sai.",
+  "match": [
+   "tool descriptions?",
+   "mô tả tool"
+  ],
+  "ref": "tool-use"
+ },
+ {
+  "key": "tool-result",
+  "term": "tool_result",
+  "vi": "Kết quả ứng dụng gửi lại cho model sau khi chạy tool. Lỗi thì gửi kèm is_error: true để model biết mà xử lý.",
+  "match": [
+   "tool_result",
+   "tool results?",
+   "kết quả tool"
+  ],
+  "ref": "tool-use"
+ },
+ {
+  "key": "tool-choice",
+  "term": "tool_choice",
+  "vi": "Tham số ép cách gọi tool: auto (model tự quyết), any (bắt buộc gọi một tool), tool (bắt gọi đúng tool chỉ định), none (cấm gọi).",
+  "match": [
+   "tool_choice"
+  ],
+  "ref": "tool-use"
+ },
+ {
+  "key": "json-schema",
+  "term": "JSON Schema",
+  "vi": "Bản mô tả “khuôn” của dữ liệu JSON: có những trường nào, kiểu gì, trường nào bắt buộc.",
+  "match": [
+   "JSON schema",
+   "schema"
+  ],
+  "ref": "tool-use"
+ },
+ {
+  "key": "structured-outputs",
+  "term": "Structured outputs",
+  "vi": "Tính năng ép câu trả lời (hoặc tham số tool) khớp đúng JSON Schema — không lo thiếu trường hay sai kiểu.",
+  "match": [
+   "structured outputs?",
+   "strict: true",
+   "strict mode",
+   "đầu ra có cấu trúc"
+  ],
+  "ref": "tool-use"
+ },
+ {
+  "key": "server-tools",
+  "term": "Server tools",
+  "vi": "Tool do Anthropic chạy sẵn phía máy chủ (tìm web, đọc trang web, chạy code) — bạn không phải tự viết.",
+  "match": [
+   "server tools?",
+   "web search",
+   "web fetch",
+   "code execution"
+  ],
+  "ref": "tool-use"
+ },
+ {
+  "key": "prompt-caching",
+  "term": "Prompt caching",
+  "vi": "Lưu lại phần đầu prompt lặp đi lặp lại (system prompt, tài liệu dài) để lần sau đọc lại rẻ hơn và nhanh hơn. Phần được cache phải giống hệt từng ký tự và nằm ở ĐẦU prompt.",
+  "match": [
+   "prompt caching",
+   "cache_control",
+   "cache hits?",
+   "cached prefix",
+   "bộ nhớ đệm prompt"
+  ],
+  "ref": "caching-batch-tokens"
+ },
+ {
+  "key": "batch",
+  "term": "Message Batches API",
+  "vi": "Gửi hàng loạt yêu cầu xử lý bất đồng bộ (trong vòng tối đa 24h), giá rẻ khoảng một nửa — hợp việc không cần kết quả ngay.",
+  "match": [
+   "Message Batches",
+   "Batch(?:es)? API",
+   "batch processing",
+   "batch"
+  ],
+  "ref": "caching-batch-tokens"
+ },
+ {
+  "key": "token-counting",
+  "term": "Token counting",
+  "vi": "API đếm trước số token của một yêu cầu để ước tính chi phí/giới hạn trước khi gửi thật.",
+  "match": [
+   "token counting",
+   "count_tokens",
+   "đếm token"
+  ],
+  "ref": "caching-batch-tokens"
+ },
+ {
+  "key": "citations",
+  "term": "Citations",
+  "vi": "Tính năng để model chỉ rõ câu trả lời lấy từ đoạn nào của tài liệu — giúp kiểm chứng, giảm bịa.",
+  "match": [
+   "citations?",
+   "trích dẫn"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "files-api",
+  "term": "Files API",
+  "vi": "Tải tệp lên một lần, các lần gọi sau chỉ cần đưa mã file_id thay vì gửi lại cả tệp.",
+  "match": [
+   "Files API",
+   "file_id"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "compaction",
+  "term": "Compaction",
+  "vi": "Tóm tắt phần hội thoại cũ để giải phóng chỗ trong cửa sổ ngữ cảnh, giúp phiên làm việc dài chạy tiếp.",
+  "match": [
+   "compaction",
+   "compact(?:ing)?"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "context-editing",
+  "term": "Context editing",
+  "vi": "Tự động xoá kết quả tool/phần nghĩ cũ không còn cần khỏi ngữ cảnh.",
+  "match": [
+   "context editing"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "memory-tool",
+  "term": "Memory tool",
+  "vi": "Tool cho Claude ghi/đọc ghi chú ra tệp bên ngoài, để nhớ qua nhiều phiên mà không chiếm cửa sổ ngữ cảnh.",
+  "match": [
+   "memory tool"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "vision",
+  "term": "Vision / PDF",
+  "vi": "Claude đọc được ảnh và tệp PDF (cả chữ lẫn bảng, biểu đồ) đưa vào prompt.",
+  "match": [
+   "vision",
+   "PDFs?"
+  ],
+  "ref": "thinking-context-files"
+ },
+ {
+  "key": "rag",
+  "term": "RAG",
+  "vi": "Retrieval-Augmented Generation: trước khi trả lời, tìm các đoạn tài liệu liên quan rồi đưa vào prompt, để model trả lời dựa trên dữ liệu thật của bạn thay vì trí nhớ.",
+  "match": [
+   "RAG",
+   "retrieval[- ]augmented"
+  ],
+  "cs": true
+ },
+ {
+  "key": "retrieval",
+  "term": "Retrieval (truy hồi)",
+  "vi": "Bước tìm và lấy ra các đoạn tài liệu liên quan tới câu hỏi trong kho dữ liệu.",
+  "match": [
+   "retrieval",
+   "retriever",
+   "truy hồi"
+  ]
+ },
+ {
+  "key": "chunk",
+  "term": "Chunk / chunking",
+  "vi": "Cắt tài liệu dài thành các đoạn nhỏ để lưu vào chỉ mục và tìm kiếm. Cắt quá nhỏ mất ngữ cảnh, quá lớn thì nhiễu.",
+  "match": [
+   "chunk(?:s|ing)?",
+   "cắt đoạn"
+  ]
+ },
+ {
+  "key": "embedding",
+  "term": "Embedding",
+  "vi": "Biến một đoạn chữ thành dãy số (vector) sao cho các đoạn cùng ý nghĩa có vector gần nhau — dùng để tìm theo ý chứ không theo từ khoá.",
+  "match": [
+   "embeddings?",
+   "vector"
+  ]
+ },
+ {
+  "key": "vector-db",
+  "term": "Vector database",
+  "vi": "Cơ sở dữ liệu lưu embedding và tìm nhanh các đoạn “gần nghĩa” nhất với câu hỏi.",
+  "match": [
+   "vector (?:database|store|db|index)"
+  ]
+ },
+ {
+  "key": "bm25",
+  "term": "BM25 / tìm theo từ khoá",
+  "vi": "Cách tìm truyền thống theo từ khoá trùng khớp — mạnh với mã số, tên riêng, thuật ngữ chính xác mà embedding hay bỏ lỡ.",
+  "match": [
+   "BM25",
+   "keyword search",
+   "lexical",
+   "sparse"
+  ]
+ },
+ {
+  "key": "hybrid-search",
+  "term": "Hybrid search",
+  "vi": "Kết hợp tìm theo nghĩa (embedding) và tìm theo từ khoá (BM25) rồi gộp kết quả — thường tốt hơn từng cách riêng.",
+  "match": [
+   "hybrid (?:search|retrieval)"
+  ]
+ },
+ {
+  "key": "dense",
+  "term": "Dense retrieval",
+  "vi": "Tìm kiếm bằng embedding (vector “dày” số liệu) — giỏi bắt các câu diễn đạt khác chữ nhưng cùng ý.",
+  "match": [
+   "dense"
+  ]
+ },
+ {
+  "key": "rerank",
+  "term": "Rerank",
+  "vi": "Bước chấm lại và sắp xếp lại các đoạn tìm được (bằng model chuyên dụng) để đưa những đoạn liên quan nhất lên đầu.",
+  "match": [
+   "re-?rank(?:er|ing)?",
+   "xếp hạng lại"
+  ]
+ },
+ {
+  "key": "contextual-retrieval",
+  "term": "Contextual Retrieval",
+  "vi": "Kỹ thuật của Anthropic: trước khi lưu, gắn thêm vài câu giải thích “đoạn này thuộc phần nào của tài liệu” vào mỗi chunk — tìm chính xác hơn hẳn.",
+  "match": [
+   "contextual retrieval"
+  ]
+ },
+ {
+  "key": "recall",
+  "term": "Recall",
+  "vi": "Trong các thứ cần tìm, tìm được bao nhiêu phần trăm. Recall thấp = bỏ sót nhiều.",
+  "match": [
+   "recall"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "precision",
+  "term": "Precision",
+  "vi": "Trong các thứ đã tìm/đã gắn cờ, bao nhiêu phần trăm là đúng. Precision thấp = báo nhầm nhiều.",
+  "match": [
+   "precision"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "grounding",
+  "term": "Grounding (bám nguồn)",
+  "vi": "Câu trả lời chỉ dựa trên tài liệu được cung cấp, có thể chỉ ra nguồn — ngược với bịa.",
+  "match": [
+   "grounded",
+   "grounding",
+   "bám nguồn"
+  ]
+ },
+ {
+  "key": "hallucination",
+  "term": "Hallucination (bịa)",
+  "vi": "Model tạo ra thông tin nghe hợp lý nhưng sai hoặc không có nguồn.",
+  "match": [
+   "hallucinat\\w*",
+   "bịa"
+  ],
+  "ref": "glossary"
+ },
+ {
+  "key": "mcp",
+  "term": "MCP",
+  "vi": "Model Context Protocol: chuẩn chung để nối ứng dụng AI với tool và dữ liệu. Viết một MCP server là mọi ứng dụng hỗ trợ MCP (Claude Code, Claude Desktop…) dùng được.",
+  "match": [
+   "MCP",
+   "Model Context Protocol"
+  ],
+  "cs": true,
+  "ref": "mcp"
+ },
+ {
+  "key": "mcp-server",
+  "term": "MCP server",
+  "vi": "Chương trình “cung cấp” tool/dữ liệu/prompt theo chuẩn MCP, ví dụ server GitHub, server Postgres.",
+  "match": [
+   "MCP servers?",
+   "máy chủ MCP"
+  ],
+  "ref": "mcp"
+ },
+ {
+  "key": "mcp-primitives",
+  "term": "Tools / Resources / Prompts (MCP)",
+  "vi": "Ba loại thứ MCP server cung cấp: Tools = hành động model gọi; Resources = dữ liệu để đọc; Prompts = mẫu prompt dựng sẵn cho người dùng chọn.",
+  "match": [
+   "MCP resources?",
+   "resources and prompts",
+   "MCP prompts?"
+  ],
+  "ref": "mcp"
+ },
+ {
+  "key": "stdio",
+  "term": "stdio / HTTP transport",
+  "vi": "Cách client nói chuyện với MCP server: stdio = chạy server như tiến trình trên máy; HTTP = server từ xa qua mạng.",
+  "match": [
+   "stdio",
+   "streamable HTTP",
+   "transport",
+   "SSE"
+  ],
+  "ref": "mcp"
+ },
+ {
+  "key": "oauth",
+  "term": "OAuth",
+  "vi": "Chuẩn uỷ quyền: người dùng cho phép ứng dụng truy cập tài khoản của họ trong phạm vi giới hạn, không cần đưa mật khẩu.",
+  "match": [
+   "OAuth"
+  ],
+  "cs": true
+ },
+ {
+  "key": "agent",
+  "term": "Agent",
+  "vi": "Model tự lên kế hoạch và gọi tool trong vòng lặp cho tới khi xong việc — tự quyết bước tiếp theo, không đi theo đường cố định.",
+  "match": [
+   "agents?",
+   "agentic",
+   "tác tử"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "workflow",
+  "term": "Workflow",
+  "vi": "Các bước gọi model và tool được lập trình sẵn theo thứ tự cố định. Dễ đoán, dễ kiểm soát hơn agent — nên dùng khi các bước đã biết trước.",
+  "match": [
+   "workflows?",
+   "luồng cố định"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "prompt-chaining",
+  "term": "Prompt chaining",
+  "vi": "Chia việc thành chuỗi bước, mỗi bước một lần gọi model, đầu ra bước trước là đầu vào bước sau.",
+  "match": [
+   "prompt chaining",
+   "chain(?:ed|ing)? prompts?"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "routing",
+  "term": "Routing",
+  "vi": "Phân loại yêu cầu trước, rồi chuyển tới xử lý (prompt/model/đội) phù hợp với từng loại.",
+  "match": [
+   "routing",
+   "router",
+   "định tuyến"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "parallelization",
+  "term": "Parallelization",
+  "vi": "Chạy nhiều lần gọi model cùng lúc: chia việc độc lập ra làm song song, hoặc hỏi nhiều lần rồi lấy ý đa số.",
+  "match": [
+   "paralleli[sz]ation",
+   "in parallel",
+   "song song"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "orchestrator",
+  "term": "Orchestrator–workers",
+  "vi": "Một model “điều phối” chia việc cho các model “thợ”, rồi gom kết quả lại. Tầng điều phối cũng là nơi đặt các chốt kiểm soát (quyền, giới hạn).",
+  "match": [
+   "orchestrat\\w*",
+   "điều phối"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "evaluator-optimizer",
+  "term": "Evaluator–optimizer",
+  "vi": "Một model làm, một model chấm và góp ý, lặp lại tới khi đạt.",
+  "match": [
+   "evaluator[–-]optimizer"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "subagent",
+  "term": "Subagent",
+  "vi": "Agent con được agent chính giao một phần việc, có ngữ cảnh riêng; làm xong chỉ gửi bản tóm tắt về — giữ ngữ cảnh agent chính gọn.",
+  "match": [
+   "sub-?agents?",
+   "agent con"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "agent-sdk",
+  "term": "Claude Agent SDK",
+  "vi": "Thư viện để tự xây agent dùng chung “bộ máy” với Claude Code (vòng lặp, tool, quyền, quản lý ngữ cảnh).",
+  "match": [
+   "Agent SDK"
+  ],
+  "ref": "agent-patterns"
+ },
+ {
+  "key": "skills",
+  "term": "Agent Skills",
+  "vi": "Thư mục hướng dẫn + tài nguyên (SKILL.md) cho một loại việc; Claude chỉ nạp khi việc đó liên quan, nên không tốn ngữ cảnh lúc không dùng.",
+  "match": [
+   "Agent Skills?",
+   "SKILL\\.md",
+   "skills?(?= (?:folder|directory|file))"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "claude-code",
+  "term": "Claude Code",
+  "vi": "Công cụ lập trình dạng agent của Anthropic chạy trong terminal/IDE: đọc code, sửa file, chạy lệnh.",
+  "match": [
+   "Claude Code"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "claude-md",
+  "term": "CLAUDE.md",
+  "vi": "Tệp ghi quy ước dự án (lệnh build, phong cách code, lưu ý) mà Claude Code tự đọc mỗi phiên. Đưa vào git để cả đội dùng chung.",
+  "match": [
+   "CLAUDE\\.md"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "hooks",
+  "term": "Hooks (Claude Code)",
+  "vi": "Lệnh tự động chạy ở các thời điểm cố định (trước/sau khi dùng tool…). Khác với dặn trong prompt, hook LUÔN chạy — dùng cho quy tắc bắt buộc.",
+  "match": [
+   "hooks?",
+   "PreToolUse",
+   "PostToolUse"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "permissions",
+  "term": "Permissions (quyền)",
+  "vi": "Danh sách cho phép/cấm những tool, lệnh, thư mục mà Claude được dùng. Đặt ở settings, có hiệu lực cứng, không phụ thuộc model “tự giác”.",
+  "match": [
+   "permissions?",
+   "allow-?list",
+   "deny-?list",
+   "phân quyền"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "slash-command",
+  "term": "Slash command",
+  "vi": "Lệnh gõ tắt bắt đầu bằng “/” trong Claude Code, chạy một prompt/quy trình đã lưu sẵn.",
+  "match": [
+   "slash commands?"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "headless",
+  "term": "Headless mode (claude -p)",
+  "vi": "Chạy Claude Code không cần người tương tác, trong script hay CI/CD.",
+  "match": [
+   "headless",
+   "claude -p",
+   "non-interactive"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "ci-cd",
+  "term": "CI/CD",
+  "vi": "Dây chuyền tự động build, test, triển khai mỗi khi code thay đổi.",
+  "match": [
+   "CI/CD",
+   "CI"
+  ],
+  "cs": true
+ },
+ {
+  "key": "plan-mode",
+  "term": "Plan mode",
+  "vi": "Chế độ Claude Code chỉ đọc và lên kế hoạch, chưa sửa gì — để người duyệt kế hoạch trước.",
+  "match": [
+   "plan mode"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "worktree",
+  "term": "Git worktree",
+  "vi": "Nhiều thư mục làm việc của cùng một repo git, mỗi cái một nhánh — cho nhiều phiên Claude chạy song song không giẫm chân nhau.",
+  "match": [
+   "worktrees?"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "eval",
+  "term": "Eval (bộ đánh giá)",
+  "vi": "Bộ câu hỏi/tình huống kiểm thử kèm cách chấm, chạy lại mỗi lần đổi prompt/model để biết chất lượng tốt lên hay tệ đi bằng con số.",
+  "match": [
+   "evals?",
+   "evaluations?",
+   "bộ đánh giá"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "golden-set",
+  "term": "Golden set / test set",
+  "vi": "Bộ ví dụ có sẵn đáp án đúng (do người xác nhận) dùng làm chuẩn để chấm.",
+  "match": [
+   "golden (?:set|dataset)",
+   "test set",
+   "ground truth",
+   "bộ chuẩn"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "llm-judge",
+  "term": "LLM-as-a-judge",
+  "vi": "Dùng một model chấm đầu ra theo tiêu chí (rubric). Nhanh và rẻ, nhưng phải kiểm tra lại bằng người chấm để biết nó chấm có chuẩn không.",
+  "match": [
+   "LLM-as-a-judge",
+   "LLM[- ]judge",
+   "model-graded",
+   "grader"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "rubric",
+  "term": "Rubric",
+  "vi": "Bảng tiêu chí chấm rõ ràng (điểm 1 là gì, điểm 5 là gì) để nhiều người/model chấm giống nhau.",
+  "match": [
+   "rubrics?",
+   "thang chấm"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "regression",
+  "term": "Regression test",
+  "vi": "Kiểm tra lại các ca cũ sau mỗi thay đổi để chắc chắn cái đang chạy tốt không bị hỏng.",
+  "match": [
+   "regressions?",
+   "hồi quy"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "baseline",
+  "term": "Baseline (mốc ban đầu)",
+  "vi": "Con số đo được TRƯỚC khi thay đổi, để sau đó so sánh xem có cải thiện thật không.",
+  "match": [
+   "baselines?",
+   "mốc nền"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "ab-test",
+  "term": "A/B test",
+  "vi": "Chia người dùng thành hai nhóm dùng hai phiên bản, so sánh chỉ số để biết bản nào tốt hơn.",
+  "match": [
+   "A/B"
+  ],
+  "cs": true,
+  "ref": "evals"
+ },
+ {
+  "key": "statistical-power",
+  "term": "Cỡ mẫu & power",
+  "vi": "Phải có đủ số mẫu thì mới phân biệt được khác biệt thật với may rủi. Tính trước cỡ mẫu cần thiết trước khi chạy thử nghiệm.",
+  "match": [
+   "statistical power",
+   "power analysis",
+   "sample size",
+   "minimum detectable effect",
+   "cỡ mẫu"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "p-hacking",
+  "term": "p-hacking",
+  "vi": "Gian lận thống kê vô tình: thấy số liệu rồi mới chọn chỉ số/cách đo cho đẹp. Tránh bằng cách chốt chỉ số TRƯỚC khi chạy.",
+  "match": [
+   "p-hacking"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "adversarial",
+  "term": "Adversarial testing / red teaming",
+  "vi": "Cố tình thử tấn công, lừa, phá hệ thống (prompt injection, câu hỏi hiểm) để tìm lỗ hổng trước khi kẻ xấu tìm ra.",
+  "match": [
+   "adversarial",
+   "red[- ]team\\w*",
+   "đối kháng"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "drift",
+  "term": "Drift (trôi chất lượng)",
+  "vi": "Chất lượng thay đổi dần theo thời gian (do đổi model, dữ liệu mới…) mà không ai để ý — cần đo định kỳ trên cùng một bộ eval.",
+  "match": [
+   "drift",
+   "trôi chất lượng"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "observability",
+  "term": "Observability / logging",
+  "vi": "Ghi lại đầu vào, đầu ra, lời gọi tool, độ trễ, chi phí của từng yêu cầu để theo dõi và điều tra sự cố.",
+  "match": [
+   "observability",
+   "tracing",
+   "structured logs?"
+  ]
+ },
+ {
+  "key": "audit-log",
+  "term": "Audit log",
+  "vi": "Nhật ký ai đã làm gì, lúc nào, không sửa được — để kiểm tra/chứng minh tuân thủ sau này.",
+  "match": [
+   "audit log\\w*",
+   "audit trail",
+   "nhật ký kiểm toán"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "prompt-injection",
+  "term": "Prompt injection",
+  "vi": "Kẻ xấu giấu lệnh trong dữ liệu (email, trang web, tài liệu) để “bẻ lái” model làm việc khác. Chặn bằng tách dữ liệu khỏi chỉ dẫn, giới hạn quyền, kiểm soát ngoài model.",
+  "match": [
+   "prompt injection",
+   "injection"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "jailbreak",
+  "term": "Jailbreak",
+  "vi": "Cố tình lách để model vượt qua quy tắc an toàn của nó.",
+  "match": [
+   "jailbreak\\w*"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "guardrails",
+  "term": "Guardrails (hàng rào)",
+  "vi": "Các lớp kiểm soát quanh model: lọc đầu vào/đầu ra, giới hạn quyền, người duyệt — để hệ thống an toàn ngay cả khi model sai.",
+  "match": [
+   "guardrails?",
+   "hàng rào"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "hitl",
+  "term": "Human-in-the-loop (HITL)",
+  "vi": "Có người xem và phê duyệt trước khi hệ thống thực hiện các hành động/quyết định quan trọng hoặc không đảo ngược được.",
+  "match": [
+   "human-in-the-loop",
+   "HITL",
+   "human review",
+   "human approval",
+   "người duyệt"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "least-privilege",
+  "term": "Least privilege (đặc quyền tối thiểu)",
+  "vi": "Chỉ cấp đúng những quyền cần để làm việc được giao, không hơn. Cắt thừa thì bớt rủi ro; nhưng cắt tới mức không làm được việc thì cũng sai.",
+  "match": [
+   "least privilege",
+   "đặc quyền tối thiểu"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "defense-in-depth",
+  "term": "Defense in depth (phòng thủ nhiều lớp)",
+  "vi": "Không trông vào một chốt chặn duy nhất; xếp nhiều lớp bảo vệ để một lớp hỏng vẫn còn lớp khác.",
+  "match": [
+   "defen[cs]e in depth",
+   "phòng thủ nhiều lớp"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "pii",
+  "term": "PII",
+  "vi": "Thông tin định danh cá nhân: tên, số CMND, địa chỉ, email, số điện thoại…",
+  "match": [
+   "PII"
+  ],
+  "cs": true,
+  "ref": "safety-governance"
+ },
+ {
+  "key": "phi",
+  "term": "PHI",
+  "vi": "Protected Health Information — thông tin sức khoẻ gắn với một bệnh nhân cụ thể (bệnh án, chẩn đoán…). Được luật HIPAA của Mỹ bảo vệ.",
+  "match": [
+   "PHI",
+   "protected health information"
+  ],
+  "cs": true,
+  "ref": "safety-governance"
+ },
+ {
+  "key": "hipaa",
+  "term": "HIPAA",
+  "vi": "Luật Mỹ về bảo vệ dữ liệu y tế. Muốn đưa PHI cho nhà cung cấp (như Anthropic) xử lý thì phải có BAA ký trước.",
+  "match": [
+   "HIPAA"
+  ],
+  "cs": true,
+  "ref": "safety-governance"
+ },
+ {
+  "key": "baa",
+  "term": "BAA",
+  "vi": "Business Associate Agreement — hợp đồng theo HIPAA giữa bên y tế và nhà cung cấp dịch vụ, cam kết cách bảo vệ PHI. Không có BAA thì không được đưa PHI vào.",
+  "match": [
+   "BAA",
+   "Business Associate Agreement"
+  ],
+  "cs": true,
+  "ref": "safety-governance"
+ },
+ {
+  "key": "zdr",
+  "term": "ZDR",
+  "vi": "Zero Data Retention — thoả thuận nhà cung cấp không lưu dữ liệu của bạn sau khi xử lý xong.",
+  "match": [
+   "ZDR",
+   "Zero Data Retention"
+  ],
+  "cs": true,
+  "ref": "safety-governance"
+ },
+ {
+  "key": "gdpr",
+  "term": "GDPR",
+  "vi": "Luật bảo vệ dữ liệu cá nhân của Liên minh châu Âu: cần căn cứ pháp lý, tối thiểu hoá dữ liệu, quyền xoá dữ liệu, giới hạn chuyển dữ liệu ra ngoài EU.",
+  "match": [
+   "GDPR"
+  ],
+  "cs": true,
+  "ref": "safety-governance"
+ },
+ {
+  "key": "data-residency",
+  "term": "Data residency",
+  "vi": "Yêu cầu dữ liệu phải được lưu/xử lý trong một vùng địa lý nhất định (ví dụ trong EU).",
+  "match": [
+   "data residency",
+   "lưu trú dữ liệu"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "eu-ai-act",
+  "term": "EU AI Act",
+  "vi": "Luật AI của EU, chia hệ thống AI theo mức rủi ro; loại “rủi ro cao” (tuyển dụng, tín dụng, y tế…) phải đánh giá, giám sát, minh bạch.",
+  "match": [
+   "EU AI Act",
+   "AI Act"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "data-minimization",
+  "term": "Tối thiểu hoá dữ liệu",
+  "vi": "Chỉ thu thập và gửi đi đúng phần dữ liệu cần cho việc, không hơn.",
+  "match": [
+   "data minimi[sz]ation",
+   "minimum necessary",
+   "tối thiểu hoá"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "redaction",
+  "term": "Redaction (che dữ liệu)",
+  "vi": "Xoá hoặc thay thông tin nhạy cảm (tên, số tài khoản…) bằng ký hiệu trước khi gửi đi hoặc ghi log.",
+  "match": [
+   "redact\\w*",
+   "mask(?:ing|ed)?"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "encryption",
+  "term": "Mã hoá",
+  "vi": "Biến dữ liệu thành dạng không đọc được nếu không có khoá. Cần thiết nhưng KHÔNG thay được các nghĩa vụ hợp đồng/pháp lý (như BAA).",
+  "match": [
+   "encrypt\\w*",
+   "mã hoá"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "constitutional-ai",
+  "term": "Constitutional AI",
+  "vi": "Cách Anthropic huấn luyện Claude theo một bộ nguyên tắc (“hiến pháp”) viết sẵn.",
+  "match": [
+   "Constitutional AI"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "rsp",
+  "term": "RSP / ASL",
+  "vi": "Responsible Scaling Policy của Anthropic: model càng mạnh thì mức bảo vệ (ASL) càng cao.",
+  "match": [
+   "RSP",
+   "ASL(?:-\\d)?",
+   "Responsible Scaling"
+  ],
+  "cs": true,
+  "ref": "safety-governance"
+ },
+ {
+  "key": "aup",
+  "term": "Usage Policy (AUP)",
+  "vi": "Chính sách sử dụng của Anthropic: liệt kê những việc không được dùng Claude để làm.",
+  "match": [
+   "AUP",
+   "usage polic\\w*"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "bias",
+  "term": "Bias (thiên lệch)",
+  "vi": "Model đối xử không công bằng với một nhóm người (giới tính, dân tộc, tuổi…) do dữ liệu huấn luyện. Phải đo theo từng nhóm.",
+  "match": [
+   "bias\\w*",
+   "thiên lệch"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "refusal",
+  "term": "Refusal (từ chối)",
+  "vi": "Model từ chối làm yêu cầu (vì an toàn). Từ chối quá tay với yêu cầu hợp lệ cũng là lỗi cần đo.",
+  "match": [
+   "refus\\w*",
+   "từ chối"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "fine-tuning",
+  "term": "Fine-tuning",
+  "vi": "Huấn luyện thêm model trên dữ liệu riêng. Đắt và chậm — thường thử prompt, ví dụ mẫu, RAG trước.",
+  "match": [
+   "fine-?tun\\w*"
+  ]
+ },
+ {
+  "key": "pretraining",
+  "term": "Pretraining",
+  "vi": "Giai đoạn huấn luyện gốc của model trên lượng văn bản khổng lồ; model mang theo cả kiến thức lẫn thiên lệch từ đây.",
+  "match": [
+   "pre-?train\\w*"
+  ]
+ },
+ {
+  "key": "knowledge-cutoff",
+  "term": "Knowledge cutoff",
+  "vi": "Mốc thời gian dữ liệu huấn luyện dừng lại; model không biết chuyện xảy ra sau đó trừ khi được cung cấp (RAG, tìm web).",
+  "match": [
+   "knowledge cutoff",
+   "training cutoff"
+  ]
+ },
+ {
+  "key": "deprecation",
+  "term": "Model deprecation",
+  "vi": "Nhà cung cấp báo trước một model sẽ ngừng; sau ngày ngừng, gọi model đó sẽ lỗi — cần kế hoạch chuyển model và chạy lại eval.",
+  "match": [
+   "deprecat\\w*",
+   "retire\\w*",
+   "ngừng dùng"
+  ],
+  "ref": "model-family"
+ },
+ {
+  "key": "model-pinning",
+  "term": "Ghim phiên bản model",
+  "vi": "Gọi đúng một phiên bản model cố định (có ngày) thay vì bí danh “mới nhất”, để hành vi không tự đổi.",
+  "match": [
+   "pinned",
+   "pin(?:ning)? (?:the )?(?:model|version)",
+   "snapshot"
+  ],
+  "ref": "model-family"
+ },
+ {
+  "key": "bedrock",
+  "term": "Amazon Bedrock / Vertex AI",
+  "vi": "Nền tảng đám mây của AWS / Google Cloud cho phép dùng Claude ngay trong tài khoản đám mây của doanh nghiệp.",
+  "match": [
+   "Bedrock",
+   "Vertex AI",
+   "Vertex"
+  ],
+  "ref": "model-family"
+ },
+ {
+  "key": "enterprise",
+  "term": "Claude Enterprise / Team",
+  "vi": "Gói Claude cho tổ chức: quản trị tập trung, SSO, phân quyền, nhật ký kiểm toán, chính sách dữ liệu dành cho doanh nghiệp.",
+  "match": [
+   "Claude Enterprise",
+   "Enterprise plan",
+   "Team plan",
+   "Claude for Work"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "sso",
+  "term": "SSO / SCIM",
+  "vi": "SSO: đăng nhập một lần bằng tài khoản công ty. SCIM: tự động thêm/xoá người dùng theo hệ thống nhân sự.",
+  "match": [
+   "SSO",
+   "SCIM",
+   "single sign-on"
+  ],
+  "cs": true
+ },
+ {
+  "key": "rbac",
+  "term": "RBAC (phân quyền theo vai trò)",
+  "vi": "Cấp quyền theo vai trò (nhân viên, quản lý, admin…) thay vì từng người.",
+  "match": [
+   "RBAC",
+   "role-based",
+   "per-role"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "sla",
+  "term": "SLA",
+  "vi": "Cam kết mức dịch vụ (thời gian hoạt động, độ trễ, thời gian phản hồi sự cố).",
+  "match": [
+   "SLA",
+   "SLO"
+  ],
+  "cs": true
+ },
+ {
+  "key": "roi",
+  "term": "ROI",
+  "vi": "Return On Investment — lợi ích thu về so với chi phí bỏ ra.",
+  "match": [
+   "ROI"
+  ],
+  "cs": true
+ },
+ {
+  "key": "kpi",
+  "term": "KPI / success metric",
+  "vi": "Con số đo xem giải pháp có đạt mục tiêu không (ví dụ: thời gian xử lý ticket giảm 30%). Phải chốt trước khi xây.",
+  "match": [
+   "KPIs?",
+   "success metrics?",
+   "success criteria",
+   "primary (?:success )?metric",
+   "chỉ số thành công"
+  ],
+  "ref": "evals"
+ },
+ {
+  "key": "poc",
+  "term": "PoC / pilot",
+  "vi": "Bản thử nhỏ, phạm vi hẹp để chứng minh ý tưởng chạy được và đo giá trị trước khi đầu tư lớn.",
+  "match": [
+   "PoC",
+   "proof of concept",
+   "pilot"
+  ]
+ },
+ {
+  "key": "stakeholder",
+  "term": "Stakeholder (bên liên quan)",
+  "vi": "Những người/bộ phận chịu ảnh hưởng hoặc có quyền quyết định với dự án: lãnh đạo, pháp chế, người dùng cuối, đội vận hành…",
+  "match": [
+   "stakeholders?",
+   "bên liên quan"
+  ]
+ },
+ {
+  "key": "change-management",
+  "term": "Change management",
+  "vi": "Giúp con người chấp nhận và dùng công cụ mới: đào tạo, truyền thông, người dẫn dắt, thu phản hồi.",
+  "match": [
+   "change management",
+   "adoption"
+  ]
+ },
+ {
+  "key": "non-functional",
+  "term": "Yêu cầu phi chức năng",
+  "vi": "Yêu cầu về “chất lượng” chứ không phải “tính năng”: tốc độ, độ sẵn sàng, bảo mật, chi phí, tuân thủ.",
+  "match": [
+   "non-functional",
+   "phi chức năng"
+  ]
+ },
+ {
+  "key": "fallback",
+  "term": "Fallback (phương án dự phòng)",
+  "vi": "Đường lui khi bước chính lỗi: chuyển model khác, trả lời mặc định, hoặc chuyển cho người.",
+  "match": [
+   "fallbacks?",
+   "dự phòng"
+  ]
+ },
+ {
+  "key": "escalation",
+  "term": "Escalation (chuyển cấp)",
+  "vi": "Chuyển ca khó/nhạy cảm cho người hoặc cấp cao hơn xử lý thay vì để AI tự quyết.",
+  "match": [
+   "escalat\\w*",
+   "chuyển cấp"
+  ]
+ },
+ {
+  "key": "handoff",
+  "term": "Handoff",
+  "vi": "Chuyển việc giữa các bước/agent/người, kèm đủ thông tin để bên nhận làm tiếp.",
+  "match": [
+   "hand-?offs?",
+   "bàn giao"
+  ]
+ },
+ {
+  "key": "sandbox",
+  "term": "Sandbox",
+  "vi": "Môi trường cô lập để chạy code/agent, nếu có sự cố cũng không ảnh hưởng hệ thống thật.",
+  "match": [
+   "sandbox\\w*"
+  ],
+  "ref": "claude-code-teams"
+ },
+ {
+  "key": "secrets",
+  "term": "Secrets (khoá bí mật)",
+  "vi": "Mật khẩu, API key, token. Không bao giờ viết thẳng vào prompt/code; giữ trong kho bí mật và chỉ cấp đúng nơi cần.",
+  "match": [
+   "secrets?",
+   "API keys?",
+   "credentials?",
+   "khoá API"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "shadow-it",
+  "term": "Shadow IT",
+  "vi": "Nhân viên tự dùng công cụ/tài khoản cá nhân ngoài kiểm soát của công ty — dữ liệu nhạy cảm thoát ra ngoài mà không ai biết.",
+  "match": [
+   "shadow IT",
+   "personal (?:Claude )?accounts?"
+  ],
+  "ref": "safety-governance"
+ },
+ {
+  "key": "determinism",
+  "term": "Tính tất định",
+  "vi": "Cùng đầu vào luôn cho cùng đầu ra. Model ngôn ngữ không hoàn toàn tất định, nên việc phải đúng 100% (tính tiền, kiểm quyền) nên để code thường làm.",
+  "match": [
+   "determinis\\w*",
+   "tất định"
+  ]
+ },
+ {
+  "key": "classification",
+  "term": "Classification (phân loại)",
+  "vi": "Gán mỗi đầu vào vào một nhãn trong danh sách cho sẵn (ví dụ: loại ticket). Việc phổ biến, hợp model nhỏ.",
+  "match": [
+   "classif\\w*",
+   "phân loại"
+  ]
+ },
+ {
+  "key": "extraction",
+  "term": "Extraction (trích xuất)",
+  "vi": "Lấy thông tin có cấu trúc (tên, ngày, số tiền…) ra từ văn bản tự do.",
+  "match": [
+   "extract\\w*",
+   "trích xuất"
+  ]
+ }
+]
