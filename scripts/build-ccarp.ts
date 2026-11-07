@@ -17,6 +17,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 const ROOT = process.cwd();
 const SRC = join(ROOT, "docs", "claude");
@@ -378,6 +379,10 @@ for (const q of questions) {
 mkdirSync(OUT, { recursive: true });
 writeFileSync(join(OUT, "guide.json"), JSON.stringify(guide, null, 1) + "\n");
 writeFileSync(join(OUT, "bank.json"), JSON.stringify(bank) + "\n");
+// Mã phiên bản ngân hàng đề: client tải bank.json?v=<mã> → service worker / trình duyệt không bao giờ trả bản cũ
+// (bản cũ thiếu câu mới làm đề thi thử bị hụt câu trên máy đã cache).
+const bankVersion = createHash("sha1").update(JSON.stringify(bank)).digest("hex").slice(0, 12);
+writeFileSync(join(OUT, "version.ts"), `/** Sinh bởi scripts/build-ccarp.ts — đổi mỗi khi bank.json đổi. */\nexport const BANK_VERSION = "${bankVersion}";\n`);
 
 const conf = bank.reduce<Record<string, number>>((s, q) => ((s[q.confidence] = (s[q.confidence] ?? 0) + 1), s), {});
 console.log(`CCAR-P: ${guide.domains.length} domain · ${taskCount} task statement · ${guide.front.length + guide.back.length} mục phụ`);

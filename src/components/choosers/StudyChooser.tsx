@@ -93,7 +93,7 @@ export function StudyChooser({ data }: { data: ChooserData }) {
       start: { label: labels.ccar[first.ccar], href: `/claude-ccar-p/${first.ccar}` },
       entries: [
         { label: "7 domain · thứ tự học", href: "/claude-ccar-p", note: `${counts.ccarLessons} task statement` },
-        { label: "Luyện tập & thi thử", href: "/claude-ccar-p/practice", note: `${counts.ccarQuestions} câu · 3 đề` },
+        { label: "Luyện tập & thi thử", href: "/claude-ccar-p/practice", note: `${counts.ccarQuestions} câu gốc · ${counts.ccarAuthored} câu Claude` },
         { label: "Lộ trình ôn & quy chế", href: "/claude-ccar-p/on-thi" },
       ],
     },

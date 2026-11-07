@@ -37,6 +37,8 @@ export const setId = {
   v2: "v2",
   /** Bộ đề Claude biên soạn: cả bộ, hoặc lọc theo domain */
   authored: (d?: number) => (d ? `claude-d${d}` : "claude"),
+  /** Bộ đề Claude biên soạn của một task statement: "claude-t3-1" */
+  authoredTask: (t: string) => `claude-t${t}`,
 };
 
 /** Nhãn của câu hỏi / lớp bổ sung do Claude biên soạn */

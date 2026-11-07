@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { BANK, getCourseMeta, mockExams, practiceSets } from "@/data/ccar-p/course";
+import { ORIGINAL, getCourseMeta, mockExams, practiceSets } from "@/data/ccar-p/course";
 import { CcarPracticeHub } from "@/components/ccar-p/CcarPracticeHub";
 
 export const metadata: Metadata = {
   title: "Luyện tập & thi thử",
-  description: "Ngân hàng câu hỏi CCAR-P theo domain, theo task statement, bộ đề v2, bộ đề Claude biên soạn, trộn ngẫu nhiên và 3 đề thi thử 63 câu theo tỉ trọng chính thức.",
+  description: "Ngân hàng câu hỏi CCAR-P theo domain, theo task statement, bộ đề v2, bộ đề Claude biên soạn, trộn ngẫu nhiên và đề thi thử 63 câu theo tỉ trọng chính thức (đề gốc và Claude biên soạn để riêng).",
 };
 
 export default function CcarPracticePage() {
@@ -17,8 +17,8 @@ export default function CcarPracticePage() {
       tasks={lessons.map((l) => ({ id: l.id, code: l.code, title: l.title, domain: l.domain, count: count(`task-${l.id}`) }))}
       v2={count("v2")}
       authored={{ total: count("claude"), byDomain: Object.fromEntries(domains.map((d) => [d.num, count(`claude-d${d.num}`)])) }}
-      total={BANK.length}
-      exams={mockExams().map((e) => ({ id: e.id, title: e.title, desc: e.desc, count: e.ids.length, minutes: e.minutes, passPct: e.passPct }))}
+      total={ORIGINAL.length}
+      exams={mockExams().map((e) => ({ id: e.id, source: e.source, title: e.title, desc: e.desc, count: e.ids.length, minutes: e.minutes, passPct: e.passPct }))}
     />
   );
 }

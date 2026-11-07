@@ -14,8 +14,9 @@ interface Props {
   v2: number;
   /** Câu do Claude biên soạn: tổng + số câu mỗi domain */
   authored: { total: number; byDomain: Record<number, number> };
+  /** Số câu ngân hàng đề gốc */
   total: number;
-  exams: { id: string; title: string; desc: string; count: number; minutes: number; passPct: number }[];
+  exams: { id: string; source: "original" | "authored"; title: string; desc: string; count: number; minutes: number; passPct: number }[];
 }
 
 export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: Props) {
@@ -23,6 +24,7 @@ export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: 
   const results = useCcarStore((s) => s.practice);
   const [parts, setParts] = useState<number[]>([]);
   const [n, setN] = useState(20);
+  const [src, setSrc] = useState<"goc" | "claude">("goc");
   const toggle = (p: number) => setParts((s) => (s.includes(p) ? s.filter((x) => x !== p) : [...s, p].sort()));
   const res = (k: string) => (hydrated ? results?.[k] : undefined);
   const best = (k: string) => {
@@ -40,46 +42,53 @@ export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: 
         <div className="oci-eyebrow">
           <FileCheck2 size={16} aria-hidden /> Luyện tập & thi thử
         </div>
-        <h1>Ngân hàng {total} câu hỏi + 3 đề thi thử 63 câu</h1>
+        <h1>
+          Đề gốc {total} câu{authored.total > 0 && <> · Claude biên soạn {authored.total} câu</>}
+        </h1>
         <p className="lead">
-          Đề tiếng Việt, bấm <strong>English</strong> để xem đề gốc. Có câu một đáp án, nhiều đáp án (ghi rõ <strong>“Chọn N”</strong>), câu Yes/No
-          từng dòng và câu chọn trong danh sách. Sau mỗi câu: <strong>✅ Kiến thức cần nhớ</strong>, <strong>💡 vì sao chọn</strong> và{" "}
-          <strong>❌ các ô kia sai ở đâu</strong>. Đáp án và giải thích do Claude soạn, chưa đối chiếu đáp án chính thức.
-          {authored.total > 0 && (
-            <>
-              {" "}
-              Trong đó {authored.total} câu mới do Claude biên soạn (gắn nhãn <strong>“Claude biên soạn”</strong>).
-            </>
-          )}
+          Hai nguồn câu hỏi <strong>để riêng, không trộn lẫn</strong>: <strong>Đề gốc</strong> là ngân hàng câu hỏi của chủ khóa;{" "}
+          <strong>Claude biên soạn</strong> là câu mới viết theo tài liệu công khai của Anthropic. Đề tiếng Việt, bấm <strong>English</strong> để xem
+          đề tiếng Anh. Sau mỗi câu có <strong>mẹo nhớ</strong>, <strong>vì sao chọn</strong>, <strong>các ô kia sai ở đâu</strong> và giải nghĩa
+          thuật ngữ. Đáp án đề gốc do Claude soạn, chưa đối chiếu đáp án chính thức.
         </p>
       </section>
 
-      <div className="oci-section-title">
-        <h2>Đề thi thử CCAR-P</h2>
-        <span>63 câu · 120 phút · không hiện đáp án khi làm</span>
-      </div>
-      <div className="oci-exam-grid">
-        {exams.map((e) => {
-          const r = res(`exam:${e.id}`);
-          return (
-            <Link key={e.id} href={`${CCAR_BASE}/exam/${e.id}`} className="oci-module-card">
-              <div className="top">
-                <span className="mn">{e.title}</span>
-                <span className="orig">
-                  <Clock size={12} style={{ display: "inline", verticalAlign: -2 }} aria-hidden /> {e.minutes}′
-                </span>
-              </div>
-              <p>{e.desc}</p>
-              <div className="meta">
-                <span>
-                  {e.count} câu · đạt ≥ {e.passPct}%
-                </span>
-                <span>{r ? `Cao nhất ${Math.round((r.best / r.total) * 100)}%` : "Chưa làm"}</span>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+      {(["original", "authored"] as const).map((source) => {
+        const list = exams.filter((e) => e.source === source);
+        if (!list.length) return null;
+        return (
+          <section key={source}>
+            <div className="oci-section-title">
+              <h2>{source === "original" ? "Đề thi thử · đề gốc" : "Đề thi thử · Claude biên soạn"}</h2>
+              <span>63 câu · 120 phút · không hiện đáp án khi làm</span>
+            </div>
+            <div className="oci-exam-grid">
+              {list.map((e) => {
+                const r = res(`exam:${e.id}`);
+                return (
+                  <Link key={e.id} href={`${CCAR_BASE}/exam/${e.id}`} className={`oci-module-card${source === "authored" ? " ccar-authored-card" : ""}`}>
+                    <div className="top">
+                      <span className="mn">
+                        {source === "authored" && <Sparkles size={13} style={{ display: "inline", verticalAlign: -2 }} aria-hidden />} {e.title}
+                      </span>
+                      <span className="orig">
+                        <Clock size={12} style={{ display: "inline", verticalAlign: -2 }} aria-hidden /> {e.minutes}′
+                      </span>
+                    </div>
+                    <p>{e.desc}</p>
+                    <div className="meta">
+                      <span>
+                        {e.count} câu · đạt ≥ {e.passPct}%
+                      </span>
+                      <span>{r ? `Cao nhất ${Math.round((r.best / r.total) * 100)}%` : "Chưa làm"}</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
 
       <div className="oci-section-title">
         <h2>Bộ đề & trộn ngẫu nhiên</h2>
@@ -91,7 +100,7 @@ export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: 
             <span className="mn">Bộ đề v2</span>
             <span className="orig">{v2} câu</span>
           </div>
-          <p>Bộ “ccar-p-v2” trong ngân hàng gốc của chủ khóa (cả {v2} câu đều nằm trong ngân hàng {total} câu).</p>
+          <p>Bộ “ccar-p-v2” trong ngân hàng gốc của chủ khóa (cả {v2} câu đều nằm trong {total} câu đề gốc).</p>
           <div className="meta">
             <span>Luyện tập · có giải thích</span>
             <span>{best("v2") ?? "Chưa làm"}</span>
@@ -123,6 +132,19 @@ export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: 
           </div>
         )}
         <div className="oci-mix ccar-span2">
+          {authored.total > 0 && (
+            <div className="row">
+              <span className="lbl">Nguồn:</span>
+              <div className="oci-seg" role="group" aria-label="Nguồn câu hỏi">
+                <button aria-pressed={src === "goc"} onClick={() => setSrc("goc")}>
+                  Đề gốc
+                </button>
+                <button aria-pressed={src === "claude"} onClick={() => setSrc("claude")}>
+                  Claude biên soạn
+                </button>
+              </div>
+            </div>
+          )}
           <div className="row">
             <span className="lbl">Domain:</span>
             <div className="oci-seg" role="group" aria-label="Chọn domain">
@@ -147,7 +169,7 @@ export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: 
             </div>
           </div>
           <div>
-            <Link href={`${CCAR_BASE}/practice/mix?d=${parts.join(",")}&n=${n}`} className="oci-btn primary">
+            <Link href={`${CCAR_BASE}/practice/mix?src=${src}&d=${parts.join(",")}&n=${n}`} className="oci-btn primary">
               <Shuffle aria-hidden /> Trộn ngẫu nhiên
             </Link>
           </div>
@@ -155,8 +177,8 @@ export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: 
       </div>
 
       <div className="oci-section-title">
-        <h2>Luyện theo domain</h2>
-        <span>7 domain</span>
+        <h2>Luyện theo domain · đề gốc</h2>
+        <span>7 domain · bộ Claude biên soạn lọc theo domain ở thẻ phía trên</span>
       </div>
       <div className="oci-lesson-practice-list">
         {domains.map((d) => (
@@ -186,7 +208,7 @@ export function CcarPracticeHub({ domains, tasks, v2, authored, total, exams }: 
             <h2>
               Domain {d.num} · {d.title}
             </h2>
-            <span>theo task statement</span>
+            <span>theo task statement · đề gốc</span>
           </div>
           <div className="oci-lesson-practice-list">
             {tasks

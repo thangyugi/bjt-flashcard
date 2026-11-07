@@ -7,6 +7,7 @@ import type { BankQuestion } from "@/data/ccar-p/types";
 import { AUTHORED_LABEL, CCAR_BASE, DOMAIN_SHORT } from "@/data/ccar-p/meta";
 import { optionOrder, seededShuffle } from "@/data/ccar-p/shuffle";
 import { useCcarStore } from "@/store/ccar-p-store";
+import { BANK_VERSION } from "@/data/ccar-p/version";
 import { Breadcrumbs } from "@/components/ui/page";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -15,7 +16,8 @@ const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
 let bankCache: Promise<BankQuestion[]> | null = null;
 export function loadBank(): Promise<BankQuestion[]> {
-  bankCache ??= fetch(`${CCAR_BASE}/practice/bank.json`)
+  // ?v=<mã phiên bản>: mỗi lần ngân hàng đổi là một URL mới → không bao giờ dính bản cache cũ
+  bankCache ??= fetch(`${CCAR_BASE}/practice/bank.json?v=${BANK_VERSION}`, { cache: "no-cache" })
     .then((r) => {
       if (!r.ok) throw new Error(`bank.json: HTTP ${r.status}`);
       return r.json() as Promise<BankQuestion[]>;

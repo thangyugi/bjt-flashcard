@@ -150,7 +150,7 @@ export function useQuizItems(data: ChooserData): { items: QuizItem[]; recommende
       group: "Luyện tập",
       title: "Luyện tập CCAR-P",
       desc: "Theo domain hoặc task statement, bộ đề v2, bộ đề Claude biên soạn hay trộn ngẫu nhiên. Đề tiếng Việt kèm bản gốc tiếng Anh, giải thích từng ô.",
-      meta: `${counts.ccarQuestions} câu · 7 domain · bộ v2 ${counts.ccarV2} câu`,
+      meta: `${counts.ccarQuestions} câu đề gốc · ${counts.ccarAuthored} câu Claude biên soạn · bộ v2 ${counts.ccarV2} câu`,
       result: score(latest(ccarPractice, (k) => !k.startsWith("exam:"))?.[1]),
       primary: last.ccar
         ? { label: `Tiếp: ${labels.ccar[last.ccar]}`, href: `/claude-ccar-p/practice/task-${last.ccar}` }
