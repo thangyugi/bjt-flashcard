@@ -1,0 +1,205 @@
+[
+ {"id": 11365,
+  "remember": "Dùng Claude với dữ liệu y tế (HIPAA): **gói doanh nghiệp + BAA đã ký + ZDR (không lưu dữ liệu) + nhật ký kiểm toán**. **Không có BAA thì không được đưa thông tin sức khoẻ vào.**",
+  "why": "Ô B có đủ phần hợp đồng và phần kỹ thuật: BAA đã ký (hợp đồng bắt buộc theo HIPAA giữa bên y tế và nhà cung cấp), bật Zero Data Retention (Anthropic không lưu dữ liệu sau xử lý), và cấu hình nhật ký kiểm toán. Đây là cấu hình Anthropic cung cấp cho khách hàng y tế. Các ô còn lại đều thiếu BAA — điều kiện tiên quyết.",
+  "wrong": {
+   "A": "Sai: gói miễn phí/tiêu dùng không có BAA nên không “tự động” đạt HIPAA.",
+   "C": "HIPAA **đòi hỏi** nhật ký kiểm toán; tắt log mà lại không có BAA là sai hai lần.",
+   "D": "Tài khoản cá nhân tự mở, không BAA — dữ liệu y tế thoát khỏi kiểm soát của tổ chức (shadow IT)."
+  }},
+ {"id": 11366,
+  "remember": "Ghi một quyết định kiến trúc cho tốt: **các phương án đã cân nhắc + tiêu chí so sánh** (vì sao chọn cái này), và **ai sở hữu + khi nào xem lại** (để quyết định không bị “chết”).",
+  "why": "Ô D cho người đọc thấy vì sao chọn phương án này mà không chọn phương án kia — cốt lõi của mọi bản ghi quyết định. Ô A giữ quyết định “sống”: có người chịu trách nhiệm và lịch xem lại khi điều kiện thay đổi. Cả hai là chất lượng nội dung, không phải hình thức hay thủ tục.",
+  "wrong": {
+   "B": "Bắt lãnh đạo dự họp là thủ tục phân phối, không làm quyết định rõ hơn.",
+   "C": "Bỏ các phương án đã loại là bỏ đúng phần giá trị nhất cho người đọc sau này.",
+   "E": "Mẫu thống nhất chỉ chuẩn hoá hình thức; đẹp mà thiếu lý lẽ vẫn yếu."
+  }},
+ {"id": 11367,
+  "remember": "Cho AI chạm vào **cơ sở dữ liệu thật**: mặc định **chỉ đọc**, subagent chỉ có **tool đọc**, và mọi thao tác **ghi phải có người xác nhận**.",
+  "why": "Ô D xếp ba lớp phòng thủ: tài khoản kết nối mặc định chỉ đọc (chặn ở tầng hạ tầng), danh sách tool của subagent chỉ gồm tool đọc (chặn ở tầng tool), và bắt người xác nhận rõ ràng trước mọi thao tác ghi (vì ghi sai dữ liệu thật thường không đảo ngược được). Ba ô kia đều gỡ bỏ rào chắn.",
+  "wrong": {
+   "A": "Cho ghi thẳng, không có cổng xác nhận — không có rào chắn nào.",
+   "B": "Tài khoản đủ mọi quyền, không cần xác nhận — trái nguyên tắc đặc quyền tối thiểu.",
+   "C": "Tắt log và kiểm toán thì không phát hiện được dữ liệu bị sửa sai."
+  }},
+ {"id": 11368,
+  "remember": "Dựng bộ đánh giá: **định nghĩa chỉ số và lát cắt** (ca thường, ca biên, ca tấn công) → **chọn và gán nhãn dữ liệu** cho khớp → chạy → chấm → xem ca hỏng → chặn phát hành theo ngưỡng.",
+  "why": "Trước khi chạy hệ thống trên bộ đánh giá, phải biết đo cái gì: chỉ số và các lát cắt trên ca tiêu biểu, ca biên, ca đối kháng (ô D). Và phải có dữ liệu đúng các lát cắt đó, đã gán nhãn đáp án tham chiếu (ô B). Chấm điểm, xem ca hỏng và chặn phát hành đều cần đầu ra của lần chạy.",
+  "wrong": {
+   "A": "Đưa chỉ số lên bảng và chặn phát hành cần có điểm đã chấm — sau khi chạy.",
+   "C": "Phải chạy rồi mới có ca hỏng để xem.",
+   "E": "Chấm đầu ra là bước ngay sau khi chạy."
+  }},
+ {"id": 11370,
+  "remember": "Chuẩn hoá Claude Code cho nhóm: (1) **hiểu quy trình và ranh giới bảo mật**, phân định cái gì thuộc cấu hình quản trị, cái gì thuộc dự án → (2) **dựng cấu hình nền cấp dự án** → chạy thử nhóm nhỏ → lặp → mở rộng.",
+  "why": "Bước đầu tiên là ô D: hiểu quy trình của nhóm, ranh giới bảo mật, và phân định quyết định nào thuộc cấu hình quản trị, quyết định nào thuộc cấp dự án. Từ đó mới định được ô A: cấu hình nền cấp dự án gồm MCP server, quy tắc quyền, subagent. Có cấu hình nền rồi mới có thứ để chạy thử.",
+  "wrong": {
+   "B": "Đào tạo cả tổ chức trước khi thử với nhóm nhỏ là quá tay, lại chưa có cấu hình ổn định.",
+   "C": "Mở rộng sang nhóm khác là bước sau khi thử.",
+   "E": "Cải tiến dựa trên kết quả thử — phải thử trước."
+  }},
+ {"id": 11371,
+  "remember": "So phương án: **loại trước** những phương án vi phạm **ràng buộc cứng** (ví dụ SLA), rồi mới so các phương án còn lại theo **nhiều tiêu chí** (chi phí, chất lượng, năng suất).",
+  "why": "Kiến trúc X trung bình 4,2 giây, vượt SLA “dưới 3 giây” → bị loại trước mọi cân nhắc chất lượng. Ô C làm đúng thứ tự: loại X, rồi đánh giá Y bằng chênh lệch chi phí cả năm (2 triệu phiên × 0,09 đô = 180 nghìn đô) và xem chênh lệch chất lượng có thật sự ảnh hưởng năng suất lâm sàng không.",
+  "wrong": {
+   "A": "Chỉ dựa vào chi phí — bỏ qua câu hỏi chất lượng có đủ không.",
+   "B": "SLA là ràng buộc cứng; “xử lý sau khi triển khai” là vi phạm ngay từ đầu.",
+   "D": "X vẫn vi phạm SLA ở các ca phức tạp, lại không phân tích gì thêm."
+  }},
+ {"id": 11374,
+  "remember": "Thứ tự ưu tiên cấu hình Claude Code (cao → thấp): **Quản trị (managed) > tham số dòng lệnh > local > dự án > cá nhân (user)**. Mẹo: càng “do tổ chức áp” và càng “riêng cho lần chạy này” thì càng ưu tiên.",
+  "why": "Theo tài liệu Claude Code: cấu hình quản trị đứng đầu, không bị ghi đè; tiếp theo là tham số dòng lệnh cho một phiên; rồi `.claude/settings.local.json` (riêng máy bạn, không commit); rồi `.claude/settings.json` (dùng chung, commit vào repo); cuối cùng là `~/.claude/settings.json` (cá nhân, mọi dự án). Ô C khớp đúng.",
+  "wrong": {
+   "A": "Đặt local trên quản trị thì cá nhân ghi đè được chính sách bảo mật của tổ chức.",
+   "B": "Quản trị nằm giữa và dòng lệnh xuống cuối — sai cả hai.",
+   "D": "Đảo ngược hoàn toàn; quản trị phải cao nhất."
+  }},
+ {"id": 11375,
+  "remember": "Khảo sát yêu cầu có cấu trúc: **hội thảo với các bên** để lộ ra ràng buộc (độ trễ, độ chính xác, tuân thủ) **trước khi** chốt phạm vi; **viết ra tiêu chí thành công và ngưỡng thất bại** làm cổng cho việc lên production.",
+  "why": "Ô A dùng hội thảo để làm lộ các ràng buộc về độ trễ, độ chính xác, tuân thủ trước khi khoanh phạm vi — phải biết trước khi thiết kế. Ô D chốt bằng văn bản tiêu chí thành công và ngưỡng thất bại sẽ dùng để quyết định có lên production không. Cả hai làm yêu cầu rõ ràng và kiểm được.",
+  "wrong": {
+   "B": "Chọn model theo kinh nghiệm cũ trước khi nghe các bên là chọn giải pháp trước khi hiểu bài toán.",
+   "C": "Dựng mẫu rồi sửa theo phản ứng, bỏ qua yêu cầu viết ra — không còn là khảo sát có cấu trúc.",
+   "E": "Phát hiện ràng buộc muộn sẽ phá thiết kế, chứ không chống được phình phạm vi."
+  }},
+ {"id": 11376,
+  "remember": "Quản lý token theo 3 chặng: **chuẩn bị đầu vào** (nén lịch sử, cắt đoạn truy hồi) → **dựng prompt** (sắp phần cố định lên đầu để cache) → **xử lý đầu ra** (kiểm lược đồ, lưu kết quả).",
+  "why": "Hỏi: thủ pháp này tác động lên cái gì? Nén nguyên liệu trước khi ghép (lịch sử hội thoại, đoạn truy hồi) là chuẩn bị đầu vào. Sắp xếp bố cục prompt để cache trúng (phần ổn định lên đầu) là dựng prompt. Mọi thứ làm với câu trả lời của model là xử lý đầu ra.",
+  "rows": {
+   "1": "Xử lý đầu ra — lưu câu trả lời đã kiểm là việc sau khi model trả lời.",
+   "2": "Dựng prompt — sắp thứ tự các phần trong prompt để phần cache được nằm trước.",
+   "3": "Chuẩn bị đầu vào — tóm tắt lịch sử trước khi ghép vào prompt.",
+   "4": "Xử lý đầu ra — kiểm câu trả lời theo lược đồ.",
+   "5": "Dựng prompt — đặt nội dung cố định thành phần đầu để cache.",
+   "6": "Chuẩn bị đầu vào — lọc đoạn truy hồi trước khi đưa vào prompt."
+  }},
+ {"id": 11377,
+  "remember": "Giao quyền quyết định cho AI: vẽ ranh giới theo **loại rủi ro** (gian lận, tiền lệ chính sách, khách dễ tổn thương), **không chỉ theo số tiền** mỗi giao dịch.",
+  "why": "Ngưỡng 50 đô chỉ đo quy mô từng giao dịch, bỏ qua các rủi ro khác: gian lận lặp nhiều lần dưới ngưỡng, tạo tiền lệ chính sách, khách hàng dễ tổn thương. Ô B nêu đúng nguyên tắc: có thể vẫn tự động hoá, nhưng phạm vi giao quyền phải phản ánh **loại** rủi ro, không chỉ độ lớn giao dịch.",
+  "wrong": {
+   "A": "Luôn có người duyệt mọi quyết định là bỏ hết lợi ích tự động hoá; mức giám sát phải tương xứng rủi ro.",
+   "C": "Lấy hiệu quả làm tiêu chí chính chính là lý lẽ cần phản bác.",
+   "D": "Cấm hẳn mọi chỗ có tiền là cực đoan, bỏ cả những ca thật sự rủi ro thấp."
+  }},
+ {"id": 11378,
+  "remember": "Phải giải thích lại quy ước dự án mỗi phiên → ghi vào **CLAUDE.md** trong repo. Claude Code **tự đọc** tệp này mỗi phiên, cả nhóm dùng chung.",
+  "why": "Gốc của lãng phí là ngữ cảnh dự án không được giữ lại giữa các phiên. Ô B đưa quy ước và kiến trúc vào tệp CLAUDE.md cấp dự án, commit vào repo, nên mỗi phiên tự nạp — xoá hẳn công lặp lại, và cả nhóm dùng chung một nguồn.",
+  "wrong": {
+   "A": "Cấm dùng Claude Code là bỏ luôn năng suất để tránh chi phí khởi động.",
+   "C": "Gõ lại nhanh hơn vẫn là việc thủ công lặp lại.",
+   "D": "Xoá quy ước là phá chuẩn chung của nhóm."
+  }},
+ {"id": 11379,
+  "remember": "Quy trình phải **giống hệt nhau ở nhiều nơi** và **hay thay đổi** → đóng gói thành **một Skill** do **chủ quy trình sở hữu**, và mọi nơi **tham chiếu cùng Skill đó**. Sửa một chỗ, mọi nơi cùng cập nhật.",
+  "why": "Yêu cầu: áp giống hệt nhau ở 3 luồng, và thay đổi 4–6 lần/năm. Ô A: bộ phận tuân thủ sở hữu Skill nên tự cập nhật ngay khi quy định đổi. Ô E: cả ba luồng tham chiếu cùng một Skill, nên một lần sửa là cả ba nhận ngay, không lệch phiên bản.",
+  "wrong": {
+   "B": "Chép vào system prompt từng luồng = 3 bản sao; mỗi lần đổi phải sửa 3 chỗ, dễ lệch.",
+   "C": "Kho truy hồi trả về đoạn trích theo độ giống, không bảo đảm quy trình được áp trọn vẹn và giống hệt.",
+   "D": "Mỗi nhóm tự viết lại phá ngay yêu cầu “giống hệt nhau”."
+  }},
+ {"id": 11380,
+  "remember": "Tính liên tục qua vòng đời: **giữ nguyên bộ đánh giá** qua các vòng (để so được với nhau) và **đưa bài học cuối mỗi pha vào pha sau**.",
+  "why": "Ô B mang bộ đánh giá và bộ tham chiếu đi tiếp qua các vòng lặp, nên kết quả các vòng so sánh được và phát hiện được hồi quy. Ô D biến bài học của pha này thành đầu vào cho pha sau. Cả hai tạo dòng chảy tri thức, thay vì mỗi pha làm lại từ đầu.",
+  "wrong": {
+   "A": "Thông báo cho danh sách các bên là thủ tục, không mang tri thức sang pha sau.",
+   "C": "Lưu trữ mà không ai dùng lại thì không tạo ra tính liên tục.",
+   "E": "Khoá cứng quyết định đi ngược tinh thần lặp; quyết định phải được xem lại khi giả định đổi."
+  }},
+ {"id": 11465,
+  "remember": "**Rất nhiều tin nhắn + cần trả lời trong vài trăm mili giây + ngân sách chặt** → **Haiku** (nhanh nhất, rẻ nhất, vẫn suy luận tốt).",
+  "why": "Đề có ba ràng buộc cứng: lưu lượng rất cao, phản hồi trong vài trăm mili giây, chi phí mỗi cuộc trò chuyện eo hẹp. Haiku 4.5 là model nhanh và rẻ nhất mà vẫn có năng lực suy luận gần mức cao nhất — đủ cho gỡ rối nhiều lượt. Mọi ô khác vi phạm ràng buộc chi phí hoặc độ trễ.",
+  "wrong": {
+   "A": "Opus đắt và chậm hơn — phá ngân sách; “bảo đảm độ chính xác” là nói quá.",
+   "C": "Đề đã nói ngân sách chặt; tự biện minh cho chi phí thêm là vượt ràng buộc.",
+   "D": "Fable là tầng đắt nhất; ngữ cảnh lớn không phải nhu cầu ở đây."
+  }},
+ {"id": 11466,
+  "remember": "Agent **tự chủ nhiều giờ** trên kho code **lớn, phức tạp**, **ưu tiên đúng hơn rẻ** → **Opus** (model cho lập trình dạng agent phức tạp, dài hơi).",
+  "why": "Tái cấu trúc nhiều giờ trên kho code lớn với rất ít điểm kiểm tra của người đòi khả năng lập kế hoạch và tự sửa sai bền bỉ; đề còn nói rõ ưu tiên độ đúng hơn chi phí. Opus 4.8 là tầng dành cho lập trình dạng agent phức tạp, dài hơi.",
+  "wrong": {
+   "A": "Nhiều lần thử kém không thay được một lần làm đúng; đề ưu tiên độ đúng.",
+   "B": "Tối ưu tốc độ, trong khi đề ưu tiên độ đúng.",
+   "D": "Ngữ cảnh dài không bù được năng lực suy luận yếu hơn."
+  }},
+ {"id": 11467,
+  "remember": "Một model **mặc định cho đủ loại việc hằng ngày**, cân bằng thông minh – tốc độ – chi phí → **Sonnet**.",
+  "why": "Đề muốn sự kết hợp tốt nhất giữa trí tuệ hàng đầu và tốc độ hằng ngày, mà không trả giá cao cấp, cho nhiều loại việc (code, phân tích, soạn nội dung, agent). Sonnet 5 là tầng cân bằng đó, dùng ở quy mô lớn.",
+  "wrong": {
+   "A": "Opus trả giá cao cấp cho việc hằng ngày — đề đã loại.",
+   "C": "Haiku rẻ nhưng không đạt mức trí tuệ hàng đầu cho code và agent phức tạp.",
+   "D": "Fable là tầng đắt nhất cho suy luận khó nhất — không phải model mặc định hằng ngày."
+  }},
+ {"id": 11468,
+  "remember": "Phải **chỉ ra đúng câu nào trong tài liệu** làm căn cứ → tính năng **Citations** (trích dẫn có vị trí trong tài liệu nguồn).",
+  "why": "Yêu cầu là trích dẫn đúng những câu đã dựa vào trong hợp đồng tải lên. Citations của Claude trả về đoạn trích chính xác kèm vị trí trong tài liệu nguồn, nên người soát đối chiếu được từng câu trả lời — đúng tính năng thiết kế cho việc này.",
+  "wrong": {
+   "A": "Structured outputs ép định dạng JSON, không buộc nội dung bám nguồn hay chỉ ra câu gốc.",
+   "C": "Suy luận mở rộng cho thấy quá trình nghĩ, không phải trích dẫn kiểm chứng được.",
+   "D": "Prompt caching tối ưu chi phí/độ trễ, không liên quan trích dẫn."
+  }},
+ {"id": 11469,
+  "remember": "RAG trên **kho riêng** mà muốn trích dẫn chất lượng như tìm web, **không gửi truy vấn ra ngoài** → dùng **search results** (ứng dụng tự đưa kết quả tìm kiếm của mình vào cho Claude trích dẫn).",
+  "why": "Tính năng search results cho phép ứng dụng tự đưa kết quả truy hồi từ kho riêng vào prompt dưới dạng khối “kết quả tìm kiếm”, và Claude trích dẫn chúng với chất lượng như tìm web. Ô C khớp cả hai ràng buộc: quy nguồn chất lượng trích dẫn, và không gửi truy vấn ra chỉ mục bên ngoài.",
+  "wrong": {
+   "A": "Web search chính là gửi truy vấn ra chỉ mục web công cộng — trái ràng buộc.",
+   "B": "Web fetch lấy nội dung từ URL; kho phiếu nội bộ không phơi ra internet.",
+   "D": "Chạy code trong hộp cát không phải cơ chế quy nguồn trích dẫn."
+  }},
+ {"id": 11470,
+  "remember": "Chọn model theo bằng chứng: **bắt đầu từ model rẻ nhất** (Haiku), **đo thử trên dữ liệu thật**, chỉ **nâng lên** khi thấy rõ nó không đủ sức.",
+  "why": "Đề có trần chi phí mỗi phiếu và muốn tránh dùng model mạnh quá mức cần. Ô A bắt đầu với Haiku 4.5, đo thử trên phiếu thật, và chỉ chuyển sang model mạnh hơn khi lộ ra khoảng hở năng lực — quyết định dựa trên bằng chứng chứ không phỏng đoán.",
+  "wrong": {
+   "B": "Opus nỗ lực tối đa cho mọi phiếu — đúng kiểu dùng quá mức đề muốn tránh, lại phá trần chi phí.",
+   "C": "Luân phiên ngẫu nhiên không dựa theo độ khó, chất lượng thất thường.",
+   "D": "Tự huấn luyện bộ phân loại riêng mất khả năng suy luận ca biên mà đề yêu cầu, lại thêm gánh bảo trì."
+  }},
+ {"id": 11471,
+  "remember": "Nối agent với nhiều hệ thống **mà không tự viết code tích hợp cho từng cái** → dùng **MCP server** có sẵn. Agent vẫn tự quyết khi nào gọi hệ thống nào.",
+  "why": "MCP là giao thức chuẩn để biến hệ thống bên ngoài thành tool cho model. Dùng MCP server có sẵn cho wiki, cơ sở dữ liệu, công cụ chat thì không phải viết và bảo trì code riêng cho từng tích hợp; agent vẫn tự chọn khi nào gọi cái nào. Ô A khớp cả hai yêu cầu.",
+  "wrong": {
+   "B": "Tự viết vòng lặp tool và từng hàm xử lý chính là code tuỳ biến đề muốn tránh.",
+   "C": "Nhét nội dung vào system prompt: không đăng được lên chat, dữ liệu cũ, tốn ngữ cảnh.",
+   "D": "Cây quyết định tĩnh bỏ mất quyền tự quyết của agent."
+  }},
+ {"id": 11472,
+  "remember": "Việc phải xảy ra **mỗi lần, chắc chắn** (như ghi log kiểm toán sau khi sửa tệp) → dùng **hook** (ví dụ `PostToolUse`), không dặn model trong prompt.",
+  "why": "Hook `PostToolUse` khớp các tool `Edit` và `Write` sẽ tự chạy sau mỗi lần sửa/ghi tệp. Nó do SDK thực thi nên chắc chắn chạy, không phụ thuộc model có nhớ hay không — đúng thứ đề cần.",
+  "wrong": {
+   "B": "Dặn Claude nhớ ghi log là trông vào model; phiên nhiều giờ sẽ có lúc quên.",
+   "C": "Thăm dò hệ tệp là đoán gián tiếp, có độ trễ, dễ bỏ sót, không biết ai sửa.",
+   "D": "Bắt người xác nhận từng lần sửa phá mất tính tự chủ nhiều giờ."
+  }},
+ {"id": 11473,
+  "remember": "Muốn agent chạy dài **mà không tự vận hành hạ tầng**, sandbox do Anthropic lo, giao tiếp qua REST → **Managed Agents**. Tự host thì dùng Agent SDK.",
+  "why": "Với Managed Agents, Anthropic chạy vòng lặp agent và hộp cát (sandbox); ứng dụng chỉ gửi sự kiện và nhận kết quả truyền về qua REST. Khớp cả ba điều kiện: sandbox do Anthropic quản lý, giao tiếp REST, không phải vận hành hạ tầng.",
+  "wrong": {
+   "B": "Agent SDK chạy trong tiến trình của họ = tự vận hành vòng lặp — đúng điều đề muốn tránh.",
+   "C": "Tự viết cả vòng lặp thực thi tool còn nặng gánh vận hành hơn.",
+   "D": "Chế độ tương tác của CLI dành cho người dùng, không phải môi trường production."
+  }},
+ {"id": 11474,
+  "remember": "Tài liệu lớn **giống hệt nhau** ở mọi câu hỏi trong phiên → **prompt caching**: lần sau đọc từ cache → **rẻ hơn và trả chữ đầu tiên nhanh hơn**.",
+  "why": "PDF 40 trang là phần đầu cố định cho mọi câu hỏi tiếp theo. Cache nó thì các lần sau đọc từ cache: rẻ hơn và nhanh hơn, mà không đổi model hay câu hỏi.",
+  "wrong": {
+   "B": "OCR bên ngoài trước mọi yêu cầu thêm chặng xử lý và độ trễ, lại xử lý lại mỗi lần.",
+   "C": "`effort` cao làm model nghĩ nhiều hơn — chậm và đắt hơn, không nhanh hơn.",
+   "D": "Chia 40 trang thành 40 yêu cầu làm mất ngữ cảnh cả hợp đồng, tốn gấp nhiều lần."
+  }},
+ {"id": 11475,
+  "remember": "Muốn giữ phần **điều tra dài dòng ra ngoài** ngữ cảnh chính, chỉ nhận **kết luận ngắn** → giao cho **subagent** (ngữ cảnh riêng, chỉ trả về tin nhắn cuối).",
+  "why": "Subagent chạy trong cửa sổ ngữ cảnh riêng, chỉ trả tin nhắn cuối cùng về cho hội thoại chính. Nội dung hàng chục tệp và suy luận trung gian ở lại bên trong subagent — đúng nhu cầu “chỉ nhận kết luận gọn”.",
+  "wrong": {
+   "B": "Đội agent dành cho nhiều thành viên phối hợp, nhắn tin cho nhau — quá mức cho một cuộc điều tra đơn lẻ.",
+   "C": "Dùng hook xoá kết quả tool là chắp vá, mất thông tin mà không cho ra kết luận gọn.",
+   "D": "Không liên quan tới tách ngữ cảnh, lại mở rộng quyền truy cập."
+  }},
+ {"id": 11476,
+  "remember": "Nhiều việc **độc lập** cần chạy nhanh → gọi các subagent **trong cùng một lượt** để chúng **chạy song song**. Tổng thời gian ≈ việc chậm nhất.",
+  "why": "Ba bài soát (phong cách, bảo mật, độ phủ kiểm thử) độc lập, không cần kết quả của nhau. Gọi cả ba trong cùng một lượt thì chúng chạy đồng thời, tổng thời gian chỉ bằng subagent chậm nhất.",
+  "wrong": {
+   "B": "Gọi lần lượt thì thời gian là tổng của cả ba — ngược yêu cầu.",
+   "C": "Gộp thành một subagent thì làm tuần tự và loãng chuyên môn.",
+   "D": "Chạy ba lần trong cùng phiên vẫn tuần tự; đổi model không tạo ra song song."
+  }}
+]
