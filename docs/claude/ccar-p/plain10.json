@@ -1,0 +1,206 @@
+[
+ {"id": "c-2-08",
+  "remember": "Việc nhiều quy tắc đan xen cần **suy luận từng bước** — và suy luận phải **được viết ra** (không viết = không nghĩ). Tách: lập luận trong `<thinking>`, đáp án trong `<answer>`; code chỉ đọc phần `<answer>`.",
+  "why": "Phân loại theo nhiều quy tắc tác động lẫn nhau đúng là loại việc cần chain-of-thought. Tài liệu Anthropic nhấn mạnh: nếu Claude không viết ra quá trình suy nghĩ thì thực chất không có suy nghĩ nào diễn ra. Dùng thẻ XML tách lập luận khỏi đáp án, nên vẫn giữ được thoả thuận “chỉ một nhãn” với parser phía sau.",
+  "wrong": {
+   "B": "“Nghĩ trong im lặng” mà không viết ra thì không có suy luận từng bước thật.",
+   "C": "Ví dụ chỉ có đầu vào và nhãn dạy định dạng, không dạy cách lập luận cho ca nhiều quy tắc.",
+   "D": "Tăng ngẫu nhiên không làm suy luận tốt hơn, lại kém nhất quán."
+  }},
+ {"id": "c-2-09",
+  "remember": "Model Claude đời mới **nghe system prompt sát hơn**. Ngôn từ gay gắt kiểu “CRITICAL: You MUST ALWAYS…” (viết cho model cũ) giờ làm nó **làm quá tay**. Chữa: viết **bình thường**, nói rõ **khi nào** nên dùng tool, rồi đo lại.",
+  "why": "Hướng dẫn prompting cho các model mới nói chúng phản hồi system prompt nhạy hơn; những câu gay gắt từng dùng để “ép” model cũ giờ khiến model mới gọi tool cả khi không cần. Cách chữa là diễn đạt bình thường, nêu điều kiện nên tìm kiếm (thông tin có thể đã cũ, thông tin nội bộ), và đo lại bằng bộ đánh giá.",
+  "wrong": {
+   "A": "Thêm cảnh báo gay gắt theo chiều ngược lại dễ làm lệch sang hướng khác.",
+   "C": "Bỏ hẳn tool là mất năng lực cho những câu thật sự cần tra cứu.",
+   "D": "Sai: vấn đề chính là model mới bám prompt quá sát, không phải không điều hướng được."
+  }},
+ {"id": "c-2-10",
+  "remember": "**Cache không giải phóng chỗ** trong cửa sổ ngữ cảnh — phần đã cache vẫn chiếm đủ token. Muốn bớt chỗ → **context editing**: xoá kết quả tool cũ không còn cần.",
+  "why": "Vấn đề là dung lượng, và thứ chiếm chỗ là nguyên văn log từ các lượt đầu. Context editing xoá các kết quả tool cũ đó — đúng kỹ thuật cho vòng lặp agent dài. Phần đã cache vẫn chiếm nguyên số token, nên đề xuất bật cache không cứu được cửa sổ.",
+  "wrong": {
+   "B": "Sai — bẫy số một: token đã cache **vẫn tính** vào cửa sổ ngữ cảnh.",
+   "C": "Tăng trần đầu ra chỉ làm chỗ cho đầu vào chật hơn.",
+   "D": "Định nghĩa tool cũng tốn token, làm cửa sổ chật thêm."
+  }},
+ {"id": "c-2-11",
+  "remember": "Cửa sổ ngữ cảnh tính **mọi thứ gửi lên**: system prompt, **định nghĩa tool** (kể cả không gọi), **toàn bộ lịch sử** (API không nhớ hộ), **ảnh và PDF** (quy ra token), cộng **câu trả lời** đang sinh.",
+  "why": "Định nghĩa tool được gửi kèm mỗi yêu cầu nên luôn chiếm token, dù không tool nào được gọi (ô C). Ảnh và PDF đều được quy đổi ra token; một PDF dài có thể chiếm phần lớn cửa sổ (ô D). Các phát biểu còn lại đều là ngộ nhận phổ biến.",
+  "wrong": {
+   "A": "Cache chỉ làm rẻ hơn; phần đã cache vẫn chiếm đủ token.",
+   "B": "Messages API không lưu lịch sử giữa các lần gọi (stateless); ứng dụng phải gửi lại toàn bộ lịch sử mỗi lần.",
+   "E": "Câu trả lời của lượt hiện tại nằm trong cửa sổ, nên đầu vào + đầu ra phải vừa giới hạn."
+  }},
+ {"id": "c-2-12",
+  "remember": "Đếm token cho Claude → dùng **endpoint đếm token của Claude API** với đúng model, system, tools, messages. Tokenizer của hãng khác hay “ký tự chia 4” đều **lệch**.",
+  "why": "Mỗi họ model (thậm chí mỗi đời model) tách token khác nhau, nên ước lượng bằng công cụ của hãng khác hay quy tắc ngón tay cái đều sai lệch. Endpoint đếm token tính cả system prompt, tools, ảnh, tài liệu, cho con số sát với yêu cầu thật mà không cần gửi yêu cầu.",
+  "wrong": {
+   "A": "Sai: các model tách token khác nhau theo hãng và theo phiên bản.",
+   "B": "Chỉ là ước lượng thô, không chính xác, lại bỏ qua tools/ảnh/tài liệu.",
+   "D": "Chờ API báo lỗi là chậm, lãng phí, trải nghiệm tệ; đề yêu cầu chặn trước khi gửi."
+  }},
+ {"id": "c-2-13",
+  "remember": "`cache_read_input_tokens` = 0 mà lần nào cũng **ghi cache mới** → phần đầu prompt **đang thay đổi** mỗi lần (ví dụ có giờ hiện tại ở dòng đầu). Đưa phần thay đổi ra **sau** điểm ngắt cache.",
+  "why": "Phần đầu prompt thay đổi ngay từ dòng đầu tiên ở mỗi yêu cầu, nên không bao giờ khớp — đúng dấu hiệu “đọc cache = 0, ghi cache lần nào cũng cao”. Đưa timestamp ra sau điểm ngắt (ví dụ vào tin nhắn người dùng) để phần system prompt tĩnh giống hệt nhau, các yêu cầu sau mới đọc lại được cache.",
+  "wrong": {
+   "A": "Cache sống lâu cỡ nào thì phần đầu mới vẫn không khớp.",
+   "B": "Cache không phụ thuộc độ mạnh model; đổi model còn mất cache hiện có.",
+   "C": "Trước dòng timestamp chỉ có rất ít chữ — quá ngắn để cache; phần dài phía sau vẫn hỏng."
+  }},
+ {"id": "c-2-14",
+  "remember": "Ba cách dùng lại prompt: **Prompt caching** = phần đầu **giống hệt** gửi lặp lại → rẻ hơn. **Modular prompt** = **một đoạn chữ dùng chung**, sửa một chỗ áp mọi nơi. **Agent Skill** = **quy trình + script + mẫu** cho cả đội, chỉ nạp khi cần.",
+  "why": "Ba cơ chế giải ba bài toán khác nhau. Phần đầu giống hệt lặp lại nhiều lượt → cache để giảm giá. Câu chữ dùng chung ở nhiều nơi → tách thành mô-đun từ một nguồn. Quy trình có hướng dẫn, script, mẫu cho cả đội → Skill, vốn chỉ nạp mô tả ngắn và tải nội dung đầy đủ khi việc cần tới.",
+  "rows": {
+   "1": "Prompt Caching — cùng một phần đầu dài gửi lại mỗi lượt, chi phí đầu vào chiếm phần lớn.",
+   "2": "Modular Prompt — một đoạn chính sách dùng chung, sửa một chỗ.",
+   "3": "Agent Skill — quy trình nhiều bước kèm script và mẫu, đóng gói cho cả đội.",
+   "4": "Prompt Caching — system prompt và định nghĩa tool không đổi qua mọi lượt: phần đầu lý tưởng để cache.",
+   "5": "Modular Prompt — ghép khối an toàn dùng chung với khối persona riêng của từng đội.",
+   "6": "Agent Skill — tệp tham chiếu chỉ nạp khi việc cần (nạp dần là đặc trưng của Skill)."
+  }},
+ {"id": "c-3-01",
+  "remember": "Model hay **chọn nhầm giữa hai tool na ná** → **gộp thành một tool**, mô tả rõ khi nào dùng, tham số ghi chú đầy đủ. Ít tool trùng = ít nhầm, lại bớt token.",
+  "why": "Chọn nhầm giữa hai tool là triệu chứng kinh điển của “phình năng lực”: hai tool chồng chức năng, mô tả mơ hồ (“Find orders” vs “Get order information”). Tài liệu tool use khuyên viết mô tả thật chi tiết và gộp các thao tác liên quan thay vì tách nhiều tool na ná. Gộp lại vừa xoá nguồn nhầm lẫn vừa bớt token, không thêm lần gọi nào.",
+  "wrong": {
+   "A": "Thêm một lần gọi phân loại trước mỗi yêu cầu → tăng độ trễ, chỉ che triệu chứng.",
+   "B": "Trông vào model tự cẩn thận; hai tool vẫn mơ hồ như cũ.",
+   "D": "Mô tả phình thêm mà gốc rễ — hai tool trùng nhau — vẫn còn."
+  }},
+ {"id": "c-3-02",
+  "remember": "Tool **càng rộng càng nguy hiểm**. Việc chỉ cần tra trạng thái đơn hàng → đừng đưa `run_sql` tự do; đưa tool **hẹp** `get_order_status(order_id)` chạy **truy vấn cố định** ở server, giới hạn theo khách đang đăng nhập.",
+  "why": "Phình năng lực không chỉ là số lượng tool mà còn là độ rộng từng tool: `run_sql` cho model sức mạnh của cả cơ sở dữ liệu, trong khi việc thật chỉ là một truy vấn tra cứu. Tool hẹp với truy vấn cố định, có tham số và giới hạn theo khách hàng ở server loại bỏ hẳn năng lực thừa. Ghi log hay duyệt tay chỉ là bù đắp cho một năng lực đáng lẽ không nên tồn tại.",
+  "wrong": {
+   "A": "Prompt không phải chốt bảo mật; một câu prompt injection là đủ để model sinh lệnh UPDATE/DELETE.",
+   "C": "Ghi log là phát hiện sau khi sự đã rồi, không ngăn được.",
+   "D": "Thêm độ trễ và gánh nặng cho tính năng tự phục vụ, trong khi năng lực thừa vẫn nguyên đó."
+  }},
+ {"id": "c-3-03",
+  "remember": "Bật Tool Search thì **chính tool tìm kiếm không được hoãn** (`defer_loading`), và nên nạp sẵn vài tool dùng thường xuyên. Hoãn **tất cả** → model không còn cách tìm tool → API báo lỗi 400.",
+  "why": "Tool Search hoạt động bằng cách để model tìm rồi nạp các tool bị hoãn; nếu chính tool tìm kiếm cũng bị hoãn thì model hết cách khám phá tool, và API từ chối cấu hình mà mọi tool đều bị hoãn. Giữ tool tìm kiếm (và các tool hay dùng) ở trạng thái nạp sẵn là cấu hình đúng. Tool Search vẫn dùng được với tool từ MCP.",
+  "wrong": {
+   "B": "Sai: Tool Search được thiết kế chính cho danh mục tool lớn, kể cả từ MCP server.",
+   "C": "Chia một việc thành ba ngữ cảnh rời, không sửa nguyên nhân lỗi 400.",
+   "D": "Lỗi nằm ở việc mọi tool đều bị hoãn; ép `tool_choice` không thay đổi điều đó."
+  }},
+ {"id": "c-3-04",
+  "remember": "**Xác thực** (authentication) = **anh là ai**. **Phân quyền** (authorization) = **anh được làm gì**. Tool dùng tài khoản dịch vụ có quyền đọc mọi thứ → lỗ **phân quyền**. Chữa: truyền **danh tính người dùng** xuống tool để hệ thống nguồn tự kiểm quyền.",
+  "why": "SSO đã trả lời đúng câu “anh là ai”; lỗ hổng là tool hành động bằng tài khoản dịch vụ mạnh nhất nên ai hỏi cũng thừa hưởng quyền đó. Truyền danh tính người đang đăng nhập (ví dụ token on-behalf-of) xuống tool để hệ thống hồ sơ áp đúng quyền của chính người đó — sửa đúng gốc. Quyền phải do hệ thống cưỡng chế, không do câu chữ trong prompt.",
+  "wrong": {
+   "A": "Prompt là gợi ý, không phải hàng rào phân quyền; diễn đạt khéo hoặc prompt injection là vượt được.",
+   "B": "Đây là lỗ phân quyền, không phải xác thực — người dùng đã được xác thực đúng.",
+   "C": "Vá ở đầu ra, dễ lọt (viết bằng chữ, đơn vị khác), và dữ liệu vẫn đã bị truy cập trái phép."
+  }},
+ {"id": "c-3-05",
+  "remember": "Hỏi hai câu: (1) Hệ thống **có biết chắc ai đang gọi** không? — không → **lỗ xác thực**. (2) Biết rồi, **có chặn đúng việc người đó được làm** không? — không → **lỗ phân quyền**.",
+  "why": "Thiếu kiểm token hay để lộ khoá bí mật là hỏng câu (1). Đăng nhập đúng nhưng vẫn với tới dữ liệu/hành động vượt vai trò là hỏng câu (2). Token ngắn hạn, theo phiên, phạm vi hẹp chính là cấu hình được khuyến nghị.",
+  "rows": {
+   "1": "Lỗ xác thực — server nhận lời gọi từ bất kỳ ai mà không kiểm token, nên không biết ai đang gọi.",
+   "2": "Lỗ phân quyền — người dùng đã đăng nhập đúng, nhưng tool trả về tài liệu của mọi phòng ban, vượt quyền của họ.",
+   "3": "Lỗ xác thực — khoá API bị lộ trong ứng dụng, ai trích ra cũng mạo danh được backend.",
+   "4": "Lỗ phân quyền — phiên hợp lệ nhưng vai trò chỉ xem vẫn xoá được dự án vì server không kiểm vai trò.",
+   "5": "Không phải lỗ bảo mật — token ngắn hạn, theo phiên, chỉ đọc cho đúng người dùng: đây là cấu hình nên làm."
+  }},
+ {"id": "c-3-06",
+  "remember": "Nội dung từ bên ngoài **luôn có thể lừa được model** ở một tỉ lệ nào đó → chốt chặn quyết định phải nằm **ngoài model**: giới hạn tool được làm gì (chỉ gửi tới địa chỉ nội bộ cho phép, người lạ thì cần người duyệt).",
+  "why": "Phòng thủ quyết định phải nằm ngoài model: giới hạn những gì tool được phép làm. Danh sách cho phép người nhận ở server, cộng duyệt tay cho người nhận bên ngoài, khiến dù model bị lừa thì hoá đơn cũng không ra khỏi công ty. Các biện pháp ở tầng prompt hữu ích như lớp phụ nhưng không phải chốt chặn.",
+  "wrong": {
+   "A": "Lời dặn trong prompt là lớp phòng thủ mềm — chính thứ bị tấn công nhắm vào.",
+   "C": "Model mạnh hơn giảm xác suất chứ không loại trừ; vẫn thiếu chốt ở tầng quyền.",
+   "D": "Thẻ XML giúp model tách dữ liệu, nhưng vẫn là trông vào model tự giữ mình."
+  }},
+ {"id": "c-3-07",
+  "remember": "Người dùng bỏ đi vì **chờ lâu mà không thấy gì** (dù chấp nhận tổng thời gian) → **bật streaming**: chữ hiện ra ngay khi được sinh, chất lượng giữ nguyên.",
+  "why": "Vấn đề là thời gian tới chữ đầu tiên, không phải tổng thời gian — đề nói rõ doanh nghiệp chấp nhận 20 giây. Streaming hiển thị chữ ngay khi model viết, nên người dùng thấy tiến triển trong khi chất lượng không đổi. Các lựa chọn khác trả giá bằng chất lượng hoặc tính tức thì.",
+  "wrong": {
+   "A": "Đổi tốc độ lấy chất lượng — vi phạm yêu cầu “không giảm chất lượng”.",
+   "B": "Giảm `max_tokens` có thể cắt cụt câu trả lời.",
+   "D": "Batch là bất đồng bộ, có thể mất hàng giờ — ngược hẳn với chat tương tác."
+  }},
+ {"id": "c-3-08",
+  "remember": "Giải trình một quyết định kiến trúc cần 3 thứ: **ràng buộc** phải đáp ứng (SLA, ngân sách), **số đo trước/sau** trên **cùng bộ đánh giá**, và **đánh đổi đã chấp nhận** + cách theo dõi.",
+  "why": "Giải trình phải kiểm chứng được: thiết kế đáp ứng ràng buộc nào (ô B), bằng chứng đo trên dữ liệu của chính bài toán (ô C), và cái giá đã trả cùng cách theo dõi (ô E). Ba yếu tố này cho người duyệt kiểm lại quyết định và biết cần theo dõi gì sau triển khai.",
+  "wrong": {
+   "A": "Bảng xếp hạng công khai không đo trên dữ liệu và tiêu chí của bài toán này.",
+   "D": "Sở thích của đội không phải lý do kiến trúc, cũng không kiểm chứng được."
+  }},
+ {"id": "c-3-09",
+  "remember": "Giám sát ở **quy mô lớn**: ghi **số đo gọn cho mọi lượt** (token, độ trễ, stop_reason, lời gọi tool), **lấy mẫu** trace chi tiết, giữ **đầy đủ các lượt lỗi**, và **che dữ liệu cá nhân**.",
+  "why": "Ở quy mô 4 triệu lượt/ngày, lưu toàn bộ nội dung vừa quá tốn vừa biến log thành chỗ rò dữ liệu. Số đo gọn cho mọi lượt giữ được bức tranh tổng thể (chi phí, độ trễ, tỉ lệ từ chối); lấy mẫu trace cho phép soi chất lượng; lượt lỗi giữ đầy đủ để chẩn đoán. Che dữ liệu nhạy cảm đáp ứng yêu cầu quyền riêng tư.",
+  "wrong": {
+   "A": "Vẫn lưu dữ liệu cá nhân của mọi lượt — không giải quyết phản đối về quyền riêng tư.",
+   "B": "Yêu cầu bị từ chối hay bị cắt cụt vẫn trả HTTP 200 — mã trạng thái gần như vô dụng.",
+   "C": "Bộ đánh giá trước phát hành không bắt được trôi chất lượng và ca lạ ngoài thực tế."
+  }},
+ {"id": "c-3-10",
+  "remember": "**HTTP 200 ≠ thành công.** Câu trả lời bị cắt (`max_tokens`) hay bị từ chối (`refusal`) **vẫn trả 200**. Theo dõi và cảnh báo theo **`stop_reason`**.",
+  "why": "Cả câu trả lời bị cắt do chạm `max_tokens` lẫn bị từ chối đều trả HTTP 200, nên chỉ số dựa trên mã trạng thái mù với đúng hai triệu chứng người dùng đang phàn nàn. Ghi `stop_reason` cho mọi lượt và cảnh báo khi tỉ lệ `max_tokens` hay `refusal` tăng sẽ lộ ra lỗi ngay, có thể chia theo tính năng để khoanh vùng.",
+  "wrong": {
+   "B": "Không có dấu hiệu timeout — các lời gọi đã trả 200; đây là đoán mò.",
+   "C": "Một con số trung bình chung làm chìm cả hai loại lỗi.",
+   "D": "Mỗi quý xem 1% là quá thưa, quá chậm, không có cảnh báo."
+  }},
+ {"id": "c-3-11",
+  "remember": "Chẩn đoán agent bị **lặp** → cần dựng lại **chuỗi bước theo thứ tự**: ghi **ID phiên + ID bước** xuyên suốt, và **chi tiết từng lời gọi tool** (tên, tham số, kết quả/lỗi, độ trễ).",
+  "why": "Vòng lặp chỉ thấy được khi dựng lại chuỗi bước theo thứ tự (nhờ ID phiên và ID bước — ô A) và thấy tool nào được gọi với tham số gì, trả về gì (ô D). Thường vòng lặp đến từ một tool trả lỗi hoặc kết quả mơ hồ khiến model gọi lại; chỉ log chi tiết lời gọi tool mới bắt được.",
+  "wrong": {
+   "B": "Chỉ có câu trả lời cuối là mất các bước trung gian — chính chỗ vòng lặp xảy ra.",
+   "C": "Không giúp chẩn đoán, lại biến log thành nơi rò thông tin cá nhân.",
+   "E": "Tổng số theo ngày quá thô, không nối được bước này với bước kia."
+  }},
+ {"id": "c-3-12",
+  "remember": "Đổi **model embedding** thì phải **embed lại toàn bộ kho**. Vector từ hai model khác nhau nằm ở **hai “không gian” khác nhau**, so với nhau là vô nghĩa.",
+  "why": "Câu hỏi được embed bằng model mới không so sánh có nghĩa với vector cũ của model cũ. Triệu chứng chỉ xảy ra với tài liệu cũ và ngay sau khi đổi model chính là lời mách nước. Cách sửa duy nhất là embed lại toàn bộ kho bằng cùng một model.",
+  "wrong": {
+   "A": "Lấy thêm kết quả từ một phép so sánh vô nghĩa chỉ thêm nhiễu và token.",
+   "B": "Model không tự lấy lại được đoạn đúng mà bước tìm kiếm không trả về.",
+   "D": "Lỗi nằm ở bước tìm kiếm, không phải ở model sinh câu trả lời."
+  }},
+ {"id": "c-3-13",
+  "remember": "Kho tài liệu chỉ **nối thêm** thì bản cũ và bản mới **cùng tồn tại** → trợ lý có thể trích bản đã hết hiệu lực. Chữa ở **pipeline**: **cập nhật đè theo ID tài liệu** (xoá bản cũ) và lưu **ngày hiệu lực** để lọc.",
+  "why": "Pipeline chỉ nối thêm nên cả hai phiên bản chính sách cùng nằm trong chỉ mục và đều có thể được tìm thấy. Cập nhật đè (upsert) theo ID tài liệu loại bỏ các mẩu lỗi thời; metadata phiên bản/ngày hiệu lực cho phép lọc ngay ở chỉ mục. Đây là sửa đúng nơi lỗi phát sinh, thay vì nhờ model đoán bản nào mới.",
+  "wrong": {
+   "A": "Model vẫn nhận các mẩu của bản cũ; nhất quán hơn không có nghĩa là đúng hơn.",
+   "B": "Làm cả hai bản càng được thể hiện đầy đủ — ngược mục tiêu.",
+   "C": "Trông vào phán đoán của model; văn bản không tự nói nó còn hiệu lực hay không."
+  }},
+ {"id": "c-3-14",
+  "remember": "Câu hỏi **lọc, cộng, tổng hợp số liệu** trên dữ liệu **dạng bảng** → cho Claude **tool chạy SQL chỉ đọc**. Tìm kiếm theo nghĩa (vector) chỉ trả vài đoạn “gần giống”, **không cộng đúng** được.",
+  "why": "Câu hỏi lọc và cộng dồn cần phép tính chính xác trên toàn bộ dữ liệu — việc cơ sở dữ liệu làm đúng và rẻ. Tool SQL chỉ đọc, có tham số, tận dụng lược đồ và chỉ mục sẵn có, trả kết quả gọn để Claude diễn giải. Đây là bẫy kinh điển: dữ liệu bảng mà lại dựng kho vector.",
+  "wrong": {
+   "A": "Lấy top-k không bao giờ bảo đảm đủ mọi dòng cần cộng; tổng sẽ sai.",
+   "C": "Tinh chỉnh một cách tìm vốn sai với dạng dữ liệu.",
+   "D": "Tốn rất nhiều token, dễ vượt ngữ cảnh, và vẫn bắt model tự cộng số trên dữ liệu thô."
+  }},
+ {"id": "c-3-15",
+  "remember": "Tài liệu **nhỏ** (vừa cửa sổ ngữ cảnh) và **ít thay đổi** → **đưa toàn bộ vào prompt + bật cache**. Không cần dựng RAG.",
+  "why": "Sổ tay 35 trang nằm gọn trong cửa sổ ngữ cảnh, lại hiếm khi thay đổi nên rất hợp làm phần đầu được cache — chi phí và độ trễ các lượt sau giảm mạnh. Bỏ bước tìm kiếm cũng loại bỏ cả một lớp lỗi (cắt sai, tìm trượt) và cho model thấy toàn văn. Anthropic gợi ý với kho kiến thức nhỏ có thể đưa toàn bộ vào prompt.",
+  "wrong": {
+   "A": "Fine-tune tốn kém, chậm, khó cập nhật khi chính sách đổi, không bảo đảm trích đúng nguyên văn.",
+   "B": "Sai: với kho nhỏ, RAG thêm chỗ hỏng mà không thêm lợi ích; lại không kịp hạn tuần sau.",
+   "D": "Lý do sai; vấn đề không phải embedding không chạy mà là không cần tìm kiếm."
+  }},
+ {"id": "c-3-16",
+  "remember": "Dữ liệu **thay đổi từng giây** (tồn kho, giá) → **gọi thẳng API nguồn** qua tool ngay lúc hỏi. Mọi chỉ mục chỉ là **ảnh chụp** tại một thời điểm, nên luôn cũ.",
+  "why": "Chỉ mục nào cũng là ảnh chụp tại một thời điểm, nên với dữ liệu đổi từng vài giây thì luôn sai dù làm mới dày tới đâu. Gọi thẳng hệ thống nguồn qua tool lúc truy vấn trả về sự thật hiện tại cho đúng cửa hàng và mặt hàng — “chọn cách lấy dữ liệu khớp với tính chất dữ liệu”.",
+  "wrong": {
+   "B": "Vẫn trễ tới một giờ với dữ liệu đổi từng giây — giảm triệu chứng, không sửa gốc.",
+   "C": "Thừa nhận câu trả lời có thể sai thay vì trả lời đúng.",
+   "D": "Sửa độ khớp mã SKU, nhưng vấn đề là độ mới của dữ liệu."
+  }},
+ {"id": "c-3-17",
+  "remember": "**Server tool** (như web search) = **Anthropic chạy** hộ, kèm trích dẫn. **Client tool** = **code của bạn chạy** — bắt buộc cho tài nguyên Anthropic không với tới (file trên máy người dùng).",
+  "why": "Web search là server tool: Anthropic thực hiện việc tìm và trả kết quả kèm trích dẫn nguồn, nên đội không cần hạ tầng tìm kiếm. File trên máy người dùng thì Anthropic không truy cập được; đó là việc của client tool — Claude yêu cầu, code của ứng dụng chạy rồi trả `tool_result`.",
+  "wrong": {
+   "A": "Sai: web search phía server cũng trả kết quả có trích dẫn.",
+   "B": "Sai sự thật; thêm MCP server là hạ tầng thừa cho thứ đã có sẵn.",
+   "C": "Server tool chạy trên hạ tầng Anthropic, không truy cập được máy người dùng."
+  }},
+ {"id": "c-3-18",
+  "remember": "MCP connector cần **hai nửa**: (1) khai server trong `mcp_servers` (URL, tên, token); (2) thêm **một mục toolset trong `tools`** trỏ tới server **bằng đúng tên**. Thiếu nửa sau → lỗi validation.",
+  "why": "MCP connector tách việc kết nối (khai báo server) khỏi việc cấu hình tool (toolset trong `tools` chọn server nào, bật/tắt tool nào). Thiếu mục toolset, hoặc tên không khớp, sẽ gây lỗi validation và Claude không thấy tool nào.",
+  "wrong": {
+   "A": "Ngược lại: connector nối tới server từ xa qua HTTP; `stdio` dành cho tiến trình chạy trên máy.",
+   "C": "Sai: connector nối được tới MCP server từ xa của bất kỳ ai.",
+   "D": "Sai: MCP connector chính là một tính năng của Messages API."
+  }}
+]
