@@ -1,0 +1,205 @@
+[
+ {"id": "c-1-01",
+  "remember": "Việc đầu tiên luôn là **biến lời than thành bài toán đo được**: có **số liệu ban đầu** (baseline) và **mục tiêu** cụ thể. Mọi quyết định model, kiến trúc, prompt sau đó đều so với con số này.",
+  "why": "Đề cho tín hiệu “hiện không theo dõi chỉ số nào” và hỏi việc làm **đầu tiên**. Không có số liệu ban đầu thì không chứng minh được giá trị, cũng không có căn cứ để chọn model hay kiến trúc. Tài liệu của Anthropic cũng đặt tiêu chí thành công rõ ràng làm điều kiện trước khi viết prompt.",
+  "wrong": {
+   "A": "Chọn model trước khi hiểu bài toán; model mạnh nhất có thể tốn tiền mà không cải thiện chỉ số nào.",
+   "C": "Đảo ngược thứ tự: không có số liệu ban đầu thì đo sau khi ra mắt cũng không biết so với cái gì; agent làm trọn ticket còn là làm quá mức.",
+   "D": "Viết prompt là bước sau; chưa có tiêu chí thành công thì không biết prompt tốt hay dở."
+  }},
+ {"id": "c-1-02",
+  "remember": "Chia việc đúng chỗ: Claude làm phần **khó với code** (đọc hàng chục mẫu PDF khác nhau); **code** làm phần **phải chính xác tuyệt đối và tái lập được** (đối chiếu số, quy tắc dung sai).",
+  "why": "Phần khó với code là hàng chục mẫu hoá đơn khác nhau — đó là chỗ Claude tạo giá trị (trích trường theo một khuôn định sẵn). Phần đối chiếu “khớp chính xác” theo quy tắc dung sai cố định, kiểm toán đòi tái lập được, là logic chắc chắn — code làm rẻ hơn, chính xác tuyệt đối và kiểm toán được. Ghép hai phần đúng chỗ là kiến trúc rẻ nhất mà vẫn đạt mục tiêu.",
+  "wrong": {
+   "A": "Dặn model “áp quy tắc thật chính xác” không biến model thành máy tính chắc chắn; kiểm toán đòi tái lập được.",
+   "B": "Đặt Claude vào đúng phần code làm tốt hơn, trong khi bỏ qua phần tốn công nhất là gõ tay.",
+   "C": "Agent tự hành có quyền ghi ERP là làm quá và rủi ro; log lập luận của model không thay được quy tắc tái lập."
+  }},
+ {"id": "c-1-03",
+  "remember": "Định nghĩa bài toán = **con số ban đầu + mục tiêu** (ví dụ: số giờ/bảng câu hỏi, giảm bao nhiêu) và **tiêu chí nghiệm thu kiểm được** (câu trả lời truy được về tài liệu đã duyệt, có người ký trước khi gửi).",
+  "why": "Ô A biến “mất quá nhiều thời gian” thành con số có mốc ban đầu và mục tiêu. Ô C biến yêu cầu “phản ánh tài liệu bảo mật đã duyệt” thành tiêu chí nghiệm thu kiểm được, đồng thời giữ người duyệt cho nội dung gửi ra ngoài. Ba ô còn lại là quyết định giải pháp nhảy cóc trước khi bài toán được định nghĩa.",
+  "wrong": {
+   "B": "Fine-tune là lựa chọn kiến trúc, không phải định nghĩa bài toán; tài liệu bảo mật thay đổi thì kiến thức “học thuộc” sẽ cũ — tìm tài liệu (retrieval) hợp hơn.",
+   "D": "Gửi thẳng cho khách, bỏ người duyệt là tăng rủi ro; lại là quyết định thiết kế chứ không phải tiêu chí.",
+   "E": "Nhồi cả thư viện vào mỗi câu hỏi tốn kém, còn làm giảm độ chính xác (ngữ cảnh quá dài)."
+  }},
+ {"id": "c-1-04",
+  "remember": "Phản hồi người dùng (thumbs-down) phải **quay về thành ca kiểm thử**: phân loại lỗi → thành ca đánh giá có nhãn → chạy lại mỗi lần đổi prompt. Chỉ hiện số trên dashboard là chưa đủ.",
+  "why": "Triệu chứng “không ai nói được mảng nào xấu đi, hay lần sửa prompt tháng trước có giúp không” cho thấy có tín hiệu nhưng tín hiệu không quay về hệ thống. Biến lỗi thành ca đánh giá có nhãn vừa chỉ ra mảng hỏng, vừa cho phép so trước/sau mỗi thay đổi. Đây là tầng “đầu ra + phản hồi” hay bị bỏ quên nhất.",
+  "wrong": {
+   "A": "Đoán mò khi chưa đo; không giúp hệ thống biết mình hỏng ở đâu.",
+   "B": "Chỉnh một tầng khác mà không có bằng chứng; còn có thể làm loãng ngữ cảnh.",
+   "D": "Vẫn chỉ là dashboard; tín hiệu không quay về thành bộ đánh giá hay cổng kiểm thay đổi."
+  }},
+ {"id": "c-1-05",
+  "remember": "Giới hạn **bắt buộc** (như hạn mức hoàn tiền) phải đặt **trong code của tool**, không đặt trong prompt. Code chạy chắc chắn, model bị thuyết phục cỡ nào cũng không vượt được.",
+  "why": "Đề đã chứng minh prompt thua: dù system prompt ghi rõ, agent vẫn hoàn 900 USD. Code phía sau tool `issue_refund` chạy chắc chắn, bất kể model bị thuyết phục ra sao, nên đó là chốt chặn thật. Chuyển khoản lớn sang giám sát viên duyệt còn giữ được nghiệp vụ thay vì chỉ chặn.",
+  "wrong": {
+   "B": "Viết in hoa vẫn là hàng rào trong prompt — lớp mỏng nhất, vừa bị chứng minh là vượt được.",
+   "C": "Phát hiện sau khi tiền đã chuyển; không ngăn được.",
+   "D": "Model mạnh hơn giảm khả năng bị lừa chứ không bảo đảm; rủi ro tài chính cần chốt chắc chắn."
+  }},
+ {"id": "c-1-06",
+  "remember": "**Không ai chờ kết quả ngay**, xem vào **hôm sau**, muốn **rẻ mà giữ chất lượng model** → **Message Batches API** (bất đồng bộ, rẻ khoảng một nửa).",
+  "why": "Ba tín hiệu “không ai chờ”, “ngày làm việc kế tiếp”, “không hạ chất lượng model” cùng chỉ về Batch API: xử lý bất đồng bộ trong vòng 24 giờ, giá thấp hơn đáng kể, giữ nguyên model. Ghi kết quả vào kho giúp tách phần hiển thị báo cáo khỏi phần xử lý.",
+  "wrong": {
+   "A": "Streaming tối ưu tốc độ mà đề không cần, lại trả giá đầy đủ.",
+   "B": "Model nhỏ nhất vi phạm “không hạ chất lượng model”, mà vẫn trả giá gọi đồng bộ.",
+   "C": "Việc có bước cố định; biến thành agent chỉ thêm chi phí và khó đoán."
+  }},
+ {"id": "c-1-07",
+  "remember": "Các bước **không bao giờ đổi**, mỗi yêu cầu **một đầu ra** → dùng cách **đơn giản nhất**: tìm tài liệu cần (style guide) + **gọi model một lần** (augmented LLM). Không cần agent.",
+  "why": "Đề nói mỗi yêu cầu một mô tả và các bước không bao giờ đổi — không có gì để model tự quyết. “Augmented LLM” (model có thêm bước tìm tài liệu) là mức đơn giản nhất đáp ứng được; Anthropic khuyên bắt đầu từ giải pháp đơn giản nhất và chỉ thêm phức tạp khi thật cần.",
+  "wrong": {
+   "A": "Agent tự hành thêm tự do mà việc không cần — tốn hơn, chậm hơn, khó đoán.",
+   "C": "Orchestrator–workers dành cho việc không biết trước cần chia thành gì; ở đây chia ba chỉ nhân chi phí.",
+   "D": "“Tới khi hoàn hảo” không có điểm dừng thực tế, tốn token gấp nhiều lần."
+  }},
+ {"id": "c-1-08",
+  "remember": "Cho agent **tự hành động** chỉ khi lỗi của nó **phát hiện được và hoàn tác được**. Không có staging, không có test, không rollback → Claude **chẩn đoán và đề xuất**, **người** áp dụng.",
+  "why": "Đề cố tình cho ba điều kiện thuận (việc khó đặc tả, tốn nhiều giờ kỹ sư, Claude làm tốt) và một điều kiện nghịch: không có staging, không có test tự động, không hoàn tác được. Khi lỗi không thể bắt và sửa lại, nên giữ phần chẩn đoán có giá trị của Claude nhưng để con người thực hiện hành động không đảo ngược được.",
+  "wrong": {
+   "A": "Bỏ qua đúng điều kiện còn thiếu — lỗi không thể bắt và hoàn tác.",
+   "B": "Model mạnh hơn chỉ giảm xác suất lỗi, không tạo ra khả năng phát hiện hay hoàn tác.",
+   "D": "Bỏ hẳn Claude là quá tay; vẫn tận dụng được phần chẩn đoán an toàn."
+  }},
+ {"id": "c-1-09",
+  "remember": "**Evaluator–optimizer** (một bên làm, một bên chấm và góp ý, lặp lại) chỉ đáng dùng khi **góp ý thật sự làm kết quả tốt lên**: dịch văn chương nhiều sắc thái, nghiên cứu cần nhiều vòng tìm.",
+  "why": "Anthropic nêu đúng hai ví dụ: dịch văn chương mà người chấm bắt được sắc thái bị mất, và tìm kiếm phức tạp nhiều vòng mà người chấm quyết định có cần tìm tiếp không. Cả hai đều có dấu hiệu “cải thiện đo được” hoặc “chỉ đạo thêm một vòng”. Các việc còn lại đã đúng ngay một lần gọi; thêm vòng lặp chỉ thêm chi phí và độ trễ.",
+  "wrong": {
+   "A": "Phân loại vào 4 hàng đợi cố định — một lần gọi (hoặc routing) là đủ.",
+   "C": "Khuôn JSON cố định giải bằng structured outputs, không cần vòng chấm–sửa.",
+   "D": "Vòng lặp nhân độ trễ, vi phạm ngân sách độ trễ chặt."
+  }},
+ {"id": "c-1-10",
+  "remember": "Mô hình điều phối–thợ: mỗi thợ đọc nhiều trong **ngữ cảnh riêng**, rồi chỉ trả về **bản tóm tắt gọn có nguồn**. Trả nguyên văn mọi thứ sẽ **làm đầy ngữ cảnh** của bên điều phối.",
+  "why": "Lý do dùng mô hình điều phối–thợ là mỗi thợ có ngữ cảnh riêng để đọc nhiều, rồi nén kết quả trước khi gửi về. Trả nguyên văn phá mất lợi ích đó và làm ngữ cảnh của bên điều phối quá tải — đúng triệu chứng “bỏ sót dữ kiện đã được đưa”. Giữ tham chiếu nguồn để vẫn truy vết được.",
+  "wrong": {
+   "A": "Cache chỉ đổi giá, không giải phóng chỗ trong cửa sổ ngữ cảnh.",
+   "B": "Gộp vào một agent đọc hết thì ngữ cảnh còn đầy nhanh hơn.",
+   "C": "Model nhỏ hơn không giảm lượng token, khả năng tổng hợp còn yếu đi."
+  }},
+ {"id": "c-1-11",
+  "remember": "Các bước **luôn theo đúng thứ tự** → không cần nhiều agent nhắn tin qua lại; dùng **prompt chain do code điều khiển**. Và **hạ model ở bước đơn giản** — có bộ đánh giá xác nhận vẫn đạt.",
+  "why": "“Luôn chạy đúng thứ tự đó” nghĩa là không có gì để các agent tự điều phối; mỗi agent mang prompt và ngữ cảnh riêng nên nhân token lên. Chuyển sang chuỗi prompt do code điều khiển (ô B) cắt chi phí phối hợp. Dùng model nhỏ hơn ở bước đơn giản, có bộ đánh giá xác nhận (ô D), giảm chi phí mà vẫn giữ độ chính xác.",
+  "wrong": {
+   "A": "Thêm một agent giám sát để chữa bệnh “quá nhiều agent” — tăng token.",
+   "C": "Cho mọi agent mọi tool: mô tả tool tốn token mỗi yêu cầu và mở rộng rủi ro.",
+   "E": "Nhiều lượt hơn = nhiều token hơn."
+  }},
+ {"id": "c-1-12",
+  "remember": "Gọi tool song song → trả **tất cả kết quả trong một tin nhắn**, mỗi `tool_use` có đúng **một `tool_result`**; cái lỗi thì đánh dấu **`is_error: true`** kèm thông báo.",
+  "why": "Tài liệu tool use nói kết quả của các lời gọi song song phải nằm chung một tin nhắn người dùng; tách ra nhiều tin nhắn sẽ “dạy” model thôi gọi song song — đúng triệu chứng đề nêu. Mỗi `tool_use` cần đúng một `tool_result`; lỗi được báo bằng `is_error: true` để Claude tự quyết thử lại hay xử lý khác.",
+  "wrong": {
+   "A": "Tách từng tin nhắn chính là nguyên nhân model thôi gọi song song; thiếu một `tool_result` còn làm yêu cầu không hợp lệ.",
+   "B": "Thử lại âm thầm có thể treo mãi và che lỗi khỏi model.",
+   "D": "Thiếu `tool_result` cho lời gọi thứ tư; phải báo lỗi bằng `is_error`, không phải ghi chú."
+  }},
+ {"id": "c-1-13",
+  "remember": "Một prompt ôm **nhiều việc** → chất lượng không đều và **không biết hỏng ở bước nào**. Tách thành **chuỗi prompt** (mỗi bước một lần gọi) có **kiểm tra giữa các bước**.",
+  "why": "Triệu chứng then chốt là “không biết bước xác định điều khoản hay bước soạn thảo bị hỏng”. Prompt chaining tách mỗi bước thành một lần gọi tập trung, có cổng kiểm giữa các bước, nên vừa tăng chất lượng từng bước vừa chỉ ra được lỗi ở đâu. Thứ tự bước cố định nên đây là workflow, không cần agent.",
+  "wrong": {
+   "A": "Vẫn là một khối, vẫn không biết hỏng ở đâu, prompt còn phình ra.",
+   "C": "Các bước đã biết trước; agent làm việc khó đoán và khó gỡ lỗi hơn.",
+   "D": "Vấn đề là chất lượng và khả năng chẩn đoán, không phải độ dài đầu ra."
+  }},
+ {"id": "c-1-14",
+  "remember": "Tài liệu quá dài cho một lần trả lời (chạm `max_tokens`) → **dàn ý trước**, duyệt dàn ý, rồi **viết từng mục một lần gọi** dựa trên dàn ý chung, cuối cùng ghép lại.",
+  "why": "`max_tokens` là trần độ dài của một câu trả lời; muốn tài liệu dài thì phải chia. Dàn ý được duyệt trước làm khung chung cho mọi lần gọi, nên chữa luôn triệu chứng “chương sau mâu thuẫn chương trước”. Đây cũng là ví dụ prompt chaining kinh điển của Anthropic: dàn ý → kiểm dàn ý → viết.",
+  "wrong": {
+   "B": "Viết ngắn lại là hy sinh nội dung, và vẫn không chắc vừa giới hạn.",
+   "C": "Cả năm lần gọi đều vấp cùng một trần, tốn gấp năm.",
+   "D": "Tốc độ sinh chữ không thay đổi trần độ dài."
+  }},
+ {"id": "c-1-15",
+  "remember": "Ba mẫu workflow khác nhau ở **quan hệ giữa các lần gọi**: **chaining** = nối tiếp (bước sau dùng kết quả bước trước); **routing** = phân loại rồi **chọn một nhánh**; **parallelization** = **chạy cùng lúc** rồi gộp.",
+  "why": "Anthropic dùng chính các ví dụ này: dàn ý → tài liệu (chaining); phân loại ticket, model nhỏ/lớn theo độ khó (routing); hàng rào an toàn chạy song song, nhiều người soát bỏ phiếu (parallelization).",
+  "rows": {
+   "1": "Prompt Chaining — bước sau viết từ dàn ý đã duyệt, có cổng kiểm ở giữa.",
+   "2": "Routing — phân loại yêu cầu rồi gửi sang prompt chuyên cho loại đó.",
+   "3": "Parallelization — nhiều prompt soát độc lập cùng lúc rồi bỏ phiếu.",
+   "4": "Routing — rẽ nhánh theo độ khó sang model nhỏ hoặc model mạnh.",
+   "5": "Parallelization — một lần gọi trả lời, một lần gọi khác cùng lúc sàng lọc vi phạm (hàng rào chạy song song).",
+   "6": "Prompt Chaining — trích dữ kiện rồi chuyển cho lần gọi thứ hai viết tóm tắt."
+  }},
+ {"id": "c-1-16",
+  "remember": "Cam kết **độ trễ** (ví dụ p95 dưới 1,5 giây) mà chất lượng các model **ngang nhau** → chọn **model nhanh nhất đạt chuẩn**, giữ **ngữ cảnh gọn**, và **streaming**.",
+  "why": "Mục tiêu ở đây là cam kết hiệu năng (95% gợi ý dưới 1,5 giây), và đề đã gỡ lý do dùng model lớn: chất lượng tương đương. Model nhanh hơn, ngữ cảnh ngắn hơn và streaming đều giảm độ trễ thực tế lẫn cảm nhận.",
+  "wrong": {
+   "A": "Suy luận mở rộng thêm thời gian nghĩ trước khi trả lời — đẩy p95 lên, vi phạm cam kết.",
+   "B": "Batch là bất đồng bộ, không dùng được cho gợi ý thời gian thực.",
+   "D": "Đọc cả repo trước mỗi gợi ý là rất nhiều lần gọi và token — phá cam kết."
+  }},
+ {"id": "c-1-17",
+  "remember": "Mỗi quyết định kiến trúc đều có **đánh đổi**. Batch + cache **phục vụ chi phí**, đổi lại **trả kết quả chậm hơn** (bất đồng bộ) — chấp nhận được khi việc chỉ cần hằng tuần.",
+  "why": "Batch và caching là công cụ giảm chi phí; cái giá là kết quả trả về bất đồng bộ, không tức thì. Lập luận B gọi đúng trụ được lợi (chi phí), nêu rõ đánh đổi, và giải thích vì sao chấp nhận được (chỉ cần hằng tuần).",
+  "wrong": {
+   "A": "Không quyết định nào “lợi mọi mặt, không đánh đổi”; batch hy sinh tốc độ trả kết quả.",
+   "C": "Sai: batch bất đồng bộ, chậm hơn gọi trực tiếp.",
+   "D": "Đội vẫn làm việc này từ trước; batch chỉ làm nó rẻ hơn, không tạo năng lực mới."
+  }},
+ {"id": "c-1-18",
+  "remember": "Chứng minh giá trị với **CFO** bằng **chỉ số kinh doanh so với trước khi ra mắt**: chi phí mỗi yêu cầu được giải quyết, tỉ lệ tự phục vụ không cần nhân viên. Chỉ số kỹ thuật (token, cache, lỗi tool) là cho đội kỹ thuật.",
+  "why": "CFO hỏi về khoản đầu tư, nên câu trả lời phải là chỉ số kinh doanh có mốc so sánh: chi phí trên mỗi yêu cầu được giải quyết (ô A) và tỉ lệ khách tự giải quyết không cần chuyển lên nhân viên (ô D). Token, lỗi tool, cache là chỉ số vận hành, không nói trực tiếp khoản đầu tư có lời hay không.",
+  "wrong": {
+   "B": "Số token mỗi yêu cầu là chỉ số kỹ thuật, không gắn với kết quả kinh doanh.",
+   "C": "Tỉ lệ lỗi tool là để gỡ lỗi, không chứng minh lợi nhuận.",
+   "E": "Tỉ lệ dùng cache là đòn bẩy chi phí nội bộ, chỉ là chỉ số trung gian."
+  }},
+ {"id": "c-2-01",
+  "remember": "Chất lượng **dư** mục tiêu, chi phí chủ yếu do **câu trả lời quá kỹ** → thử **hạ `effort`** trên **chính model đó** rồi chạy lại bộ đánh giá. Rẻ, ít rủi ro, giữ được cache.",
+  "why": "Đề chỉ ra chi phí đến từ token đầu ra của các câu trả lời rất kỹ, trong khi chất lượng vượt xa mục tiêu. `effort` điều chỉnh mức kỹ lưỡng và lượng token model bỏ ra, nên là đòn bẩy rẻ và ít rủi ro nhất. Giữ nguyên model còn giữ được cache của system prompt dài; chạy lại bộ đánh giá để xác nhận bằng số liệu.",
+  "wrong": {
+   "A": "Nhảy thẳng sang model nhỏ nhất là bước lớn, chưa đánh giá, lại mất hết cache (cache gắn theo model).",
+   "B": "Với phần đầu dài lặp lại, đọc cache rẻ hơn nhiều; bỏ cache làm hoá đơn tăng.",
+   "C": "Cắt mù bất kể kết quả đánh giá — có thể phá chất lượng, lại không nhắm vào token đầu ra."
+  }},
+ {"id": "c-2-02",
+  "remember": "So chi phí model bằng **tổng chi phí cho một kết quả đạt yêu cầu**, tính cả **lần chạy lại** và **công sửa tay**. Rẻ mỗi lần gọi mà hay hỏng thì **không rẻ**.",
+  "why": "Một yêu cầu rẻ mà phải chạy lại hoặc sửa tay thì không rẻ. Đề nói rõ bản nháp của P thường phải sinh lại hoặc sửa tay, nên chi phí thật gồm token của các lần chạy lại và giờ công con người. Đo trên bộ đánh giá đại diện cho ra con số so sánh được.",
+  "wrong": {
+   "B": "Giá niêm yết bỏ qua chi phí chạy lại và sửa tay — đúng cái bẫy đề dựng.",
+   "C": "Cửa sổ lớn không bảo đảm bản nháp tốt hơn, và không phải điểm nghẽn ở đây.",
+   "D": "Độ trễ và chi phí là hai chuyện khác nhau; lại không xét tỉ lệ đạt."
+  }},
+ {"id": "c-2-03",
+  "remember": "Muốn Claude chạy **dưới kiểm soát tài khoản AWS** (IAM, mạng riêng, audit log) và thanh toán qua **hợp đồng AWS** → **Amazon Bedrock**. Nhưng phải **kiểm tra model/tính năng có sẵn** ở region cần dùng.",
+  "why": "Bedrock đặt việc gọi Claude dưới IAM, kết nối riêng và nhật ký kiểm toán của AWS, thanh toán qua hợp đồng AWS — khớp mọi ràng buộc. Tuy nhiên model và tính năng có thể khác nhau giữa các nền tảng và region, nên phải xác nhận trước khi thiết kế dựa vào chúng.",
+  "wrong": {
+   "A": "Gọi API trực tiếp của Anthropic không nằm dưới IAM/audit của tài khoản AWS, không qua hợp đồng AWS.",
+   "B": "Anthropic không phát hành trọng số Claude để tự host.",
+   "D": "Đúng kênh nhưng bỏ bước kiểm tra — model và tính năng có thể khác theo nền tảng/region."
+  }},
+ {"id": "c-2-04",
+  "remember": "**Đừng nhét dữ liệu người dùng vào system prompt.** System prompt chỉ chứa **vai trò, phạm vi, quy tắc**; dữ liệu đưa vào **lượt user**, bọc trong thẻ rõ ràng (ví dụ `<review>`).",
+  "why": "Trộn dữ liệu không đáng tin vào system prompt khiến nó mang “thẩm quyền” của chỉ dẫn hệ thống — mở cửa cho prompt injection. Tách dữ liệu sang lượt user, bọc trong thẻ XML, giúp Claude phân biệt đâu là chỉ dẫn, đâu là nội dung cần xử lý. Đây là lớp giảm thiểu ở tầng prompt; vẫn nên kết hợp giới hạn quyền ở tầng khác.",
+  "wrong": {
+   "A": "Dữ liệu vẫn nằm ở chỗ có thẩm quyền cao nhất; một câu dặn ở cuối dễ bị vượt.",
+   "C": "Đảo ngược nguyên tắc — đưa dữ liệu không đáng tin lên vị trí chỉ dẫn hệ thống.",
+   "D": "Đổi sang chữ in hoa không tách được dữ liệu khỏi chỉ dẫn."
+  }},
+ {"id": "c-2-05",
+  "remember": "Agent **không bao giờ cần** làm việc X → **đừng cho nó tool X**, và cấp tài khoản **không có quyền X**. Không có công cụ thì không làm được, dù bị lừa thế nào.",
+  "why": "Agent không có nhu cầu nghiệp vụ nào cần xoá, nên tool xoá chỉ là chỗ để bị tấn công. Bỏ tool xoá và hạ quyền tài khoản CRM tạo hai chốt chắc chắn, không phụ thuộc model có bị thuyết phục hay không.",
+  "wrong": {
+   "A": "Vẫn là hàng rào trong prompt — đề vừa chứng minh nó bị vượt.",
+   "B": "Bộ lọc phát hiện là lớp hữu ích nhưng chỉ theo xác suất, có thể bị lách; tool xoá vẫn còn đó.",
+   "C": "Model mạnh hơn giảm rủi ro chứ không loại bỏ; hành động xoá vẫn làm được."
+  }},
+ {"id": "c-2-06",
+  "remember": "Quản lý prompt như quản lý code: lưu trong **version control**, dùng **biến** cho phần thay đổi, **ghi phiên bản prompt vào log** mỗi yêu cầu, và chỉ đưa lên production khi **qua bộ đánh giá**.",
+  "why": "Triệu chứng “không ai biết phiên bản prompt nào tạo ra câu trả lời tệ” được chữa bằng quản lý phiên bản + ghi phiên bản vào log từng yêu cầu (ô B). Cổng đánh giá trên từng phiên bản (ô E) bảo đảm thay đổi được đo trước khi chạy thật, và biết chắc bộ đánh giá đã chấm bản nào.",
+  "wrong": {
+   "A": "Mỗi đội tự chép và sửa chính là nguyên nhân gây ra tình trạng hiện tại.",
+   "C": "Chèn ngày/ID vào đầu prompt làm phần đầu đổi mỗi lần → phá cache; truy vết nên nằm ở log.",
+   "D": "Sửa thẳng không ghi lại tạo ra những phiên bản không ai biết đang chạy."
+  }},
+ {"id": "c-2-07",
+  "remember": "Trước khi tinh chỉnh prompt, cần đủ 3 thứ: **prompt nháp**, **tiêu chí thành công đo được**, và **bộ test đại diện** (có ca biên). Thiếu thì mọi kỹ thuật chỉ là đoán.",
+  "why": "Đề đã có prompt nháp nhưng thiếu hai thứ: định nghĩa thế nào là bản tóm tắt tốt, và bộ test. Không có chúng thì không biết bản mới có tốt hơn “chưa đủ tốt” hay không. Tài liệu của Anthropic đặt ba điều kiện này trước khi bắt đầu prompt engineering.",
+  "wrong": {
+   "A": "Áp kỹ thuật trước khi có cách đo; không biết có cải thiện thật không.",
+   "B": "Ví dụ chọn theo cảm tính, chưa có tiêu chí, dễ lệch.",
+   "D": "Sai: kiểm chứng cần tiêu chí và bộ test, không cần model khác."
+  }}
+]
