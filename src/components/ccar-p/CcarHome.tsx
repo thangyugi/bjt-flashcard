@@ -11,7 +11,7 @@ import { Breadcrumbs } from "@/components/ui/page";
 interface Props {
   domains: (DomainMeta & { intro: string; questions: number })[];
   lessons: LessonMeta[];
-  stats: { questions: number; exams: number };
+  stats: { questions: number; authored: number; exams: number };
   /** HTML dựng sẵn từ tài liệu ôn (server) */
   html: { facts: string; layers: string; order: string; register: string; weights: string };
 }
@@ -72,8 +72,14 @@ export function CcarHome({ domains, lessons, stats, html }: Props) {
             </div>
             <div className="oci-stat">
               <div className="n">{stats.questions}</div>
-              <div className="l">câu luyện tập</div>
+              <div className="l">câu đề gốc</div>
             </div>
+            {stats.authored > 0 && (
+              <div className="oci-stat">
+                <div className="n">{stats.authored}</div>
+                <div className="l">câu Claude biên soạn</div>
+              </div>
+            )}
             <div className="oci-stat">
               <div className="n">{stats.exams}</div>
               <div className="l">đề thi thử 63 câu</div>
@@ -169,7 +175,7 @@ export function CcarHome({ domains, lessons, stats, html }: Props) {
                 <span>
                   {dn}/{d.lessonIds.length} bài đã học
                 </span>
-                <Link href={`${CCAR_BASE}/practice/${setId.domain(d.num)}`}>Luyện {d.questions} câu của domain →</Link>
+                <Link href={`${CCAR_BASE}/practice/${setId.domain(d.num)}`}>Luyện {d.questions} câu đề gốc của domain →</Link>
               </div>
             </section>
           );

@@ -1,0 +1,211 @@
+[
+ {"id": 11265,
+  "remember": "Đặc quyền tối thiểu = cấp **đúng và đủ** quyền cho việc được giao. Thiếu thì không làm được việc, thừa thì thêm rủi ro. Chốt chặn đặt trong code (tầng điều phối), không đặt ở lời dặn model.",
+  "why": "Đề nói rõ trợ lý chỉ cần 2 quyền: **đọc** kho tri thức và **ghi** hàng đợi bản nháp. Ô B cấp đúng 2 tool đó, không thừa cái nào. Quan trọng hơn, danh sách cho phép được kiểm ở **tầng điều phối** — tức phần code của bạn chặn trước khi tool chạy — nên dù model bị lừa bằng prompt injection cũng không gọi được tool khác.",
+  "wrong": {
+   "A": "Quyền đọc cũng là quyền. Mở đọc mọi tool thì trợ lý xem được cả dữ liệu không liên quan, trái với yêu cầu “ngoài ra không gì khác”.",
+   "C": "Lời dặn model không phải ổ khoá: mọi tool vẫn nằm trong tầm gọi, chỉ cần một câu lừa (prompt injection) là vượt qua.",
+   "D": "Tắt hết thì an toàn nhưng trợ lý không làm được đúng 2 việc nó sinh ra để làm. “Tối thiểu” nghĩa là vừa đủ, không phải bằng 0."
+  }},
+ {"id": 11266,
+  "remember": "Thí nghiệm có 3 thứ phải chốt **trước khi chạy**: giả thuyết, chỉ số đo chính, cỡ mẫu. Phân tích → quyết định → ghi chép đều làm **sau** khi có số liệu.",
+  "why": "Muốn so sánh hai prompt công bằng thì trước hết phải biết mình kiểm cái gì và đo bằng gì (ô C: giả thuyết + chỉ số thành công chính). Tiếp theo phải tính cần bao nhiêu mẫu để phân biệt được khác biệt thật với may rủi (ô A: hiệu ứng nhỏ nhất phát hiện được + cỡ mẫu). Chốt trước còn tránh được việc thấy kết quả rồi mới chọn chỉ số cho đẹp (p-hacking).",
+  "wrong": {
+   "B": "Quyết định dùng hay bỏ prompt dựa trên kết quả phân tích — phải chạy xong mới làm được.",
+   "D": "Phân tích kết quả là việc sau khi chạy; đề hỏi việc phải xong trước khi chạy.",
+   "E": "Ghi lại khuyến nghị là bước cuối cùng của cả quy trình."
+  }},
+ {"id": 11267,
+  "remember": "Cho Claude Code chạy **mọi lệnh Bash** trên mọi dự án = mở toang cửa. Sửa bằng cách: chỉ cho phép đúng các lệnh cần (allow) + cấm rõ các thao tác nguy hiểm (deny — deny luôn thắng allow).",
+  "why": "Bash là tool mạnh nhất: chạy được mọi lệnh trên máy (xoá file, đẩy code, đọc khoá bí mật). Triển khai cả công ty mà mở hết là rủi ro cực lớn. Ô C áp đúng đặc quyền tối thiểu: liệt kê các mẫu lệnh quy trình thực sự cần (ví dụ `npm test`, `git status`) và thêm quy tắc từ chối cho thao tác nhạy cảm. Cấu hình phức tạp hơn một chút là cái giá đáng trả.",
+  "wrong": {
+   "A": "Đòi “nhất quán” bằng cách mở rộng cả các tool khác — làm lỗ hổng to hơn chứ không nhỏ đi.",
+   "B": "Duyệt nguyên trạng chỉ vì ngại cấu hình phức tạp — bỏ qua đúng lỗ hổng mà bạn được nhờ soát.",
+   "D": "Tắt hết quy tắc phân quyền còn tệ hơn hiện trạng: không còn lớp kiểm soát nào."
+  }},
+ {"id": 11268,
+  "remember": "Bên liên quan lo lắng → đưa **số đo thật** so với cam kết (SLA). Nếu cam kết không khả thi → **cùng nhau** sửa cam kết. Không né trách nhiệm, không hoảng loạn.",
+  "why": "Đề hỏi về **căn chỉnh kỳ vọng**, không phải sửa kỹ thuật. Ô A thay cảm giác “chậm quá” bằng con số: độ trễ p50 (một nửa yêu cầu nhanh hơn mức này) và p95 (95% yêu cầu nhanh hơn mức này) so với SLA đã thống nhất — mọi người cùng nhìn một dữ liệu. Ô E xử lý phần còn lại minh bạch: nếu mục tiêu không đạt được trong điều kiện thật thì ngồi lại sửa SLA cùng các bên.",
+  "wrong": {
+   "B": "Dừng hết để dồn sức tối ưu khi chưa có số liệu là phản ứng thái quá, và không giải quyết chuyện kỳ vọng.",
+   "C": "Đổ cho “giới hạn của LLM” là né trách nhiệm; nhóm kiến trúc vẫn có nhiều cách giảm độ trễ (streaming, cache, model nhỏ hơn) và làm vậy mất lòng tin.",
+   "D": "Đổi sang model khác chưa qua đánh giá là đánh cược chất lượng, và cũng không trả lời câu hỏi về kỳ vọng."
+  }},
+ {"id": 11269,
+  "remember": "Quá nhiều tool (từ nhiều MCP server) ăn hết ngữ cảnh ngay từ đầu → bật **Tool Search**: chỉ nạp định nghĩa tool khi cần. Giữ đủ tool mà ngữ cảnh vẫn gọn.",
+  "why": "Mỗi tool đều có “bản mô tả” (tên, công dụng, tham số) phải nạp vào ngữ cảnh để model biết nó tồn tại. 60 tool = hàng chục nghìn token bị chiếm trước khi bạn kịp gõ gì. Tool Search hoãn việc nạp: model chỉ tìm và nạp mô tả tool khi thật sự cần dùng. Vậy là giảm chỗ chiếm dụng mà **không mất tool nào** — đúng điều kiện “không mất năng lực” của đề.",
+  "wrong": {
+   "B": "Tắt hết MCP server thì đỡ tốn ngữ cảnh nhưng mất toàn bộ tool — trái điều kiện của đề.",
+   "C": "Viết prompt dài hơn chỉ tốn thêm token, không động tới nguyên nhân (mô tả tool).",
+   "D": "Thêm MCP server = thêm mô tả tool phải nạp → càng tệ hơn."
+  }},
+ {"id": 11270,
+  "remember": "Hai lỗi bảo mật kinh điển: (1) để **khoá bí mật trong prompt**; (2) **kiểm quyền sau khi** model đã đọc dữ liệu cấm. Khoá phải nằm ở kho bí mật phía server; kiểm quyền phải làm **trước** khi dữ liệu tới model.",
+  "why": "Ô B: mật khẩu/khoá dịch vụ nằm trong ngữ cảnh prompt thì có thể lọt ra log, bản ghi vết, thậm chí vào câu trả lời — khoá phải giữ ở phía server, model không cần nhìn thấy. Ô C: kiểm soát theo vai trò chỉ áp **ở khâu hiển thị**, tức model đã đọc được dữ liệu hạn chế rồi; lọc lúc hiển thị là quá muộn vì dữ liệu đã nằm trong ngữ cảnh. Ba ô còn lại đều là thực hành tốt.",
+  "wrong": {
+   "A": "Chạy tool phía server bằng định danh có quyền tối thiểu — đây là cách làm **đúng**, không phải lỗ hổng.",
+   "D": "Token OAuth riêng cho từng người, phạm vi quyền hẹp — cũng là cách làm đúng.",
+   "E": "Mã hoá đường truyền (TLS) giữa các dịch vụ là chuẩn mực cơ bản, không phải lỗ hổng."
+  }},
+ {"id": 11271,
+  "remember": "Lỗi **chỉ xảy ra lần đầu**, đúng lúc hệ điều hành hỏi xin quyền → nguyên nhân là bước cấp quyền một lần. Xác nhận các lần sau chạy tốt, ghi vào tài liệu hướng dẫn người mới. Đừng đập đi làm lại.",
+  "why": "Triệu chứng tự chỉ ra nguyên nhân: lần đầu hệ điều hành hiện hộp thoại xin quyền và server lỗi; sau khi đã cấp quyền thì các lần sau chạy bình thường. Ô A làm đúng ba việc: nhận ra nguyên nhân, kiểm chứng các lần sau thành công, và ghi lại vào tài liệu nhập môn để người sau không hoang mang. Chẩn đoán có kiểm chứng, can thiệp ít nhất.",
+  "wrong": {
+   "B": "Cài lại cả hệ điều hành là quá tay, lại làm khi chưa xác nhận nguyên nhân.",
+   "C": "Tắt hộp thoại xin quyền là hy sinh bảo mật cho một lỗi vốn tự hết sau lần đầu.",
+   "D": "Coi là hỏng vĩnh viễn trái với bằng chứng (các lần sau chạy được), lại không kiểm tra gì."
+  }},
+ {"id": 11272,
+  "remember": "Lỗi “đặc thù của AI” nằm ở **hành vi model**: bịa thông tin (hallucination) và từ chối nhầm yêu cầu hợp lệ (over-refusal). Chứng chỉ hết hạn, DB quá thời gian, cân bằng tải sai là lỗi phần mềm thường.",
+  "why": "Đề hỏi kiểu hỏng **chỉ hệ dùng LLM mới có**. Ô E là bịa: câu trả lời nghe hợp lý nhưng không tài liệu nào chống đỡ. Ô C là từ chối quá tay: vài từ ngữ bề ngoài kích hoạt phản xạ an toàn khiến model từ chối một câu hỏi chính đáng. Cả hai xuất phát từ việc model sinh chữ theo xác suất — phần mềm truyền thống không có.",
+  "wrong": {
+   "A": "Chứng chỉ TLS hết hạn là lỗi vận hành hạ tầng, hệ thống nào cũng có thể gặp.",
+   "B": "Kết nối cơ sở dữ liệu quá thời gian là lỗi tầng dữ liệu thông thường.",
+   "D": "Bộ cân bằng tải cấu hình sai là lỗi hạ tầng, không liên quan tới bản chất LLM."
+  }},
+ {"id": 11273,
+  "remember": "Đánh giá rủi ro theo thứ tự: **có gì cần bảo vệ** (tài sản) → **ai/cái gì tấn công** (mối đe doạ) → ước lượng khả năng × mức tác động → biện pháp giảm thiểu → ghi chép.",
+  "why": "Muốn ước lượng “mối đe doạ X tấn công tài sản Y có dễ xảy ra không, hại cỡ nào” thì phải có sẵn hai danh sách: danh sách tài sản và độ nhạy cảm của chúng (ô C), và danh sách kẻ tấn công cùng các đường tấn công (ô E). Ba ô còn lại là kết quả **sau khi** đã đánh giá.",
+  "wrong": {
+   "A": "Ghi lại kết quả đánh giá là bước cuối cùng.",
+   "B": "Đề xuất biện pháp giảm thiểu chỉ làm được sau khi đã phân tích rủi ro.",
+   "D": "Cũng là đề xuất giảm thiểu — bước sau đánh giá, trùng ý với ô B."
+  }},
+ {"id": 11274,
+  "remember": "Hàng rào an toàn tốt = **nhiều lớp** và **có thể cưỡng chế**: chỉ dẫn trong prompt + kiểm nội dung lúc chạy + kiểm định dạng (schema) trước khi hành động. Không lớp đơn lẻ nào là đủ.",
+  "why": "Ô C: kiểm đầu ra của model theo một khuôn dữ liệu (schema) **trước khi** hệ thống làm gì tiếp — đây là kiểm tra bằng code, chắc chắn, không phụ thuộc model tự giác. Ô D: phòng thủ nhiều lớp — vừa dặn trong prompt vừa kiểm nội dung khi chạy, lớp này hỏng còn lớp kia.",
+  "wrong": {
+   "A": "Câu “mật khẩu” để nới hàng rào chính là cửa sau: ai đoán/lấy được câu đó là vượt rào.",
+   "B": "Hạ temperature chỉ làm câu trả lời ổn định hơn, không chặn được nội dung sai — model vẫn có thể sai một cách ổn định.",
+   "E": "Chỉ dựa vào một system prompt là một lớp duy nhất, lại là lớp “lời dặn” không cưỡng chế được."
+  }},
+ {"id": 11275,
+  "remember": "Ngữ cảnh bị chiếm **trước khi bạn gõ chữ nào** → nghi ngay **mô tả tool** nạp sẵn từ nhiều MCP server (khi chưa bật Tool Search).",
+  "why": "Trước tin nhắn đầu tiên, thứ duy nhất được nạp vào ngữ cảnh là phần cấu hình: system prompt, tệp CLAUDE.md và nhất là mô tả của mọi tool. Nhiều MCP server, mỗi server vài chục tool, có thể chiếm hàng chục nghìn token. Ô B nêu đúng cơ chế này.",
+  "wrong": {
+   "A": "Bố trí bàn phím không liên quan gì tới token gửi lên model.",
+   "C": "Model không có “sở thích” tự tiêu ngữ cảnh; đổ cho model là né việc chẩn đoán.",
+   "D": "Phông chữ hay tỉ lệ hiển thị chỉ là giao diện, không biến thành token."
+  }},
+ {"id": 11276,
+  "remember": "Cả đội cần **cùng một cấu hình cho một repo** → đặt tệp cấu hình cấp dự án (`.mcp.json`, `.claude/settings.json`) vào repo và commit. Git tự đồng bộ cho mọi người.",
+  "why": "Khi cấu hình MCP nằm ngay trong repo, ai clone/pull về đều có cùng một bản, không cần chép tay; thay đổi cấu hình cũng đi qua review như code. Phạm vi vừa khớp: cấu hình cho đúng repo đó, không rộng hơn.",
+  "wrong": {
+   "A": "Cấu hình quản trị đẩy xuống mọi máy dành cho chính sách cả tổ chức — quá rộng cho nhu cầu của một repo, lại phụ thuộc admin.",
+   "B": "Biến môi trường trên từng máy phải đặt tay từng người — đúng thứ đề muốn tránh.",
+   "D": "Mỗi người tự giữ tệp cấu hình cá nhân thì chắc chắn sẽ lệch nhau theo thời gian."
+  }},
+ {"id": 11277,
+  "remember": "Bị từ chối quyền → **tìm đúng quy tắc nào đang chặn**, xem qua mọi tầng cấu hình (quản trị → dòng lệnh → local → dự án → cá nhân), rồi quyết định sửa hay giữ.",
+  "why": "Quyền trong Claude Code được gộp từ nhiều tầng cấu hình; một quy tắc cấm ở tầng cao (ví dụ do quản trị đặt) sẽ thắng quy tắc cho phép ở tầng cá nhân. Ô C làm đúng: tìm ra quy tắc cụ thể, rồi xác nhận nên sửa hay **nên giữ** — vì có khi việc chặn là cố ý.",
+  "wrong": {
+   "A": "Quy tắc quyền là cố định; thử lại bao nhiêu lần kết quả cũng vậy, và không chẩn đoán được gì.",
+   "B": "Tắt cả hệ thống phân quyền để sửa một quy tắc là phá bỏ mọi lớp kiểm soát.",
+   "D": "Cấp Bash không giới hạn để lách là mở toang quyền, thay vì sửa đúng một quy tắc."
+  }},
+ {"id": 11278,
+  "remember": "AI soát code là **trợ thủ**: Claude viết nhận xét, **con người vẫn bấm duyệt** (qua quy tắc bảo vệ nhánh).",
+  "why": "Đề có hai điều kiện: có soát xét bằng AI, và **không bỏ** khâu người duyệt. Ô A thoả cả hai: Claude đăng bản phân tích có cấu trúc dưới dạng bình luận; quyết định duyệt vẫn thuộc về người, theo quy tắc bảo vệ nhánh đang có.",
+  "wrong": {
+   "B": "Tự động gộp mọi pull request là bỏ qua đúng khâu người duyệt mà đề yêu cầu giữ.",
+   "C": "Tắt quy tắc bảo vệ nhánh là phá cơ chế kiểm soát.",
+   "D": "Lặng lẽ xoá pull request là hành động phá huỷ, không minh bạch, không có người tham gia."
+  }},
+ {"id": 11279,
+  "remember": "Gặp **ràng buộc cứng** (bảo mật, pháp lý) thì đó là điều kiện loại: không đáp ứng được thì mọi lợi ích khác đều vô nghĩa. Xét nó trước tiên.",
+  "why": "Giám đốc tài chính muốn giảm việc bảo trì hạ tầng, nhưng cán bộ bảo mật đặt yêu cầu **bắt buộc**: dữ liệu tài chính khách hàng phải nằm trong ranh giới mạng đã duyệt. Yêu cầu bắt buộc là cửa “được/không được” — nếu hạ tầng mới không đáp ứng thì không thể chọn, dù rẻ hay tiện cỡ nào. Vì vậy ô D nặng ký nhất.",
+  "wrong": {
+   "A": "Mức độ khớp mẫu thiết kế là chuyện kỹ thuật, có thể điều chỉnh được; không vượt qua được ràng buộc bảo mật.",
+   "B": "Chi phí token chủ yếu do model quyết định, không do hạ tầng; mục tiêu ở đây là lấy lại thời gian kỹ sư.",
+   "C": "Kiểu bus tin nhắn hiện tại chính là thứ đang gây gánh nặng; giữ được nó không phải tiêu chí chính."
+  }},
+ {"id": 11280,
+  "remember": "Trước khi viết tài liệu: biết **viết cho ai** (họ cần trả lời câu hỏi gì) và có **dàn ý**. Kiểm chứng, dịch, quản lý phiên bản đều làm sau.",
+  "why": "Mỗi mục của tài liệu phải trả lời câu hỏi của một nhóm người đọc cụ thể, nên phải xác định người đọc trước (ô A). Có người đọc rồi mới dựng được dàn ý các mục: tổng quan, thành phần, giao kèo, luồng, sổ tay vận hành, giới hạn (ô E).",
+  "wrong": {
+   "B": "Dịch một tài liệu chưa viết — rõ ràng là bước sau.",
+   "C": "Kiểm chứng với nhóm triển khai cần có bản nháp trước.",
+   "D": "Quản lý phiên bản, lịch soát xét là việc quản lý tài liệu khi đã có nội dung."
+  }},
+ {"id": 11281,
+  "remember": "Chọn cách tìm theo **kiểu dữ liệu**: tìm theo nghĩa (dense/embedding) cho câu diễn đạt khác chữ; tìm theo từ khoá (sparse/BM25) cho mã số, từ hiếm; truy vấn SQL cho lọc-tổng hợp trên bảng; kết hợp (hybrid) để có cả hai.",
+  "why": "Ba mệnh đề đầu đều mô tả đúng điểm mạnh của từng cách tìm. Hybrid kết hợp thêm tìm theo từ khoá nên kết quả khác (thường tốt hơn) so với chỉ tìm theo nghĩa. Lấy mẫu ngẫu nhiên thì không dựa vào câu hỏi nên không phải là cách tìm kiếm.",
+  "rows": {
+   "1": "Đúng — tìm bằng embedding bắt được những câu cùng ý dù khác chữ.",
+   "2": "Đúng — tìm theo từ khoá khớp chính xác mã số, tên riêng, từ hiếm; chỗ embedding hay bỏ lỡ.",
+   "3": "Đúng — dữ liệu dạng bảng có lược đồ, cần lọc và tính tổng thì dùng truy vấn có cấu trúc (SQL).",
+   "4": "Sai — hybrid = tìm theo nghĩa + tìm theo từ khoá, nên không giống hệt chỉ tìm theo nghĩa; kết quả tìm được khác.",
+   "5": "Sai — lấy ngẫu nhiên không liên quan gì tới câu hỏi, không thể dùng để trả lời."
+  }},
+ {"id": 11282,
+  "remember": "Phần tìm tài liệu **không đổi** mà câu trả lời bắt đầu trái với tài liệu → nghi hai thứ còn lại: **phiên bản model** và **chỉ dẫn bám nguồn** trong system prompt.",
+  "why": "Đề đã loại trừ đường ống tìm tài liệu (không thay đổi gì). Vậy nguyên nhân nằm ở model hoặc prompt. Ô C kiểm xem lỗi có xảy ra với phiên bản model cũ không — nếu không thì do đổi model. Ô E kiểm các chỉ dẫn “chỉ trả lời theo tài liệu, có trích dẫn” trong system prompt còn nguyên không. Cả hai là bước **chẩn đoán**, không phải sửa mò.",
+  "wrong": {
+   "A": "Nới cửa sổ ngữ cảnh là thay đổi chứ không phải chẩn đoán; thêm tài liệu không giải thích vì sao model trả lời trái với tài liệu đã có.",
+   "B": "Đổi mô hình embedding là sửa phần tìm kiếm, trong khi đề nói phần này không đổi.",
+   "D": "Hạ temperature chỉ giảm dao động, không cho biết nguyên nhân; model vẫn có thể sai đều đặn."
+  }},
+ {"id": 11283,
+  "remember": "Bốn loại giá trị: **Năng suất** = cùng người làm được nhiều hơn; **Hiệu suất** = bỏ bớt bước thủ công; **Chi phí** = tiền bỏ ra; **SLA hiệu năng** = cam kết tốc độ/độ sẵn sàng.",
+  "why": "Câu (1) “gấp 3 lần số đơn trên mỗi nhân viên mỗi ngày” → sản lượng mỗi người tăng → Năng suất. Câu (2) bỏ hẳn khâu nhập liệu thủ công → Hiệu suất (tự động hoá phần lặp lại). Câu (3) chi phí API vượt ngân sách → Chi phí giải pháp. Câu (4) 11 giây so với cam kết 5 giây → SLA hiệu năng. Chỉ ô B khớp cả bốn.",
+  "wrong": {
+   "A": "Gán câu 1 là Hiệu suất và câu 2 là Chuyển đổi: “trên mỗi nhân viên mỗi ngày” là thước đo năng suất; bỏ nhập liệu là tự động hoá, chưa phải tạo ra cách làm việc mới.",
+   "C": "Gán câu 4 là Hiệu suất: “cam kết 5 giây” rõ ràng là SLA hiệu năng.",
+   "D": "Đảo câu 3 và 4: ngân sách trên mỗi giao dịch là Chi phí; độ trễ so với cam kết là SLA hiệu năng."
+  }},
+ {"id": 11284,
+  "remember": "Claude giỏi: hiểu ngôn ngữ, suy luận, đọc tài liệu dài, giải thích lý do. Claude **không** hợp: việc cần phản hồi dưới vài chục mili giây, hay thay thế hạ tầng tìm kiếm cho hàng triệu tài liệu.",
+  "why": "Việc 1, 3, 5 đều là xử lý văn bản dài/bán cấu trúc cần hiểu và giải thích — đúng sở trường của Claude, có người soát lại. Chấm điểm gian lận dưới 50 ms cần model máy học chuyên dụng (LLM mất hàng trăm ms trở lên). Thay chỉ mục vector cho hàng triệu tài liệu là việc của hạ tầng tìm kiếm; Claude dùng kết quả tìm kiếm chứ không thay được nó.",
+  "rows": {
+   "1": "Đúng — viết bản nháp báo cáo từ nhật ký bán cấu trúc, có người phân tích soát lại: đúng sở trường, có người kiểm.",
+   "2": "Sai — dưới 50 mili giây trên dòng dữ liệu liên tục nhanh hơn nhiều so với tốc độ một LLM; dùng model máy học chuyên dụng.",
+   "3": "Đúng — đọc hợp đồng dài, trích xuất điều khoản có cấu trúc là ứng dụng kinh điển của Claude.",
+   "4": "Sai — Claude không thay được chỉ mục vector cho kho hàng triệu tài liệu; nó dùng kết quả tìm kiếm, không phải là bộ tìm kiếm.",
+   "5": "Đúng — phân loại vào 30 nhóm kèm giải thích lý do là việc LLM làm tốt."
+  }},
+ {"id": 11285,
+  "remember": "Pha **lặp** = vòng cải tiến liên tục: xem số liệu thật → chọn thay đổi đáng giá nhất → kiểm bằng bộ đánh giá. Không ngừng đo, không đập đi xây lại.",
+  "why": "Ô D mô tả đúng vòng cải tiến: lấy tín hiệu từ số đo môi trường chạy thật, các đợt chấm mẫu đầu ra và phản hồi người dùng, chọn ra thay đổi có tác động lớn nhất, rồi lên kế hoạch kiểm tra thay đổi đó bằng bộ đánh giá để biết nó tốt hơn thật hay không.",
+  "wrong": {
+   "A": "Xây lại toàn bộ mỗi vòng là lãng phí và bỏ qua dữ liệu cho biết chỗ nào cần sửa.",
+   "B": "Ngừng đo sau khi ra mắt thì không phát hiện được chất lượng đi xuống, cũng không có gì để cải tiến.",
+   "C": "Bỏ bộ đánh giá thì mất thước đo để biết thay đổi tốt lên hay tệ đi."
+  }},
+ {"id": 11286,
+  "remember": "Cắt tài liệu theo **cấu trúc tự nhiên** của nó: code cắt theo hàm/cây phân cấp; tài liệu dài cắt theo mục/đoạn/điều khoản; bản ghi ngắn thì mỗi bản ghi là một mẩu.",
+  "why": "Cắt mẩu (chunking) tốt là giữ nguyên các đơn vị ý nghĩa. Code và đặc tả có cấu trúc cây (mô-đun → hàm). Tài liệu dài (hợp đồng, chính sách) có mục, đoạn, điều khoản. Bản ghi ngắn (ticket, đánh giá sản phẩm) bản thân đã là một đơn vị, hoặc dài xấp xỉ nhau nên cắt cỡ cố định là đủ.",
+  "rows": {
+   "1": "Mã nguồn/đặc tả — cắt theo hàm cho mô-đun code, đề nêu thẳng là code.",
+   "2": "Mã nguồn/đặc tả — đi theo phân cấp của code hoặc đặc tả.",
+   "3": "Bản ghi ngắn — mỗi bản ghi đã là một đơn vị trọn vẹn.",
+   "4": "Tài liệu dài có cấu trúc — điều khoản, đoạn văn là cấu trúc của hợp đồng, chính sách.",
+   "5": "Bản ghi ngắn — các bản ghi dài xấp xỉ nhau nên cắt cỡ cố định là đủ.",
+   "6": "Tài liệu dài có cấu trúc — bám theo cấu trúc mục/tiểu mục của tài liệu."
+  }},
+ {"id": 11287,
+  "remember": "Viết prompt: bắt đầu **đơn giản** (không ví dụ — zero-shot); thêm **ví dụ mẫu** để cố định định dạng; chỉ bắt **suy luận từng bước** khi việc cần; và **kiểm lại** mỗi khi đổi model.",
+  "why": "Mệnh đề 1, 2, 4 là thực hành chuẩn. Suy luận từng bước (chain-of-thought) tốn thêm token và thời gian nên không dùng mặc định cho mọi việc. Mỗi phiên bản model hành xử khác nhau, nên prompt đã kiểm trên bản này phải chạy lại bộ đánh giá trên bản mới.",
+  "rows": {
+   "1": "Đúng — danh mục và mô tả đã có sẵn trong prompt thì thử không ví dụ trước là hợp lý.",
+   "2": "Đúng — ví dụ mẫu có đúng tên trường giúp model trả ra đúng định dạng.",
+   "3": "Sai — suy luận từng bước tốn token và thời gian, chỉ đáng dùng cho việc cần suy luận.",
+   "4": "Đúng — câu hỏi dẫn dắt làm câu trả lời thiên lệch; yêu cầu so sánh công bằng theo tiêu chí rõ ràng sẽ khắc phục.",
+   "5": "Sai — mỗi phiên bản model có thể hành xử khác; phải chạy lại đánh giá khi đổi model."
+  }},
+ {"id": 11288,
+  "remember": "Muốn phát hiện chất lượng trôi khi nâng model → giữ **một bộ đánh giá cố định**, chấm từng phiên bản trên **cùng bộ đó**, chạy **trước khi** cho bản mới lên.",
+  "why": "Chỉ so sánh được khi dùng cùng một thước đo. Ô D giữ nguyên bộ câu kiểm tra đối kháng và ghi điểm theo từng phiên bản model, nên mỗi lần nâng cấp đều so được với bản trước — và phát hiện vấn đề **trước khi** model mới phục vụ người dùng thật.",
+  "wrong": {
+   "A": "Tắt đánh giá để tiết kiệm là chấp nhận không phát hiện được sự cố — ngược mục tiêu.",
+   "B": "Mỗi lần dùng một bộ câu khác thì không so được phiên bản này với phiên bản kia.",
+   "C": "Đợi người dùng khiếu nại là phát hiện sau khi đã gây hại."
+  }},
+ {"id": 11289,
+  "remember": "Người dùng **tự xưng** là admin trong tin nhắn ≠ có quyền admin. Chống bằng nhiều lớp: coi nội dung người dùng là dữ liệu, bộ lọc phát hiện lúc chạy, quyền không thể nâng bằng lời nói, và nhật ký kiểm toán.",
+  "why": "Lời tự xưng trong tin nhắn không bao giờ là bằng chứng quyền hạn. Ô B xếp nhiều lớp: prompt dặn model coi nội dung người dùng là dữ liệu không đáng tin; bộ phân loại lúc chạy phát hiện mưu toan vượt quyền; quyền dùng tool được cố định sẵn và **không thể** nâng lên bằng nội dung tin nhắn (đây là chốt chặn thật); nhật ký kiểm toán để truy vết.",
+  "wrong": {
+   "A": "Trông vào việc model tự nhận ra là chỉ có một lớp phòng thủ, và là lớp yếu nhất.",
+   "C": "Gỡ hết hàng rào để “không còn gì để lách” là tự phá hệ thống.",
+   "D": "Cấp quyền theo lời tự khai chính là lỗ hổng mà kẻ tấn công nhắm tới."
+  }}
+]

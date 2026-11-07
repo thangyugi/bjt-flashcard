@@ -1,0 +1,202 @@
+[
+ {"id": 11527,
+  "remember": "Ít tool (7 cái, ~1.200 token) và **lần nào cũng dùng** → cứ **nạp hết**. Tool Search chỉ đáng khi bộ tool **rất lớn** mà mỗi lần chỉ cần vài cái.",
+  "why": "7 tool khoảng 1.200 token là phần ngữ cảnh nhỏ, và tool nào cũng thường xuyên được dùng. Bật Tool Search chỉ thêm một bước tìm mà không tiết kiệm đáng kể. Ô A là lựa chọn hợp lý và đơn giản nhất.",
+  "wrong": {
+   "B": "Gần như tool nào cũng liên quan, nên lọc là thừa.",
+   "C": "Hoãn cả bảy tool chỉ thêm độ trễ tìm kiếm trước mỗi lần gọi.",
+   "D": "Chia ra hai MCP server cho 1.200 token là làm quá mức."
+  }},
+ {"id": 11528,
+  "remember": "Nhiều MCP server cộng lại **hàng chục nghìn token** mô tả tool trước khi làm gì → **Tool Search**: chỉ nạp 3–5 tool liên quan cho mỗi yêu cầu.",
+  "why": "55.000 token định nghĩa tool chiếm ngữ cảnh trước khi agent bắt đầu. Tool Search hoãn nạp và chỉ kéo vào 3–5 tool liên quan tới từng yêu cầu, giảm phình ngữ cảnh ngay tại gốc — đúng tình huống Anthropic mô tả cho trường hợp dùng nhiều MCP server.",
+  "wrong": {
+   "B": "Không có tuỳ chọn “xin nâng cửa sổ”; dù có thì ngữ cảnh vẫn phình và model vẫn dễ chọn nhầm tool.",
+   "C": "Viết lại tay mọi mô tả tốn công, dễ làm mô tả kém đi, mà vẫn nạp toàn bộ.",
+   "D": "Cache giảm chi phí và độ trễ, nhưng 55.000 token vẫn nằm trong cửa sổ ngữ cảnh."
+  }},
+ {"id": 11529,
+  "remember": "Bài **phân loại nhãn cố định** có sẵn đáp án → chấm **bằng code**: so khớp nhãn (độ chính xác) và **F1** theo từng nhãn. Nhanh, rẻ, khách quan.",
+  "why": "Có 5 nhãn cố định, 5.000 phiếu đã gán nhãn, cần chấm tự động và không mơ hồ → đây là chấm bằng code kinh điển. Độ chính xác cho bức tranh chung; F1 theo từng nhãn bắt được các nhãn hiếm như “gian lận” (nếu chỉ nhìn độ chính xác chung, model có thể bỏ qua nhãn hiếm mà điểm vẫn cao).",
+  "wrong": {
+   "B": "Đo độ giống nhau giữa các cách diễn đạt, không đo nhãn có đúng không.",
+   "C": "ROUGE-L dành cho tóm tắt, không phải phân loại.",
+   "D": "Nhờ model khác chấm 1–5 là chủ quan và tốn kém, trong khi so nhãn là chấm được tuyệt đối."
+  }},
+ {"id": 11530,
+  "remember": "Chấm **tóm tắt** so với bản mẫu, quan tâm cả **ý chính** lẫn **thứ tự ý** → **ROUGE-L** (dựa trên chuỗi con chung dài nhất).",
+  "why": "ROUGE-L đo chuỗi con chung dài nhất giữa bản của model và bản tham chiếu, nên vừa thưởng cho việc giữ thông tin chính, vừa nhạy với thứ tự các ý — đúng hai điều đề muốn.",
+  "wrong": {
+   "B": "So từng ký tự: bản tóm tắt hay nhưng dùng chữ khác vẫn bị 0 điểm.",
+   "C": "Đo độ nhất quán giữa các lần sinh, không so với bản tham chiếu.",
+   "D": "Kiểm có thông tin cá nhân không là kiểm an toàn, không phải chất lượng tóm tắt."
+  }},
+ {"id": 11531,
+  "remember": "So hai phiên bản prompt **công bằng**: chạy **cả hai trên cùng một bộ dữ liệu có đáp án**, chấm **cùng một chỉ số khách quan**.",
+  "why": "Cùng bộ dữ liệu giữ riêng, cùng đáp án chuẩn, chỉ số khách quan, chạy tự động — vừa nhanh nhất vừa khách quan nhất. Ô A là phép so sánh công bằng trước khi đưa prompt mới lên dùng.",
+  "wrong": {
+   "B": "Hai người đọc rồi bỏ phiếu theo cảm giác — chậm, chủ quan, mẫu nhỏ.",
+   "C": "Mức tự tin của model không phải độ chính xác.",
+   "D": "Đưa thẳng lên toàn bộ người dùng là rủi ro; thời gian giải quyết phiếu là thước đo gián tiếp, nhiễu."
+  }},
+ {"id": 11532,
+  "remember": "So nhiều phiên bản prompt **tóm tắt** ở quy mô lớn → chấm tự động bằng **ROUGE-L** so với bản tham chiếu, theo dõi điểm qua từng phiên bản.",
+  "why": "ROUGE-L đo chuỗi con chung dài nhất giữa bản ứng viên và bản tham chiếu, nên thưởng cho việc giữ ý chính theo thứ tự tương tự. Theo dõi điểm F1 qua các phiên bản prompt cho phép so sánh tự động trên 250 bài.",
+  "wrong": {
+   "B": "Bản tóm tắt gần như không bao giờ trùng nguyên văn — chỉ số vô dụng.",
+   "C": "Kiểm có nhắc thông tin sức khoẻ là kiểm an toàn, không đo chất lượng tóm tắt.",
+   "D": "Tốc độ không phải chất lượng."
+  }},
+ {"id": 11533,
+  "remember": "Bộ đánh giá: **nhiều câu + chấm tự động** thường tốt hơn **ít câu + chấm tay** cẩn thận. Số lượng lớn giảm nhiễu khi so sánh.",
+  "why": "Hướng dẫn xây bộ đánh giá của Anthropic nói rõ: nhiều câu hỏi chấm tự động (dù mỗi câu cho tín hiệu kém hơn một chút) tốt hơn ít câu chấm tay chất lượng cao. Mẫu lớn giảm nhiễu khi so các prompt ứng viên.",
+  "wrong": {
+   "B": "Bỏ qua cỡ mẫu — 80 câu dễ cho kết quả nhiễu.",
+   "C": "10 mẫu là quá ít để so sánh có ý nghĩa.",
+   "D": "Cảm nhận chủ quan không phải là đánh giá."
+  }},
+ {"id": 11534,
+  "remember": "Ca kiểm thử phải **giống người dùng thật**: ngoài ca “sạch”, thêm ca **khó, mơ hồ, lan man, lạc đề, giọng châm biếm**.",
+  "why": "Nguyên tắc thiết kế bộ đánh giá: mô phỏng đúng những gì người dùng thật gửi tới và đưa ca biên vào — đầu vào mơ hồ, quá dài, lạc đề, giọng điệu khó. Ô A liệt kê đúng những loại đó.",
+  "wrong": {
+   "B": "Chỉ thử ca hoàn hảo — kết quả đo quá lạc quan.",
+   "C": "Lặp một câu mười lần chỉ đo tính nhất quán, không phủ được trường hợp nào khác.",
+   "D": "Người dùng thật không viết theo khuôn mẫu của prompt."
+  }},
+ {"id": 11535,
+  "remember": "Chống bịa trong RAG: bắt **trích nguyên văn** đoạn tài liệu **trước khi** trả lời, và **cho phép nói “không chắc / không tìm thấy”**.",
+  "why": "Gốc lỗi: model bịa ra một con số không có trong tài liệu. Kỹ thuật giảm bịa của Anthropic có hai vế: yêu cầu trích nguyên văn đoạn chính sách trước khi trả lời (để bám nguồn), và cho phép thừa nhận không chắc khi không tìm thấy — ô A gộp cả hai.",
+  "wrong": {
+   "B": "Bù chỗ trống bằng kiến thức chung chính là nguồn sinh ra con số bịa.",
+   "C": "Ép luôn nêu con số cụ thể là ép model bịa khi tài liệu không có.",
+   "D": "Nhắc lại cả tài liệu tốn token và không ngăn được bịa."
+  }},
+ {"id": 11536,
+  "remember": "Trả lời **chậm + hoá đơn cao** cho việc **đơn giản, khối lượng lớn** → dấu hiệu **dùng model quá mạnh**. Thử model nhẹ hơn (Haiku), kiểm lại độ chính xác.",
+  "why": "Trả lời trạng thái đơn hàng, giờ mở cửa không cần model lớn nhất. Opus vừa chậm hơn vừa đắt hơn cho việc đơn giản — khớp đúng hai triệu chứng “trả lời chậm” và “hoá đơn cao”. Nên chọn model phù hợp (Haiku 4.5), kiểm lại độ chính xác rồi quyết định.",
+  "wrong": {
+   "B": "Đề không có dấu hiệu nội dung sai; thêm bước kiểm còn chậm hơn.",
+   "C": "Câu hỏi ngắn theo khuôn khó mà tràn cửa sổ; triệu chứng cũng không phải bị cắt.",
+   "D": "System prompt dài hơn = thêm token = càng chậm và đắt."
+  }},
+ {"id": 11537,
+  "remember": "JSON đầu ra **đổi tên trường, đổi cấu trúc** dù dữ liệu vào ổn định → do prompt **không nêu khuôn (schema)**. Chữa: đưa **danh sách trường cố định + một JSON mẫu** (hoặc dùng structured outputs).",
+  "why": "Dữ liệu vào đã đúng khuôn và nhất quán, nên lỗi nằm ở chỗ chưa đặc tả đầu ra: không có khuôn thì model tự chọn tên trường và cách lồng. Cố định danh sách trường kèm một JSON mẫu (hoặc bật structured outputs) sẽ giữ định dạng ổn định.",
+  "wrong": {
+   "B": "Trái với dữ kiện đề nói dữ liệu nhất quán.",
+   "C": "Vấn đề là cấu trúc, không phải nội dung sai.",
+   "D": "Chạm hạn mức gây lỗi khi gọi API, không làm đổi tên trường."
+  }},
+ {"id": 11538,
+  "remember": "Bật telemetry Claude Code (`CLAUDE_CODE_ENABLE_TELEMETRY=1`) **chưa đủ**: còn phải **chọn nơi xuất** (`OTEL_METRICS_EXPORTER`, `OTEL_LOGS_EXPORTER`, ví dụ `otlp`) và endpoint. Mặc định là **không xuất gì**.",
+  "why": "Trong Claude Code, bật telemetry chỉ là bật công tắc; chưa chọn bộ xuất (exporter) nào thì không có gì được gửi đi. Đề nói rõ không biến nào khác được cấu hình, nên ô B đúng nguyên nhân — cần đặt exporter là `otlp` và địa chỉ bộ thu thập.",
+  "wrong": {
+   "A": "Cờ beta đó chỉ dành cho tính năng beta (như traces), không phải điều kiện để số đo/log chạy.",
+   "C": "Không có yêu cầu bắt buộc phải cấu hình `console` trước; đó chỉ là một lựa chọn.",
+   "D": "Header dùng để xác thực với bộ thu thập của bạn, không phải điều kiện để CLI phát dữ liệu."
+  }},
+ {"id": 11539,
+  "remember": "Số đo phình to vì **mỗi phiên một ID riêng** → đặt **`OTEL_METRICS_INCLUDE_SESSION_ID=false`**: bỏ session ID khỏi số đo, vẫn giữ các nhãn khác như **model**.",
+  "why": "Cờ này chỉ bỏ `session.id` khỏi số đo, nên mỗi chuỗi dữ liệu không còn bị tách theo từng phiên ngắn, trong khi phần bóc tách theo `model` vẫn còn. Sửa đúng nguyên nhân mà không mất chiều dữ liệu cần thiết.",
+  "wrong": {
+   "B": "Tắt hẳn xuất số đo là mất giám sát theo thời gian thực chỉ vì một thuộc tính.",
+   "C": "Xả thưa hơn chỉ giảm tần suất gửi, không giảm số chuỗi dữ liệu duy nhất.",
+   "D": "Usage API là API khác, không ảnh hưởng số đo OpenTelemetry đã xuất."
+  }},
+ {"id": 11540,
+  "remember": "Giám sát **theo từng phút** → `bucket_width=1m` (mặc định trả 60 khoảng, tối đa 1440 = 24 giờ). Hỏi **khoảng mỗi phút một lần** là vừa; hỏi dày hơn không làm dữ liệu mới hơn.",
+  "why": "Khoảng 1 phút khớp nhịp kiểm tra mỗi phút; mặc định trả 60 khoảng, có thể nâng tới 1440 (24 giờ) để xem đường nền. Hỏi mỗi phút là vừa với độ mịn của dữ liệu.",
+  "wrong": {
+   "B": "Theo ngày là quá thô, không thấy được đột biến theo phút trong lúc sự cố.",
+   "C": "Độ mịn vẫn là giờ, không thấy được đột biến theo phút.",
+   "D": "Hỏi mỗi 5 giây không làm dữ liệu khoảng 1 phút mới hơn, chỉ tốn yêu cầu và dễ chạm hạn mức."
+  }},
+ {"id": 11541,
+  "remember": "Tài liệu lớn **giống hệt** ở mọi yêu cầu, yêu cầu tới **dưới 5 phút một lần** → đặt **`cache_control`** sau tài liệu: lần sau đọc từ cache — **rẻ hơn, nhanh hơn**. (Mỗi lần đọc lại làm mới hạn 5 phút.)",
+  "why": "Cẩm nang 30.000 token giống hệt ở mọi yêu cầu; yêu cầu cách nhau 30–90 giây, vẫn trong hạn 5 phút của cache, và mỗi lần đọc lại gia hạn cache. Đặt điểm ngắt sau cẩm nang thì các yêu cầu sau đọc từ cache — rẻ hơn nhiều và chữ đầu tiên đến nhanh hơn, không đổi model hay nội dung.",
+  "wrong": {
+   "B": "Chia nhỏ rồi luân phiên ngẫu nhiên làm mất thông tin, và phần đầu thay đổi nên khó dùng cache.",
+   "C": "Dời xuống cuối không bớt token phải xử lý, lại phá phần đầu ổn định.",
+   "D": "Câu trả lời vốn ngắn; chi phí nằm ở 30.000 token đầu vào."
+  }},
+ {"id": 11542,
+  "remember": "Có BAA **không có nghĩa** mọi sản phẩm Claude đều được xử lý PHI. Chỉ **tổ chức đã bật HIPAA** + **chỉ dùng tính năng đủ điều kiện BAA** mới nằm trong phạm vi.",
+  "why": "BAA chỉ phủ những cấu hình cụ thể. Ô A là một tổ chức riêng đã bật HIPAA, gọi Claude API, và chỉ bật các tính năng đủ điều kiện BAA — đúng cấu hình nằm trong phạm vi BAA.",
+  "wrong": {
+   "B": "Cùng tổ chức không có nghĩa Workbench được BAA phủ.",
+   "C": "Gói Pro là gói cá nhân, nằm ngoài BAA, lại dùng chung tài khoản.",
+   "D": "Chưa bật thiết lập HIPAA thì không nằm trong phạm vi BAA."
+  }},
+ {"id": 11543,
+  "remember": "Thao tác cực nhạy (chuyển tiền) **luôn phải có người duyệt**, kể cả khi phiên bật `bypassPermissions` → dùng **hook `PreToolUse`** trả `\"ask\"`. Hook chạy **trước** mọi quy tắc và chế độ quyền.",
+  "why": "Trong Agent SDK, hook chạy đầu tiên trong chuỗi quyết định quyền — trước các quy tắc cấm/hỏi/cho phép và trước kiểm tra chế độ. Một hook `PreToolUse` nhắm riêng tool chuyển tiền và trả `permissionDecision: \"ask\"` sẽ luôn buộc người duyệt, kể cả khi phiên chuyển sang `bypassPermissions`.",
+  "wrong": {
+   "B": "Cho tool vào danh sách tự duyệt thì nó tự chạy, callback không bao giờ được gọi.",
+   "C": "Chế độ có thể bị đổi; `bypassPermissions` bỏ qua cả `canUseTool`.",
+   "D": "Quy tắc cấm không gỡ được từ callback, nên tool bị chặn hẳn chứ không phải “cần duyệt”."
+  }},
+ {"id": 11544,
+  "remember": "**Rất nhiều yêu cầu ngắn + cần dưới 1 giây + ngân sách hạn chế** → bắt đầu bằng **Haiku**, thử trên dữ liệu thật, **chỉ nâng cấp nếu không đạt**.",
+  "why": "50.000 yêu cầu phân loại ngắn mỗi ngày, cần dưới một giây, ngân sách hạn chế — cả ba đều chỉ về Haiku 4.5. Ô A còn đúng quy trình: thử trên mẫu phiếu thật và chỉ nâng cấp nếu không đạt — bắt đầu từ lựa chọn rẻ nhất, nâng dần theo dữ liệu.",
+  "wrong": {
+   "B": "Opus effort `xhigh` chậm và đắt nhất — trái cả ba yêu cầu.",
+   "C": "Suy luận mở rộng mọi yêu cầu thêm độ trễ và chi phí cho việc ngắn.",
+   "D": "Mỗi phiếu là một yêu cầu riêng; ngữ cảnh lớn không giúp gì."
+  }},
+ {"id": 11545,
+  "remember": "**Độ chính xác quan trọng hơn chi phí** + agent **tự chủ, nhiều bước, dài** → **Opus**.",
+  "why": "Kết quả khảo sát: độ chính xác quan trọng hơn chi phí, và agent tự lập kế hoạch nhiều bước — đúng sở trường của Opus (suy luận phức tạp, việc dạng agent nâng cao). Ô A khớp thẳng các yêu cầu.",
+  "wrong": {
+   "B": "Haiku tối ưu chi phí, trong khi đề ưu tiên độ chính xác.",
+   "C": "Hạ effort cũng là tối ưu chi phí, làm giảm độ sâu suy luận.",
+   "D": "Batch API giảm chi phí cho việc không gấp, không tăng độ chính xác, cũng không hợp với agent tương tác."
+  }},
+ {"id": 11546,
+  "remember": "Claude được huấn luyện để **hiệu chuẩn** (calibration): mức tự tin **tương xứng với bằng chứng**, nói rõ khi **không chắc** — thay vì khẳng định chắc nịch.",
+  "why": "Nguyên tắc trung thực của Claude có “hiệu chuẩn”: mức tự tin phải tương xứng với bằng chứng, và nói rõ khi không chắc. Đây chính là cơ chế giảm khả năng công cụ trình bày sai mức tự tin khi hồ sơ ứng viên mơ hồ.",
+  "wrong": {
+   "B": "Chọn cách hiểu “thuận lợi nhất” là thiên lệch, đi ngược tính trung thực.",
+   "C": "Trả về rỗng là né tránh; vẫn có thể nói rõ phần nào chưa chắc.",
+   "D": "Chỉ trích nguyên văn không thể hiện được mức độ không chắc chắn."
+  }},
+ {"id": 11547,
+  "remember": "**Compaction** = **tóm tắt** phần hội thoại cũ khi ngữ cảnh gần đầy. **Context editing** = **xoá có chọn lọc** nội dung cũ (kết quả tool cũ, phần nghĩ cũ) theo cấu hình.",
+  "why": "Hai cơ chế bổ trợ nhau: compaction tóm tắt phần hội thoại trước khi chạm ngưỡng; context editing xoá có chọn lọc nội dung cũ như kết quả tool cũ hay khối suy nghĩ. Ô A mô tả đúng cả hai.",
+  "wrong": {
+   "B": "Đảo ngược hai cơ chế: compaction mới là tóm tắt, context editing mới là xoá.",
+   "C": "Bịa ra ràng buộc theo model.",
+   "D": "Cả hai đều dùng được trong Messages API đồng bộ, không cần Batch API."
+  }},
+ {"id": 11548,
+  "remember": "Đọc kỹ **phạm vi** của thông báo ngừng model. “Ngừng **trừ** trên Bedrock và Google Cloud” → lưu lượng qua **API trực tiếp** phải chuyển model trước hạn; Bedrock/Vertex theo lịch riêng của từng nền tảng.",
+  "why": "Thông báo đã nói rõ: model ngừng ở mọi nơi **ngoài** Bedrock và Google Cloud. Vì vậy phần gọi qua API trực tiếp phải chuyển sang model còn hỗ trợ trước ngày ngừng; phần chạy trên Bedrock/Vertex đi theo lịch của từng nền tảng. Ô A đặt đúng kỳ vọng với các bên.",
+  "wrong": {
+   "B": "Ngừng model là ngừng với mọi người dùng, không miễn trừ khách cũ.",
+   "C": "Trái với chính nội dung thông báo.",
+   "D": "Ngừng model chặn cả việc gọi API, không chỉ giao diện Console."
+  }},
+ {"id": 11549,
+  "remember": "Việc **dài, nhiều bước, bất đồng bộ** mà khách **không muốn tự vận hành hạ tầng agent/sandbox** → **Claude Managed Agents**.",
+  "why": "Yêu cầu then chốt là tránh tự vận hành hạ tầng vòng lặp agent hay hộp cát. Với Managed Agents, Anthropic vận hành hộp cát và phiên làm việc cho việc chạy dài, bất đồng bộ — khớp đúng điều kiện đó.",
+  "wrong": {
+   "A": "Tự viết vòng lặp tool chính là hạ tầng khách không muốn tự vận hành.",
+   "C": "Nhúng Agent SDK vào máy chủ của khách thì khách vẫn phải tự lo vòng đời tiến trình và hộp cát.",
+   "D": "Files API và prompt caching không có cơ chế điều phối hay chạy tool nào."
+  }},
+ {"id": 11550,
+  "remember": "Vừa nén xong ngữ cảnh lại đầy ngay (“autocompact thrashing”) → đang **nạp thứ quá to** (ví dụ log 40.000 dòng). Đọc **từng đoạn nhỏ** hoặc **giao cho subagent** phân tích (ngữ cảnh riêng, chỉ trả tóm tắt).",
+  "why": "Thông báo cho thấy vừa nén xong thì ngữ cảnh lại đầy — vì đang đọc nguyên tệp log 40.000 dòng. Đọc theo từng khoảng dòng, hoặc giao cho subagent phân tích (subagent có ngữ cảnh riêng, chỉ trả về kết luận), xử lý đúng gốc và vẫn tiếp tục điều tra được.",
+  "wrong": {
+   "A": "Thử lại bao nhiêu lần thì ngữ cảnh cũng đầy y như cũ.",
+   "C": "Tắt nén thì tệp vẫn không vừa; chỉ làm chạm giới hạn cứng.",
+   "D": "Xoá hội thoại là mất toàn bộ tiến độ, và một dòng lỗi cuối thường không đủ để tìm nguyên nhân."
+  }},
+ {"id": 11551,
+  "remember": "Agent SDK đọc tin nhắn từ **stdout** của CLI. Exporter **`console`** cũng ghi ra **stdout** → hai luồng trộn lẫn, hỏng việc đọc. Dùng **OTLP** gửi tới bộ thu thập (hoặc Jaeger chạy tại máy) thay vì `console`.",
+  "why": "SDK chạy CLI như một tiến trình con và đọc tin nhắn qua đầu ra chuẩn (stdout). Exporter `console` cũng ghi dữ liệu đo ra stdout, nên hai luồng đâm vào nhau và SDK không phân tích được tin nhắn nữa. Ô A giải thích đúng cơ chế và nêu cách thay thế: gửi OTLP tới bộ thu thập hoặc Jaeger chạy tại máy.",
+  "wrong": {
+   "B": "Sai nguyên nhân — vấn đề là dùng chung stdout, không phải thiếu cửa sổ dòng lệnh.",
+   "C": "Bịa ra cơ chế.",
+   "D": "Sai cơ chế; triệu chứng là dữ liệu xen lẫn, không phải bị nghẽn."
+  }}
+]

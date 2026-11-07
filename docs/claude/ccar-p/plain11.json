@@ -1,0 +1,207 @@
+[
+ {"id": "c-3-19",
+  "remember": "Dữ liệu **nhỏ** (vừa ngữ cảnh), **ít đổi**, cần **phản hồi rất nhanh** → **nạp hết vào phần đầu prompt và cache**. Tra cứu dần (progressive discovery) mỗi lần thêm **một vòng gọi tool** = thêm độ trễ.",
+  "why": "Mỗi lần “khám phá thêm” là thêm một lần gọi tool, cộng thẳng vào độ trễ — rủi ro lớn với cam kết 1,5 giây. 15.000 token ổn định cả tháng là ứng viên lý tưởng cho prompt caching: không thêm lượt nào, giảm thời gian tới chữ đầu tiên và chi phí đầu vào. Tra cứu dần chỉ thắng khi kho lớn hoặc đổi thường xuyên.",
+  "wrong": {
+   "B": "Sai: mỗi lần lấy thêm là thêm một lượt gọi; với dữ liệu nhỏ thì còn chậm hơn.",
+   "C": "Thêm bước tìm kiếm và rủi ro tìm trượt cho một kho vốn vừa gọn trong ngữ cảnh.",
+   "D": "Thêm một lần gọi model trước mỗi yêu cầu, lại làm mất chi tiết."
+  }},
+ {"id": "c-3-20",
+  "remember": "Chọn **tra cứu dần** (progressive discovery) khi: kho **quá lớn** để nạp hết, hoặc **đổi liên tục** (phá cache), hoặc cần **nhật ký chính xác** model đã xem tài liệu nào. Kho nhỏ, ổn định, cần nhanh → **nạp hết + cache**.",
+  "why": "Kho hàng chục nghìn tài liệu không thể nạp hết, và cập nhật hằng ngày sẽ liên tục phá cache — tra cứu dần chỉ lấy đúng phần cần (ô B). Khi mỗi lần lấy là một lời gọi tool rõ ràng, hệ thống tự có nhật ký model đã xem gì, đáp ứng yêu cầu kiểm toán (ô E). Ba điều kiện còn lại là dấu hiệu nên nạp hết + cache.",
+  "wrong": {
+   "A": "Nhỏ và ổn định — đúng hồ sơ của nạp hết + cache.",
+   "C": "Tra cứu dần thêm lượt gọi; việc cố định cần độ trễ thấp nhất thì nạp hết thắng.",
+   "D": "Đang cache tốt; chuyển sang tra cứu dần là mất lợi ích cache."
+  }},
+ {"id": "c-4-01",
+  "remember": "Với agent, đo chi phí theo **kết quả**: **chi phí cho mỗi việc hoàn thành** (tính mọi lượt, lần thử lại, lời gọi tool). Đo theo **từng request** dễ đánh lừa: mỗi request rẻ hơn nhưng số request tăng.",
+  "why": "Với agent, một việc gồm nhiều request; tối ưu chi phí từng request có thể làm tăng số lượt và tổng chi — đúng điều đang xảy ra. Chi phí trên mỗi ticket xử lý thành công gắn chi phí với kết quả kinh doanh, và tự “phạt” cả việc thử lại lẫn thất bại.",
+  "wrong": {
+   "A": "Vẫn đo theo request — chính chỉ số đã đánh lừa nhóm.",
+   "B": "Không gắn với khối lượng việc được giải quyết; người dùng không hoạt động làm loãng số.",
+   "D": "Chỉ là một phần chi phí, và vẫn đo theo request."
+  }},
+ {"id": "c-4-02",
+  "remember": "Bảng đánh giá đủ 5 nhóm: **độ chính xác, độ trễ, chi phí, an toàn, bảo mật**. An toàn → ví dụ **tỉ lệ bịa**; bảo mật → ví dụ **tỉ lệ chặn được prompt injection** trên bộ thử tấn công.",
+  "why": "Bảng điểm đã có độ chính xác, độ trễ và chi phí; còn thiếu an toàn và bảo mật. Tỉ lệ bịa số liệu đo an toàn đầu ra (số bịa trong hồ sơ vay là gây hại) — ô A. Tỉ lệ chặn prompt injection trên bộ red-team đo bảo mật trước tấn công — ô C. Cả hai đo được và đặt ngưỡng được.",
+  "wrong": {
+   "B": "Token mỗi giây lại là chỉ số độ trễ — nhóm đã có.",
+   "D": "Số lần sửa prompt đo hoạt động của nhóm, không đo hệ thống.",
+   "E": "Độ dài câu trả lời không phải chỉ số chất lượng, an toàn hay bảo mật."
+  }},
+ {"id": "c-4-03",
+  "remember": "**Trung bình che giấu ca chậm.** Đo độ trễ bằng **p50 và p95** (95% yêu cầu nhanh hơn mức này), **tách theo từng bước** để biết chỗ nào nghẽn, mỗi chỉ số có **ngưỡng cảnh báo**.",
+  "why": "Giá trị trung bình bị kéo bởi số đông yêu cầu nhanh nên che mất “đuôi” chậm — chính nơi người dùng bỏ đi. p95 phơi bày đuôi đó; tách theo bước (tìm tài liệu, gọi model, gọi tool, hậu xử lý) chỉ ra chỗ nghẽn. Ngưỡng biến chỉ số thành cảnh báo có thể hành động.",
+  "wrong": {
+   "B": "Vẫn là trung bình — cửa sổ dài hơn còn làm phẳng đuôi chậm thêm.",
+   "C": "Loại bỏ đúng những yêu cầu đang khiến người dùng bỏ đi.",
+   "D": "Thông lượng đo năng lực xử lý, không trả lời được người dùng phải chờ bao lâu."
+  }},
+ {"id": "c-4-04",
+  "remember": "Chọn cách chấm **nhanh, rẻ, tin cậy nhất mà vẫn đủ**: có **đáp án xác định** → chấm bằng **code**; **văn bản tự do, số lượng lớn** → **LLM chấm theo rubric**; **quyết định hệ trọng / tiêu chí chưa rõ** → **chuyên gia người**.",
+  "why": "Code chấm khớp chính xác, kiểm lược đồ, chạy test khi đầu ra có đáp án xác định. LLM có rubric rõ ràng chấm văn bản tự do ở quy mô lớn. Người chấm linh hoạt và chất lượng cao nhất nhưng chậm, đắt — để dành cho chỗ hệ trọng hoặc khi tiêu chí còn đang hình thành. Trộn ba cách là “phương pháp hỗn hợp”.",
+  "rows": {
+   "1": "Chấm bằng code — JSON hợp lệ và đúng lược đồ kiểm được tự động, chắc chắn.",
+   "2": "Chấm bằng code — so nhãn với nhãn chuẩn là so khớp chính xác.",
+   "3": "Chấm bằng code — chạy unit test là có ngay đúng/sai.",
+   "4": "Chấm bằng LLM theo rubric — 5.000 văn bản tự do mỗi tuần, cần đánh giá rõ ràng/đồng cảm/trung thành với chính sách: quá nhiều cho người, code không chấm được.",
+   "5": "Chuyên gia người — số lượng nhỏ, rủi ro cao (từ chối bồi thường y tế), tiêu chí còn đang hoàn thiện."
+  }},
+ {"id": "c-4-05",
+  "remember": "Chỉnh prompt nhiều vòng trên **cùng một bộ test** → prompt “học thuộc” bộ đó, điểm **lạc quan quá mức**. Con số báo lãnh đạo phải đo trên **bộ test giữ riêng, chưa từng dùng để chỉnh**.",
+  "why": "Mỗi vòng chỉnh dựa trên lỗi của cùng 150 ví dụ khiến prompt dần khớp với đặc thù của bộ đó (overfitting), nên điểm trên chính bộ này cao hơn năng lực thật. Tách bộ dùng để lặp và bộ test giữ riêng cho ước lượng trung thực hơn về môi trường thật.",
+  "wrong": {
+   "A": "Bộ nhỏ chọn lọc càng không đại diện, và vẫn là bộ đã dùng để chỉnh.",
+   "B": "BLEU dành cho so khớp văn bản sinh ra, không phải phân loại có nhãn.",
+   "C": "Đây chính là lỗi “học thuộc bộ test”."
+  }},
+ {"id": "c-4-06",
+  "remember": "LLM chấm điểm đáng tin khi: **rubric rõ**, **thang điểm nhỏ** (đạt/không, 1–5), **suy luận trước rồi mới chấm**; và đã **đối chiếu với người chấm** trên một mẫu.",
+  "why": "Hướng dẫn của Anthropic cho LLM chấm điểm: rubric chi tiết, rõ ràng; đầu ra cụ thể (đạt/không hoặc 1–5); để model suy luận trước khi cho điểm (ô B). Thêm nữa, judge chỉ đáng tin khi đã đo mức đồng thuận với chuyên gia người trên một mẫu — chỗ lệch chỉ ra tiêu chí cần làm rõ (ô D).",
+  "wrong": {
+   "A": "Thang 1–100 không tiêu chí chính là nguồn gây dao động.",
+   "C": "Prompt sinh nội dung không chứa tiêu chí chấm; tự chấm theo cùng chỉ dẫn dễ thiên vị.",
+   "E": "Tăng ngẫu nhiên làm điểm càng kém nhất quán."
+  }},
+ {"id": "c-4-07",
+  "remember": "Đổi **nhiều thứ cùng lúc** thì không biết cái nào có tác dụng. So sánh **từng thay đổi một** với mốc ban đầu trên cùng bộ đánh giá, rồi giữ cái đáng giữ.",
+  "why": "Ba thay đổi cùng lúc làm lẫn nguyên nhân: có thể một thay đổi mang lại gần hết 6 điểm, còn thay đổi khác chỉ thêm độ trễ và chi phí. So từng biến với mốc ban đầu cho biết đóng góp riêng của mỗi thay đổi.",
+  "wrong": {
+   "A": "Có thể đang trả độ trễ và chi phí cho một thay đổi không đóng góp gì.",
+   "C": "Vứt bỏ cải thiện thật khi chưa biết nó đến từ đâu.",
+   "D": "Đoán theo kinh nghiệm chung thay vì đo trên chính bài toán."
+  }},
+ {"id": "c-4-08",
+  "remember": "Chênh lệch **nhỏ hơn mức dao động tự nhiên** giữa các lần chạy = **chưa kết luận được**. Cần thêm dữ liệu (bộ lớn hơn, chạy lặp nhiều lần) trước khi quyết.",
+  "why": "Chênh 0,6 điểm nhỏ hơn nhiều so với dao động ±1,5 điểm khi chạy lại chính prompt A, nên chưa có bằng chứng B tốt hơn. Mở rộng bộ đánh giá hoặc chạy lặp nhiều lần giúp tách tín hiệu khỏi nhiễu. Ra mắt hay loại bỏ lúc này đều chưa có cơ sở.",
+  "wrong": {
+   "A": "Chênh lệch nằm trong nhiễu không phải là “cải thiện đo được”.",
+   "B": "Loại bỏ vĩnh viễn cũng là kết luận không có cơ sở.",
+   "D": "Đẩy rủi ro ra toàn bộ người dùng, lại dựa vào khiếu nại — tín hiệu chậm và nhiễu."
+  }},
+ {"id": "c-4-09",
+  "remember": "Thử nghiệm trên người dùng thật: **chia ngẫu nhiên một phần nhỏ** lưu lượng, có **công tắc tắt ngay** (feature flag), và theo dõi **chỉ số hàng rào** (từ chối, chuyển người, cờ an toàn) bên cạnh chỉ số chính.",
+  "why": "Một phần nhỏ, chia ngẫu nhiên giới hạn tác hại nếu prompt mới có vấn đề, và hai nhóm chạy cùng thời gian nên so sánh được; feature flag cho phép rút lui tức thì (ô C). Chỉ số hàng rào bắt các tác dụng phụ mà chỉ số chính bỏ sót (ô E).",
+  "wrong": {
+   "A": "100% lưu lượng: không có nhóm đối chứng, không giới hạn rủi ro; cuối tuần còn không đại diện.",
+   "B": "So hai thời kỳ khác nhau — mùa vụ và thay đổi khác làm nhiễu kết quả.",
+   "D": "Thấy dẫn trước là dừng (“nhìn trộm”) làm tăng kết luận sai."
+  }},
+ {"id": "c-4-10",
+  "remember": "`stop_reason: max_tokens` = câu trả lời **bị cắt vì chạm trần độ dài** → **tăng `max_tokens`** hoặc **chia nhỏ** đầu vào. Đổi model hay dặn prompt không giúp.",
+  "why": "`max_tokens` là trần token mà yêu cầu đặt ra; chạm trần thì model bị dừng giữa chừng, không kịp đóng JSON. Nâng `max_tokens` hoặc chia hợp đồng dài xử lý đúng nguyên nhân — bằng chứng đã nằm sẵn trong phản hồi.",
+  "wrong": {
+   "A": "Model nào cũng bị dừng ở cùng trần `max_tokens`.",
+   "B": "Bị cắt rồi thì model không thể đóng object nữa.",
+   "C": "Temperature không ảnh hưởng độ dài cho phép."
+  }},
+ {"id": "c-4-11",
+  "remember": "Claude không gọi tool dù tool trả đúng thông tin → thường do **tên/mô tả tool mơ hồ**. Viết lại: tool **trả về gì**, **khi nào dùng**, bằng **ngôn ngữ người dùng hay hỏi**.",
+  "why": "Claude quyết định gọi tool chủ yếu dựa vào tên và mô tả; “Retrieves records from CRM_V2” không cho biết tool trả lời câu hỏi nào. Tài liệu tool use coi mô tả chi tiết (làm gì, khi nào dùng, tham số nghĩa là gì) là yếu tố quan trọng nhất. Sửa mô tả rẻ, nhanh và đúng nguyên nhân.",
+  "wrong": {
+   "B": "Tốn hơn mà mô tả vẫn mơ hồ; sửa đầu vào trước khi đổi model.",
+   "C": "Không giải quyết chuyện model không biết tool dùng để làm gì.",
+   "D": "Dựng cả pipeline mới, tốn token, lại đưa dữ liệu của người khác vào ngữ cảnh."
+  }},
+ {"id": "c-4-12",
+  "remember": "Chạy tốt lúc **phiên ngắn**, hỏng dần khi **phiên dài** → **context rot**: ngữ cảnh đầy rác cũ làm chỉ dẫn bị “chìm”. Chữa: **xoá kết quả tool cũ** hoặc **compact** lịch sử.",
+  "why": "Khác biệt duy nhất giữa demo và production là độ dài ngữ cảnh — model và prompt không đổi. Khi ngữ cảnh đầy kết quả tool cũ, sự chú ý của model bị pha loãng, chỉ dẫn quan trọng bị chìm. Context editing hoặc compaction giữ ngữ cảnh gọn và liên quan.",
+  "wrong": {
+   "A": "Không có bằng chứng; triệu chứng chỉ xuất hiện cuối phiên dài, khớp với độ dài ngữ cảnh.",
+   "C": "Thêm token vào một ngữ cảnh vốn đã quá tải.",
+   "D": "Tăng ngẫu nhiên không cứu được chỉ dẫn bị chìm."
+  }},
+ {"id": "c-4-13",
+  "remember": "Thêm **dòng thay đổi mỗi lần** (như giờ hiện tại) vào **đầu** prompt → **mất sạch cache** phía sau. Đưa phần thay đổi ra **sau** phần tĩnh được cache. Đây là tối ưu **miễn phí**, làm trước tiên.",
+  "why": "Prompt caching chỉ trúng khi phần đầu giống hệt; một timestamp đổi mỗi yêu cầu ở đầu system prompt làm mọi thứ phía sau trượt cache — đúng thời điểm `cache_read_input_tokens` về 0. Đưa nội dung động ra sau điểm ngắt khôi phục cache, giảm cả chi phí lẫn độ trễ mà không đụng tới chất lượng.",
+  "wrong": {
+   "A": "Đổi model nhỏ là mất chất lượng (và mất cache) trong khi lỗi chỉ là một dòng đặt sai chỗ.",
+   "C": "Cắt thông tin bắt buộc để che một lỗi cấu hình cache.",
+   "D": "Bot hỗ trợ cần trả lời ngay; batch không phù hợp, lại không sửa được cache."
+  }},
+ {"id": "c-4-14",
+  "remember": "Thứ tự tối ưu chi phí: **cache + dọn prompt** (miễn phí) → **Batch API** nếu không cần kết quả ngay (rẻ ~một nửa, chất lượng y nguyên) → sau cùng mới tới **hạ effort / đổi model nhỏ** (có thể mất chất lượng).",
+  "why": "Cache và dọn đầu vào đã làm xong; bước tiếp theo là Message Batches API — giảm giá lớn, chỉ đánh đổi tính tức thì, điều job chạy đêm không cần. Chất lượng không đổi vì cùng model, cùng prompt. Hạ effort hay đổi model là các bước có thể làm giảm chất lượng, vi phạm ràng buộc.",
+  "wrong": {
+   "A": "Model nhỏ nhất đánh đổi chất lượng — vi phạm yêu cầu.",
+   "B": "Hạ effort có thể giảm chất lượng và phải đo lại; không phải bước “miễn phí” tiếp theo.",
+   "C": "Ví dụ mẫu thường quyết định độ chính xác; phần đã cache vốn đã rẻ."
+  }},
+ {"id": "c-4-15",
+  "remember": "Cache hỏng **không gây lỗi** — chỉ đắt và chậm hơn. Muốn bắt được: theo dõi **tỉ lệ token đọc từ cache trên tổng token đầu vào**, chia theo tính năng, **cảnh báo khi tụt** sau deploy.",
+  "why": "Cache hỏng không làm yêu cầu thất bại, nên chỉ chỉ số dựa trên các trường usage mới thấy được. Tỉ lệ `cache_read_input_tokens` trên tổng token đầu vào tụt đột ngột sau deploy là dấu hiệu trực tiếp có thứ đã phá phần đầu prompt. Chia theo tính năng để khoanh vùng; ngưỡng biến biểu đồ thành cảnh báo.",
+  "wrong": {
+   "A": "Cache hỏng không làm thay đổi số yêu cầu.",
+   "B": "Trượt cache không phải lỗi; mọi yêu cầu vẫn trả 200.",
+   "D": "Cache chỉ ảnh hưởng token đầu vào; đầu ra không đổi."
+  }},
+ {"id": "c-4-16",
+  "remember": "Sau ra mắt, chất lượng có thể **trôi** (nội dung mới mà bộ test cũ không có). Cần: **chấm định kỳ mẫu lưu lượng thật**, đưa lỗi thật vào bộ test; và **một ID xuyên suốt** từ log ứng dụng tới log lời gọi model.",
+  "why": "Bộ đánh giá cố định không chứa câu hỏi về sản phẩm mới nên không thấy được trôi chất lượng; chấm định kỳ mẫu lưu lượng thật bắt được nó, và biến lỗi thật thành ca test (ô B). ID xuyên suốt từ log ứng dụng tới log model là điều kiện để lần từ khiếu nại tới đúng lời gọi (ô E).",
+  "wrong": {
+   "A": "Bộ test tĩnh không phủ được nội dung mới — chính lý do suy giảm không bị phát hiện.",
+   "C": "Biểu đồ không có ngưỡng thì không ai hành động.",
+   "D": "Lưu nguyên văn vô thời hạn là rủi ro quyền riêng tư, mà vẫn không nối được khiếu nại với lời gọi."
+  }},
+ {"id": "c-5-01",
+  "remember": "Tool **không quy trình nào cần** → **gỡ nó đi** (đặc quyền tối thiểu). Không còn tool xoá thì lệnh độc khéo cỡ nào cũng **không có gì để xoá**.",
+  "why": "Không quy trình nào cần quyền xoá, nên gỡ tool là áp dụng đặc quyền tối thiểu thuần tuý: lệnh tiêm vào có khéo đến đâu cũng không còn công cụ để xoá. Các ô khác hoặc chỉ là lời dặn model, hoặc chỉ phát hiện sau khi đã xảy ra, hoặc dễ bị lách.",
+  "wrong": {
+   "A": "Prompt chỉ là gợi ý; prompt injection không chữa được bằng prompt — tool vẫn trong tầm gọi.",
+   "B": "Log cho biết đã xoá, không ngăn việc xoá.",
+   "D": "Kẻ tấn công chỉ cần đổi cách diễn đạt hoặc đổi ngôn ngữ là lọt."
+  }},
+ {"id": "c-5-02",
+  "remember": "Phân quyền phải áp **ở tầng dữ liệu, trước khi nội dung vào ngữ cảnh**: chỉ lấy những đoạn **người hỏi có quyền xem**. Đã vào ngữ cảnh rồi thì mọi lớp chặn sau chỉ là cố che.",
+  "why": "Khi đoạn chứa dữ liệu lương đã nằm trong ngữ cảnh, mọi lớp chặn phía sau chỉ là cố che, và model có thể bị dụ diễn đạt lại để lọt bộ lọc. Ô A kiểm quyền theo từng tài liệu ngay lúc truy hồi, nên dữ liệu cấm không bao giờ tới model.",
+  "wrong": {
+   "B": "Tự khai không phải xác thực; giao quyết định phân quyền cho model là trông vào thiện chí.",
+   "C": "Vừa phá câu trả lời hợp lệ (ngày phép, số giờ), vừa không chặn được lương viết bằng chữ.",
+   "D": "Ghi vết để kiểm sau, không ngăn dữ liệu bị lộ."
+  }},
+ {"id": "c-5-03",
+  "remember": "Mỗi vấn đề một chốt đúng tầng: JSON phải **đúng khuôn 100%** → **structured outputs** với schema; **chặn câu hỏi lạc đề** → **model nhẹ sàng lọc đầu vào** trước khi tới model chính.",
+  "why": "Structured outputs ràng buộc đầu ra theo schema, nên hệ thống thanh toán phía sau không còn nhận JSON hỏng (ô B). Với câu hỏi lạc đề, Anthropic gợi ý dùng model nhẹ (như Haiku) sàng lọc đầu vào: rẻ, nhanh, chặn trước khi model chính trả lời (ô E).",
+  "wrong": {
+   "A": "Dặn mạnh hơn vẫn chỉ là dặn, không bảo đảm định dạng.",
+   "C": "Thử lại không giới hạn đốt tiền và thời gian, có thể lặp vô hạn.",
+   "D": "Ghi log không chặn được; khách vẫn nhận câu trả lời y tế suốt cả tuần."
+  }},
+ {"id": "c-5-04",
+  "remember": "Nhận diện kiểu hỏng: **chi tiết không có nguồn** (bịa) → **bám nguồn + trích dẫn**; **câu bị cụt** → xem **`stop_reason`**, tăng `max_tokens` hoặc chia nhỏ; tool **trả rỗng khi thật ra là lỗi** → trả `tool_result` có **`is_error: true`** và thông báo rõ.",
+  "why": "Mỗi kiểu hỏng có dấu hiệu riêng. Chi tiết cụ thể không có nguồn là bịa (hallucination). Đầu ra đứt đoạn là bị cắt do trần token. Tool trả kết quả rỗng/mơ hồ khi thật ra là lỗi khiến agent gọi lại mãi hoặc kết luận sai.",
+  "rows": {
+   "1": "stop_reason / max_tokens — câu đứt giữa chừng và `stop_reason` là `max_tokens`: bị cắt do trần độ dài.",
+   "2": "Trả lỗi tool rõ ràng — tool trả chuỗi rỗng khi thực ra bị lỗi, nên agent cứ gọi lại y nguyên.",
+   "3": "Grounding và trích dẫn — trích điều khoản không có trong tài liệu nào: bịa.",
+   "4": "stop_reason / max_tokens — mảng JSON bị cụt mỗi khi báo cáo dài: chạm trần độ dài.",
+   "5": "Grounding và trích dẫn — gợi ý mã SKU không có trong danh mục: bịa.",
+   "6": "Trả lỗi tool rõ ràng — timeout mà trả `{}` khiến agent hiểu nhầm là “không có bản ghi”."
+  }},
+ {"id": "c-5-05",
+  "remember": "Model **không tất định tuyệt đối** (kể cả temperature 0). Giảm dao động bằng **tiêu chí rõ ràng** (rubric cho từng mức) + **trường enum** trong schema, rồi **đo độ nhất quán** bằng chạy lặp — và nói thật giới hạn với bên liên quan.",
+  "why": "Dao động giữa các lần chạy thường đến từ tiêu chí mơ hồ: model phải tự đoán ranh giới giữa “trung bình” và “cao”. Rubric rõ ràng cộng trường enum làm giảm dao động thật sự; chạy lặp nhiều lần biến kỳ vọng thành con số kiểm chứng được.",
+  "wrong": {
+   "A": "Temperature 0 giảm ngẫu nhiên nhưng không bảo đảm luôn giống hệt; cam kết quá mức là rủi ro.",
+   "B": "Sai về bản chất: model lớn hơn không làm đầu ra tất định.",
+   "C": "Che triệu chứng: nếu lần đầu sai thì sai mãi."
+  }},
+ {"id": "c-5-06",
+  "remember": "Agent chạy **rất nhiều bước**: (1) **kiểm giữa chừng** các kết quả quan trọng để lỗi sớm không lan; (2) **dọn/tóm tắt kết quả tool cũ** để ngữ cảnh không phình (context rot).",
+  "why": "Hai triệu chứng là hai kiểu hỏng khác nhau. Lỗi ở bước sớm lan tới các bước sau chỉ chặn được bằng chốt kiểm giữa đường (ô A). Chất lượng tụt khi ngữ cảnh phình là context rot, chữa bằng xoá kết quả tool cũ hoặc nén lịch sử (ô D). Kiểm ở cuối là quá muộn.",
+  "wrong": {
+   "B": "Tăng ngẫu nhiên chỉ làm hành vi khó đoán hơn.",
+   "C": "Kiểm ở cuối không gỡ được lỗi đã dồn suốt 200 bước; vẫn chỉ là lời dặn.",
+   "E": "Làm ngữ cảnh phình thêm — đúng nguyên nhân của kiểu hỏng thứ hai."
+  }},
+ {"id": "c-5-07",
+  "remember": "Duyệt quá nhiều → người duyệt **bấm cho qua** (mệt mỏi duyệt). Chia theo **khả năng hoàn tác**: việc **huỷ được** (tìm kiếm, nháp) cho tự chạy; việc **ràng buộc, không đảo ngược** (gửi đơn) mới bắt duyệt, kèm **tóm tắt đủ thông tin**.",
+  "why": "Mỗi lần duyệt chỉ 2 giây là dấu hiệu người duyệt bấm mà không đọc — khâu duyệt chỉ còn hình thức. Tìm kiếm và tạo nháp huỷ được nên cho tự chạy; gửi đơn tạo cam kết ràng buộc nên phải duyệt. Số lần duyệt giảm mạnh, và mỗi lần duyệt có đủ thông tin để quyết định thật.",
+  "wrong": {
+   "A": "Thêm người duyệt thứ hai chỉ nhân đôi mệt mỏi.",
+   "C": "Hành động ràng buộc tài chính mất chốt chặn duy nhất.",
+   "D": "Model không tự biết khi nào nó sai; giao cổng duyệt cho chính model là trông vào thiện chí."
+  }}
+]

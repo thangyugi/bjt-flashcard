@@ -1,0 +1,202 @@
+[
+ {"id": 11315,
+  "remember": "Chọn kiến trúc **đơn giản nhất đủ dùng**. Hỏi đáp có trích dẫn từ kho tài liệu nội bộ → **RAG**: tìm đoạn liên quan + một lần gọi model + trích dẫn. Không cần nhiều agent.",
+  "why": "Bài toán: trả lời kèm trích dẫn tới nguồn nội bộ chính thống, ưu tiên nhanh, rẻ và dễ kiểm toán. Ô A là cách đơn giản nhất đáp ứng: tìm các đoạn liên quan trong kho đã đánh chỉ mục, gọi model một lần, mỗi câu trả lời có trích dẫn để kiểm toán. Ít bước = nhanh, rẻ, hành vi dễ đoán.",
+  "wrong": {
+   "B": "Nhiều agent cho **mọi** câu hỏi là làm quá mức: chậm hơn, đắt hơn, khó đoán hơn.",
+   "C": "Duyệt web mở là rời khỏi nguồn chính thống, mất khả năng kiểm toán.",
+   "D": "Nhồi cả kho chính sách vào mọi yêu cầu tốn rất nhiều token, chậm, và trích dẫn kém chính xác."
+  }},
+ {"id": 11316,
+  "remember": "Kiểm quyền truy cập **trước khi dữ liệu tới model** (ở bước tìm tài liệu). Dữ liệu không được phép thì **không bao giờ** vào ngữ cảnh → không có gì để lộ.",
+  "why": "Ô B chặn ngay ở tầng truy hồi: tài liệu người dùng không có quyền xem sẽ không được lấy ra, nên không có mặt trong prompt, model không thể nhắc tới nó dù bị lừa. Dặn trong prompt không phải chốt bảo mật, còn lọc sau khi sinh câu trả lời thì đã muộn.",
+  "wrong": {
+   "A": "Lời dặn trong system prompt chỉ là “xin” model làm theo; một câu prompt injection là vượt qua được.",
+   "C": "Không đặt kiểm soát ở đâu cả, chỉ trông vào model tự từ chối — không có gì được bảo đảm.",
+   "D": "Dữ liệu cấm đã vào model rồi; lọc câu trả lời sau đó không đáng tin cậy."
+  }},
+ {"id": 11317,
+  "remember": "**Lượng rất lớn + cần nhanh + nhãn đã rõ** → model nhỏ, nhanh, rẻ (**Haiku**). Model lớn chỉ đáng tiền khi việc cần suy luận sâu.",
+  "why": "Phân loại bình luận theo nhãn đã định nghĩa rõ là việc đơn giản, không cần suy luận sâu. Nhưng khối lượng rất lớn và mỗi tin nhắn phải xử lý nhanh. Haiku có độ trễ và chi phí thấp nhất — khớp đúng hồ sơ này.",
+  "wrong": {
+   "A": "Opus mạnh nhất nhưng chậm và đắt, vượt xa những gì việc phân loại đơn giản cần.",
+   "C": "Ưu tiên model lớn hơn dù yêu cầu độ trễ chặt là ngược với ràng buộc của đề.",
+   "D": "Bật suy luận mở rộng cho **mọi** yêu cầu thêm thời gian và token, phá ngân sách độ trễ."
+  }},
+ {"id": 11318,
+  "remember": "Ràng buộc “**tuyệt đối không được**” → hai lớp: (1) **nói rõ trong system prompt** những gì ngoài phạm vi + câu từ chối cố định; (2) **bộ lọc đầu ra** bắt những gì lọt qua.",
+  "why": "Ô E định hướng hành vi từ đầu: liệt kê rõ các chủ đề ngoài phạm vi trong system prompt, kèm câu từ chối cố định khi bị hỏi xin tư vấn đầu tư. Ô B là lớp cưỡng chế độc lập: một bộ phân loại kiểm câu trả lời, phát hiện và chặn ngôn ngữ khuyến nghị đầu tư trước khi tới khách. Hai lớp, trong đó một lớp không phụ thuộc model.",
+  "wrong": {
+   "A": "Tăng độ ngẫu nhiên không ngăn được nội dung bị cấm, còn làm hành vi khó đoán hơn.",
+   "C": "Giới hạn độ dài phiên chỉ giảm khối lượng, không chặn được nội dung cụ thể.",
+   "D": "Ghi log để soát sau là phát hiện khi đã lỡ, không ngăn chặn."
+  }},
+ {"id": 11319,
+  "remember": "Bên liên quan muốn thêm việc giữa chừng → **ghi nhận** nhu cầu, **nói rõ hệ quả** (phạm vi, tiến độ), rồi **đưa lựa chọn**: hoãn, bớt việc khác, hoặc lùi hạn.",
+  "why": "Ô C vừa tôn trọng nhu cầu thật (ghi nhận yêu cầu), vừa giữ kỳ vọng thực tế (nói minh bạch thêm việc thì ảnh hưởng gì), và để bên liên quan tự chọn trong các phương án hoãn / cắt bớt thứ khác / kéo dài thời hạn.",
+  "wrong": {
+   "A": "Giấu với nhóm triển khai là thiếu minh bạch, rủi ro dồn về sau.",
+   "B": "Từ chối thẳng mà không ghi nhận nhu cầu làm hỏng quan hệ và bỏ lỡ nhu cầu thật.",
+   "D": "Nhận thêm mà không nói hệ quả là hứa ngầm, rồi sẽ trễ hạn."
+  }},
+ {"id": 11320,
+  "remember": "Rò rỉ dữ liệu xảy ra khi có đủ **3 thứ**: dữ liệu nhạy cảm + nội dung không đáng tin (có thể chứa lệnh độc) + một **đường gửi ra ngoài** (tool HTTP, email).",
+  "why": "Ô C là kịch bản kinh điển: một tài liệu bị cài nội dung độc được truy hồi vào ngữ cảnh, ra lệnh cho model dùng tool HTTP gửi dữ liệu nhạy cảm tới địa chỉ do kẻ tấn công kiểm soát. Đủ cả ba yếu tố: dữ liệu nhạy cảm, nội dung không tin cậy và kênh gửi ra ngoài.",
+  "wrong": {
+   "A": "Gọi tới tên miền nằm trong danh sách cho phép, phục vụ yêu cầu của người dùng — hoạt động bình thường.",
+   "B": "Câu hỏi thường, trả lời thường — không có dấu hiệu rủi ro.",
+   "D": "Trả về tài liệu người dùng **được phép** xem — đúng quyền, không rò rỉ gì."
+  }},
+ {"id": 11321,
+  "remember": "Câu hỏi **đạo đức** của AI: có **định kiến** về con người không? Quyết định quan trọng có **người chịu trách nhiệm** không? (Giấy phép là pháp lý; độ trễ là hiệu năng.)",
+  "why": "Ô B nhắm vào định kiến: đầu ra không được dựa vào những khái quát hoá về con người mà dữ liệu không chứng minh. Ô C nhắm vào trách nhiệm giải trình: quyết định có tác động lớn vẫn phải có con người chịu trách nhiệm, không đổ cho model. Các ô khác thuộc pháp lý hợp đồng hoặc hiệu năng.",
+  "wrong": {
+   "A": "Điều khoản cấp phép của nhà cung cấp là chuyện pháp lý/hợp đồng, không phải đạo đức AI.",
+   "D": "Model tự tin cao không có nghĩa là công bằng; thu hẹp phạm vi soát đạo đức là sai.",
+   "E": "Độ trễ và thông lượng là chỉ số hiệu năng."
+  }},
+ {"id": 11322,
+  "remember": "Hàng rào vững = (1) **chặn bằng cấu trúc** (danh sách tool cho phép, kiểm trước khi tool chạy) + (2) **chứng minh còn hiệu lực** (bộ đánh giá có ca tấn công, theo dõi hồi quy).",
+  "why": "Ô B là chốt chặn cứng: mỗi vai chỉ được gọi một danh sách tool nhất định, kiểm ở tầng điều phối trước khi tool chạy — không trông cậy model. Ô E là cách chứng minh hàng rào vẫn hoạt động: bộ đánh giá có các đầu vào tấn công, theo dõi xem lần thay đổi nào làm hàng rào yếu đi. Các ô khác là quy trình phụ trợ, không phải đặc tính của bản thân hàng rào.",
+  "wrong": {
+   "A": "Lưu log và soát theo quý là phát hiện chậm, sau sự việc — giám sát chứ không phải thiết kế hàng rào.",
+   "C": "Kênh phản hồi người dùng là bị động, chờ người báo.",
+   "D": "Sửa câu chữ system prompt vẫn là trông cậy model, không cưỡng chế được."
+  }},
+ {"id": 11323,
+  "remember": "Không thể soát hết → **soát theo rủi ro**: xem **toàn bộ** ca model kém tự tin và ca tác động lớn, cộng **một mẫu ngẫu nhiên nhỏ** ca thường để bắt lỗi “tự tin mà sai”.",
+  "why": "Ô B dồn công sức người vào nơi rủi ro nhất (đầu ra độ tin cậy thấp và đầu ra tác động lớn), nhưng vẫn soát ngẫu nhiên một phần nhỏ các ca thông thường — vì model đôi khi sai mà vẫn rất tự tin. Vừa giữ thông lượng, vừa giám sát được chất lượng.",
+  "wrong": {
+   "A": "Chờ khiếu nại là phát hiện khi người dùng đã bị ảnh hưởng.",
+   "C": "Soát ca an toàn và bỏ đúng những ca nguy hiểm nhất — ngược đời.",
+   "D": "Đề đã nói soát toàn bộ là bất khả thi."
+  }},
+ {"id": 11324,
+  "remember": "Yêu cầu mơ hồ (“cải thiện trải nghiệm”) → **cùng khách hàng làm rõ** trước: quyết định nào đang hỏng? Đo bằng chỉ số nào? Rồi mới thiết kế.",
+  "why": "Bên bảo trợ không nói được hành trình nào hỏng, đo bằng gì, AI hỗ trợ quyết định nào. Ô D tổ chức một đợt khảo sát có cấu trúc **cùng** họ để xác định quyết định đang hỏng và chỉ số mục tiêu. Đây là bước đầu đúng của việc giao việc cho AI: phải biết rõ việc gì cần giao.",
+  "wrong": {
+   "A": "Bảo họ tự sửa rồi nộp lại là đẩy trách nhiệm, không giúp làm rõ vấn đề.",
+   "B": "Làm trước khi hiểu dễ giải sai bài toán.",
+   "C": "Tự đặt phạm vi theo giả định của mình thay vì tìm hiểu nhu cầu thật."
+  }},
+ {"id": 11325,
+  "remember": "Công bằng không chỉ là **tỉ lệ duyệt** ngang nhau giữa các nhóm; còn phải xét **tỉ lệ sai** ngang nhau. Và “khớp với con người” có thể chỉ là **chép lại định kiến** của con người.",
+  "why": "Ô A: tỉ lệ duyệt bằng nhau vẫn có thể che giấu việc model **từ chối nhầm** hay **duyệt nhầm** nhiều hơn ở một nhóm. Ô B: khớp 94% với chuyên viên thẩm định chỉ cho thấy model bắt chước người — nếu chuyên viên có thiên lệch thì model cũng vậy.",
+  "wrong": {
+   "C": "Đây chính là kết luận sai cần bác bỏ.",
+   "D": "Suy đoán không có căn cứ trong đề.",
+   "E": "Đề không cho thấy cỡ mẫu là vấn đề; lỗ hổng nằm ở cách đo, không ở số lượng mẫu."
+  }},
+ {"id": 11326,
+  "remember": "Giảm độ trễ mà giữ chất lượng → **bớt token phải xử lý** mỗi lượt: chỉ lấy số đoạn tài liệu đủ dùng, và **cache** phần system prompt cố định.",
+  "why": "Ô B tác động trực tiếp vào lượng chữ model phải đọc mỗi lượt: giảm số đoạn truy hồi xuống mức mà lịch sử cho thấy vẫn đủ chứa câu trả lời (bỏ phần thừa), và cache phần system prompt ổn định để không phải xử lý lại. Chất lượng không đổi vì các đoạn hữu ích vẫn còn.",
+  "wrong": {
+   "A": "Tắt cache làm chậm hơn; cache không làm nội dung “cũ” theo nghĩa đề nêu.",
+   "C": "Tăng số đoạn truy hồi tới tối đa là ngược mục tiêu giảm độ trễ.",
+   "D": "Model nặng nhất chậm hơn — đi ngược mục tiêu."
+  }},
+ {"id": 11327,
+  "remember": "Giữ nhiều bên liên quan cùng hướng: **họp định kỳ** xem lại kỳ vọng và giả định; **giải quyết bất đồng công khai**, không lấp liếm.",
+  "why": "Ô D: điều kiện thay đổi theo thời gian, nên cần nhịp xem lại kỳ vọng và giả định đều đặn để không lệch dần. Ô E: khi các bên có quan điểm khác nhau, phải nói rõ và hoà giải, không giả vờ đồng thuận. Hai việc này là cốt lõi; các ô khác là chuyện hậu cần hoặc leo thang thái quá.",
+  "wrong": {
+   "A": "Ghi hình là hữu ích nhưng không tạo ra đồng thuận; ghi quyết định bằng văn bản tốt hơn.",
+   "B": "Đẩy mọi bất đồng lên lãnh đạo làm họ quá tải và bỏ qua việc các bên tự hoà giải.",
+   "C": "Luân phiên người điều phối chỉ là cách tổ chức, không bảo đảm căn chỉnh kỳ vọng."
+  }},
+ {"id": 11328,
+  "remember": "Tài liệu bàn giao đủ để **không cần hỏi lại kiến trúc sư** khi có: (1) **đặc tả chính xác** từng thành phần (giao kèo, cấu hình, đầu vào/ra); (2) **sổ ghi quyết định** — chọn gì, vì sao, đã loại gì.",
+  "why": "Ô A cho biết chính xác phải xây cái gì: giao kèo tích hợp, lược đồ cấu hình, hình dạng đầu vào/đầu ra của từng thành phần. Ô B cho biết **vì sao** chọn như vậy và đã loại phương án nào — nhờ đó nhóm tự ra quyết định khi gặp tình huống mới mà không phải hỏi.",
+  "wrong": {
+   "C": "Chỉ có mô tả tổng quan, thiếu chi tiết thành phần — không đủ để làm.",
+   "D": "Kèm số liên lạc kiến trúc sư chính là dấu hiệu vẫn cần họ — trái với đề.",
+   "E": "Liệt kê model đã thử mà không nói chọn cái nào và vì sao — thiếu quyết định cốt lõi."
+  }},
+ {"id": 11329,
+  "remember": "System prompt có **hai chỉ dẫn mâu thuẫn** → **sửa prompt cho nhất quán**. Đừng để model tự phân xử — nó sẽ hành xử thất thường.",
+  "why": "“Không bao giờ suy diễn ngoài nguồn” và “tự tin lấp mọi chỗ trống” đá nhau, nên model lúc theo cái này lúc theo cái kia. Ô B bỏ hoặc viết lại chỉ dẫn lấp chỗ trống, chỉ giữ một hướng: chỉ dùng nội dung có nguồn — đúng với hệ bám nguồn và tránh bịa.",
+  "wrong": {
+   "A": "Vẫn để model tự chọn chỉ dẫn nào ở mỗi lần — hành vi khó đoán.",
+   "C": "Che mâu thuẫn bằng độ ngẫu nhiên chỉ làm tệ hơn.",
+   "D": "Giữ nguyên lỗi thiết kế."
+  }},
+ {"id": 11330,
+  "remember": "Các bước **đã biết trước, cố định** → dùng **workflow** (code điều khiển thứ tự). Agent chỉ đáng dùng khi các bước không biết trước. Workflow rẻ và dễ đoán hơn.",
+  "why": "Việc gồm các bước cố định: trích siêu dữ liệu → phân loại → tóm tắt → lưu. Ô D chọn workflow với lý do đúng: các bước đã rõ, và chi phí token đoán trước được quan trọng hơn sự linh hoạt. Đây là nguyên tắc của Anthropic: dùng cách đơn giản nhất đủ dùng.",
+  "wrong": {
+   "A": "Kết luận đúng nhưng lý do sai: agent vẫn gọi tool được.",
+   "B": "Ngược lại mới đúng: workflow cố định cho đầu ra nhất quán hơn agent tự lập kế hoạch.",
+   "C": "Agent không “luôn chính xác hơn”; nó tốn hơn và khó đoán hơn."
+  }},
+ {"id": 11331,
+  "remember": "Agent quá nhiều tool chọn nhầm → **tách theo miền nghiệp vụ** (mỗi agent một bộ tool gọn, mô tả không chồng nhau) thay vì đắp thêm một lớp định tuyến lên trên.",
+  "why": "Lý lẽ đúng phải chỉ ra **gốc bệnh**. Ô A: mô tả các tool chồng lấn nhau giữa nhiều loại bồi thường → model khó phân biệt nên chọn nhầm, độ chính xác giảm. Ô C: 34 tool thực chất phục vụ 4 miền nghiệp vụ tách bạch → đó là đường ranh tự nhiên để tách thành 4 bộ nhỏ. Đặt router lên trên chỉ là thêm một lớp, bộ tool vẫn phình.",
+  "wrong": {
+   "B": "Tool không ai dùng là lý do để **gỡ bỏ** tool, không phải lý do để tách theo miền.",
+   "D": "Đây là lý lẽ **ủng hộ** router, không phải ủng hộ việc tách.",
+   "E": "Đúng là chi phí của router, nhưng không chỉ ra gốc bệnh nên không chứng minh vì sao phải tách."
+  }},
+ {"id": 11332,
+  "remember": "Cài đặt **không ai được tắt** → **managed settings** (cấu hình quản trị, do IT đặt tập trung). Tầng này có quyền cao nhất, thắng mọi cấu hình dự án và cá nhân.",
+  "why": "Claude Code đọc cấu hình từ nhiều tầng. Cấu hình quản trị (managed) do tổ chức đặt có thứ tự ưu tiên cao nhất và không bị cấu hình người dùng hay dự án ghi đè. Ô C là cách duy nhất bảo đảm không kỹ sư nào tắt được cờ bảo mật.",
+  "wrong": {
+   "A": "Tệp cấu hình cá nhân nằm trên máy kỹ sư — chính họ sửa được.",
+   "B": "Biến môi trường trong CI/CD không áp dụng cho máy của từng kỹ sư.",
+   "D": "Cấu hình dự án có thể bị ghi đè bởi cấu hình local, hoặc ai đó sửa trong commit."
+  }},
+ {"id": 11333,
+  "remember": "Các tầng cấu hình Claude Code: **cá nhân** (~/.claude) = sở thích riêng, theo bạn qua mọi dự án; **dự án** (commit vào repo) = dùng chung cho repo; **quản trị** = chính sách công ty.",
+  "why": "Ô A (giao diện trình soạn thảo ưa thích) và ô B (ngôn ngữ trả lời ưa dùng) đều là sở thích cá nhân, áp dụng mọi dự án — đúng chỗ của tệp cấu hình người dùng. Các ô sai thuộc tầng khác.",
+  "wrong": {
+   "C": "Chính sách toàn công ty thuộc tầng quản trị (managed).",
+   "D": "Máy chủ MCP dùng chung cho một repo thuộc tầng dự án (`.mcp.json` commit vào repo).",
+   "E": "Khoá bí mật nên để trong kho bí mật/keychain hoặc biến môi trường, không phải công dụng của tệp cấu hình người dùng."
+  }},
+ {"id": 11334,
+  "remember": "Chọn cách tích hợp: cần **dùng lại trên nhiều ứng dụng AI** → MCP. Tương tác **ngắn, không lưu trạng thái, cần nhanh** → gọi API trực tiếp. Việc **dài, có trạng thái** → chuyển giao giữa các agent.",
+  "why": "Ô D: dùng được trên nhiều client AI là lý do đặc trưng để chọn MCP — viết một lần, nhiều ứng dụng dùng chung. Ô E: tương tác ngắn/không trạng thái/nhạy độ trễ hay dài/có trạng thái quyết định giữa gọi API trực tiếp và chuyển giao agent. Đây là yếu tố kiến trúc, không phải kinh nghiệm đội hay tài liệu.",
+  "wrong": {
+   "A": "Có tài liệu tốt là yếu tố phụ, không phân biệt được các cơ chế.",
+   "B": "Thói quen của đội không phải tiêu chí kiến trúc.",
+   "C": "Mã hoá đường truyền là bắt buộc với mọi lựa chọn, nên không giúp phân biệt."
+  }},
+ {"id": 11335,
+  "remember": "Dịch vụ **đã có API HTTP ổn định** + chỉ cần **gọi một lần, nhanh** → **gọi API trực tiếp** với khoá có quyền hẹp. Đừng thêm lớp nào khác.",
+  "why": "Dịch vụ định giá đã có API sẵn, tương tác chỉ là một lời gọi ngắn không cần nhớ trạng thái. Ô A là cách đơn giản và đúng nhất: gọi thẳng điểm cuối có sẵn, dùng thông tin xác thực có phạm vi quyền phù hợp.",
+  "wrong": {
+   "B": "Giao thức phiên dài có trạng thái không khớp với một lời gọi đơn lẻ.",
+   "C": "Tự chế giao thức trên một bus không liên quan là làm quá, thêm độ trễ.",
+   "D": "Đặt thêm một agent phía trước là thêm một lần gọi model chỉ để gọi một API."
+  }},
+ {"id": 11336,
+  "remember": "Câu trả lời chứa **điều tài liệu không nói** (bịa) → **ràng buộc chỉ dùng nội dung có nguồn + bắt trích dẫn + thêm bước kiểm chứng**.",
+  "why": "Lỗi được mô tả là câu trả lời khẳng định những điều tài liệu truy hồi không chống đỡ — tức không bám nguồn. Ô A chặn đúng lỗi này lúc chạy: buộc chỉ dùng nội dung có nguồn, bắt trích dẫn, thêm bước kiểm tra câu trả lời với nguồn. Bộ đánh giá chỉ giúp **phát hiện**, không trực tiếp ngăn.",
+  "wrong": {
+   "B": "Bộ đánh giá giúp phát hiện trôi chất lượng, không trực tiếp giảm câu bịa lúc chạy.",
+   "C": "Token riêng từng người là kiểm soát truy cập, không liên quan bám nguồn.",
+   "D": "Coi dữ liệu là không đáng tin là để chống tiêm lệnh, không phải chống bịa."
+  }},
+ {"id": 11337,
+  "remember": "Leo thang **nhất quán** cần **tiêu chí khách quan, viết sẵn**: độ tin cậy dưới ngưỡng, thuộc loại quyết định tác động lớn, bị bộ lọc gắn cờ mơ hồ, hoặc người dùng yêu cầu người xem.",
+  "why": "Ô D cho bộ tiêu chí rõ ràng, đo được: điểm tin cậy dưới ngưỡng định sẵn, quyết định thuộc nhóm tác động lớn, cờ mơ hồ từ bộ phân loại, hoặc yêu cầu soát xét rõ ràng. Ca mơ hồ nào cũng đi cùng một đường, không phụ thuộc ai đang rảnh hay model tự quyết.",
+  "wrong": {
+   "A": "Để model tự quyết, không ngưỡng — không nhất quán.",
+   "B": "Chỉ leo thang khi khách đã phàn nàn — tức là đã gây hại.",
+   "C": "Tuỳ người đang rảnh — không nhất quán."
+  }},
+ {"id": 11338,
+  "remember": "Sau khi sửa gì đó, **ca từng đạt nay lại hỏng** = **hồi quy** (regression) → bắt bằng **kiểm thử hồi quy** trên bộ tham chiếu cố định.",
+  "why": "Triệu chứng “ca trước đây đạt nay ra kết quả bất ngờ” chính là định nghĩa hồi quy. Ô C chạy lại các ca trên một bộ tham chiếu cố định gồm hành vi đã biết là tốt — được thiết kế đúng để bắt lỗi này mỗi khi prompt hay model đổi.",
+  "wrong": {
+   "A": "Kiểm thử tích hợp kiểm các phần phối hợp với nhau, không chuyên bắt thay đổi so với trước.",
+   "B": "Kiểm thử đối kháng nhắm vào bảo mật (tiêm lệnh) — loại lỗi khác.",
+   "D": "Kiểm thử khói chỉ biết hệ thống còn chạy, không biết chất lượng có lùi."
+  }},
+ {"id": 11339,
+  "remember": "Chọn chỉ số đánh giá **khớp từng yêu cầu**: yêu cầu về chi phí → đo **chi phí mỗi truy vấn**; yêu cầu không lộ dữ liệu → đo **tỉ lệ chặn đúng quyền** trên bộ thử tấn công.",
+  "why": "Đề nêu hai yêu cầu: trần chi phí mỗi truy vấn, và không lộ dữ liệu bệnh nhân cho vai không được phép. Ô D đo trực tiếp chi phí token mỗi truy vấn so với trần. Ô B đo tỉ lệ kiểm soát truy cập theo vai hoạt động đúng, trên bộ dữ liệu do đội tấn công thử (red team) dựng. Các ô khác là chỉ số tốt nhưng không gắn với hai yêu cầu này.",
+  "wrong": {
+   "A": "BLEU đo mức giống câu chữ với bản tham chiếu — không phải chi phí hay quyền truy cập.",
+   "C": "Thông lượng là chỉ số hiệu năng, không có trong yêu cầu.",
+   "E": "Độ trễ không phải ràng buộc đề nêu."
+  }}
+]

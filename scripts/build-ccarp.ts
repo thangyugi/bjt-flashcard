@@ -13,10 +13,13 @@
  *   - docs/claude/ccar-p/answers.json           — đáp án + giải thích tiếng Việt (do Claude soạn, chưa đối chiếu đáp án chính thức)
  *   - docs/claude/ccar-p/supplement.json        — lớp bổ sung cho từng task + thẻ "Kiến thức nền" (Claude biên soạn, Markdown)
  *   - docs/claude/ccar-p/authored*.json         — câu hỏi mới do Claude biên soạn (id "c-<domain>-<nn>")
+ *   - docs/claude/ccar-p/plain*.json            — lời giải viết lại cho người mới (mẹo nhớ, vì sao chọn, các ô sai) — đè lên answers/authored
+ *   - docs/claude/ccar-p/terms.json             — từ điển thuật ngữ (giải nghĩa dễ hiểu + thẻ kiến thức nền tham chiếu)
  * Câu chưa có đáp án bị bỏ qua.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 const ROOT = process.cwd();
 const SRC = join(ROOT, "docs", "claude");
@@ -321,6 +324,50 @@ for (const f of authoredFiles) {
     if (idm[1] !== /^Subdomain (\d)/.exec(raw.topic)?.[1]) issues.push(`${raw.id}: domain trong id khác topic "${raw.topic}"`);
   }
 }
+// Lời giải viết lại cho người mới: khóa = id số (đề gốc) hoặc mã "c-<domain>-<nn>" (câu Claude biên soạn)
+interface RawPlain {
+  id: number | string;
+  remember?: string;
+  why?: string;
+  wrong?: Record<string, string>;
+  rows?: Record<string, string>;
+}
+const plain = new Map<string, RawPlain>();
+for (const f of readdirSync(join(SRC, "ccar-p")).filter((f) => /^plain\d*\.json$/.test(f)).sort())
+  for (const p of JSON.parse(readFileSync(join(SRC, "ccar-p", f), "utf8")) as RawPlain[]) {
+    if (plain.has(String(p.id))) issues.push(`${f}: lời giải trùng id ${p.id}`);
+    plain.set(String(p.id), p);
+  }
+
+// Từ điển thuật ngữ: mỗi câu được gắn các thuật ngữ xuất hiện trong đề / phương án / lời giải
+interface RawTerm {
+  key: string;
+  term: string;
+  /** Biểu thức chính quy (không phân biệt hoa thường), mặc định = term */
+  match?: string[];
+  /** Phân biệt hoa thường (cho từ viết tắt dễ trùng chữ thường: "PHI", "RAG"…) */
+  cs?: boolean;
+  vi: string;
+  /** id thẻ kiến thức nền */
+  ref?: string;
+}
+const TERMS_SRC = join(SRC, "ccar-p", "terms.json");
+const rawTerms: RawTerm[] = existsSync(TERMS_SRC) ? JSON.parse(readFileSync(TERMS_SRC, "utf8")) : [];
+const termRes = rawTerms.map((t) => ({
+  key: t.key,
+  re: new RegExp((t.match ?? [t.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")]).map((m) => `(?<![\\p{L}\\d_])(?:${m})(?![\\p{L}\\d_])`).join("|"), t.cs ? "u" : "iu"),
+}));
+const termsOf = (text: string) => {
+  const hits: { key: string; at: number }[] = [];
+  for (const t of termRes) {
+    const m = t.re.exec(text);
+    if (m) hits.push({ key: t.key, at: m.index });
+  }
+  // Theo thứ tự xuất hiện (đề trước, lời giải sau); tối đa 7 thuật ngữ để phần giải nghĩa không dài hơn lời giải
+  return hits.sort((a, b) => a.at - b.at).slice(0, 7).map((h) => h.key);
+};
+const plainUsed = new Set<string>();
+
 const bank = [];
 for (const q of questions) {
   const a = answers.get(q.id);
@@ -350,6 +397,20 @@ for (const q of questions) {
     if (n && ans.length !== n) issues.push(`${q.id}: đề cần chọn ${n}, đáp án có ${ans.length}`);
   }
   const ml = (s: string) => (grid ? s : markLetters(s, keys));
+  const pk = authoredMeta.get(q.id)?.ref ?? String(q.id);
+  const p = plain.get(pk);
+  if (p) {
+    plainUsed.add(pk);
+    if (grid && p.rows) a.rows = { ...(a.rows ?? {}), ...p.rows };
+    if (!grid && p.wrong) {
+      const missing = keys.filter((k) => !(a.answer ?? []).includes(k) && !p.wrong![k]);
+      if (missing.length) issues.push(`plain ${pk}: thiếu lời giải ô sai ${missing.join(",")}`);
+      a.wrong = p.wrong;
+    }
+    if (p.remember) a.remember = p.remember;
+    if (p.why) a.why = p.why;
+  }
+  const allText = [q.question_en, q.question_vi, ...Object.values(q.options), ...Object.values(q.options_vi ?? {}), a.remember, a.why, ...Object.values(a.wrong ?? {}), ...Object.values(a.rows ?? {}), ...(q.rows ?? []).map((r) => r.text)].join("\n");
   bank.push({
     id: q.id,
     no: q.question_no,
@@ -371,16 +432,33 @@ for (const q of questions) {
     confidence: a.confidence,
     remember: ml(a.remember ?? ""),
     why: ml(a.why ?? ""),
+    terms: termsOf(allText),
+    plain: !!p,
     ...(authoredMeta.has(q.id) ? { authored: authoredMeta.get(q.id)!.ref, source: authoredMeta.get(q.id)!.source } : {}),
   });
 }
 
+for (const k of plain.keys()) if (!plainUsed.has(k)) issues.push(`plain: id lạ ${k}`);
+
 mkdirSync(OUT, { recursive: true });
+// Từ điển thuật ngữ + tên bài (task) cho phần "Giải nghĩa thuật ngữ" / "Đọc thêm" dưới mỗi câu
+writeFileSync(
+  join(OUT, "explain.json"),
+  JSON.stringify({
+    terms: Object.fromEntries(rawTerms.map((t) => [t.key, { t: t.term, d: t.vi, ...(t.ref ? { ref: t.ref } : {}) }])),
+    tasks: Object.fromEntries(guide.domains.flatMap((d) => d.tasks.map((t) => [t.id, `${t.code} · ${t.title}`]))),
+  }) + "\n"
+);
 writeFileSync(join(OUT, "guide.json"), JSON.stringify(guide, null, 1) + "\n");
 writeFileSync(join(OUT, "bank.json"), JSON.stringify(bank) + "\n");
+// Mã phiên bản ngân hàng đề: client tải bank.json?v=<mã> → service worker / trình duyệt không bao giờ trả bản cũ
+// (bản cũ thiếu câu mới làm đề thi thử bị hụt câu trên máy đã cache).
+const bankVersion = createHash("sha1").update(JSON.stringify(bank)).digest("hex").slice(0, 12);
+writeFileSync(join(OUT, "version.ts"), `/** Sinh bởi scripts/build-ccarp.ts — đổi mỗi khi bank.json đổi. */\nexport const BANK_VERSION = "${bankVersion}";\n`);
 
 const conf = bank.reduce<Record<string, number>>((s, q) => ((s[q.confidence] = (s[q.confidence] ?? 0) + 1), s), {});
 console.log(`CCAR-P: ${guide.domains.length} domain · ${taskCount} task statement · ${guide.front.length + guide.back.length} mục phụ`);
+console.log(`Lời giải viết lại cho người mới: ${plainUsed.size}/${bank.length} câu · từ điển ${rawTerms.length} thuật ngữ`);
 console.log(`Ngân hàng: ${bank.length}/${questions.length} câu có đáp án (${bank.filter((q) => q.v2).length} thuộc bộ v2 · ${bank.filter((q) => "authored" in q).length} do Claude biên soạn) · độ tin cậy ${JSON.stringify(conf)}`);
 
 // ═════════════════════════ 3) Bổ sung do Claude biên soạn → supplement.json ═════════════════════════

@@ -1,0 +1,210 @@
+[
+ {"id": 11290,
+  "remember": "Lỗi xuất hiện **ngay sau một đợt thay đổi** (bảo trì) → (1) so cấu hình hiện tại với bản tốt gần nhất; (2) chạy lại yêu cầu cũ và xem **đầu ra thô** của model để biết lỗi ở model hay ở khâu đọc JSON phía sau.",
+  "why": "Ô B tìm xem đợt bảo trì đã đổi gì: so system prompt và lược đồ đầu ra hiện tại với bản cuối cùng còn chạy tốt. Ô E tách lớp: phát lại các yêu cầu từ trước bảo trì rồi xem đầu ra thô **trước khi** khâu phân giải JSON xử lý — biết ngay lỗi do model trả sai hay do code phía sau. Hai bước này khoanh vùng nguyên nhân thay vì đoán mò.",
+  "wrong": {
+   "A": "Prompt cache chỉ dùng lại phần đầu vào, không làm hỏng định dạng đầu ra; lại là hành động sửa chứ không phải chẩn đoán.",
+   "C": "Đổi sang model khác là thêm một biến mới, làm chẩn đoán rối hơn.",
+   "D": "Chỉ thử một giả thuyết hẹp (bị cắt cụt) không gắn với đợt bảo trì; xem đầu ra thô ở ô E đã đủ thấy nếu bị cắt."
+  }},
+ {"id": 11291,
+  "remember": "Muốn vừa **đáng tin** vừa **không nghẽn** → mô hình **liên bang**: các nhóm tự viết phần của mình, một cổng soát xét chung ở trung tâm trước khi phát hành.",
+  "why": "Đề có hai yêu cầu kéo ngược nhau: Skill phải đáng tin (cần kiểm soát) nhưng không được nghẽn ở một nhóm trung tâm (cần phân tán). Ô D cân cả hai: 14 nhóm tự viết Skill thuộc lĩnh vực của mình, còn một cổng soát xét và xuất bản ở trung tâm bảo đảm chất lượng trước khi phát hành.",
+  "wrong": {
+   "A": "Mỗi người tự viết, không phối hợp → 280 nguồn rời rạc, không ai kiểm soát, mất tin cậy.",
+   "B": "Dồn hết vào một nhóm nền tảng chính là cái nút cổ chai đề muốn tránh.",
+   "C": "Không soát xét trước khi xuất bản thì Skill không đáng tin."
+  }},
+ {"id": 11292,
+  "remember": "Bàn giao tốt = **viết ra đủ**: đã quyết gì và vì sao (ADR), các phần nối nhau thế nào (giao kèo), đo đúng sai ra sao (bộ đánh giá), vận hành thế nào (sổ tay), và giới hạn đã biết.",
+  "why": "Đội thi công cần biết: cái gì đã được quyết định và lý do (ADR — Architecture Decision Record, bản ghi quyết định kiến trúc), các thành phần giao tiếp ra sao (giao kèo/contract), thế nào là chạy đúng (bộ đánh giá + bộ tham chiếu), và vận hành ra sao (sổ tay vận hành, sổ tay trực, giới hạn đã biết). Chỉ ô C có đủ.",
+  "wrong": {
+   "A": "Chỉ có slide thiết kế: không sơ đồ, không giao kèo, không cách đo, không sổ tay — thiếu nền để làm.",
+   "B": "Thuyết trình miệng: không có gì viết ra, kiến thức biến mất sau buổi họp.",
+   "D": "Chỉ có code: code không nói lý do thiết kế, cách đo hay cách vận hành."
+  }},
+ {"id": 11293,
+  "remember": "Dùng chung một khoá API → đổi sang **token riêng cho từng người** (OAuth, quyền hẹp). Không biết ai gọi tool → **ghi danh tính người khởi phát** vào log mỗi lời gọi.",
+  "why": "Đề hỏi đúng hai phát hiện, nên chọn đúng hai biện pháp khớp. Phát hiện (1) mọi người dùng chung một khoá → ô E: thay bằng token OAuth riêng cho từng người, phạm vi quyền hạn chế. Phát hiện (2) lời gọi tool không ghi ai khởi phát → ô D: gắn danh tính người dùng vào log từng lời gọi. Các ô khác tốt nhưng chữa vấn đề khác.",
+  "wrong": {
+   "A": "Kiểm đầu ra theo lược đồ chữa lỗi định dạng, không liên quan danh tính hay log.",
+   "B": "Phân quyền ở tầng truy hồi là tốt, nhưng đề không phát hiện lỗi đó.",
+   "C": "Đưa khoá ra khỏi prompt chữa việc lộ khoá qua prompt — không phải một trong hai phát hiện."
+  }},
+ {"id": 11294,
+  "remember": "Không tự huấn luyện ≠ không có thiên lệch. Model mang sẵn thiên lệch từ **giai đoạn huấn luyện gốc** → vẫn phải **đo chênh lệch kết quả giữa các nhóm** trước khi dùng, nhất là trong tuyển dụng.",
+  "why": "Ô C bác thẳng tiền đề sai: thiên lệch có thể đến từ dữ liệu huấn luyện gốc (pretraining) của model, và lộ ra trong kết quả sàng lọc dù công ty không huấn luyện thêm gì. Ô D nêu việc phải làm: đo chênh lệch kết quả giữa các nhóm được bảo vệ (giới tính, tuổi, dân tộc…) trước khi triển khai — tuyển dụng là quyết định rủi ro cao.",
+  "wrong": {
+   "A": "Công bố “có dùng AI” là minh bạch, nhưng không thay được việc kiểm tra công bằng.",
+   "B": "Thiên lệch vẫn xuất hiện qua các dấu hiệu gián tiếp (tên, trường học, địa chỉ…) dù dữ liệu không có nhãn nhóm.",
+   "E": "Chính sách của nhà cung cấp không chứng minh hệ thống **của bạn** công bằng trong việc cụ thể này."
+  }},
+ {"id": 11295,
+  "remember": "**Chức năng** = hệ thống LÀM GÌ (trích xuất, phân loại, soạn nháp). **Phi chức năng** = làm TỐT CỠ NÀO (nhanh bao nhiêu, ổn định, bảo mật, chi phí).",
+  "why": "Ô D mô tả một thuộc tính chất lượng có số đo: 95% yêu cầu phải trả lời dưới 800 mili giây ở mức lưu lượng dự kiến — đây là yêu cầu hiệu năng, tức phi chức năng. Ba ô còn lại đều mô tả một việc cụ thể hệ thống phải làm.",
+  "wrong": {
+   "A": "Trích các trường từ hoá đơn là một chức năng.",
+   "B": "Soạn bản nháp cho người sửa là một chức năng (mô tả hành vi).",
+   "C": "Phân loại phiếu yêu cầu là một chức năng."
+  }},
+ {"id": 11296,
+  "remember": "Đường ống xử lý chia 3 tầng: **trước model** (chuẩn bị đầu vào: OCR, che dữ liệu nhạy cảm) → **model** (Claude phân loại/trích xuất) → **sau model** (kiểm đầu ra, lưu kết quả).",
+  "why": "Thứ tự tự nhiên: OCR biến ảnh quét thành chữ → che thông tin cá nhân → Claude phân loại và trích xuất → kiểm lược đồ các trường trích được → ghi vào hệ thống lưu trữ chính thức. Mọi thứ trước lời gọi model là tiền xử lý; mọi thứ kiểm tra/dùng đầu ra của model là hậu xử lý.",
+  "rows": {
+   "1": "Tầng mô hình — phân loại bằng Claude là chính lời gọi model.",
+   "2": "Hậu xử lý — lưu các bản ghi đã kiểm là bước cuối.",
+   "3": "Hậu xử lý — kiểm lược đồ là kiểm tra đầu ra của model.",
+   "4": "Tầng mô hình — trích xuất bằng Claude là lời gọi model.",
+   "5": "Tiền xử lý — che thông tin cá nhân phải làm **trước** khi gửi cho model.",
+   "6": "Tiền xử lý — OCR biến ảnh thành chữ để model đọc được."
+  }},
+ {"id": 11297,
+  "remember": "“Người dùng bấm chấp nhận” ≠ “câu trả lời đúng”. Phải xem **sau khi chuyên gia soát lại** câu trả lời còn đứng vững không, và AI có bỏ sót tiêu chí nào không.",
+  "why": "Chuyên viên thường bác khuyến nghị sau khi xét những tiêu chí trợ lý **không hề xem tới** → trợ lý đang thiếu thông tin đầu vào, phạm vi có lỗ hổng (ô C). Và 89% chỉ đo việc chấp nhận ở lần đầu, không cho biết khuyến nghị có còn đúng sau khi chuyên viên xem kỹ (ô D). Cả hai là đánh giá chất lượng đầu ra một cách tỉnh táo.",
+  "wrong": {
+   "A": "Đây chính là suy diễn sai cần bác bỏ: tỉ lệ chấp nhận một mình không chứng minh được gì.",
+   "B": "Lo ngại thống kê chung chung; bằng chứng chuyên viên thường xuyên bác bỏ vẫn đáng xem xét.",
+   "E": "Phỏng đoán không có căn cứ trong đề."
+  }},
+ {"id": 11298,
+  "remember": "Muốn giảm chi phí mà **không đổi độ chính xác** → dùng **prompt caching** cho những phần lặp lại giống hệt nhau. Model vẫn thấy đúng nội dung cũ, chỉ là đọc lại rẻ hơn.",
+  "why": "Ràng buộc là độ chính xác phải giữ nguyên, nên chỉ chọn cách **không đổi nội dung model nhìn thấy**. Ô C: đoạn chính sách 6.000 token giống hệt ở mọi lời gọi, chiếm 45% chi phí → cache nó là tiết kiệm lớn nhất mà không mất gì. Ô E: các mẩu dữ liệu bán hàng được dùng lặp lại nhiều lần trong ngày → cache cũng giảm chi phí, nội dung vẫn y nguyên.",
+  "wrong": {
+   "A": "Bớt dữ liệu lịch sử là bớt thông tin model dùng để dự báo — có thể giảm độ chính xác.",
+   "B": "Cắt đoạn chính sách có thể làm model hành xử khác; cache đã giảm chi phí mà không phải cắt gì.",
+   "D": "Đổi sang model nhỏ hơn đánh đổi chất lượng — vi phạm ràng buộc của đề."
+  }},
+ {"id": 11299,
+  "remember": "**Skill** = gói **kiến thức/quy trình** (hướng dẫn + ví dụ), không gọi hệ thống bên ngoài. **MCP server** = **cầu nối tới hệ thống đang chạy** (cơ sở dữ liệu, API, xác thực).",
+  "why": "Đề mô tả một quy trình soạn thảo cố định kèm ví dụ, **không** cần gọi hệ thống ngoài, và phải dùng được ở nhiều nơi (claude.ai, API, Claude Code) — đúng định nghĩa Skill. Ô D nêu đúng yếu tố quyết định: đây là tri thức quy trình, không có lời gọi tới hệ thống đang chạy.",
+  "wrong": {
+   "A": "Cần truy vấn cơ sở dữ liệu đang chạy là lý do chọn MCP — ngược hướng.",
+   "B": "Cả Skill lẫn MCP đều dùng được trong dòng lệnh (Claude Code), nên không giúp phân biệt.",
+   "C": "Cần xác thực với hệ thống danh tính doanh nghiệp nghiêng về MCP."
+  }},
+ {"id": 11300,
+  "remember": "Soát đặc quyền tối thiểu: với mỗi tool hỏi “**việc được giao có cần nó không?**”. Cần → giữ (ưu tiên chỉ đọc). Không cần, hoặc vượt quyền (ví dụ bỏ qua người duyệt) → gỡ.",
+  "why": "Việc được giao là **soạn** yêu cầu mua hàng **để người khác soát**. Cần: tra danh mục nhà cung cấp, đọc chính sách mua sắm, ghi bản nháp vào hàng đợi soát xét. Gửi email thẳng cho nhà cung cấp là bỏ qua bước soát; tool quản trị cơ sở dữ liệu thì không liên quan gì tới mua sắm.",
+  "rows": {
+   "1": "Giữ — tra nhà cung cấp/mã hàng chỉ đọc, cần để soạn nháp.",
+   "2": "Gỡ — gửi thẳng cho nhà cung cấp là vượt phạm vi “soạn để soát”, bỏ qua người duyệt.",
+   "3": "Giữ — tạo bản nháp trong hàng đợi soát xét chính là việc được giao.",
+   "4": "Gỡ — quyền quản trị cơ sở dữ liệu thật rủi ro cao và không liên quan.",
+   "5": "Giữ — đọc chính sách giúp soạn đúng quy định, chỉ đọc nên an toàn."
+  }},
+ {"id": 11301,
+  "remember": "Chọn model bằng **đánh giá trên dữ liệu thật** của bài toán, không bằng “mạnh nhất” hay “mới nhất”. Mẹo tiết kiệm: việc thường → model nhẹ, việc khó → model nặng.",
+  "why": "Model suy luận nặng thường chậm và tốn hạn mức hơn. Căn cứ đúng để chọn là chạy thử trên mẫu đại diện của chính bài toán. Định tuyến theo tầng giúp cân bằng chi phí và năng lực. “Luôn chọn mạnh nhất” và “chọn bản mới công bố” đều bỏ qua chi phí, độ trễ và yêu cầu thật.",
+  "rows": {
+   "1": "Đúng — model nặng tốn hạn mức và chậm hơn trên cùng đầu vào.",
+   "2": "Đúng — đánh giá trên mẫu đại diện của bài toán thật là căn cứ đúng.",
+   "3": "Sai — “luôn luôn, bất kể bài toán” bỏ qua chi phí, độ trễ, cam kết dịch vụ.",
+   "4": "Đúng — model nhẹ lo việc thường, model nặng giữ cho ca khó.",
+   "5": "Sai — “mới công bố” không chứng minh được là hợp; phải đánh giá."
+  }},
+ {"id": 11302,
+  "remember": "Công cụ AI cho lập trình viên nên nằm **ngay trong IDE** (nơi đang viết code). Bắt họ chuyển qua lại ứng dụng khác là thêm ma sát, giảm năng suất.",
+  "why": "Ô C: đề xuất A đưa trợ giúp AI tới ngay chỗ đang viết code, giảm việc chuyển qua lại giữa các cửa sổ. Ô B: đề xuất B bắt lập trình viên rời IDE sang Slack, mất ngữ cảnh code và tăng ma sát — đi ngược mục tiêu năng suất. Hai nhận định này đánh giá theo **quy trình làm việc**, không theo năng lực model.",
+  "wrong": {
+   "A": "Nhật ký kiểm tra là mục tiêu khác, không phải cải thiện quy trình; dùng trong IDE vẫn ghi log được.",
+   "D": "Hàng đợi bất đồng bộ làm chậm vòng phản hồi khi đang code, không tăng tốc.",
+   "E": "Model giống nhau nhưng **chỗ tích hợp** quyết định ma sát và ngữ cảnh — nên không tương đương."
+  }},
+ {"id": 11303,
+  "remember": "Tài liệu dài, hỏi nhiều lần, **cấm lưu dữ liệu ra ngoài** → tìm đoạn liên quan (RAG) với kho vector đặt trong hạ tầng của mình: mỗi lần chỉ gửi đoạn cần, giữ nguyên văn bản gốc.",
+  "why": "14 câu hỏi rải rác suốt cả vụ việc (nhiều ngày), trong khi prompt cache chỉ sống vài phút tới một giờ, lại lưu nội dung ở phía nhà cung cấp — vướng yêu cầu bảo mật “không lưu ngoài hạ tầng công ty”. Ô C: đánh chỉ mục hồ sơ trong kho vector đặt trong hạ tầng của công ty, mỗi câu hỏi chỉ lấy các đoạn liên quan → giảm mạnh token mỗi lần, mà vẫn dùng đúng văn bản gốc nên chất lượng không giảm.",
+  "wrong": {
+   "A": "Tóm tắt làm mất chi tiết pháp lý; câu hỏi cụ thể sẽ trả lời sai — vi phạm yêu cầu giữ chất lượng.",
+   "B": "Cache hết hạn nhanh so với nhịp hỏi của vụ việc, và lưu nội dung ở phía nhà cung cấp — vướng ràng buộc bảo mật.",
+   "D": "Model nhỏ hơn là cách giảm chi phí sau cùng, đánh đổi chất lượng trên văn bản pháp lý dài."
+  }},
+ {"id": 11304,
+  "remember": "Chọn loại kiểm thử theo **mục tiêu**: an toàn khi bị tấn công → **kiểm thử đối kháng**; đúng khi các phần ghép lại với nhau → **kiểm thử tích hợp** (đầu-cuối).",
+  "why": "Đề nêu hai mục tiêu cụ thể. “An toàn dưới tấn công” → ô A: thử tấn công bằng tiêm lệnh (prompt injection) và đầu vào hỏng định dạng. “Đúng đắn xuyên thành phần” → ô D: kiểm hành vi từ đầu tới cuối qua mọi thành phần. Các loại kiểm thử khác có ích nhưng không nhắm đúng hai mục tiêu này.",
+  "wrong": {
+   "B": "Kiểm thử hồi quy bắt việc chất lượng đi xuống, không nhắm tấn công hay tương tác giữa các phần.",
+   "C": "Kiểm thử khói chỉ xem đường chính còn chạy không — quá nông.",
+   "E": "Kiểm thử đơn vị chỉ xét một phần riêng lẻ — ngược với “xuyên thành phần”."
+  }},
+ {"id": 11305,
+  "remember": "Hai cách giảm **cả tiền lẫn thời gian chờ** cùng lúc: (1) **prompt caching** phần đầu prompt cố định; (2) **chuyển việc dễ sang model nhỏ**, giữ model lớn cho việc khó.",
+  "why": "Ô A: cache phần system prompt cố định → token đầu vào được tính giá rẻ hơn, và model không phải xử lý lại phần đó nên trả chữ đầu tiên nhanh hơn. Ô B: model nhỏ vừa rẻ vừa nhanh; ca khó vẫn dùng model đầy đủ nên chất lượng ca cốt lõi không giảm.",
+  "wrong": {
+   "C": "max_tokens chỉ là trần độ dài câu trả lời; trả lời dài hơn thì tốn tiền và chậm hơn.",
+   "D": "Nạp cả kho tài liệu vào ngữ cảnh là thêm rất nhiều token → tăng cả chi phí lẫn độ trễ.",
+   "E": "Thêm ví dụ vào mọi yêu cầu là thêm token đầu vào mỗi lần gọi — ngược mục tiêu."
+  }},
+ {"id": 11306,
+  "remember": "Kiểm tuân thủ theo thứ tự: luật này **có áp dụng không**? → mình **đang có công cụ** tuân thủ gì → đối chiếu từng điều khoản → tìm khoảng hở → ghi lại → khắc phục.",
+  "why": "Trước khi đối chiếu luồng dữ liệu với từng điều khoản, phải biết luật đó có áp dụng cho mình không (ô B: dựa vào loại dữ liệu, nơi hoạt động, đối tượng phục vụ), và phải biết mình đang có những công cụ tuân thủ nào từ nhà cung cấp (ô E). Đó là đầu vào cho bước đối chiếu; tìm khoảng hở, ghi lại, lên lịch khắc phục đều diễn ra sau.",
+  "wrong": {
+   "A": "So kiểm soát với yêu cầu để tìm khoảng hở cần có bản đối chiếu điều khoản trước.",
+   "C": "Lên lịch khắc phục là bước cuối cùng của chuỗi.",
+   "D": "Chỉ ghi lại khoảng hở được sau khi đã tìm ra chúng."
+  }},
+ {"id": 11307,
+  "remember": "Gặp một sự cố AI → hỏi hai câu: **xảy ra thường không?** (lấy mẫu đo tần suất) và **vì sao lọt qua?** (có chốt kiểm soát không). Có bằng chứng rồi mới quyết sửa lớn hay nhỏ.",
+  "why": "Nhóm cần biết sự cố cần sửa kiến trúc hay chỉ là ca lẻ. Ô A trả lời “bao nhiêu”: lấy mẫu các bản tóm tắt gần đây để ước lượng tỉ lệ trích dẫn bịa. Ô C trả lời “vì sao”: xem quy trình hiện tại có chốt kiểm tra trích dẫn với nguồn hay không. Hai bước gộp lại là bằng chứng để quyết định.",
+  "wrong": {
+   "B": "Tắt ngay khi chưa chẩn đoán gì là phản ứng thái quá.",
+   "D": "Nói “thiết kế không bao giờ bịa” là sai sự thật — LLM có thể bịa; nói vậy làm mất lòng tin.",
+   "E": "Bỏ qua một tín hiệu rõ ràng mà không điều tra là thiếu cần mẫn."
+  }},
+ {"id": 11308,
+  "remember": "Ghép biện pháp với rủi ro: **giới hạn nơi tool được gửi dữ liệu tới** → chặn rò rỉ dữ liệu. **Chấm lại trên cùng bộ đánh giá sau mỗi lần đổi model** → bắt chất lượng trôi.",
+  "why": "Biện pháp A (danh sách cho phép đích đến cho tool gửi ra ngoài) khoá những chỗ dữ liệu có thể bị gửi đi → khớp rủi ro rò rỉ dữ liệu qua tool (ô C). Biện pháp B (chấm trên bộ đánh giá cố định sau mỗi lần đổi phiên bản model) là kiểm thử hồi quy theo phiên bản → khớp rủi ro chất lượng trôi âm thầm sau nâng cấp (ô E).",
+  "wrong": {
+   "A": "Danh sách cho phép không ngăn lệnh độc chui vào qua dữ liệu truy hồi; nó chỉ hạn chế hậu quả. Chống tiêm lệnh cần coi dữ liệu là không đáng tin ngay ở đầu vào.",
+   "B": "Giới hạn đích đến của tool không liên quan gì tới việc đo chất lượng sau nâng model.",
+   "D": "Bộ đánh giá chạy ngoài giờ (offline) không chặn được lời gọi gửi dữ liệu ra ngoài lúc hệ thống đang chạy."
+  }},
+ {"id": 11309,
+  "remember": "Chọn model: **đặt tiêu chí** (chất lượng, độ trễ, lưu lượng) → **chọn ứng viên** → chạy thử mẫu đại diện → chọn model nhẹ nhất đạt chuẩn → ký duyệt → kiểm lại khi có model mới.",
+  "why": "Không thể chạy thử khi chưa có thước đo và chưa có ứng viên. Ô D đặt tiêu chí: ngưỡng chất lượng, độ trễ chấp nhận được, lưu lượng dự kiến. Ô C chọn một model ứng viên dựa trên các tiêu chí đó. Cả hai phải xong trước bước chạy thử.",
+  "wrong": {
+   "A": "Chọn model nhẹ nhất đạt chuẩn cần có kết quả chạy thử — nên làm sau.",
+   "B": "Kiểm lại khi có model mới là việc vận hành về sau.",
+   "E": "Ký duyệt kế hoạch triển khai chỉ làm khi đã chọn xong model."
+  }},
+ {"id": 11310,
+  "remember": "Sổ tay vận hành phải giúp người trực **tự xử lý được sự cố**: cảnh báo thường gặp + bước xử lý đầu tiên + khi nào/gọi ai (leo thang) + cách quay lại bản cũ + xem log/biểu đồ ở đâu.",
+  "why": "Người trực đêm cần làm được việc mà không phải hỏi ai. Ô B có đủ chuỗi: nhận diện cảnh báo → xử lý ban đầu → leo thang nếu không xử lý được → quay lại bản trước (rollback) → biết xem bảng theo dõi và log ở đâu. Các ô khác đều có chữ “chỉ”, thiếu một mắt xích.",
+  "wrong": {
+   "A": "Chỉ biết nhìn ở đâu mà không biết phải làm gì.",
+   "C": "Thiếu đường leo thang và cách quay lại khi bước đầu không xử lý được.",
+   "D": "Thiếu bước nhận diện cảnh báo và xử lý ban đầu."
+  }},
+ {"id": 11311,
+  "remember": "Buổi lấy ý kiến hiệu quả: **chương trình rõ** + **gửi tài liệu trước** + **ghi quyết định bằng văn bản** + chốt **ai làm, hạn bao giờ**.",
+  "why": "Ô B bao trọn: chuẩn bị (gửi tài liệu trước để mọi người kịp đọc), tập trung (chương trình có trọng tâm), và kết quả không bị mất (ghi quyết định, việc cần làm, người phụ trách, thời hạn). Đó là cách biến góp ý thành hành động theo dõi được.",
+  "wrong": {
+   "A": "Không chương trình, dựa vào trí nhớ — không chuẩn bị, không lưu vết.",
+   "C": "Phát tài liệu tại chỗ thì người dự không kịp đọc, góp ý hời hợt.",
+   "D": "Không ghi lại gì thì mất hết kết quả của buổi họp."
+  }},
+ {"id": 11312,
+  "remember": "Muốn tài liệu **đúng với code thật** → cho agent **đọc code thật** (tool đọc tệp, tìm kiếm code), rồi vẫn để **người soát** trước khi xuất bản.",
+  "why": "Yêu cầu là tài liệu bám sát mã nguồn, nên agent phải đọc chính các tệp code qua tool hệ tệp và tool tìm kiếm code. Ô C còn giữ quy trình soát xét bình thường của nhóm, tức có người kiểm trước khi đăng. Đó là ô duy nhất vừa bám nguồn vừa có kiểm soát.",
+  "wrong": {
+   "A": "Viết từ trí nhớ huấn luyện mà không đọc code thật — trái hẳn yêu cầu.",
+   "B": "Đăng thẳng lên trang công khai không qua soát xét là bỏ chốt chặn của người.",
+   "D": "Tắt tool đọc code thì agent không đọc được gì — mất mục đích."
+  }},
+ {"id": 11313,
+  "remember": "Ở quy mô lớn: **kiểm quyền trước khi tìm dữ liệu**, **hàng đợi** để hứng tải đột biến, **tính toán chính xác để code làm** (không để prompt), **che dữ liệu nhạy cảm** trước khi ghi log.",
+  "why": "Ở quy mô hàng nghìn người cùng lúc, các chốt bảo mật và phép tính chính xác phải được bảo đảm bằng thiết kế hệ thống, không giao cho prompt. Hai dòng đầu là thực hành chuẩn. Dòng 3 giao phép tính thuế cho model (model không tính chính xác tuyệt đối); dòng 4 làm lộ số định danh cá nhân trong log.",
+  "rows": {
+   "1": "Đúng — kiểm danh tính và quyền trước, để bước tìm dữ liệu chỉ lấy những gì người đó được xem; dữ liệu cấm không bao giờ vào ngữ cảnh.",
+   "2": "Đúng — hàng đợi bất đồng bộ hứng lưu lượng đột biến, tách khâu tiếp nhận khỏi khâu gọi model, chịu được giới hạn tốc độ.",
+   "3": "Sai — phép tính phải đúng 100% nên đặt trong code (hoặc tool); model ngôn ngữ không tính toán chính xác tuyệt đối.",
+   "4": "Sai — lưu số định danh chưa che trong log vi phạm nguyên tắc tối thiểu hoá dữ liệu và rủi ro tuân thủ; phải che trước."
+  }},
+ {"id": 11314,
+  "remember": "Trình bày cho người nghe hỗn hợp: **nói kết luận trước** (quyết định, lợi ích kinh doanh, đánh đổi) cho lãnh đạo → **rồi đi sâu** (lý do kỹ thuật, phương án khác, cách làm) cho kỹ sư.",
+  "why": "Ô B xếp nội dung theo tầng: mở đầu bằng quyết định, kết quả kinh doanh nó phục vụ và các đánh đổi đã chấp nhận — lãnh đạo nắm ngay điều cần. Sau đó mới tới lý lẽ kỹ thuật, các phương án thay thế và tác động khi triển khai — cho trưởng nhóm kỹ thuật. Một bài, hai độ sâu, ai cũng có thứ mình cần.",
+  "wrong": {
+   "A": "Chỉ đi sâu chi tiết kỹ thuật rồi dừng — bỏ rơi lãnh đạo bảo trợ.",
+   "C": "Bỏ lý lẽ và đánh đổi thì không ai có đủ ngữ cảnh để thẩm định hay triển khai.",
+   "D": "Một mạch đều nhau: lãnh đạo ngập chi tiết, kỹ sư lại thiếu chiều sâu."
+  }}
+]

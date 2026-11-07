@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FileCheck2, Layers, ListChecks } from "lucide-react";
-import { BANK, SUPPLEMENT, TASKS, getLesson, renderBlocks } from "@/data/ccar-p/course";
+import { AUTHORED, ORIGINAL, SUPPLEMENT, TASKS, getLesson, renderBlocks } from "@/data/ccar-p/course";
 import { CCAR_BASE, REFERENCE_PATH, setId } from "@/data/ccar-p/meta";
 import { CcarLessonControls } from "@/components/ccar-p/CcarLessonControls";
 import { ReadProgress } from "@/components/oci-ai/LessonToc";
@@ -28,8 +28,11 @@ export default async function CcarLessonPage({ params }: PageProps<"/claude-ccar
   if (!found) notFound();
   const { task, domain, prev, next } = found;
   const { html, toc } = withHeadingIds(renderBlocks(task.blocks) + renderSupplement(task.id));
-  const count = BANK.filter((q) => q.task === task.id).length;
+  // Đề gốc và câu Claude biên soạn: hai bộ luyện riêng
+  const count = ORIGINAL.filter((q) => q.task === task.id).length;
+  const own = AUTHORED.filter((q) => q.task === task.id).length;
   const practiceHref = `${CCAR_BASE}/practice/${setId.task(task.id)}`;
+  const authoredHref = `${CCAR_BASE}/practice/${setId.authoredTask(task.id)}`;
   const label = (t: NonNullable<typeof prev>) => `${t.code} ${t.title}`;
 
   return (
@@ -57,7 +60,12 @@ export default async function CcarLessonPage({ params }: PageProps<"/claude-ccar
             </span>
             {count > 0 && (
               <span className="oci-chip accent">
-                <ListChecks aria-hidden /> {count} câu luyện tập
+                <ListChecks aria-hidden /> {count} câu đề gốc
+              </span>
+            )}
+            {own > 0 && (
+              <span className="oci-chip">
+                <ListChecks aria-hidden /> {own} câu Claude biên soạn
               </span>
             )}
           </div>
@@ -71,10 +79,22 @@ export default async function CcarLessonPage({ params }: PageProps<"/claude-ccar
           <div className="oci-practice-cta">
             <FileCheck2 aria-hidden style={{ width: 26, height: 26, color: "var(--o-accent)", flex: "none" }} />
             <span className="tx">
-              <b>Luyện {count} câu của task statement {task.code}</b>
+              <b>Luyện {count} câu đề gốc của task statement {task.code}</b>
               Đề tiếng Việt (bật được bản tiếng Anh gốc), đáp án kèm “Kiến thức cần nhớ” và vì sao các ô kia sai.
             </span>
             <Link href={practiceHref} className="oci-btn primary sm">
+              Bắt đầu
+            </Link>
+          </div>
+        )}
+        {own > 0 && (
+          <div className="oci-practice-cta">
+            <FileCheck2 aria-hidden style={{ width: 26, height: 26, color: "var(--o-accent)", flex: "none" }} />
+            <span className="tx">
+              <b>Luyện {own} câu Claude biên soạn của task statement {task.code}</b>
+              Bộ riêng, không trộn với đề gốc: câu mới viết theo tài liệu công khai của Anthropic.
+            </span>
+            <Link href={authoredHref} className="oci-btn ghost sm">
               Bắt đầu
             </Link>
           </div>
@@ -90,8 +110,8 @@ export default async function CcarLessonPage({ params }: PageProps<"/claude-ccar
         <div className="oci-aside-col">
           <LessonToc items={toc} />
           <div className="oci-aside-card">
-            <b>{count ? `Luyện ${count} câu của bài này` : "Luyện tập & thi thử"}</b>
-            <span>Luyện theo domain, theo task statement, bộ đề v2 và 3 đề thi thử 63 câu có đồng hồ.</span>
+            <b>{count ? `Luyện ${count} câu đề gốc của bài này` : "Luyện tập & thi thử"}</b>
+            <span>Đề gốc và câu Claude biên soạn để riêng: luyện theo domain, theo task statement, bộ đề v2 và các đề thi thử 63 câu có đồng hồ.</span>
             <span style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               <Link href={count ? practiceHref : `${CCAR_BASE}/practice`} className="oci-btn primary sm">
                 {count ? "Bắt đầu luyện" : "Mở luyện tập"}
@@ -99,6 +119,11 @@ export default async function CcarLessonPage({ params }: PageProps<"/claude-ccar
               <Link href={`${CCAR_BASE}/practice/${setId.domain(domain.num)}`} className="oci-btn ghost sm">
                 Cả Domain {domain.num}
               </Link>
+              {own > 0 && (
+                <Link href={authoredHref} className="oci-btn ghost sm">
+                  {own} câu Claude
+                </Link>
+              )}
             </span>
           </div>
         </div>

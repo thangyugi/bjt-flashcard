@@ -3,10 +3,11 @@
  * - Tài nguyên tĩnh có hash (/_next/static, icon): lấy từ cache trước.
  * - Trang HTML & dữ liệu RSC: lấy mạng trước, lưu bản mới vào cache; mất mạng thì dùng bản đã lưu,
  *   chưa từng mở thì hiện trang /offline.
+ * - Ngân hàng đề (…/bank.json): lấy mạng trước — bản cũ trong cache làm đề thi thử hụt câu.
  * - File dữ liệu khác (json…): dùng bản cache ngay, đồng thời cập nhật ngầm.
  * Đổi VERSION khi cần xóa sạch cache cũ.
  */
-const VERSION = "v2";
+const VERSION = "v3";
 const STATIC_CACHE = `bjt-static-${VERSION}`;
 const PAGE_CACHE = `bjt-pages-${VERSION}`;
 const DATA_CACHE = `bjt-data-${VERSION}`;
@@ -64,6 +65,10 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (url.pathname.startsWith("/_next/")) return;
+  if (url.pathname.endsWith("/bank.json")) {
+    event.respondWith(networkFirst(request, false));
+    return;
+  }
   event.respondWith(staleWhileRevalidate(request));
 });
 

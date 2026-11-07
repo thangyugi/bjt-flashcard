@@ -1,4 +1,4 @@
-import { BANK, DOMAINS, getCourseMeta, guideSection, mockExams, renderBlocks, renderSections } from "@/data/ccar-p/course";
+import { AUTHORED, DOMAINS, ORIGINAL, getCourseMeta, guideSection, mockExams, renderBlocks, renderSections } from "@/data/ccar-p/course";
 import { CcarHome } from "@/components/ccar-p/CcarHome";
 
 const blocksOf = (title: string, skipTables = false) =>
@@ -11,10 +11,10 @@ export default function CcarHomePage() {
       domains={domains.map((d) => ({
         ...d,
         intro: DOMAINS.find((x) => x.num === d.num)!.intro.map((b) => (b.t === "p" ? b.text : "")).join(" ").trim(),
-        questions: BANK.filter((q) => q.domain === d.num).length,
+        questions: ORIGINAL.filter((q) => q.domain === d.num).length,
       }))}
       lessons={lessons}
-      stats={{ questions: BANK.length, exams: mockExams().length }}
+      stats={{ questions: ORIGINAL.length, authored: AUTHORED.length, exams: mockExams().length }}
       html={{
         facts: blocksOf("Số liệu kỳ thi"),
         order: blocksOf("Mục lục ＋ tỉ trọng CHÍNH CHỦ", true),

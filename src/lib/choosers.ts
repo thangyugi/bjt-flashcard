@@ -50,6 +50,7 @@ export interface ChooserData {
     bjtCards: number;
     bjtTopics: number;
     ccarQuestions: number;
+    ccarAuthored: number;
     ccarV2: number;
     ccarLessons: number;
   };
@@ -139,7 +140,8 @@ export function chooserData(): ChooserData {
       ociPracticeLessons: PRACTICE.length,
       bjtCards: catalog.bjt.cards,
       bjtTopics: catalog.bjt.topics,
-      ccarQuestions: CCAR_BANK.length,
+      ccarQuestions: CCAR_BANK.filter((q) => !q.authored).length,
+      ccarAuthored: CCAR_BANK.filter((q) => q.authored).length,
       ccarV2: CCAR_BANK.filter((q) => q.v2).length,
       ccarLessons: ccar.lessons.length,
     },

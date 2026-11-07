@@ -1,0 +1,199 @@
+[
+ {"id": 11477,
+  "remember": "Subagent **tuyệt đối không được sửa/chạy lệnh** → chỉ khai đúng tool **đọc** trong trường `tools` (ví dụ `Read`, `Grep`). Không có tool ghi thì “lỡ tay” cũng không ghi được.",
+  "why": "Đặt `tools` chỉ gồm `Read` và `Grep` thì subagent hoàn toàn không có tool ghi hay chạy lệnh, nên kể cả do sơ suất cũng không thể. Quyền bị giới hạn ngay trong cấu hình, không trông vào model tự giác.",
+  "wrong": {
+   "B": "Bỏ trống `tools` = thừa hưởng **toàn bộ** tool của agent cha, gồm cả ghi tệp và Bash.",
+   "C": "Cấp tool ghi rồi dùng hook để chặn là vòng vèo, thừa quyền, dễ cấu hình sai.",
+   "D": "`Bash` là quyền chạy lệnh — vi phạm thẳng yêu cầu."
+  }},
+ {"id": 11478,
+  "remember": "Cần nhiều agent **điều tra độc lập rồi phản biện lẫn nhau** → **đội agent (agent team)**: các thành viên nhắn trực tiếp cho nhau. Subagent thì **chỉ báo về agent cha**, không nói chuyện với nhau.",
+  "why": "Trong agent team, các thành viên có thể nhắn tin trực tiếp cho nhau, nên mỗi người điều tra một giả thuyết rồi chủ động tìm cách bác bỏ lý thuyết của người khác — đúng cơ chế tranh luận đề yêu cầu.",
+  "wrong": {
+   "B": "Sai: subagent chỉ trả kết quả về agent cha, không nhắn được cho nhau.",
+   "C": "Một subagent làm tuần tự thì mất tính độc lập, không có phản biện chéo.",
+   "D": "Suy luận mở rộng chỉ là một luồng suy nghĩ, không có nhiều góc nhìn độc lập."
+  }},
+ {"id": 11479,
+  "remember": "Subagent **lồng nhau được nhưng có trần độ sâu**: tới **5 tầng** dưới agent chính thì không sinh thêm được nữa — để tránh đệ quy vô tận.",
+  "why": "Theo tài liệu Claude Code, subagent có thể sinh subagent con, nhưng bị chặn ở độ sâu tối đa năm tầng dưới agent chính, dù chạy tiền cảnh hay chạy nền. Giới hạn cứng này ngăn đệ quy chạy mất kiểm soát.",
+  "wrong": {
+   "B": "Ngưỡng 3 tầng và ngoại lệ “trừ khi chạy tiền cảnh” không có trong tài liệu.",
+   "C": "Lồng vô hạn là rủi ro đệ quy vô tận — hệ thống luôn đặt trần.",
+   "D": "Quá chặt: các tầng dưới vẫn sinh được subagent cho tới giới hạn độ sâu."
+  }},
+ {"id": 11480,
+  "remember": "Các bước **tuần tự cố định** (viết → dịch) + **kiểm bằng code** giữa các bước → **prompt chaining** có cổng kiểm (gate).",
+  "why": "Viết bài rồi dịch là chuỗi tuần tự cố định; kiểm độ dài ký tự là phép kiểm bằng chương trình (code đếm ký tự) — đúng hình mẫu “cổng kiểm” trong prompt chaining. Không cần LLM thứ hai chấm điểm hay điều phối động.",
+  "wrong": {
+   "B": "Routing dùng khi phải phân loại đầu vào rồi chọn đường; ở đây cả ba ngôn ngữ đều phải dịch.",
+   "C": "“Phân tích lưu lượng thời gian thực” là bịa thêm yêu cầu, làm quá mức.",
+   "D": "Độ dài ký tự kiểm bằng code là đủ, không cần LLM thứ hai chấm lặp."
+  }},
+ {"id": 11481,
+  "remember": "Bước đầu là **phân loại** rồi **chuyển tới xử lý chuyên biệt** cho từng loại → **routing** (định tuyến).",
+  "why": "Đề nói rõ bước đầu tiên phải xác định phiếu thuộc loại nào, và mỗi loại cần một prompt riêng. Routing chính là: một lần gọi LLM để phân loại, rồi chuyển phiếu tới prompt chuyên biệt của loại đó.",
+  "wrong": {
+   "A": "Chạy cả ba prompt rồi lấy cái xong trước: lãng phí và không đúng chuyên môn.",
+   "C": "Cho mọi phiếu đi qua cả ba prompt là thừa — phiếu hoá đơn không cần đi qua prompt huỷ tài khoản.",
+   "D": "Orchestrator–workers dành cho việc không đoán trước được cần nhiệm vụ con nào; ở đây các loại đã cố định."
+  }},
+ {"id": 11482,
+  "remember": "Song song hoá có 2 kiểu: **phân mảnh** (sectioning) = chia **các việc khác nhau** chạy cùng lúc; **bỏ phiếu** (voting) = chạy **cùng một việc** nhiều lần rồi lấy đa số.",
+  "why": "Kiểm lỗ hổng và kiểm giấy phép là hai nhiệm vụ **khác nhau**, độc lập, chạy cùng lúc rồi gộp báo cáo — đúng định nghĩa song song hoá bằng phân mảnh (ô A).",
+  "wrong": {
+   "B": "Bỏ phiếu là chạy **cùng** một prompt nhiều lần; đề có hai nhiệm vụ khác nhau.",
+   "C": "Hai phép kiểm độc lập, không có quan hệ “một bên chấm, một bên sửa”.",
+   "D": "Prompt chaining là tuần tự, trái với “đồng thời”."
+  }},
+ {"id": 11483,
+  "remember": "Bài toán có **nhiều mảng khác nhau**, mỗi mảng cần **bộ tool và trọng tâm riêng** → một **agent điều phối** + các **subagent chuyên biệt** (mỗi cái tool riêng, mô tả riêng).",
+  "why": "Ba chiều kiểm toán (bảo mật, chất lượng code, độ phủ kiểm thử) cần tool khác nhau, trọng tâm khác nhau. Tách thành các subagent, mỗi cái có bộ tool giới hạn và mô tả riêng, do agent điều phối gọi qua tool Agent. Mỗi subagent giữ ngữ cảnh gọn và quyền vừa đủ.",
+  "wrong": {
+   "B": "Một agent ôm hết, không giới hạn tool — ngữ cảnh lẫn lộn.",
+   "C": "Ba tool trong một MCP server không tách được ngữ cảnh hay trọng tâm — chỉ là thêm tool, không phải phân rã.",
+   "D": "Tăng ngữ cảnh và suy luận không phải là phân rã bài toán."
+  }},
+ {"id": 11484,
+  "remember": "Phân rã việc xong thì **chọn model theo từng phần**: phần **nhiều, đơn giản** → model nhỏ (Haiku); phần **ít, khó** → model mạnh (Opus).",
+  "why": "Phân loại khối lượng lớn là việc đơn giản, cần nhanh và rẻ → Haiku 4.5. Soạn kế hoạch khắc phục kỹ thuật chi tiết là việc khó → Opus 4.8. Đây chính là lợi ích của việc phân rã: mỗi nhiệm vụ con dùng model phù hợp.",
+  "wrong": {
+   "B": "Dùng Opus cho mọi thứ (kể cả effort thấp) vẫn đắt hơn Haiku cho việc phân loại khối lượng lớn.",
+   "C": "Prompt dài hơn không bù được năng lực cho việc suy luận phức tạp.",
+   "D": "Luân phiên ngẫu nhiên không có lý do kiến trúc, chất lượng thất thường."
+  }},
+ {"id": 11485,
+  "remember": "Hàng chục lời gọi tool nhỏ liên tiếp → **programmatic tool calling**: Claude viết **một đoạn code** gọi các tool trong môi trường chạy code, thay vì gọi từng cái qua từng lượt hội thoại.",
+  "why": "Với programmatic tool calling, Claude viết code để gọi tool bên trong hộp thực thi mã; kết quả trung gian không phải đi qua từng lượt hội thoại. Nhờ vậy cắt được cả độ trễ (bớt vòng khứ hồi) lẫn token (bớt kết quả tool trong lịch sử).",
+  "wrong": {
+   "B": "Mỗi tool một subagent còn thêm chi phí khởi tạo ngữ cảnh.",
+   "C": "Message Batches xử lý nhiều yêu cầu độc lập bất đồng bộ, không chạy vòng lặp tool trong một cuộc hội thoại.",
+   "D": "`effort` cao hơn tăng token suy luận, không giảm số vòng khứ hồi."
+  }},
+ {"id": 11486,
+  "remember": "Việc dài hơi cần **lời khuyên chiến lược ở vài mốc** mà không làm chậm phần thường lệ → **Advisor tool**: model nhanh làm, model thông minh hơn chỉ được hỏi ý ở các mốc quan trọng.",
+  "why": "Advisor tool tách vai: một model thực thi nhanh lo các bước thường lệ; một model cố vấn mạnh hơn chỉ được tham vấn tại các điểm mốc chiến lược. Đúng nhu cầu “chỉ dẫn chiến lược giữa chừng” mà không làm chậm các bước thường.",
+  "wrong": {
+   "B": "Model mạnh nhất cho mọi bước làm chậm và đắt chính các bước thường lệ.",
+   "C": "Người duyệt từng bước làm chậm toàn bộ, không phải lời khuyên tại mốc.",
+   "D": "Chạy hai lần rồi trộn là lãng phí, không có lời khuyên tại các mốc."
+  }},
+ {"id": 11487,
+  "remember": "Mục tiêu là **phản hồi dưới 1 giây** với **chi phí thấp** cho câu hỏi thường → **Haiku** (nhanh nhất, rẻ nhất mỗi token).",
+  "why": "Haiku 4.5 là model nhanh nhất và rẻ nhất mỗi token, đủ thông minh cho câu hỏi tài khoản thường gặp. Khớp đúng hai yêu cầu: độ trễ và chi phí.",
+  "wrong": {
+   "B": "Chế độ nhanh của Opus có giá cao cấp — trái yêu cầu chi phí.",
+   "C": "Sonnet dù tắt suy luận vẫn chậm và đắt hơn Haiku.",
+   "D": "Nạp cả kho tri thức vào mỗi yêu cầu làm tăng cả độ trễ lẫn chi phí."
+  }},
+ {"id": 11488,
+  "remember": "**Chuyển đổi** (transformation) = **thiết kế lại cách làm việc và vai trò** con người, không chỉ làm việc cũ nhanh hơn (đó là năng suất/hiệu suất).",
+  "why": "Đề nói rõ: không phải tự động hoá quy trình cũ, mà **thiết kế lại tận gốc** luồng tiếp nhận hợp đồng, và trợ lý luật sư chuyển sang vai trò mới (rà ngoại lệ, đàm phán). Đó là trụ Chuyển đổi.",
+  "wrong": {
+   "B": "Năng suất là giữ nguyên quy trình, chỉ làm nhanh hơn — trái với cách đề mô tả.",
+   "C": "Giảm chi phí có thể là hệ quả, nhưng không phải trọng tâm.",
+   "D": "Đề không nhắc tới cam kết thời gian xử lý với khách hàng."
+  }},
+ {"id": 11489,
+  "remember": "Khối lượng lớn, **không ai chờ kết quả ngay** → **Message Batches API**: xử lý bất đồng bộ, **rẻ khoảng một nửa**, chất lượng model y nguyên.",
+  "why": "Việc chạy qua đêm, không có người dùng đang chờ, nên xử lý bất đồng bộ là đủ. Batch API giảm khoảng 50% chi phí mà giữ nguyên chất lượng của model.",
+  "wrong": {
+   "B": "Gọi đồng bộ đắt hơn batch; tắt cache không tiết kiệm gì đáng kể.",
+   "C": "Sai: giảm giá batch áp cho mọi model; dùng Opus cho mọi phiếu là lãng phí.",
+   "D": "Effort tối đa, gọi đồng bộ cho 40 triệu phiếu — tốn kém khổng lồ, ngược mục tiêu."
+  }},
+ {"id": 11490,
+  "remember": "Vì sao **bắt đầu bằng model nhỏ** (Haiku)? → **lặp thử nhanh**, hợp với yêu cầu **độ trễ thấp**, **chi phí nhạy cảm**, việc **khối lượng lớn, đơn giản**. Nó **không** chính xác bằng model lớn ở mọi việc.",
+  "why": "Hướng dẫn của Anthropic: bắt đầu với model nhanh, tiết kiệm để làm bản thử và lặp nhanh; hợp với ứng dụng cần độ trễ thấp, nhạy chi phí, và việc khối lượng lớn đơn giản. Ba ý A, B, C đúng tinh thần đó.",
+  "wrong": {
+   "D": "Không có ràng buộc “phải có bản Haiku mới được dùng Opus”.",
+   "E": "Sai: Haiku không bằng Opus ở mọi việc; chọn model khởi đầu có ảnh hưởng."
+  }},
+ {"id": 11491,
+  "remember": "Muốn giọng điệu và hành vi **ổn định** → cho Claude một **vai trò cụ thể** trong system prompt: sản phẩm gì, phục vụ ai, giọng thế nào.",
+  "why": "Gán vai trò (role prompting) trong system prompt là đòn bẩy mạnh nhất cho giọng điệu và trọng tâm. Mô tả cụ thể sản phẩm, đối tượng và giọng điệu giúp giảm lệch mức trang trọng và giảm lạc đề.",
+  "wrong": {
+   "B": "Sai: system prompt chính là chỗ đặt vai trò, ảnh hưởng mạnh tới giọng điệu.",
+   "C": "Chỉ cấm cụm từ không định hình được giọng điệu; hướng dẫn tích cực hiệu quả hơn.",
+   "D": "`max_tokens` chỉ giới hạn độ dài, không sửa giọng điệu."
+  }},
+ {"id": 11492,
+  "remember": "Lọc yêu cầu độc hại **nhanh, rẻ, trước khi** tới hội thoại chính → dùng **model nhẹ (Haiku) làm bộ sàng lọc**, trả kết quả có cấu trúc (ví dụ: có hại/không có hại).",
+  "why": "Anthropic khuyến nghị dùng model nhẹ như Haiku làm “bộ sàng lọc vô hại” cho đầu vào người dùng, trả kết quả có cấu trúc. Nhanh, rẻ, mở rộng được, và chặn trước khi yêu cầu tới hội thoại chính.",
+  "wrong": {
+   "B": "Model lớn nhất chạy hai lần — đắt và chậm, trái yêu cầu độ trễ thấp.",
+   "C": "Chỉ dựa vào system prompt là không đủ trước các mưu toan bẻ khoá có chủ đích.",
+   "D": "Lọc sau khi câu trả lời đã sinh ra là quá muộn."
+  }},
+ {"id": 11493,
+  "remember": "Chống lệnh độc giấu trong email (prompt injection) bằng nhiều lớp: **nói rõ kết quả tool là dữ liệu không đáng tin**, **mã hoá JSON** nội dung, và **lọc bằng model nhẹ** trước khi tới agent chính.",
+  "why": "Ba lớp phòng thủ: system prompt nói rõ kết quả tool là dữ liệu, không bao giờ được ghi đè chỉ dẫn (ô A); mã hoá JSON để dấu nháy hay thẻ trong email không phá vỡ cấu trúc (ô B); bộ phân loại nhẹ sàng lọc và gắn cờ nội dung đáng ngờ (ô C).",
+  "wrong": {
+   "D": "Trộn chỉ dẫn của lập trình viên vào chung với nội dung email làm mờ ranh giới tin cậy — đúng điều kẻ tấn công khai thác.",
+   "E": "Quyền rộng không giới hạn vi phạm đặc quyền tối thiểu, làm thiệt hại lớn hơn nếu bị tấn công."
+  }},
+ {"id": 11494,
+  "remember": "**Prompt template** = phần **cố định** (chỉ dẫn) + **chỗ trống** cho phần **thay đổi** (đầu vào). Dễ dùng lại, dễ kiểm thử; bọc biến trong thẻ XML cho rõ.",
+  "why": "Mẫu prompt tách phần cố định và phần biến đổi bằng các chỗ trống (ô A); nhờ đó kiểm thử dễ — chỉ cần thay giá trị đầu vào (ô B); bọc biến trong thẻ XML giúp cấu trúc rõ ràng (ô C).",
+  "wrong": {
+   "D": "Sai: mẫu prompt dùng được với API và Console, không chỉ trong claude.ai.",
+   "E": "Ngược bản chất: mục đích chính của mẫu là dùng lại phần cố định."
+  }},
+ {"id": 11495,
+  "remember": "Đầu ra lộn xộn định dạng → thêm **3–5 ví dụ mẫu đa dạng** (few-shot) trong thẻ `<example>`. Model sẽ bắt chước đúng định dạng và cách viết nhãn.",
+  "why": "Đưa ví dụ (few-shot) là cách đáng tin nhất để cố định định dạng và cách viết nhãn. Ba đến năm cặp “phiếu → đầu ra” đa dạng cho Claude mẫu chính xác để làm theo.",
+  "wrong": {
+   "A": "Tăng `temperature` làm đầu ra còn thất thường hơn.",
+   "C": "Một ví dụ duy nhất dễ bị bắt chước quá mức và không phủ đủ trường hợp.",
+   "D": "Tóm tắt và giải thích thêm không cố định được định dạng nhãn."
+  }},
+ {"id": 11496,
+  "remember": "Ví dụ mẫu phải **đa dạng**. Ví dụ toàn một kiểu (cùng cảm xúc, cùng cấu trúc) → model học nhầm “quy luật” ngoài ý muốn.",
+  "why": "Cả năm ví dụ đều tích cực, ngắn, cùng cấu trúc câu, nên Claude bắt được những mẫu ngoài ý muốn. Cách sửa là thêm ví dụ tiêu cực, pha trộn và có cấu trúc khác nhau.",
+  "wrong": {
+   "B": "Thiếu thẻ `<thinking>` không phải nguyên nhân lệch về một loại cảm xúc.",
+   "C": "Thêm nhiều ví dụ giống nhau chỉ củng cố thiên lệch.",
+   "D": "Vị trí không phải gốc vấn đề; thiếu đa dạng mới là."
+  }},
+ {"id": 11497,
+  "remember": "Prompt có tài liệu dài: **tài liệu ở đầu, câu hỏi ở cuối**; bọc mỗi tài liệu trong thẻ `<document>`; bảo Claude **trích đoạn liên quan** vào `<quotes>` trước khi trả lời.",
+  "why": "Theo hướng dẫn ngữ cảnh dài: đặt tài liệu dài ở đầu prompt, câu hỏi ở cuối (ô A); bọc mỗi tài liệu trong `<document>` với thẻ con nguồn và nội dung (ô B); yêu cầu trích các đoạn liên quan vào `<quotes>` trước để lọc nhiễu (ô D).",
+  "wrong": {
+   "C": "Ngược hướng dẫn: câu hỏi đặt ở cuối cho chất lượng tốt hơn rõ rệt.",
+   "E": "Sai: Claude xử lý được nhiều tài liệu dài.",
+   "F": "Bỏ thẻ XML làm mất cấu trúc — ngược hướng dẫn."
+  }},
+ {"id": 11498,
+  "remember": "Muốn biết bộ ví dụ mẫu có thừa/thiếu không → **nhờ chính Claude** đánh giá độ liên quan, độ đa dạng, hoặc sinh thêm ví dụ.",
+  "why": "Tài liệu prompt engineering gợi ý nhờ Claude đánh giá các ví dụ về mức liên quan và độ đa dạng, hoặc sinh thêm ví dụ từ bộ ban đầu. Đó là cách kiểm chứng trực tiếp.",
+  "wrong": {
+   "B": "Không có “giới hạn 4 ví dụ”; xoá ngẫu nhiên có thể mất ca biên quan trọng.",
+   "C": "Gộp thành một khối làm mất ranh giới giữa các ví dụ.",
+   "D": "Bỏ hết ví dụ là lùi lại, mất lợi ích của few-shot."
+  }},
+ {"id": 11499,
+  "remember": "Cache hoạt động theo **phần đầu giống hệt**. Đặt điểm ngắt cache (`cache_control`) ở **cuối phần cố định** (system prompt tĩnh); phần thay đổi (tin nhắn người dùng) để **sau** điểm ngắt.",
+  "why": "Cache khớp theo phần đầu prompt cho tới điểm ngắt. Đặt `cache_control` ở khối cuối của system prompt tĩnh thì 6.000 token đó được dùng lại ở mọi yêu cầu; tin nhắn người dùng (luôn khác) nằm sau, không làm hỏng cache.",
+  "wrong": {
+   "B": "Tin nhắn người dùng luôn khác nên mỗi lần đều ghi cache mới, không bao giờ dùng lại được.",
+   "C": "Bỏ qua chính phần tĩnh lớn nhất; đề cũng không nói tool hay đổi.",
+   "D": "Điểm ngắt trên tin nhắn thay đổi chỉ tạo ghi cache lãng phí."
+  }},
+ {"id": 11500,
+  "remember": "Model mới: đầu vào vừa cửa sổ nhưng **đầu vào + max_tokens** vượt → API **vẫn nhận**; nếu chạm trần thì dừng sớm với `stop_reason` = `model_context_window_exceeded`.",
+  "why": "Với các model Claude đời mới, API không còn từ chối khi đầu vào cộng `max_tokens` vượt cửa sổ ngữ cảnh. Yêu cầu được chấp nhận; nếu quá trình viết chạm giới hạn thì dừng sớm và báo lý do `model_context_window_exceeded`.",
+  "wrong": {
+   "B": "Lỗi 400 chỉ xảy ra khi riêng đầu vào đã vượt cửa sổ; trường hợp này là hành vi cũ.",
+   "C": "API không tự cắt lịch sử hội thoại.",
+   "D": "Cửa sổ ngữ cảnh cố định theo model, không tự nâng."
+  }},
+ {"id": 11501,
+  "remember": "Ba nguồn tốn token của agent nhiều tool → ba cách chữa: mô tả tool nạp sẵn dù không dùng → **Tool Search**; nhiều lời gọi tool nhỏ → **programmatic tool calling**; định nghĩa tool lặp lại → **prompt caching**.",
+  "why": "Khớp từng nguồn với cách chữa: lược đồ tool nạp sẵn dù không dùng → Tool Search nạp theo nhu cầu (ô A). Nhiều `tool_result` từ chuỗi lời gọi nhỏ → programmatic tool calling gom thành một đoạn code (ô B). Định nghĩa tool ổn định gửi lại mỗi lần → prompt caching để trả giá đọc cache rẻ hơn (ô C).",
+  "wrong": {
+   "D": "`max_tokens` giới hạn đầu ra, không giảm chi phí đầu vào.",
+   "E": "Cửa sổ lớn hơn không giảm số token gửi đi, chỉ chứa được nhiều hơn.",
+   "F": "Bớt vài ký tự là không đáng kể, không giải quyết nguồn nào."
+  }}
+]

@@ -60,6 +60,10 @@ interface BankBase {
   remember: string;
   /** 💡 Vì sao chọn ô này */
   why: string;
+  /** Khóa thuật ngữ xuất hiện trong câu (tra trong explain.json) — theo thứ tự xuất hiện */
+  terms: string[];
+  /** Lời giải đã viết lại cho người mới */
+  plain?: boolean;
   /** Câu do Claude biên soạn (không thuộc ngân hàng gốc): mã "c-<domain>-<nn>" */
   authored?: string;
   /** Nguồn tài liệu của câu Claude biên soạn */
@@ -115,4 +119,11 @@ export interface DomainMeta {
   /** "Học cái gì" (bảng mục lục của tài liệu) */
   topics: string;
   lessonIds: string[];
+}
+
+/** Từ điển thuật ngữ + tên bài, dùng dưới mỗi câu hỏi (explain.json) */
+export interface ExplainMeta {
+  terms: Record<string, { t: string; d: string; ref?: string }>;
+  /** task "3-1" → "3.1 · Tên bài" */
+  tasks: Record<string, string>;
 }

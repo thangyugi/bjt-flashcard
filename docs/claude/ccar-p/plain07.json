@@ -1,0 +1,201 @@
+[
+ {"id": 11502,
+  "remember": "Cache xếp theo thứ bậc **tools → system → messages**. Đổi thứ gì thì **chỉ phần từ đó trở xuống** bị mất cache. Đổi `tool_choice` chỉ làm mất cache phần **messages**.",
+  "why": "Theo bảng “thay đổi nào làm mất cache” của prompt caching, đổi `tool_choice` chỉ ảnh hưởng các khối tin nhắn. Phần định nghĩa tool và system prompt vẫn đọc từ cache; chỉ phần tin nhắn phải xử lý lại.",
+  "wrong": {
+   "B": "Đổi `tool_choice` khác với sửa mảng `tools`; không làm mất toàn bộ cache.",
+   "C": "Sai: cache phần tin nhắn bị mất.",
+   "D": "Ngược thứ bậc: phần tools ở đầu vẫn còn, phần tin nhắn mới bị mất."
+  }},
+ {"id": 11503,
+  "remember": "Khi tra cache, hệ thống chỉ **soi ngược tối đa 20 khối** tính từ điểm ngắt. Hội thoại dài → **thêm điểm ngắt ở giữa** để không “rơi” mục cache cũ.",
+  "why": "Hệ thống chỉ kiểm tra cache khớp trong khoảng 20 khối trước điểm ngắt. Từ khối 35 lùi 20 khối không tới được khối 12, nên mục cache ở khối 12 không được tìm thấy. Cách chữa: thêm một điểm ngắt ở giữa để chuỗi khớp không bị đứt.",
+  "wrong": {
+   "B": "Cache không chỉ theo dõi đúng lượt gần nhất.",
+   "C": "Không có quy tắc xoá cache sau 30 khối.",
+   "D": "Đặt điểm ngắt ở khối đầu chỉ cache được phần rất nhỏ, bỏ phí phần còn lại."
+  }},
+ {"id": 11504,
+  "remember": "Trường `name` của Skill: chỉ **chữ thường, số, gạch nối**, và **không được chứa “claude” hay “anthropic”** (từ dành riêng).",
+  "why": "Quy tắc frontmatter của `SKILL.md`: `name` chỉ gồm chữ thường, chữ số, dấu gạch nối, và không được chứa từ dành riêng “anthropic” hay “claude”. `claude-pdf-helper` vi phạm đúng điều này.",
+  "wrong": {
+   "B": "Không có độ dài tối thiểu 45 ký tự cho mô tả.",
+   "C": "Không bắt buộc hậu tố phiên bản.",
+   "D": "Ngược lại: gạch nối là ký tự hợp lệ trong `name`."
+  }},
+ {"id": 11505,
+  "remember": "Skill dùng chung cho cả repo → đặt trong **`.claude/skills/`** và **commit vào repo**. Ai clone về là có. (`~/.claude/skills/` là của riêng bạn.)",
+  "why": "Skill cấp dự án nằm trong `.claude/skills/` của repo, đi cùng mã nguồn, nên bất kỳ ai clone repo đều có sẵn, không phải cài thêm.",
+  "wrong": {
+   "B": "`~/.claude/skills/` là thư mục cá nhân trên máy từng người, không tự đồng bộ theo repo.",
+   "C": "Claude Code đọc Skill từ thư mục trên máy, không phải chỉ qua API.",
+   "D": "Tải lên claude.ai không gắn với quyền truy cập repo GitHub."
+  }},
+ {"id": 11506,
+  "remember": "Agent chạy tự động trong CI, **chỉ được đọc** và **không được dừng lại hỏi** → danh sách tool cho phép chỉ gồm tool đọc + `permissionMode: \"dontAsk\"` (tool nào không được phép thì **tự từ chối**, không hỏi).",
+  "why": "Chế độ `dontAsk` tự động từ chối mọi tool không nằm trong danh sách cho phép, thay vì dừng lại hỏi người dùng. Kết hợp với danh sách chỉ gồm tool đọc (`Read`, `Glob`, `Grep`), agent không thể sửa tệp hay chạy shell, và cũng không bị treo chờ duyệt trong CI.",
+  "wrong": {
+   "B": "`bypassPermissions` cho mọi tool khác chạy tự do — danh sách cấm rất dễ sót.",
+   "C": "`default` sẽ quay về hỏi duyệt — đề cấm hỏi tương tác.",
+   "D": "`acceptEdits` tự duyệt việc sửa tệp — đúng điều bị cấm."
+  }},
+ {"id": 11507,
+  "remember": "Muốn subagent **chỉ đọc** dù agent chính có nhiều quyền → khai trường **`tools`** riêng cho subagent. Không khai thì nó **thừa hưởng hết** tool của agent chính.",
+  "why": "Trường `tools` trong định nghĩa subagent (`AgentDefinition`) giới hạn chính xác những tool subagent được dùng, bất kể agent chính có gì. “Chỉ đọc” được bảo đảm bằng cấu hình, không bằng lời mô tả.",
+  "wrong": {
+   "B": "Không khai `tools` thì subagent thừa hưởng tool của agent chính — gồm cả Write, Bash.",
+   "C": "`CLAUDE.md` chỉ là hướng dẫn, không phải ranh giới quyền.",
+   "D": "`plan` là chế độ của cả phiên, không phải cách giới hạn riêng một subagent."
+  }},
+ {"id": 11508,
+  "remember": "Trả lời **1–2 giây**, **khối lượng rất lớn**, việc **đơn giản** (phân loại ý định), **ngân sách chặt** → **Haiku**.",
+  "why": "Haiku 4.5 nhanh nhất, rẻ nhất, và đủ chính xác cho việc phân loại ý định đơn giản. Khớp cả ba ràng buộc: độ trễ, khối lượng, chi phí.",
+  "wrong": {
+   "A": "Opus mạnh nhưng chậm và đắt — thừa sức cho việc phân loại đơn giản.",
+   "C": "Fable là model hàng đầu, đắt, không nhắm tới độ trễ thấp cho việc đơn giản.",
+   "D": "Sonnet cân bằng nhưng vẫn chậm và đắt hơn Haiku cho việc này."
+  }},
+ {"id": 11509,
+  "remember": "Tham số **`effort`** chỉnh model “bỏ công” bao nhiêu: **low** cho việc đơn giản, khối lượng lớn (nhanh, ít token); **high** là mặc định; **xhigh/max** cho việc khó, dài hơi.",
+  "why": "`effort` thấp được thiết kế cho việc đơn giản, khối lượng lớn — như các subagent tra cứu. Nó giảm token và độ trễ mà chất lượng vẫn đủ cho việc tra cứu.",
+  "wrong": {
+   "B": "`max` tốn token và chậm nhất; “bảo đảm” là nói quá.",
+   "C": "`xhigh` dành cho việc agent khó, dài hơi — không phải tra cứu đơn giản.",
+   "D": "Giữ `high` mặc định là không tối ưu gì — trong khi đề muốn giảm độ trễ."
+  }},
+ {"id": 11510,
+  "remember": "Cần **suy luận đầy đủ** mà người dùng **không phải chờ lâu mới thấy chữ** → giữ ngân sách suy luận, đặt **`display: \"omitted\"`** (không truyền phần nghĩ nháp về, chữ trả lời đến sớm hơn).",
+  "why": "Với `display: \"omitted\"`, model vẫn suy nghĩ đầy đủ nhưng không truyền phần “nghĩ nháp” về theo dòng, nên chữ trả lời đầu tiên tới sớm hơn. Giảm thời gian chờ cảm nhận mà không cắt phần suy luận cần cho bài toán khó.",
+  "wrong": {
+   "B": "Tắt suy luận làm giảm độ chính xác cho bài toán định giá phức tạp.",
+   "C": "Ngân sách nhỏ cố định cắt bớt suy luận — hy sinh đúng độ chính xác cần giữ.",
+   "D": "Sai: ngân sách lớn hơn thường chậm hơn chứ không nhanh hơn."
+  }},
+ {"id": 11511,
+  "remember": "Cache mặc định sống **5 phút**; có tuỳ chọn **1 giờ** (ghi đắt hơn chút). Người dùng **nghỉ hơn 5 phút giữa các câu hỏi** → chọn **cache 1 giờ**.",
+  "why": "Cache 5 phút sẽ hết hạn giữa các câu hỏi cách nhau hơn 20 phút, nên lần nào cũng phải ghi lại với giá đầy đủ. Cache 1 giờ ghi đắt hơn một chút nhưng còn sống suốt các khoảng nghỉ, nên tổng chi phí và độ trễ thấp hơn.",
+  "wrong": {
+   "B": "Sai: cache 5 phút hết hạn trước khi có câu hỏi tiếp theo.",
+   "C": "Caching giảm cả chi phí đầu vào lẫn thời gian chờ chữ đầu tiên với tài liệu dài.",
+   "D": "Cache phần thay đổi (câu hỏi) thì không bao giờ khớp; phải cache phần lặp lại (hợp đồng)."
+  }},
+ {"id": 11512,
+  "remember": "Agent khảo sát **quá hẹp, bỏ sót** ở mức effort mặc định → **nâng `effort`** (ví dụ `xhigh`) và nới `max_tokens`, chấp nhận tốn hơn và chậm hơn mỗi lượt.",
+  "why": "Triệu chứng là agent khoanh phạm vi khảo sát quá hẹp ở mức mặc định — đúng thứ `effort` cao hơn sửa được: nghĩ sâu hơn, khảo sát rộng hơn. Ô A nâng lên `xhigh` và nới `max_tokens` cho đủ chỗ, đồng thời nói rõ cái giá: tốn token hơn, mỗi lượt lâu hơn. Với việc nhiều giờ, ngân sách hàng triệu token, đây là đánh đổi hợp lý.",
+  "wrong": {
+   "B": "Hạ effort làm phạm vi vốn đã hẹp còn hẹp hơn — đi ngược vấn đề.",
+   "C": "Lời nhắc “hãy kỹ hơn” không thay được ngân sách suy luận; “chắc chắn thay thế được” là cam kết sai.",
+   "D": "Model nhỏ hơn, effort thấp giảm độ sâu suy luận cho một việc cần khảo sát rộng — tối ưu sai hướng."
+  }},
+ {"id": 11513,
+  "remember": "**Contextual Retrieval** = thêm vài câu ngữ cảnh vào đầu mỗi mẩu tài liệu, rồi dùng **chính bản đã thêm ngữ cảnh** cho **cả** chỉ mục vector **và** chỉ mục từ khoá (BM25).",
+  "why": "Anthropic mô tả Contextual Retrieval gồm cả Contextual Embeddings **và** Contextual BM25: cùng một đoạn ngữ cảnh riêng của từng mẩu được ghép vào đầu mẩu, rồi mới đưa vào cả hai chỉ mục. Ô A làm đúng vậy — BM25 vẫn khớp nguyên văn mã sản phẩm, chuỗi lỗi, mà nay có thêm ngữ cảnh cấp tài liệu.",
+  "wrong": {
+   "B": "Bỏ hẳn BM25 là mất khả năng khớp chính xác mã sản phẩm, chuỗi lỗi mà đề muốn giữ.",
+   "C": "Chỉnh trọng số không thêm ngữ cảnh nào, lại làm yếu phần khớp từ khoá.",
+   "D": "Chỉ đánh chỉ mục tiêu đề thì mã lỗi trong thân bài không khớp được nữa."
+  }},
+ {"id": 11514,
+  "remember": "Đặt điểm ngắt cache ở **cuối phần lặp lại** (tài liệu dùng chung), **ngay trước** phần thay đổi (câu hỏi). Phần sau điểm ngắt khác nhau vẫn hưởng lợi từ cache.",
+  "why": "Cache hoạt động theo phần đầu prompt: mọi thứ tới điểm ngắt phải giống hệt giữa các yêu cầu. Tài liệu lặp lại ở mọi phiên, câu hỏi thì thay đổi, nên đặt điểm ngắt ở khối cuối của phần tài liệu ngay trước câu hỏi là đúng — cache được phần dài và đắt nhất.",
+  "wrong": {
+   "B": "Câu hỏi đổi mỗi lần nên phần đầu không bao giờ khớp, cache gần như luôn trượt.",
+   "C": "Bỏ không cache chính phần tài liệu dài, lặp lại.",
+   "D": "Sai: cache theo phần đầu; phần cuối khác nhau vẫn được hưởng lợi."
+  }},
+ {"id": 11515,
+  "remember": "Ba bước giảm “tìm trượt” đã được Anthropic đo: (1) **thêm ngữ cảnh vào mỗi mẩu** trước khi tạo embedding; (2) **BM25 trên mẩu đã thêm ngữ cảnh**; (3) **xếp hạng lại** (rerank) các ứng viên.",
+  "why": "Bài Contextual Retrieval của Anthropic đo được: Contextual Embeddings giảm tỉ lệ tìm hỏng; thêm Contextual BM25 giảm thêm; thêm bước xếp hạng lại giảm tiếp. Ba ô A, B, C đúng là ba bước đó. Các ô khác chạm vào bước sinh câu trả lời, kích thước chỉ mục hay tốc độ dựng — không phải bước tìm.",
+  "wrong": {
+   "D": "Temperature ở bước trả lời cuối không ảnh hưởng mẩu nào được tìm thấy.",
+   "E": "Lượng tử hoá nhị phân để tiết kiệm dung lượng, thường đổi lại một chút độ chính xác.",
+   "F": "Bỏ chồng lấn để dựng nhanh hơn, dễ cắt ngữ cảnh ở ranh giới mẩu — có thể còn tệ hơn."
+  }},
+ {"id": 11516,
+  "remember": "Voyage embeddings: câu người dùng gõ → `input_type='query'`; đoạn văn đánh chỉ mục → `input_type='document'`. Vector đã chuẩn hoá độ dài 1 nên **cosine và tích vô hướng xếp hạng như nhau**.",
+  "why": "Voyage khuyên đặt `input_type` đúng vai: `query` cho câu hỏi, `document` cho đoạn được đánh chỉ mục — model thêm lời nhắc phù hợp để hai phía khớp nhau tốt hơn (ô A, B). Embedding của Voyage được chuẩn hoá về độ dài 1, nên độ tương đồng cosine và tích vô hướng cho cùng thứ hạng (ô D).",
+  "wrong": {
+   "C": "Để trống vẫn chạy, nhưng bỏ lỡ tối ưu mà tài liệu khuyên dùng.",
+   "E": "Lượng tử hoá nhị phân là để tiết kiệm, không phải tăng độ chính xác.",
+   "F": "Gán `document` cho cả câu hỏi là sai vai; cấu hình giống nhau không phải mục tiêu."
+  }},
+ {"id": 11517,
+  "remember": "Một khoá API dùng chung cho nhiều khách → khoá **không** cho biết ai gọi. Gắn **mã người dùng và mã khách thuê** vào **telemetry** (`OTEL_RESOURCE_ATTRIBUTES`) để mọi sự kiện tool mang theo danh tính.",
+  "why": "Dùng một chứng danh chung thì khoá API không phân biệt được khách thuê, nên danh tính phải đi theo dữ liệu đo (telemetry). Ô A đưa `enduser.id` và `tenant.id` vào `OTEL_RESOURCE_ATTRIBUTES`, nhờ vậy các sự kiện quyết định gọi tool, kết quả tool, kết nối MCP đều mang người dùng/khách thuê — trả lời thẳng câu “khách nào đã kích hoạt hành động MCP này”.",
+  "wrong": {
+   "B": "Một khoá cho mỗi khách là gánh nặng vận hành lớn, và vẫn chỉ biết tới khách thuê, không tới từng người.",
+   "C": "Đẩy việc sang khách tự dựng bộ thu thập, mà vẫn phải tách luồng chung — không giải quyết gì.",
+   "D": "Đoán từ nội dung không phải dấu vết kiểm toán, lại tăng rủi ro lộ dữ liệu."
+  }},
+ {"id": 11518,
+  "remember": "Giám sát Claude Code cho **hàng trăm kỹ sư**: đặt biến đo đạc trong **settings do quản trị quản lý** (không bắt từng người tự cài), thêm **nhãn phòng ban/trung tâm chi phí**, và **tắt các nhãn quá chi tiết** (như session ID) để chi phí lưu trữ không phình.",
+  "why": "Đề cần cấu hình mở rộng được mà không cài cho từng người, và chi phí lưu trữ dự đoán được. Ô A đặt biến trong settings do quản trị quản lý; ô B thêm `department`, `cost_center` để chia chi phí theo nhóm; ô C tắt `OTEL_METRICS_INCLUDE_SESSION_ID` và các cờ tương tự để số chuỗi dữ liệu không phình to.",
+  "wrong": {
+   "D": "`console` chỉ in ra máy từng người, không có bộ thu thập trung tâm — trái mục tiêu.",
+   "E": "Bắt từng người tự khai trong shell chính là cấu hình theo từng người mà đề muốn tránh, dễ lệch nhau."
+  }},
+ {"id": 11519,
+  "remember": "Tổ chức càng đông thì **tỉ lệ người dùng cùng lúc càng thấp** → hạn mức **trên đầu người giảm** khi quy mô tăng. Đừng nhân con số của nhóm nhỏ lên.",
+  "why": "Bảng khuyến nghị hạn mức của Claude Code cho TPM/RPM mỗi người giảm dần theo quy mô, vì càng đông người thì tỉ lệ người dùng đồng thời càng thấp. Nhân con số của mức 15 người với 300 sẽ cấp thừa. Ô A nói đúng: dùng con số thấp hơn của mức 300 người.",
+  "wrong": {
+   "B": "Sai: khuyến nghị giảm theo quy mô, không giữ nguyên.",
+   "C": "Hạn mức áp ở cấp tổ chức, nên vẫn phải tính tổng.",
+   "D": "Claude Console cũng có hạn mức cấp tổ chức."
+  }},
+ {"id": 11520,
+  "remember": "Chạy Claude qua **Bedrock/Vertex** thì bảng điều khiển và trần chi tiêu của Anthropic **không thấy** lưu lượng đó. Muốn đo và giới hạn theo từng người → tự đặt một **cổng (gateway)** phía trước.",
+  "why": "Khi chạy qua Bedrock, các công cụ của Anthropic không nhìn thấy lưu lượng này. Muốn gán chi phí theo từng người và chặn cứng theo từng người, phải có một lớp ở giữa do mình kiểm soát: ô A là cổng tự lưu trữ đặt trước Bedrock, thêm quy mức dùng theo người, số đo token, và trần chi theo người.",
+  "wrong": {
+   "B": "Bảng phân tích của Anthropic không nhận dữ liệu từ Bedrock.",
+   "C": "Lệnh trên máy từng người không áp được giới hạn cho cả hệ thống Bedrock.",
+   "D": "Trần workspace của Console chỉ áp cho lưu lượng qua API của Anthropic."
+  }},
+ {"id": 11521,
+  "remember": "**Ít tool, mô tả ngắn, lần nào cũng dùng** → cứ khai báo bình thường. Tool Search chỉ đáng khi có **rất nhiều** tool mà mỗi lần chỉ cần vài cái.",
+  "why": "8 tool, mỗi cái dưới 100 token, gần như yêu cầu nào cũng cần vài cái — tổng chỉ vài trăm token. Bật Tool Search hay hoãn nạp chỉ thêm một vòng tìm trước mỗi lần gọi mà không tiết kiệm được gì. Ô A là cách đơn giản nhất mà vẫn tốt.",
+  "wrong": {
+   "B": "Thêm bước tìm kiếm thừa cho một danh mục nhỏ.",
+   "C": "Hoãn nạp những tool lần nào cũng cần chỉ làm chậm.",
+   "D": "Làm quá mức, cùng nhược điểm như ô C."
+  }},
+ {"id": 11522,
+  "remember": "Phiên làm việc dài sắp đầy cửa sổ ngữ cảnh mà vẫn cần nhớ phát hiện cũ → bật **compaction**: tự tóm tắt các lượt trước để phiên chạy tiếp.",
+  "why": "Compaction tự động tóm tắt các lượt cũ khi ngữ cảnh gần đầy, giữ lại những phát hiện quan trọng, để phiên chạy tiếp vượt qua giới hạn — đúng tình huống: chạy nhiều giờ và vẫn phải tham chiếu kết quả cũ.",
+  "wrong": {
+   "B": "Tăng `max_tokens` chỉ thêm chỗ cho đầu ra, không giải quyết việc đầu vào đầy — còn chiếm thêm chỗ.",
+   "C": "Tải lại mọi tài liệu cũ làm ngữ cảnh đầy nhanh hơn.",
+   "D": "Cửa sổ nhỏ hơn đi ngược vấn đề, đẩy việc tóm tắt sang người dùng."
+  }},
+ {"id": 11523,
+  "remember": "Muốn Claude tìm tool bằng **chỉ mục embedding của riêng bạn** → tự viết **một tool tìm kiếm tuỳ biến**, trả về các khối `tool_reference`; Claude sẽ nạp các tool được tham chiếu.",
+  "why": "Tool Search hỗ trợ cách làm tuỳ biến: một tool của bạn chạy tìm kiếm bằng embedding, rồi trả `tool_reference` trong `tool_result`; Claude nạp các tool đó. Ô A dùng đúng chỉ mục sẵn có — hợp với mô tả tool ít chữ nhưng liên quan về nghĩa.",
+  "wrong": {
+   "B": "BM25 là khớp từ khoá; mô tả ít chữ chính là chỗ nó yếu.",
+   "C": "Regex không hiểu nghĩa.",
+   "D": "Tắt tìm kiếm, nạp hết tool là bỏ yêu cầu khám phá tool và làm phình ngữ cảnh."
+  }},
+ {"id": 11524,
+  "remember": "Tool Search có 2 kiểu dựng sẵn: **regex** = khớp mẫu **chính xác** (hợp tên có tiền tố như `db_read_`); **BM25** = xếp hạng theo **từ ngữ tự nhiên** (mờ hơn).",
+  "why": "Ở biến thể regex, Claude tự viết mẫu tìm kiếm kiểu Python trên tên và mô tả tool, nên khớp chính xác được tiền tố như `db_read_` hoặc cả hai thứ tự từ. Đề nói rõ muốn khớp mẫu chính xác thay vì xếp hạng mờ — đó là ô A.",
+  "wrong": {
+   "B": "BM25 với câu tự nhiên chính là kiểu xếp hạng mờ đề muốn tránh.",
+   "C": "Memory tool để lưu thông tin giữa các phiên, không phải tìm tool.",
+   "D": "Code execution chạy script trong sandbox, không phải cơ chế tìm tool."
+  }},
+ {"id": 11525,
+  "remember": "Muốn Messages API **tự gọi MCP server** (MCP connector) → server phải là **MCP từ xa qua HTTP** (Streamable HTTP/SSE), khai trong `mcp_servers`. API **không chạy được** server `stdio` trên máy bạn.",
+  "why": "Muốn gọi từ phía server qua Messages API mà không phải vận hành tiến trình MCP client riêng thì dùng MCP connector — và connector chỉ hỗ trợ server từ xa qua HTTP. Ô A triển khai dịch vụ thành MCP server từ xa rồi khai trong `mcp_servers`.",
+  "wrong": {
+   "B": "API không thể khởi chạy tiến trình trên máy của bạn; `stdio` không được hỗ trợ.",
+   "C": "Khai thành tool phía máy khách thì ứng dụng phải tự chạy vòng `tool_use` — đúng việc đề muốn tránh.",
+   "D": "Files API chỉ chứa tệp, không chạy hay gọi tool."
+  }},
+ {"id": 11526,
+  "remember": "Cần agent **tự đọc, sửa code, chạy test qua nhiều vòng** mà **không tự viết vòng lặp tool** → **Claude Agent SDK** (có sẵn vòng lặp + tool `Read`, `Edit`, `Bash`).",
+  "why": "Agent SDK cung cấp sẵn vòng lặp agent và các tool dựng sẵn `Read`, `Edit`, `Bash`; nó tự chạy tool rồi gửi kết quả lại cho model — đúng yêu cầu lặp tới khi test qua mà không phải tự viết code xử lý `tool_use`.",
+  "wrong": {
+   "B": "Tự viết vòng lặp soi `stop_reason` chính là việc đề muốn tránh.",
+   "C": "CI là tự động; không có người ngồi duyệt từng lần sửa.",
+   "D": "MCP connector chỉ cung cấp tool, không có môi trường chạy test và sửa code; vẫn phải tự lo phần còn lại."
+  }}
+]

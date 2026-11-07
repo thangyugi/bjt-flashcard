@@ -12,6 +12,9 @@ import { seededShuffle } from "./shuffle";
 export const GUIDE = guideJson as unknown as Guide;
 export const BANK = bankJson as unknown as BankQuestion[];
 export const SUPPLEMENT = supplementJson as unknown as Supplement;
+/** Ngân hàng đề gốc (200 câu) và bộ câu Claude biên soạn — luôn để riêng, không trộn vào nhau */
+export const ORIGINAL = BANK.filter((q) => !q.authored);
+export const AUTHORED = BANK.filter((q) => q.authored);
 export const DOMAINS: GuideDomain[] = GUIDE.domains;
 export const TASKS: (GuideTask & { domain: number })[] = DOMAINS.flatMap((d) => d.tasks.map((t) => ({ ...t, domain: d.num })));
 
@@ -149,23 +152,28 @@ export interface PracticeSet {
 
 export function practiceSets(): PracticeSet[] {
   const sets: PracticeSet[] = [];
+  // Đề gốc: theo domain, theo task statement, bộ v2 — không lẫn câu Claude biên soạn
   for (const d of DOMAINS) {
-    const ids = BANK.filter((q) => q.domain === d.num).map((q) => q.id);
-    const own = BANK.filter((q) => q.domain === d.num && q.authored).length;
-    sets.push({ id: setId.domain(d.num), kind: "domain", title: `Domain ${d.num} · ${d.title}`, desc: `${ids.length} câu${own ? ` (${own} câu Claude biên soạn)` : ""} · tỉ trọng đề thật ${d.weight}%`, ids });
+    const ids = ORIGINAL.filter((q) => q.domain === d.num).map((q) => q.id);
+    sets.push({ id: setId.domain(d.num), kind: "domain", title: `Domain ${d.num} · ${d.title}`, desc: `${ids.length} câu đề gốc · tỉ trọng đề thật ${d.weight}%`, ids });
   }
   for (const t of TASKS) {
-    const ids = BANK.filter((q) => q.task === t.id).map((q) => q.id);
-    if (ids.length) sets.push({ id: setId.task(t.id), kind: "task", title: `${t.code} · ${t.title}`, desc: `${ids.length} câu của task statement ${t.code}`, ids, lessonId: t.id });
+    const ids = ORIGINAL.filter((q) => q.task === t.id).map((q) => q.id);
+    if (ids.length) sets.push({ id: setId.task(t.id), kind: "task", title: `${t.code} · ${t.title}`, desc: `${ids.length} câu đề gốc của task statement ${t.code}`, ids, lessonId: t.id });
   }
-  const v2 = BANK.filter((q) => q.v2).map((q) => q.id);
+  const v2 = ORIGINAL.filter((q) => q.v2).map((q) => q.id);
   sets.push({ id: setId.v2, kind: "v2", title: "Bộ đề v2", desc: `${v2.length} câu của bộ “ccar-p-v2” trong ngân hàng gốc`, ids: v2 });
-  const authored = BANK.filter((q) => q.authored);
-  if (authored.length) {
-    sets.push({ id: setId.authored(), kind: "authored", title: AUTHORED_SET_TITLE, desc: `${authored.length} câu mới do Claude biên soạn theo tài liệu công khai của Anthropic`, ids: authored.map((q) => q.id) });
+  // Bộ Claude biên soạn: cả bộ, theo domain, theo task statement
+  if (AUTHORED.length) {
+    sets.push({ id: setId.authored(), kind: "authored", title: AUTHORED_SET_TITLE, desc: `${AUTHORED.length} câu mới do Claude biên soạn theo tài liệu công khai của Anthropic`, ids: AUTHORED.map((q) => q.id) });
     for (const d of DOMAINS) {
-      const ids = authored.filter((q) => q.domain === d.num).map((q) => q.id);
+      const ids = AUTHORED.filter((q) => q.domain === d.num).map((q) => q.id);
       if (ids.length) sets.push({ id: setId.authored(d.num), kind: "authored", title: `${AUTHORED_SET_TITLE} · Domain ${d.num}`, desc: `${ids.length} câu Claude biên soạn của Domain ${d.num} · ${d.title}`, ids });
+    }
+    for (const t of TASKS) {
+      const ids = AUTHORED.filter((q) => q.task === t.id).map((q) => q.id);
+      if (ids.length)
+        sets.push({ id: setId.authoredTask(t.id), kind: "authored", title: `${AUTHORED_SET_TITLE} · ${t.code}`, desc: `${ids.length} câu Claude biên soạn của task statement ${t.code} · ${t.title}`, ids, lessonId: t.id });
     }
   }
   return sets;
@@ -173,6 +181,8 @@ export function practiceSets(): PracticeSet[] {
 
 export interface MockExam {
   id: string;
+  /** "original": lấy từ ngân hàng đề gốc · "authored": lấy từ bộ Claude biên soạn */
+  source: "original" | "authored";
   title: string;
   desc: string;
   minutes: number;
@@ -192,27 +202,47 @@ export function domainQuota(total = EXAM_FACTS.items): Record<number, number> {
   return q;
 }
 
-/**
- * 3 đề thi thử 63 câu, lấy mẫu theo tỉ trọng domain; cố định (cùng đề → cùng câu).
- * Mỗi domain xáo một lần rồi các đề lấy các đoạn nối tiếp → ít trùng câu giữa các đề.
- */
-export function mockExams(): MockExam[] {
+/** Lấy `count` đề 63 câu từ một nguồn câu hỏi, theo tỉ trọng domain; mỗi domain xáo một lần rồi các đề lấy các đoạn nối tiếp → ít trùng câu. */
+function buildExams(source: BankQuestion[], count: number, seed: string): number[][] {
   const quota = domainQuota();
-  const pools = Object.fromEntries(DOMAINS.map((d) => [d.num, seededShuffle(BANK.filter((q) => q.domain === d.num).map((q) => q.id), `ccarp-pool-${d.num}`)]));
-  return [1, 2, 3].map((n) => {
+  const pools = Object.fromEntries(DOMAINS.map((d) => [d.num, seededShuffle(source.filter((q) => q.domain === d.num).map((q) => q.id), `${seed}-pool-${d.num}`)]));
+  return Array.from({ length: count }, (_, i) => {
+    const n = i + 1;
     const ids: number[] = [];
     for (const d of DOMAINS) {
       const pool = pools[d.num];
       const k = Math.min(quota[d.num], pool.length);
-      for (let i = 0; i < k; i++) ids.push(pool[((n - 1) * k + i) % pool.length]);
+      for (let j = 0; j < k; j++) ids.push(pool[((n - 1) * k + j) % pool.length]);
     }
-    return {
-      id: `exam-${n}`,
-      title: `Đề thi thử ${n}`,
-      desc: `${ids.length} câu lấy theo tỉ trọng chính thức của 7 domain · ${EXAM_FACTS.minutes} phút · đạt ≥ ${MOCK_PASS_PCT}%.`,
-      minutes: EXAM_FACTS.minutes,
-      passPct: MOCK_PASS_PCT,
-      ids: seededShuffle(ids, `ccarp-exam-${n}`),
-    };
+    return seededShuffle(ids, `${seed}-exam-${n}`);
   });
+}
+
+/**
+ * Đề thi thử 63 câu, cố định (cùng đề → cùng câu), lấy theo tỉ trọng chính thức của 7 domain:
+ * 3 đề chỉ gồm câu ngân hàng gốc + 1 đề chỉ gồm câu Claude biên soạn — hai nguồn không trộn vào nhau.
+ */
+export function mockExams(): MockExam[] {
+  const desc = (n: number, src: string) => `${n} câu ${src}, lấy theo tỉ trọng chính thức của 7 domain · ${EXAM_FACTS.minutes} phút · đạt ≥ ${MOCK_PASS_PCT}%.`;
+  const original = buildExams(ORIGINAL, 3, "ccarp").map((ids, i) => ({
+    id: `exam-${i + 1}`,
+    source: "original" as const,
+    title: `Đề gốc ${i + 1}`,
+    desc: desc(ids.length, "trong ngân hàng đề gốc"),
+    minutes: EXAM_FACTS.minutes,
+    passPct: MOCK_PASS_PCT,
+    ids,
+  }));
+  const authored = AUTHORED.length
+    ? buildExams(AUTHORED, 1, "ccarp-claude").map((ids, i) => ({
+        id: `exam-claude-${i + 1}`,
+        source: "authored" as const,
+        title: `Đề Claude biên soạn ${i + 1}`,
+        desc: desc(ids.length, "do Claude biên soạn"),
+        minutes: EXAM_FACTS.minutes,
+        passPct: MOCK_PASS_PCT,
+        ids,
+      }))
+    : [];
+  return [...original, ...authored];
 }
