@@ -1,0 +1,202 @@
+[
+ {"id": 11340,
+  "remember": "Tài liệu cho **đội trực tiếp xây** phải đủ để làm mà không cần hỏi: trách nhiệm từng thành phần, giao kèo giữa chúng, sơ đồ luồng chính, tham số cấu hình kèm giá trị mặc định, sổ tay vận hành.",
+  "why": "Đội sẽ xây và vận hành hệ thống, nên cần bộ đầy đủ như ô A: mỗi thành phần làm gì, các thành phần giao tiếp theo giao kèo nào, sơ đồ tuần tự cho các luồng chính, tham số cấu hình và mặc định, sổ tay vận hành. Các ô khác đều thiếu một mảnh mà đội sẽ phải quay lại hỏi.",
+  "wrong": {
+   "B": "Thiếu sơ đồ luồng, tham số cấu hình và sổ tay vận hành.",
+   "C": "Thiếu giao kèo giao diện và bảng tham số — không đủ để viết code tích hợp.",
+   "D": "Chỉ có tổng quan và giới hạn — quá chung chung để xây."
+  }},
+ {"id": 11341,
+  "remember": "Tối ưu chi phí: tìm **nguồn tốn nhiều nhất** rồi đánh đúng vào đó. Prompt dài lặp lại → **cache**; ngữ cảnh truy hồi lớn → **chỉ giữ đoạn liên quan**.",
+  "why": "Ô C đánh vào đúng hai nguồn chi phí đề nêu: đưa system prompt dài lặp lại vào phần đầu có thể cache (đọc từ cache rẻ hơn nhiều so với đọc mới), và cắt ngữ cảnh truy hồi chỉ còn những đoạn liên quan tới từng câu hỏi. Không đổi model, không hy sinh chất lượng.",
+  "wrong": {
+   "A": "Truy hồi nhiều hơn là làm nặng thêm đúng nguồn chi phí.",
+   "B": "Thêm nội dung lặp vào system prompt là tăng đúng thứ đang tốn tiền nhất.",
+   "D": "Model nặng nhất có giá mỗi token còn cao hơn."
+  }},
+ {"id": 11342,
+  "remember": "Minh bạch về AI = (1) **cho người dùng biết** có AI tham gia; (2) **luôn có đường gặp người thật** khi cần.",
+  "why": "Ô C đáp ứng cả hai vế: công bố cho người dùng cuối biết có AI tham gia theo chính sách của tổ chức, và cung cấp lối đi có tài liệu để gặp nhân viên thật. Đây cũng là yêu cầu pháp lý ở nhiều nơi.",
+  "wrong": {
+   "A": "Nói sai vai trò của AI là lừa dối người dùng.",
+   "B": "Từ chối trả lời người dùng có AI tham gia hay không là che giấu.",
+   "D": "Chỉ báo cho nhân viên nội bộ trong khi người chịu ảnh hưởng lại không được biết."
+  }},
+ {"id": 11343,
+  "remember": "Code do AI viết **vẫn phải có người soát**. Và **số dòng** không nói lên rủi ro: 5 dòng sửa phần đăng nhập có thể nguy hiểm hơn 500 dòng giao diện.",
+  "why": "Ô A chỉ ra lỗi nguyên tắc: bỏ soát xét là bỏ luôn cơ chế kiểm chứng bắt buộc cho đầu ra của AI. Ô E chỉ ra lỗi tiêu chí: số dòng là thước đo tồi cho rủi ro — một thay đổi nhỏ ở xác thực hay câu truy vấn SQL có thể nguy hiểm hơn hàng trăm dòng khác. Cả hai thể hiện sự cần mẫn: chịu trách nhiệm cho những gì AI tạo ra.",
+  "wrong": {
+   "B": "Mở rộng năng lực soát là giải pháp nguồn lực, không phải phản bác đề xuất, và cũng không thực tế.",
+   "C": "Nâng ngưỡng lên 200 dòng là nới thêm một tiêu chí vốn đã sai.",
+   "D": "Từ chối mọi pull request của AI là cực đoan, phá mục đích dùng Claude Code."
+  }},
+ {"id": 11344,
+  "remember": "SLA có ý nghĩa phải có đủ **4 phần**: **chỉ số** gì, **ngưỡng** bao nhiêu, đo trong **khoảng thời gian** nào, và **vi phạm thì sao**. Ví dụ: “p95 dưới 800 ms, tính trên 28 ngày, vi phạm thì…”.",
+  "why": "Ô B có đủ bốn phần: chỉ số xác định, ngưỡng, cửa sổ đánh giá, và hệ quả khi vi phạm (ví dụ độ trễ p95 mỗi yêu cầu dưới 800 ms trong 28 ngày). Chỉ khi đủ như vậy mới đo được, biết lúc nào vi phạm và kích hoạt khắc phục.",
+  "wrong": {
+   "A": "“Nhóm thấy hài lòng” không đo khách quan được.",
+   "C": "“Nhanh và đáng tin” không có chỉ số, ngưỡng hay thời gian đo.",
+   "D": "Thiếu khoảng thời gian đo và hệ quả — không biết khi nào vi phạm và phải làm gì."
+  }},
+ {"id": 11345,
+  "remember": "HIPAA bảo vệ thông tin sức khoẻ (PHI) ở hai mặt: **chỉ người có thẩm quyền xem được**, và **không đưa cho bên thứ ba khi chưa ký BAA**.",
+  "why": "Ô C: kiểm soát truy cập theo vai trò để chỉ người có thẩm quyền mới truy hồi được PHI. Ô D: dữ liệu bệnh nhân không được rời sang bên thứ ba (kể cả nhà cung cấp model) khi chưa có BAA. Cả hai kiểm soát trực tiếp luồng dữ liệu bệnh nhân; các ô khác là tối ưu chi phí, chất lượng hay trải nghiệm.",
+  "wrong": {
+   "A": "Giảm độ dài câu trả lời là chuyện chi phí; PHI vẫn đi qua như cũ.",
+   "B": "Model mạnh nhất không phải yêu cầu của HIPAA; model mạnh mà không có BAA vẫn vi phạm.",
+   "E": "Streaming chỉ giảm cảm giác chờ — chuyện trải nghiệm, không bảo vệ PHI."
+  }},
+ {"id": 11346,
+  "remember": "Thiết kế khâu người duyệt: (1) **chỗ nào cần người** (theo mức tác động và có đảo ngược được không) → (2) **soát bao nhiêu, khi nào leo thang** ở mỗi chỗ → rồi mới chạy thử.",
+  "why": "Bước nền là ô E: xác định những điểm quyết định cần người giám sát, dựa trên mức tác động và khả năng hoàn tác. Ngay sau đó là ô A: ở mỗi điểm đó, định cách lấy mẫu để soát và tiêu chí leo thang. Thiếu hai thứ này thì không có gì để thử. Tài liệu, đào tạo đội soát thường hoàn thiện sau khi thiết kế đã được thử nghiệm.",
+  "wrong": {
+   "B": "Lặp lại dựa trên kết quả chạy thử — phải chạy thử rồi mới có kết quả.",
+   "C": "Đào tạo cả đội soát là bước vận hành; làm trước khi thiết kế được kiểm chứng dễ phải làm lại.",
+   "D": "Tài liệu chốt SLA là đầu ra hoàn thiện sau khi chạy thử có số liệu thật."
+  }},
+ {"id": 11347,
+  "remember": "Dùng đúng tầng cấu hình: **dùng chung cả nhóm** → tầng dự án (commit vào repo); **bảo mật không ai được tắt** → tầng quản trị; **sở thích riêng** → tầng cá nhân.",
+  "why": "Ô A: MCP server và quy tắc quyền dùng chung đặt ở tầng dự án, commit vào repo, nên cả nhóm có cùng cấu hình. Ô B: thiết lập bảo mật đặt ở cấu hình quản trị — tầng ưu tiên cao nhất, kỹ sư không ghi đè được. Mỗi tầng được dùng đúng mục đích.",
+  "wrong": {
+   "C": "Tầng local là cá nhân, ai cũng tự nới được — ngược với yêu cầu bảo mật.",
+   "D": "Tầng người dùng nằm trên máy từng người, không chia sẻ được qua repo.",
+   "E": "Ép sở thích cá nhân lên cả nhóm; thứ đó thuộc tầng cá nhân."
+  }},
+ {"id": 11348,
+  "remember": "Mỗi tool thừa đều có giá: tốn token, model dễ chọn nhầm, thêm chỗ để tấn công. Chỉ giữ tool **bắt buộc** và tool **dùng thường xuyên**; bỏ tool “thỉnh thoảng” và “biết đâu sau này cần”.",
+  "why": "Ô C giữ đúng hai nhóm có lý do cụ thể: nhóm bắt buộc cho các việc đã định, và nhóm dùng thường xuyên giúp bớt chuyển giao qua lại. Nhóm 3 và 4 là “phình năng lực” — chỉ thêm chi phí và rủi ro.",
+  "wrong": {
+   "A": "Bỏ cả tool bắt buộc để giữ tool cho việc không liên quan — agent không làm được việc chính.",
+   "B": "Chỉ giữ tool phỏng đoán cho tương lai, lại mất tool bắt buộc.",
+   "D": "Nhiều tool hơn không “luôn tốt hơn”; nó làm model chọn tool kém chính xác và tăng rủi ro."
+  }},
+ {"id": 11349,
+  "remember": "Ghi lại quyết định kiến trúc → **ADR** (Architecture Decision Record): bối cảnh, quyết định, phương án đã cân nhắc, hệ quả, ngày và người quyết định.",
+  "why": "Kiểm toán và người mới cần một bản ghi bền, có cấu trúc, trả lời được “vì sao chọn cái này mà không chọn cái kia”. Ô C — ADR — có đủ bối cảnh, quyết định, phương án thay thế, hệ quả, ngày tháng và tác giả.",
+  "wrong": {
+   "A": "Slide không có lý lẽ viết ra — thiếu đúng phần kiểm toán cần.",
+   "B": "Chú thích code của một người: rời rạc, một chiều, không ghi phương án đã xét hay ai duyệt.",
+   "D": "Nói miệng, không có bản ghi thì không kiểm toán được."
+  }},
+ {"id": 11350,
+  "remember": "Tài liệu truy hồi có thể **bị cài lệnh độc** (prompt injection gián tiếp) → coi **mọi nội dung truy hồi là không đáng tin**: lọc đầu vào + kiểm đầu ra.",
+  "why": "Mối đe doạ là lệnh độc giấu trong tài liệu được truy hồi. Ô A xử lý đúng điểm vào: coi mọi nội dung truy hồi là dữ liệu không đáng tin, dùng bộ phân loại đầu vào để phát hiện, và kiểm đầu ra để chặn hậu quả. Các ô khác chỉ giảm một hệ quả phụ hoặc phát hiện muộn.",
+  "wrong": {
+   "B": "Bắt trích dẫn chống bịa, nhưng tài liệu bị cài lệnh vẫn được trích dẫn đàng hoàng.",
+   "C": "Giới hạn đích gọi ra chỉ hạn chế rò rỉ dữ liệu, không ngăn model bị thao túng.",
+   "D": "Bộ đánh giá định kỳ là kiểm thử, không phải biện pháp chặn lúc chạy."
+  }},
+ {"id": 11351,
+  "remember": "Bộ đánh giá phải **giống người dùng thật**. Công cụ phục vụ nhiều vùng, nhiều cấp bậc mà chỉ thử trên một nhóm → **mở rộng bộ đánh giá** rồi chấm lại.",
+  "why": "Tuyển dụng là lĩnh vực nhạy cảm về thiên lệch. Bộ đánh giá chỉ một vùng, một cấp bậc không thể phát hiện lỗi trên các nhóm khác. Ô B mở rộng bộ đánh giá cho khớp các vùng và cấp bậc mà công cụ sẽ phục vụ, rồi chấm lại trước khi phát hành rộng — sửa đúng gốc là độ phủ.",
+  "wrong": {
+   "A": "Bỏ đánh giá định lượng, thay bằng cảm nhận của nhóm nhỏ chọn tiện tay — còn kém đại diện hơn.",
+   "C": "Thu hẹp thêm làm vấn đề tệ hơn.",
+   "D": "Điểm cao trên tập hẹp chính là ảo tưởng mà đề đang cảnh báo."
+  }},
+ {"id": 11352,
+  "remember": "Trình bày cho ban lãnh đạo nhiều người: **nói quyết định trước**, rồi **trả lời mối quan tâm của từng người** (tài chính → chi phí; pháp chế → rủi ro pháp lý; CNTT → tích hợp).",
+  "why": "Ban chỉ đạo cần biết ngay mình được đề nghị duyệt cái gì, nên ô D mở đầu bằng quyết định. Sau đó trả lời trực tiếp mối quan tâm chính của từng người: chi phí cho giám đốc tài chính, rủi ro pháp lý cho pháp chế, tích hợp cho giám đốc CNTT. Ai cũng tìm thấy phần của mình.",
+  "wrong": {
+   "A": "Mở đầu bằng sơ đồ kỹ thuật chỉ phục vụ giám đốc CNTT; hai người còn lại mất hứng ngay.",
+   "B": "Mở đầu bằng dự toán chi phí chỉ phục vụ tài chính, lại đặt số trước lý lẽ.",
+   "C": "Một mạch chung bỏ qua đúng dữ kiện “mỗi người quan tâm một khía cạnh”."
+  }},
+ {"id": 11353,
+  "remember": "Chẩn đoán sự cố: **tái hiện tối giản**, mỗi lần đổi **một biến**; với Claude Code, **liệt kê MCP server** và xem trạng thái kết nối. Thu bằng chứng trước, không phá hiện trường.",
+  "why": "Ô C là kỹ thuật chẩn đoán kinh điển: dựng ca tái hiện nhỏ nhất, mỗi lần thay đổi một yếu tố để biết yếu tố nào gây lỗi. Ô E là thao tác cụ thể của Claude Code: liệt kê các MCP server đã cấu hình và xem trạng thái để bắt lỗi kết nối. Cả hai tạo bằng chứng mà không làm hỏng trạng thái hiện tại.",
+  "wrong": {
+   "A": "Tăng độ ngẫu nhiên làm sự cố khó tái hiện hơn chứ không dễ hơn.",
+   "B": "Gửi phiếu hỗ trợ khi chưa có bằng chứng thì không ai xử lý được.",
+   "D": "Lùi phiên bản ngay là thay đổi lớn trước khi có bằng chứng, xoá luôn hiện trường."
+  }},
+ {"id": 11354,
+  "remember": "**Hiệu suất** = làm cùng việc nhanh hơn. **Năng suất** = thời gian tiết kiệm biến thành **thêm sản lượng**. Tiết kiệm thời gian mà sản lượng không tăng → năng suất **chưa** hiện thực hoá.",
+  "why": "Quan sát 1: thời gian tóm tắt giảm từ 47 xuống 6 phút → hiệu suất tăng. Quan sát 2: thời gian tiết kiệm chưa biến thành sản lượng tính phí → năng suất chưa đạt. Quan sát 3: tiền hạ tầng → chi phí giải pháp. Quan sát 4: tốn thêm 8 phút soát lại → hao hụt hiệu suất, bù trừ một phần quan sát 1. Ô D gán đúng cả bốn.",
+  "wrong": {
+   "A": "Quan sát 2 là năng suất chưa đạt chứ không phải hiệu suất tăng; 8 phút soát thêm là chuyện hiệu suất, không phải SLA.",
+   "B": "Làm việc cũ nhanh hơn không phải “chuyển đổi”; chi phí tăng 22% không phải SLA.",
+   "C": "Thời gian xử lý tài liệu không phải SLA độ trễ hệ thống; gọi lại thừa là chi phí."
+  }},
+ {"id": 11355,
+  "remember": "MCP server mới thêm mà không thấy → **kiểm tra đã đăng ký chưa** (lệnh liệt kê, đúng tầng cấu hình) rồi **khởi động lại phiên** — đổi cấu hình thường cần nạp lại.",
+  "why": "Hai nguyên nhân hay gặp nhất: server chưa được đăng ký đúng chỗ, hoặc phiên chưa nạp lại cấu hình mới. Ô C kiểm bằng lệnh liệt kê, rồi kết nối lại phiên. Rẻ, không phá gì, đi thẳng vào nguyên nhân.",
+  "wrong": {
+   "A": "Tắt hết MCP server phá cả những server đang chạy tốt, mà vẫn chưa biết server mới đã đăng ký chưa.",
+   "B": "Đổi sang sản phẩm khác là bỏ cuộc chứ không phải chẩn đoán.",
+   "D": "Cài lại hệ điều hành là cực đoan, xoá sạch hiện trường."
+  }},
+ {"id": 11356,
+  "remember": "Nhiều tool mà vẫn muốn giữ đủ → **khám phá tool dần dần** (progressive discovery / Tool Search): chỉ nạp một nhóm khởi đầu, phần còn lại nạp khi cần.",
+  "why": "Đề có hai ràng buộc: giảm token/độ trễ **và** không hy sinh bề rộng năng lực. Ô A chỉ đưa ra một tập tool khởi đầu đã chọn lọc; các tool khác vẫn nạp được khi cần, nên cả 60 tool vẫn còn đó. Đây là đúng tinh thần Tool Search của Anthropic.",
+  "wrong": {
+   "B": "Thêm một lần gọi model mỗi lượt để tóm tắt → tăng độ trễ; bản tóm tắt cũng không dùng làm định nghĩa tool được.",
+   "C": "Vẫn nạp cả 60 tool, chỉ là chấp nhận vấn đề.",
+   "D": "Cố định 5 tool bất kể có liên quan không là hy sinh năng lực — vi phạm ràng buộc."
+  }},
+ {"id": 11357,
+  "remember": "Skill chỉ là **hướng dẫn model đọc** — lo phần **nội dung** (văn phong, miễn trừ, từ cấm). Việc phải **chắc chắn 100%** như **kiểm quyền người dùng** và **ghi log kiểm toán** phải do **code ứng dụng** làm.",
+  "why": "Model đọc Skill rồi làm theo, nhưng nó không xác thực được ai đang gọi, cũng không bảo đảm ghi log bền vững. Ô B (kiểm người yêu cầu có được phép không) phải chặn **trước** khi Skill chạy; ô A (ghi mọi bản tóm tắt vào vết kiểm toán) phải là việc chắc chắn của hệ thống. Miễn trừ, từ cấm, văn phong là nội dung — đúng chỗ của Skill.",
+  "wrong": {
+   "C": "Định dạng theo văn phong là hướng dẫn nội dung, để trong Skill là hợp lý.",
+   "D": "Đề nói Skill đã chứa sẵn mẫu miễn trừ — phần này Skill đảm nhận.",
+   "E": "Danh sách từ cấm cũng đã nằm trong Skill."
+  }},
+ {"id": 11358,
+  "remember": "GDPR cần: **gói doanh nghiệp + DPA đã ký** (hợp đồng xử lý dữ liệu), **giới hạn thời gian lưu**, **chỉ gửi dữ liệu cần thiết** (che phần thừa), và **quy trình cho người dân xem/xoá dữ liệu của họ**.",
+  "why": "Ô A gom đủ các trụ GDPR: DPA đã ký (cơ sở pháp lý với bên xử lý), cấu hình thời hạn lưu giữ, che dữ liệu cá nhân không cần thiết (tối thiểu hoá), và xử lý quyền của chủ thể dữ liệu (quyền xem, quyền xoá). Các ô khác tháo bỏ chính những kiểm soát này.",
+  "wrong": {
+   "B": "Tắt lưu giữ, che dữ liệu và quy trình quyền chủ thể — tự nhận rủi ro vi phạm.",
+   "C": "Tài khoản cá nhân, không có DPA — không có cơ sở hợp đồng để xử lý dữ liệu người EU.",
+   "D": "Nhồi toàn bộ dữ liệu cá nhân vào mọi prompt vi phạm nguyên tắc tối thiểu hoá và giới hạn mục đích."
+  }},
+ {"id": 11359,
+  "remember": "Hệ nhiều agent cần ghi được: **model nào, phiên bản nào** ở mỗi lượt, và **một mã yêu cầu xuyên suốt** (correlation ID) đi qua mọi agent và tool — để truy vết được từ đầu tới cuối.",
+  "why": "Đề hỏi **khoảng hở**, nên chỉ chọn ô mô tả thứ đang **thiếu**. Ô D: không ghi model và phiên bản ở mỗi lượt → khi đổi model, không truy được lỗi do đâu. Ô E: mã tương quan không truyền qua các lời gọi → không nối được một yêu cầu đi qua nhiều agent và tool.",
+  "wrong": {
+   "A": "Đã xuất vết từng bước — đây là điều làm đúng, không phải khoảng hở.",
+   "B": "Đã ghi độ trễ và token — thực hành tốt.",
+   "C": "Đã ghi kết quả tool và còn che trường nhạy cảm — thực hành tốt."
+  }},
+ {"id": 11360,
+  "remember": "Nói với **người duyệt bảo mật/tuân thủ** bằng ngôn ngữ của họ: **mô hình mối đe doạ**, **biện pháp kiểm soát tương ứng**, **rủi ro còn lại chấp nhận được**, **khả năng truy vết kiểm toán**.",
+  "why": "Ô C dùng đúng những thứ người duyệt bảo mật cần: các mối đe doạ, kiểm soát nào chặn mối nào, tiêu chí chấp nhận rủi ro còn lại, và khả năng truy vết khi kiểm toán. Ba ô kia đều được dán nhãn cho đối tượng khác (quản lý sản phẩm, kỹ sư, lãnh đạo).",
+  "wrong": {
+   "A": "Lịch tính năng và phạm vi — dành cho quản lý sản phẩm.",
+   "B": "Giao diện thành phần và trình tự triển khai — dành cho kỹ sư.",
+   "D": "Tóm tắt rủi ro ở mức cao — dành cho lãnh đạo, không đủ sâu cho người duyệt bảo mật."
+  }},
+ {"id": 11361,
+  "remember": "Lập **subagent** khi có **việc chuyên biệt lặp đi lặp lại** cần system prompt riêng, bộ tool hẹp riêng (và có thể model riêng). Việc làm một lần thì không cần.",
+  "why": "Subagent là một cấu hình dùng lại được: system prompt riêng, danh sách tool riêng, model riêng, ngữ cảnh tách biệt. Ô A có đủ các nhu cầu đó, cộng với việc **lặp lại qua nhiều phiên** — đúng lý do để đầu tư. Các ô khác mô tả tình huống không cần chuyên biệt hoá.",
+  "wrong": {
+   "B": "Câu hỏi một lần, không lặp lại — không đáng công lập và bảo trì subagent.",
+   "C": "Không có việc chuyên biệt lặp lại nào để chuyên biệt hoá.",
+   "D": "Muốn mọi thứ dùng chung một prompt chung chung — phủ định lý do tồn tại của subagent."
+  }},
+ {"id": 11362,
+  "remember": "Quay lại **thiết kế lại** khi kiến trúc hiện tại **không chứa nổi yêu cầu mới** nếu không đổi trách nhiệm thành phần hay giao kèo cốt lõi. Sửa chữ, chỉnh ngưỡng, sửa sổ tay chỉ là thay đổi nhỏ.",
+  "why": "Tín hiệu cần chu kỳ thiết kế mới là ô D: không thể đáp ứng yêu cầu mới nếu không thay đổi trách nhiệm của các thành phần hoặc các giao kèo cốt lõi. Ba ô kia đều tự ghi rõ là thay đổi cục bộ.",
+  "wrong": {
+   "A": "Sửa một câu chữ hiển thị — thay đổi nội dung nhỏ.",
+   "B": "Chỉnh số ngưỡng cảnh báo — thay đổi cấu hình vận hành.",
+   "C": "Sửa cho rõ một bước trong sổ tay — cập nhật tài liệu."
+  }},
+ {"id": 11363,
+  "remember": "Giám sát hệ thống: **quyết định đo gì** (chỉ số, lát cắt) và **mục tiêu là gì** (SLO, ngân sách lỗi) → rồi mới gắn code đo → dựng bảng theo dõi → chỉnh ngưỡng → viết tài liệu.",
+  "why": "Muốn biết phải phát ra chỉ số và vết gì thì trước hết phải định ra các chỉ số và cách chia lát (ô A), và các mục tiêu mà chúng phục vụ — SLO (mục tiêu mức dịch vụ) và ngân sách lỗi (ô C). Bảng theo dõi, chỉnh ngưỡng và tài liệu đều cần dữ liệu đã được phát ra.",
+  "wrong": {
+   "B": "Chỉnh ngưỡng dựa trên dữ liệu quan sát — chỉ có sau khi đã gắn đo đạc.",
+   "D": "Bảng theo dõi hiển thị chỉ số — phải có chỉ số trước.",
+   "E": "Viết tài liệu cho những thứ dựng sau khi đo đạc."
+  }},
+ {"id": 11364,
+  "remember": "Trước khi chạy thử Claude Code với nhóm nhỏ: **thiết kế** (bước nào AI giúp được, chỗ nào người phải quyết) + **cấu hình** (MCP server, quyền, subagent, CLAUDE.md).",
+  "why": "Đề nói rõ phải xong bước thiết kế và cấu hình. Thiết kế là ô B: xác định bước nào trong quy trình AI tạo thêm giá trị, chỗ nào quyền quyết định phải ở lại với con người. Cấu hình là ô E: MCP server cấp dự án, quyền hạn, subagent và ngữ cảnh dự án lâu dài. Thiếu một trong hai thì không có gì để chạy thử.",
+  "wrong": {
+   "A": "Tài liệu vận hành đầy đủ cho ca trực là đầu ra khi triển khai rộng, không phải điều kiện cho chạy thử nhỏ.",
+   "C": "Xin chữ ký chính thức của từng quản lý là quá mức cho một đợt thử nhỏ.",
+   "D": "Lặp lại theo kết quả chạy thử — phải chạy thử rồi mới có kết quả."
+  }}
+]
