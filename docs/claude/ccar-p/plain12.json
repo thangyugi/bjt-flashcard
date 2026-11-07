@@ -1,0 +1,204 @@
+[
+ {"id": "c-5-08",
+  "remember": "Quyết định ảnh hưởng **quyền lợi của con người** (tín dụng, tuyển dụng…) mà luật đòi **giải thích được, khiếu nại được** → Claude **soạn đề xuất có dẫn chứng**, **người quyết cuối**, và khách bị từ chối có **đường xem xét lại**.",
+  "why": "Đề nêu hai ràng buộc: giải thích được và khiếu nại được. Đề xuất có dẫn các yếu tố cụ thể trong hồ sơ đáp ứng phần giải thích; nhân viên tín dụng quyết định cuối giữ trách nhiệm giải trình; đường xem xét lại cho khách là phần khiếu nại. Các ô khác đều để model thật sự quyết định quyền lợi của khách.",
+  "wrong": {
+   "A": "Vẫn là model quyết; chỉ xem hồ sơ bị đề xuất từ chối thì các ca duyệt sai lọt hết.",
+   "B": "Lấy mẫu 5% là giám sát chất lượng, không phải người quyết cuối; 95% khách không ai xem.",
+   "D": "Model không tự biết khi nào nó sai; leo thang dựa trên tự đánh giá của model là không đáng tin."
+  }},
+ {"id": "c-5-09",
+  "remember": "Đặt người duyệt ở **đúng chỗ không đảo ngược được**: agent tự sửa và mở pull request (hoàn tác được), nhưng **merge vào main phải có người** — cưỡng chế bằng **branch protection** (phía server) và **deny rule/hook** (phía Claude Code).",
+  "why": "Pull request chưa merge là thay đổi hoàn tác được nên agent có thể tự làm; merge vào main mới là quyết định khó đảo ngược, nên người phải đứng ở đó. Branch protection chốt phía server (ô C), còn quy tắc deny hoặc hook `PreToolUse` chặn push thẳng lên main phía Claude Code (ô E) — cả hai do hệ thống cưỡng chế, nên prompt injection trong tệp không thuyết phục được.",
+  "wrong": {
+   "A": "Cho token quyền merge là bỏ mất quyết định của người đúng ở chỗ đề yêu cầu.",
+   "B": "CLAUDE.md là ngữ cảnh cho model đọc, không cưỡng chế được; đề yêu cầu chịu được cả nội dung cố thuyết phục agent.",
+   "D": "Đề nói không muốn duyệt ở khâu sửa; CI chạy tự động cũng không có người ngồi bấm."
+  }},
+ {"id": "c-5-10",
+  "remember": "**Lưu trú dữ liệu** (data residency) là câu hỏi **xử lý Ở ĐÂU** → giải ở tầng **định tuyến**: chọn **vùng EU**, dùng endpoint **không chuyển request sang vùng khác**, và **ghi lại luồng dữ liệu** để chứng minh.",
+  "why": "Yêu cầu là suy luận model chỉ diễn ra trong EU, nên phải chọn vùng EU và endpoint theo vùng (không dùng định tuyến toàn cầu). Ghi lại luồng dữ liệu là phần “chứng minh bằng gì” mà tuân thủ đòi hỏi. Các ô khác trả lời một câu hỏi khác hoặc trông vào model.",
+  "wrong": {
+   "B": "Model không điều khiển được request được định tuyến tới đâu.",
+   "C": "ZDR nói về việc **giữ** dữ liệu bao lâu, không nói dữ liệu được **xử lý ở đâu**.",
+   "D": "Model phải đọc được nội dung mới suy luận được; nơi xử lý vẫn là nơi dữ liệu được giải mã."
+  }},
+ {"id": "c-5-11",
+  "remember": "Yêu cầu xoá dữ liệu (GDPR) → xoá ở **mọi nơi lưu bền**: cơ sở dữ liệu, **kho vector** (các đoạn văn và embedding vẫn chứa dữ liệu gốc), **log**. Cache tự hết hạn nhanh nên không phải nơi lưu bền. **Ghi lại** các bước đã làm.",
+  "why": "Kiến trúc sư phải biết dữ liệu chảy qua đâu. Ở đây có ba chỗ lưu bền: CRM, kho vector (đoạn văn vẫn chứa nội dung gốc và có thể được truy hồi lại), và log 90 ngày. Prompt cache tự hết hạn sau vài phút nên không cần xử lý riêng. Ghi lại các bước để chứng minh với cơ quan quản lý.",
+  "wrong": {
+   "A": "Đoạn văn kèm embedding vẫn trả về được nội dung gốc khi truy hồi; xoá thiếu kho vector là xoá chưa xong.",
+   "B": "Dữ liệu ứng dụng nằm ở kho và log của bạn, không nằm trong trọng số model — đi sai chỗ.",
+   "C": "Dữ liệu vẫn còn nguyên — đây là che giấu, không phải xoá."
+  }},
+ {"id": "c-5-12",
+  "remember": "Muốn **vài năm sau vẫn giải thích được** vì sao AI trả lời như vậy → mỗi lần tương tác ghi: **ai hỏi, lúc nào, phiên bản prompt, model nào, tài liệu nào được truy hồi** — lưu vào kho **không sửa được**, giữ **đủ lâu**.",
+  "why": "Muốn tái dựng lý do thì phải có đủ đầu vào đã dẫn tới câu trả lời: người dùng, thời điểm, phiên bản prompt, model và các đoạn tài liệu đã truy hồi (ô B). Bản ghi đó phải bất biến và được giữ đủ lâu thì mới làm bằng chứng được (ô D). Chạy lại về sau không tái tạo được, vì đầu ra không lặp lại y hệt và model cũ có thể đã ngừng.",
+  "wrong": {
+   "A": "Biết trả lời gì nhưng không biết **vì sao** — đúng phần cơ quan quản lý đòi.",
+   "C": "Model đã đổi, tài liệu đã đổi, đầu ra không tất định — không phải bằng chứng.",
+   "E": "Lưu trên trình duyệt từng người: dễ mất, dễ sửa, không tập trung."
+  }},
+ {"id": "c-5-13",
+  "remember": "**Một con số tổng** (93% khớp) có thể **che giấu nhóm bị thiệt**. Với quyết định về con người: **tách kết quả theo từng nhóm**, thử **đối chứng** (chỉ đổi tên, giữ nội dung), đặt **ngưỡng cho nhóm kém nhất**.",
+  "why": "Con số gộp che mất chênh lệch giữa các nhóm, mà tuyển dụng ảnh hưởng trực tiếp tới con người. Đo tách theo nhóm (khoảng trống nghề nghiệp, người viết tiếng Anh không phải tiếng mẹ đẻ…) và thử đối chứng là cách phát hiện thiên lệch trực tiếp nhất; ngưỡng cho nhóm kém nhất biến công bằng thành tiêu chí ra mắt kiểm chứng được.",
+  "wrong": {
+   "A": "Nhiều mẫu hơn vẫn ra một con số gộp, vẫn che nhóm bị thiệt.",
+   "C": "Dặn dò không phải đo lường; không đo thì không biết lời dặn có tác dụng không.",
+   "D": "Model không tự biết mình sai; tự chấm không phải bằng chứng."
+  }},
+ {"id": "c-5-14",
+  "remember": "Dùng dữ liệu cá nhân cho **mục đích mới** → (1) **hỏi pháp chế/quyền riêng tư** xem sự đồng ý ban đầu có cho phép không; (2) **xoá hoặc giả danh hoá** thông tin cá nhân ngay ở nguồn trước khi đưa vào kho/ví dụ.",
+  "why": "Sự đồng ý chỉ ghi mục đích “đảm bảo chất lượng”, nên dùng cho mục đích khác cần xác nhận pháp lý trước. Dù được phép, dữ liệu cá nhân trong ví dụ mẫu hay kho truy hồi vẫn có thể bị model lặp lại cho người khác, nên phải gỡ ở nguồn. Đây là tôn trọng những khách hàng có mặt trong các cuộc gọi.",
+  "wrong": {
+   "A": "Không dùng để huấn luyện không có nghĩa là được phép dùng; mục đích vẫn bị giới hạn bởi sự đồng ý.",
+   "B": "Lời dặn không phải chốt chặn; dữ liệu cá nhân vẫn nằm trong ngữ cảnh và vẫn có thể lộ.",
+   "D": "Đoán thái độ khách không thay được cơ sở pháp lý."
+  }},
+ {"id": "c-6-01",
+  "remember": "Mỗi quyết định kiến trúc có **câu hỏi khảo sát tương ứng**: **bao nhiêu, cần nhanh cỡ nào** → realtime hay batch; **sai thì hậu quả gì, có ai phát hiện kịp không** → cần người duyệt từng bản hay chỉ lấy mẫu.",
+  "why": "Số lượng và độ trễ chấp nhận được cho biết có thể dùng Batch API (rẻ hơn, không tức thì) hay phải gọi theo thời gian thực (ô A). Mức nghiêm trọng của lỗi và khả năng phát hiện sớm cho biết cần người rà soát mọi bản hay chỉ lấy mẫu (ô E).",
+  "wrong": {
+   "B": "Ngôn ngữ lập trình là chi tiết triển khai, không giúp quyết batch/realtime hay mức duyệt.",
+   "C": "Tên và tính cách agent là chuyện trải nghiệm, không liên quan hai quyết định.",
+   "D": "Nhảy vào giải pháp trước khi hiểu bài toán; không trả lời được câu nào trong hai câu."
+  }},
+ {"id": "c-6-02",
+  "remember": "“Mọi người thích là được” **không phải tiêu chí**. Cùng nhà tài trợ biến nó thành **mục tiêu đo được có mốc ban đầu** (tỉ lệ ticket tự giải quyết, thời gian xử lý…) **trước khi** chốt thiết kế.",
+  "why": "Tiêu chí mơ hồ khiến không biết khi nào đã xong, và mọi cải tiến sau này chỉ là cảm tính. Mốc ban đầu của quy trình hiện tại cộng mục tiêu cụ thể cho phép thiết kế bộ đánh giá ngay từ đầu, và cho nhà tài trợ một con số để đánh giá. Anthropic khuyên định nghĩa tiêu chí thành công cụ thể, đo được trước khi phát triển.",
+  "wrong": {
+   "B": "Đo quá muộn, vẫn là chỉ số cảm tính không có mốc so sánh.",
+   "C": "Dễ đo nhưng sai thứ: dùng nhiều không có nghĩa là giải quyết được việc.",
+   "D": "Model tự chấm mình không độc lập, và không có mốc để so."
+  }},
+ {"id": "c-6-03",
+  "remember": "Khảo sát phát hiện **nhu cầu thật khác yêu cầu ban đầu** → **mang số liệu tới nhà tài trợ** và **đề xuất điều chỉnh phạm vi** kèm cách đo thành công. Không tự đổi, cũng không làm cái vô ích.",
+  "why": "Khảo sát cho thấy chỗ đau thật là viết ghi chú sau cuộc gọi (60% thời gian), có số liệu rõ ràng. Kiến trúc sư không tự ý đổi phạm vi mà mang bằng chứng tới nhà tài trợ để cùng quyết định, kèm cách đo thành công. Làm đúng yêu cầu ban đầu là giải quyết một vấn đề gần như không tồn tại.",
+  "wrong": {
+   "A": "Bỏ qua dữ liệu khảo sát; làm đúng yêu cầu nhưng không tạo giá trị.",
+   "B": "Dàn trải nguồn lực cho một nhu cầu đã được chứng minh là nhỏ, né việc trao đổi thẳng với nhà tài trợ.",
+   "C": "Càng khoá chặt vào giải pháp sai thay vì bài toán thật."
+  }},
+ {"id": "c-6-04",
+  "remember": "Trình bày cho **CFO**: đặt **hai phương án cạnh nhau** với **chi phí mỗi việc hoàn thành** và **chất lượng trên cùng bộ đánh giá**, nêu **rủi ro và cách chặn**. Không nói chi tiết kỹ thuật, không hứa “không có đánh đổi”.",
+  "why": "CFO quan tâm chi phí trên mỗi việc hoàn thành, thời hạn và rủi ro. Đặt hai phương án cạnh nhau với cùng thước đo chất lượng cho thấy đánh đổi đã được cân nhắc bằng số liệu. Nêu rủi ro và cách chặn giúp phê duyệt dựa trên thông tin trung thực.",
+  "wrong": {
+   "A": "Chi tiết token, prompt, tham số là ngôn ngữ của kỹ sư, không phải của CFO.",
+   "C": "Giấu phương án bị loại làm giảm niềm tin; không thấy đánh đổi thì không đánh giá được.",
+   "D": "Hứa quá mức; model nhỏ hơn có đánh đổi về năng lực, phải đo chứ không được hứa."
+  }},
+ {"id": "c-6-05",
+  "remember": "Bị hỏi “có bảo đảm **không bao giờ sai** không?” → nói thật: **không hệ thống LLM nào bảo đảm được**; đưa **tỉ lệ lỗi đo được + mục tiêu**, và **cách khoanh lỗi** khi xảy ra (trích nguồn, chuyển người thật, kênh phản hồi).",
+  "why": "Hứa quá mức là rủi ro: lỗi đầu tiên xảy ra là niềm tin sụp đổ. Câu trả lời trung thực có hai nửa: con số lỗi thực tế và mục tiêu (ô C), cùng cơ chế khoanh vùng và học từ lỗi (ô D). Như vậy lãnh đạo quyết định dựa trên thông tin thật.",
+  "wrong": {
+   "A": "Không model nào bảo đảm 100%; hứa vậy là cam kết quá mức.",
+   "B": "Né câu hỏi; độ chính xác phải là tiêu chí ra mắt.",
+   "E": "Công ty triển khai vẫn chịu trách nhiệm với khách của mình; đẩy trách nhiệm làm mất niềm tin."
+  }},
+ {"id": "c-6-06",
+  "remember": "SLA phải ghi rõ **đo cái gì** (chữ đầu tiên hay hoàn tất toàn bộ?), **phân vị nào** (p95?), **điều kiện tải nào**, dựa trên **số đo thật**. Không thì hai bên đều “đúng” theo cách hiểu của mình.",
+  "why": "Hai bên đều đúng theo cách đọc của mình vì SLA “trả lời trong 3 giây” không định nghĩa đo từ đâu tới đâu. Thương lượng lại để ghi rõ thước đo, phân vị và điều kiện tải, dựa trên số đo thật để mục tiêu khả thi — sau đó cả hai bên đọc cùng một con số theo cùng một cách.",
+  "wrong": {
+   "A": "Hy sinh chất lượng mà không biết mất bao nhiêu, và vẫn chưa sửa định nghĩa mơ hồ.",
+   "B": "Chọn số đẹp để thắng tranh cãi; giờ cao điểm người dùng vẫn chờ 7 giây.",
+   "D": "Bỏ bước tìm tài liệu làm tăng bịa — đổi độ chính xác lấy tốc độ mà không ai đồng ý."
+  }},
+ {"id": "c-6-07",
+  "remember": "Sửa prompt theo **lời phàn nàn mới nhất** → sửa chỗ này hỏng chỗ kia (hồi quy). Biến **mỗi lời phàn nàn thành một ca test**, chạy **toàn bộ bộ test** trước mỗi lần đổi, phát hành theo **nhịp đều** kèm điểm trước/sau.",
+  "why": "Sửa theo phàn nàn mới nhất là tối ưu cho một ca và làm hỏng ca khác, vì không có bộ test giữ lại hành vi tốt cũ. Bộ đánh giá tích luỹ từ phản hồi thật bắt được hồi quy trước khi phát hành; điểm trước/sau cho các bên bằng chứng thay vì cảm nhận.",
+  "wrong": {
+   "B": "Đóng băng thì chặn luôn cải tiến; lỗi đang có giữ mãi.",
+   "C": "Càng nhiều người sửa không kiểm soát, càng không biết bản nào đang chạy.",
+   "D": "Mất nguồn ca test quý nhất; vấn đề là cách xử lý phản hồi, không phải bản thân phản hồi."
+  }},
+ {"id": "c-6-08",
+  "remember": "Độ sẵn sàng của trợ lý = **tích của mọi thành phần** nó phụ thuộc (tìm kiếm, API đơn hàng, model). Đề xuất **mục tiêu đo được cho cả dịch vụ** + kế hoạch **chạy ở chế độ suy giảm** khi một phần hỏng.",
+  "why": "Không thể mượn con số sẵn sàng của riêng model, vì trợ lý còn phụ thuộc dịch vụ tìm kiếm và API đơn hàng. Biến kỳ vọng mơ hồ “luôn sẵn sàng” thành mục tiêu đo được kèm kế hoạch dự phòng cho thấy rõ cái gì cam kết được, và chuyện gì xảy ra khi một phần hỏng.",
+  "wrong": {
+   "A": "Không hệ thống nào cam kết được 100%.",
+   "B": "Bỏ qua dịch vụ tìm kiếm và API đơn hàng — sai phạm vi.",
+   "C": "Né trách nhiệm; kiến trúc sư phải biến kỳ vọng thành cam kết đo được."
+  }},
+ {"id": "c-6-09",
+  "remember": "Nhiều đội dùng chung một dịch vụ AI → cần **hợp đồng prompt-và-tool có phiên bản**: phiên bản prompt hiện tại, schema của tool, **ai phải duyệt khi đổi**, **báo cho ai**.",
+  "why": "Sự cố có hai gốc: thay đổi schema không qua ai duyệt, và không biết phiên bản nào đang chạy. Hợp đồng prompt-và-tool có phiên bản giải quyết cả hai: có người duyệt, có thông báo cho các bên dùng, và truy ngược được phiên bản khi có lỗi.",
+  "wrong": {
+   "A": "Sơ đồ cho biết ai nối với ai, nhưng không kiểm soát việc đổi schema hay phiên bản.",
+   "C": "Email không phải tài liệu có thẩm quyền; tới lúc gửi thì tích hợp đã hỏng.",
+   "D": "Sai người đọc; sự cố nằm ở thoả thuận giữa các đội kỹ thuật."
+  }},
+ {"id": "c-6-10",
+  "remember": "Đội nhận bàn giao **hiểu “cái gì” và “vì sao”** nhưng **không biết bắt đầu từ đâu** → thiếu **hướng dẫn triển khai**: code mẫu, chỗ đặt cấu hình, **thứ tự xây**, checklist trước ra mắt có ngưỡng đánh giá.",
+  "why": "Đội đối tác đã hiểu kiến trúc; cái họ thiếu là “làm thế nào, bắt đầu từ đâu”. Code mẫu cho lời gọi Claude cốt lõi (có xử lý lỗi), chỗ đặt từng cấu hình, thứ tự xây dựng và checklist có ngưỡng đánh giá biến kiến trúc thành việc làm được và cho biết khi nào là xong.",
+  "wrong": {
+   "A": "Thêm mô tả kiến trúc trong khi họ đã hiểu kiến trúc.",
+   "B": "Truyền cảm hứng, không chỉ đường triển khai.",
+   "D": "Quá nhiều, không có thứ tự hành động; bản ghi quyết định đã tóm phần đó."
+  }},
+ {"id": "c-6-11",
+  "remember": "Đổi sang **model mới** không phải chỉ đổi một dòng tên: **chạy bộ đánh giá hiện có**, rà prompt (model mới có thể phản ứng khác), kiểm **tham số và token**, rồi **triển khai dần có đường lùi**.",
+  "why": "Model mới có thể phản hồi khác với cùng prompt, có thể từ chối tham số cũ, và có thể dùng số token khác nên chi phí lệch. Chạy bộ đánh giá hiện có là cách duy nhất biết chắc có tốt hơn không; triển khai dần có đường lùi giới hạn thiệt hại nếu có hồi quy.",
+  "wrong": {
+   "A": "Không được bảo đảm tương thích — hành vi, tham số và chi phí đều có thể khác.",
+   "B": "Dồn việc chuyển đổi vào sát hạn chót, không còn thời gian xử lý sự cố.",
+   "C": "Viết lại hết trước khi test là làm thừa, và không có mốc để biết bản mới tốt hay xấu hơn."
+  }},
+ {"id": "c-6-12",
+  "remember": "Giám sát sau ra mắt cần đủ **3 chiều**: **chi phí** (token, chi phí theo tính năng + cảnh báo), **hiệu năng** (p95), **chất lượng** (chấm mẫu định kỳ). “Không ai phàn nàn” **không có nghĩa** là ổn.",
+  "why": "Tách chi phí theo tính năng cho biết vì sao chi phí gấp đôi; cảnh báo giúp biết sớm thay vì chờ hoá đơn; chấm mẫu định kỳ phát hiện chất lượng trôi mà người dùng im lặng không báo. Dữ liệu usage và chi phí có thể lấy từ Console hoặc Usage & Cost API.",
+  "wrong": {
+   "B": "Người dùng thường bỏ đi thay vì báo lỗi; chất lượng trôi âm thầm.",
+   "C": "Phát hiện quá muộn, không chỉ ra nguyên nhân, vẫn không có tín hiệu chất lượng.",
+   "D": "Có dữ liệu nhưng không ai xem — ghi log không phải là giám sát."
+  }},
+ {"id": "c-7-01",
+  "remember": "Các tầng cấu hình Claude Code: **managed policy** (tổ chức, không ai ghi đè được) > settings **dự án** (commit, dùng chung) > **settings.local.json / user settings** (cá nhân). **CLAUDE.md** là ngữ cảnh cho model đọc — hợp cho quy ước, **không cưỡng chế** được hành vi (muốn chắc chắn phải dùng **hook**).",
+  "why": "Claude Code phân tầng cấu hình: chính sách quản trị của tổ chức ở trên cùng; settings dự án được commit để chia sẻ; settings.local.json và user settings dành cho cá nhân. CLAUDE.md là chữ cho model đọc, nên hợp để ghi quy ước nhưng không bảo đảm hành vi — hành vi tự động phải dùng hook do Claude Code chạy.",
+  "rows": {
+   "1": "Đúng — quy ước chung cho mọi kỹ sư đặt trong CLAUDE.md commit vào repo.",
+   "2": "Sai — CLAUDE.md chỉ là ngữ cảnh model đọc, không cưỡng chế được; “chạy formatter sau mỗi lần sửa” phải dùng hook (ví dụ `PostToolUse`).",
+   "3": "Đúng — `.mcp.json` cấp dự án commit vào repo để cả đội dùng chung MCP server.",
+   "4": "Đúng — sở thích cá nhân để trong user settings hoặc `settings.local.json`, không bắt đồng đội thừa hưởng.",
+   "5": "Sai — chính sách quản trị (managed) có ưu tiên cao nhất, user settings không ghi đè được."
+  }},
+ {"id": "c-7-02",
+  "remember": "Phân phối **trọn bộ** Skill, slash command, hook, cấu hình MCP cho nhiều repo → đóng gói thành **plugin Claude Code** và phát hành qua **plugin marketplace** nội bộ. Cài một lần, cập nhật đồng bộ.",
+  "why": "Plugin là đơn vị đóng gói của Claude Code, gom được skills, slash commands, hooks, subagents và cấu hình MCP thành một thứ cài một lần. Marketplace cho các đội thêm nguồn và nhận bản cập nhật, nên mười hai repo dùng cùng một phiên bản mà không ai phải chép tay.",
+  "wrong": {
+   "A": "Mười hai bản sao sẽ lệch nhau rất nhanh.",
+   "C": "Cấu hình cá nhân: không nhất quán, không có cơ chế cập nhật.",
+   "D": "Mỗi đội dựng một kiểu — đúng điều đề muốn tránh."
+  }},
+ {"id": "c-7-03",
+  "remember": "Đo tác động của AI lập trình bằng **kết quả giao hàng so với trước**: thời gian từ commit tới merge, thời gian review, **tỉ lệ lỗi lọt**. **Số dòng code AI viết** chỉ là đầu vào — nhiều hơn mà review lâu hơn là **lỗ**.",
+  "why": "Số dòng code là đầu vào, không phải kết quả; nhiều dòng hơn mà review lâu hơn thì chi phí đang dồn sang người review. Thời gian chu kỳ, thời gian review và tỉ lệ lỗi lọt so với mốc trước khi triển khai đo đúng thứ doanh nghiệp quan tâm: giao nhanh hơn mà chất lượng không giảm.",
+  "wrong": {
+   "A": "Đo sản lượng thô; tín hiệu review chậm cho thấy chi phí đang dồn sang người review.",
+   "B": "Đo mức sử dụng, không đo tác động.",
+   "C": "Cảm nhận chủ quan, không có mốc khách quan."
+  }},
+ {"id": "c-7-04",
+  "remember": "Tự động hoá đầu tiên nên là việc **lợi rõ** mà **kiểm chứng được tự động** và **có người quyết cuối**: viết **unit test** (CI xác nhận chạy đúng), **rà diff vòng đầu** (người review vẫn quyết). Tránh việc hệ trọng, không review, tắt CI.",
+  "why": "Viết test có cơ chế kiểm tự động: test chạy qua hay không, có thật sự kiểm code hay không (ô B). Rà diff vòng đầu giảm tải cho người review mà vẫn giữ người quyết cuối (ô C). Cả hai cho lợi ích rõ và rủi ro được khoanh vùng.",
+  "wrong": {
+   "A": "Chuyển đổi kiến trúc sổ cái cốt lõi là quyết định hệ trọng — người quyết, AI chỉ liệt kê đánh đổi.",
+   "D": "Không review, không đường lùi, trên hệ thống thanh toán thật.",
+   "E": "Tắt CI là bỏ đúng cơ chế kiểm chứng làm cho tự động hoá an toàn."
+  }},
+ {"id": "c-7-05",
+  "remember": "Phiên Claude Code dài → **chậm dần, quên ràng buộc đầu phiên** (context rot). Dùng **`/context`** xem cái gì chiếm chỗ, **`/compact`** (kèm dặn giữ ràng buộc chính) để tóm lại, và **`/clear`** khi chuyển sang việc không liên quan.",
+  "why": "Triệu chứng khớp với context rot: ngữ cảnh đầy, chi tiết ban đầu bị chìm, mỗi lượt xử lý nhiều token hơn. `/context` cho thấy cái gì đang chiếm chỗ; `/compact` tóm lịch sử mà vẫn giữ điều quan trọng nếu được dặn; `/clear` cho việc mới một khởi đầu sạch thay vì kéo theo ngữ cảnh refactor không liên quan.",
+  "wrong": {
+   "B": "Chẩn đoán sai — triệu chứng đi theo độ dài phiên, không phải bản cài.",
+   "C": "Lặp lại ràng buộc mỗi tin nhắn làm ngữ cảnh phình thêm.",
+   "D": "Tác động quá rộng, mất công cụ của cả đội mà không chẩn đoán gì."
+  }},
+ {"id": "c-7-06",
+  "remember": "Thử lại **theo loại lỗi**: lỗi **tạm thời** (429 quá hạn mức, 529 quá tải, 5xx, mất kết nối) → **thử lại có giãn cách**; lỗi **400** (request sai) → **không thử lại**, ghi log kèm ID để sửa dữ liệu gốc.",
+  "why": "Lỗi 400 do request sai định dạng sẽ sai y hệt ở mọi lần thử, nên thử lại chỉ tốn tiền và thời gian. Lỗi 429/529/5xx là tình trạng tạm thời phía dịch vụ; thử lại có exponential backoff thường thành công như log đã cho thấy. Phân loại theo kiểu lỗi giữ lợi ích của thử lại mà bỏ phần lãng phí.",
+  "wrong": {
+   "A": "Nhân đôi lãng phí cho các lỗi 400 vốn không bao giờ thành công.",
+   "B": "Mất khả năng vượt qua lỗi 529 tạm thời mà thử lại vốn đã cứu được.",
+   "D": "Lỗi 400 do request sai định dạng, không liên quan năng lực model."
+  }}
+]
